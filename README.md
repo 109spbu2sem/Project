@@ -1,2 +1,1 @@
-# Project
-start work with Qt
+# start work with Qt
