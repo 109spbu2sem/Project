@@ -1,3 +1,6 @@
+#ifndef STORAGES
+#define STORAGES
+
 struct Point
 {
 	double x;
@@ -9,20 +12,20 @@ struct Segment
 	Point d;//direction
 };
 //points
-class storagepoints
+class storagePoints
 {
 private:
 	Point *_points;
 	unsigned _size;
 public:
 	//constructor
-	storagepoints(void)
+	storagePoints(void)
 	{
 		_points = 0;
 		_size = 0;
 	}
 	//destructor
-	~storagepoints(void)
+	~storagePoints(void)
 	{
 		delete[] _points;
 	}
@@ -37,20 +40,20 @@ public:
 	}
 };
 //segments
-class storagesegments
+class storageSegments
 {
 private:
 	Segment *_segments;
 	unsigned _size;
 public:
 	//constructor
-	storagesegments(void)
+	storageSegments(void)
 	{
 		*_segments;
 		_size = 0;
 	}
 	//destructor
-	~storagesegments(void)
+	~storageSegments(void)
 	{
 		delete[] _segments;
 	}
@@ -64,3 +67,11 @@ public:
 		return _size;
 	}
 };
+//class for all objects
+struct storeOfObjects
+{
+	//points
+	storagePoints points;
+	storageSegments segments;
+};
+#endif //STORAGES

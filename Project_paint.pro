@@ -19,7 +19,8 @@ SOURCES += main.cpp\
 
 HEADERS  += mainwindow.h \
     storages.h \
-    objectpropertieswindow.h
+    objectpropertieswindow.h \
+    globals.h
 
 FORMS    += mainwindow.ui \
     objectpropertieswindow.ui

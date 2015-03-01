@@ -4,7 +4,7 @@
 //----------------------------------------------------------------
 //--------------------------Points--------------------------------
 //----------------------------------------------------------------
-void storagepoints::add(Point p)
+void storagePoints::add(Point p)
 {
 	//if storage is empty
 	if (_points == 0)
@@ -32,7 +32,7 @@ void storagepoints::add(Point p)
 	return;
 }
 
-Point& storagepoints::operator[] (unsigned num)
+Point& storagePoints::operator[] (unsigned num)
 {
 	if (num >= _size) throw std::invalid_argument("Bad array index");
 	return _points[num];
@@ -42,7 +42,7 @@ Point& storagepoints::operator[] (unsigned num)
 //--------------------------Segments-----------------------------
 //----------------------------------------------------------------
 
-void storagesegments::add(Segment s)
+void storageSegments::add(Segment s)
 {
 	//if storage is empty
 	if (_segments == 0)
@@ -69,7 +69,7 @@ void storagesegments::add(Segment s)
 	return;
 }
 
-Segment& storagesegments::operator[] (unsigned num)
+Segment& storageSegments::operator[] (unsigned num)
 {
 	if (num >= _size) throw std::invalid_argument("Bad array index");
 	return _segments[num];

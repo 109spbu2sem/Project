@@ -18,6 +18,8 @@ public:
 private slots:
 	void on_objectTypeBox_currentIndexChanged(int index);
 
+	void on_buttonBox_accepted();
+
 private:
 	Ui::objectPropertiesWindow *ui;
 };

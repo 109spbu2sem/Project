@@ -1,6 +1,5 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
-#include "storages.h"
 #include "objectpropertieswindow.h"
 
 MainWindow::MainWindow(QWidget *parent) :
