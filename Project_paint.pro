@@ -14,9 +14,12 @@ TEMPLATE = app
 
 SOURCES += main.cpp\
         mainwindow.cpp \
-    storages.cpp
+    storages.cpp \
+    objectpropertieswindow.cpp
 
 HEADERS  += mainwindow.h \
-    storages.h
+    storages.h \
+    objectpropertieswindow.h
 
-FORMS    += mainwindow.ui
+FORMS    += mainwindow.ui \
+    objectpropertieswindow.ui

@@ -1,6 +1,7 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
 #include "storages.h"
+#include "objectpropertieswindow.h"
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
@@ -14,6 +15,14 @@ MainWindow::~MainWindow()
     delete ui;
 }
 
-void MainWindow::on_pushButton_clicked()
+void MainWindow::on_buttonChange_clicked()
 {
+	objectPropertiesWindow *ow = new objectPropertiesWindow(this);
+	ow->show();
+}
+
+void MainWindow::on_buttonAdd_clicked()
+{
+	objectPropertiesWindow *ow = new objectPropertiesWindow(this);
+	ow->show();
 }
