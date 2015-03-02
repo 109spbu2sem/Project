@@ -50,3 +50,7 @@ section DynArray::get(int num) {
 int DynArray::size() {
 	return _size;
 }
+void DynArray::value(int num1, int num2) {
+	_sections[num2].x2 = _sections[num2].x1 + (_sections[num1].x2 - _sections[num1].x1);
+	_sections[num2].y1 = _sections[num2].y2 - (_sections[num1].y2 - _sections[num1].x1);
+}
