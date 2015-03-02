@@ -134,15 +134,17 @@ int main(int argc, const char * argv[])
     {
         for (unsigned i = 0; i < n; ++i)
         {
-            for (unsigned k = 1; k < n; ++k)
+            for (unsigned j = 1; j < n; ++j)
             {
-                if (i != k)
-                    if ((sqrt(pow((StorageP.Get(i).X - StorageP.Get(k).X), 2) + pow((StorageP.Get(i).Y - StorageP.Get(k).Y), 2))) < MinDistance)
+                if (i != j)
+                {
+                    if ((sqrt(pow((StorageP.Get(i).X - StorageP.Get(j).X), 2) + pow((StorageP.Get(i).Y - StorageP.Get(j).Y), 2))) < MinDistance)
                     {
-                        MinDistance = (sqrt(pow((StorageP.Get(i).X - StorageP.Get(k).X), 2) + pow((StorageP.Get(i).Y - StorageP.Get(k).Y), 2)));
+                        MinDistance = (sqrt(pow((StorageP.Get(i).X - StorageP.Get(j).X), 2) + pow((StorageP.Get(i).Y - StorageP.Get(j).Y), 2)));
                         AnsP[0] = i;
-                        AnsP[1] = k;
+                        AnsP[1] = j;
                     }
+                }
             }
         }
         
@@ -165,6 +167,26 @@ int main(int argc, const char * argv[])
     //---------------------------------------------------------
     
     //  2. Вводим с клавиатуры отрезки + определяем все, ортогональные друг другу
+        //  Определяем ортогональные отрезки и модифицируем их так, чтобы они стали параллельными
+    {
+        for (unsigned i = 0; i < m; ++i)
+        {
+            for (unsigned j = 1; j < m; ++j)
+            {
+                if (i != j)
+                {
+                    //  Определяем ортогональные отрезки
+                    if (((StorageS.Get(i).X1 - StorageS.Get(i).X2) + (StorageS.Get(j).Y1 - StorageS.Get(j).Y2) == 0) && ((StorageS.Get(i).Y1 - StorageS.Get(i).Y2) - (StorageS.Get(j).X1 - StorageS.Get(j).X2) == 0))
+                    {
+                        cout << "Отрезок с координатами концов (" << StorageS.Get(i).X1 << ";" << StorageS.Get(i).Y1 << ") и (" << StorageS.Get(i).X2 << ";" << StorageS.Get(i).Y2  << ") ортогонален отрезку с координатами концов (" << StorageS.Get(j).X1 << ";" << StorageS.Get(j).Y1 << ") и (" << StorageS.Get(j).X2 << ";" << StorageS.Get(j).Y2  << ")" << endl;
+                        
+                        //  Модифицируем их так, чтобы они стали параллельными
+                        //  Замена местами координат (X1 -> Y2, X2 -> Y1, Y1 -> X1, Y2 -> X2);
+                    }
+                }
+            }
+        }
+    }
     
     cout << endl;
     return 0;
