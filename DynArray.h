@@ -6,25 +6,45 @@
 //  Copyright (c) 2015 Никита Попов. All rights reserved.
 //
 
-struct Point
+struct Point    //  Точка
 {
     double X;
     double Y;
 };
 
-class DynArray
+struct Section  //  Отрезок
+{
+    //  Координаты начала
+    double X1;
+    double Y1;
+    //  Координаты конца
+    double X2;
+    double Y2;
+
+};
+
+struct Arc      //  Дуга
+{
+
+};
+
+
+//  Массив точек
+class DynArrayP
 {
 public:
     //  Создание хранилища
-    DynArray(void);
+    DynArrayP(void);
     
     //  Добавление элемента (точка)
     void Store(Point);
     
     //  Получить элемент
     Point Get(int num);
+    
     //  Изменить элемент
     void Set(int num, Point P);
+    
     Point *Value(int i);
     //  Удалить элемент
     void Drop(int num);
@@ -37,5 +57,36 @@ public:
     
 private:
     Point *_Points;
+    unsigned _Size;
+};
+
+//  Массив отрезков
+class DynArrayS
+{
+public:
+    //  Создание хранилища
+    DynArrayS(void);
+    
+    //  Добавление элемента (отрезок)
+    void Store(Section);
+    
+    //  Получить элемент
+    Section Get(int num);
+    
+    //  Изменить элемент
+    void Set(int num, Section S);
+    Section *Value(int i);
+    
+    //  Удалить элемент
+    void Drop(int num);
+    
+    //  Узнать кол-во элементов
+    unsigned Size()const
+    {
+        return _Size;
+    };
+    
+private:
+    Section *_Sections;
     unsigned _Size;
 };

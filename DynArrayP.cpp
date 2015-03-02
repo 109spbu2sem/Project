@@ -1,5 +1,5 @@
 //
-//  DynArray.cpp
+//  DynArrayP.cpp
 //  Project_2Sem
 //
 //  Created by Никита Попов on 24.02.15.
@@ -9,13 +9,15 @@
 #include "DynArray.h"
 #include <stdexcept>
 
-DynArray::DynArray(void)
+//  Создание хранилища
+DynArrayP::DynArrayP(void)
 {
     _Points = 0;
     _Size = 0;
 }
 
-void DynArray::Store(Point P)
+//  Добавление элемента
+void DynArrayP::Store(Point P)
 {
     if (_Points == 0)
     {
@@ -49,19 +51,22 @@ void DynArray::Store(Point P)
     }
 }
 
-Point DynArray::Get(int num)
+//  Удаление элемента
+void DynArrayP::Drop(int num)
 {
-    if ((num >= _Size) || (num < 0)) throw std::invalid_argument("Bad array index");
+    
+}
+
+//  Получение элемента
+Point DynArrayP::Get(int num)
+{
+    if ((num >= _Size) || (num < 0)) throw std::invalid_argument("> Bad array index");
     return _Points[num];
 }
 
-Point *DynArray::Value(int num)
+//  Изменение элемента | его значение
+Point *DynArrayP::Value(int num)
 {
-    if ((num >= _Size) || (num < 0)) throw std::invalid_argument("Bad array index");
+    if ((num >= _Size) || (num < 0)) throw std::invalid_argument("> Bad array index");
     return _Points + num;
 }
-
-//unsigned DynArray::Size()
-//{
-//    return _Size;
-//}
