@@ -44,8 +44,11 @@ public:
     
     //  Изменить элемент
     void Set(int num, Point P);
-    
     Point *Value(int i);
+    
+    //  Изменение координат
+    //  void ChangeCorrdinates;
+    
     //  Удалить элемент
     void Drop(int num);
     
@@ -76,6 +79,9 @@ public:
     //  Изменить элемент
     void Set(int num, Section S);
     Section *Value(int i);
+    
+    //  Изменение координат
+    //  void ChangeCorrdinates;
     
     //  Удалить элемент
     void Drop(int num);
