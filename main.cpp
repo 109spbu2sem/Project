@@ -62,7 +62,6 @@ int main(int argc, const char * argv[])
         ++n;
     }
     
-    
     //---------------------------------------------------------
     //-----------------------  ОТРЕЗКИ  -----------------------
     //---------------------------------------------------------
@@ -162,32 +161,61 @@ int main(int argc, const char * argv[])
     }
     catch (invalid_argument e)
     {
-        cout << e.what() << endl;
+        cout << e.what() << endl << endl;
+    }
+    
+    //  2. Даны две точки и какое-то расстояние. Модифицировать эти точки так, чтобы расстояние между ними стало равным данному.
+    double DistanceBetweenTwoPoints;
+    
+    cout << "Введите новое расстояние между двумя первыми точками: ";
+    cin >> DistanceBetweenTwoPoints;
+    
+    try
+    {
+        if ((sqrt(pow((StorageP.Get(0).X - StorageP.Get(1).X), 2) + pow((StorageP.Get(0).Y - StorageP.Get(1).Y), 2))) == DistanceBetweenTwoPoints)
+        {
+            cout << "Расстояние между первыми двумя точками уже равно заданному" << endl;
+        }
+        else
+        {
+            //  Замена координат точки
+        }
+    }
+    catch (invalid_argument e)
+    {
+        cout << e.what() << endl << endl;
     }
     //---------------------------------------------------------
     
-    //  2. Вводим с клавиатуры отрезки + определяем все, ортогональные друг другу
+    //  3. Вводим с клавиатуры отрезки + определяем все, ортогональные друг другу
         //  Определяем ортогональные отрезки и модифицируем их так, чтобы они стали параллельными
     {
-        for (unsigned i = 0; i < m; ++i)
+        try
         {
-            for (unsigned j = 1; j < m; ++j)
+            for (unsigned i = 0; i < m; ++i)
             {
-                if (i != j)
+                for (unsigned j = 1; j < m; ++j)
                 {
-                    //  Определяем ортогональные отрезки
-                    if (((StorageS.Get(i).X1 - StorageS.Get(i).X2) + (StorageS.Get(j).Y1 - StorageS.Get(j).Y2) == 0) && ((StorageS.Get(i).Y1 - StorageS.Get(i).Y2) - (StorageS.Get(j).X1 - StorageS.Get(j).X2) == 0))
+                    if (i != j)
                     {
-                        cout << "Отрезок с координатами концов (" << StorageS.Get(i).X1 << ";" << StorageS.Get(i).Y1 << ") и (" << StorageS.Get(i).X2 << ";" << StorageS.Get(i).Y2  << ") ортогонален отрезку с координатами концов (" << StorageS.Get(j).X1 << ";" << StorageS.Get(j).Y1 << ") и (" << StorageS.Get(j).X2 << ";" << StorageS.Get(j).Y2  << ")" << endl;
-                        
-                        //  Модифицируем их так, чтобы они стали параллельными
-                        //  Замена местами координат (X1 -> Y2, X2 -> Y1, Y1 -> X1, Y2 -> X2);
+                        //  Определяем ортогональные отрезки
+                        if ((((StorageS.Get(i).X1 - StorageS.Get(i).X2) - (StorageS.Get(j).Y1 - StorageS.Get(j).Y2)) == 0) && (((StorageS.Get(j).X1 - StorageS.Get(j).X2) + (StorageS.Get(i).Y1 - StorageS.Get(i).Y2) == 0)))
+                        {
+                            cout << "Отрезок с координатами концов (" << StorageS.Get(i).X1 << ";" << StorageS.Get(i).Y1 << ") и (" << StorageS.Get(i).X2 << ";" << StorageS.Get(i).Y2  << ") ортогонален отрезку с координатами концов (" << StorageS.Get(j).X1 << ";" << StorageS.Get(j).Y1 << ") и (" << StorageS.Get(j).X2 << ";" << StorageS.Get(j).Y2  << ")" << endl;
+                            
+                            //  Модифицируем их так, чтобы они стали параллельными
+                            //  Замена местами координат (X1 -> Y2, X2 -> Y1, Y1 -> X1, Y2 -> X2);
+                        }
                     }
                 }
             }
         }
+        catch (invalid_argument e)
+        {
+            cout << e.what() << endl << endl;
+        }
     }
-    
+        
     cout << endl;
     return 0;
 }
