@@ -8,8 +8,8 @@
 
 #include <iostream>
 #include <cmath>
-#include "..\include\DynArray.h"
-#include "..\include\Vector.h"
+#include "DynArray.h"
+#include "Vector.h"
 
 using namespace std;
 
