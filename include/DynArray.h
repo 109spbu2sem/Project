@@ -6,6 +6,9 @@
 //  Copyright (c) 2015 Никита Попов. All rights reserved.
 //
 
+#ifndef DYNARRAY_H
+#define DYNARRAY_H
+
 struct Point    //  Точка
 {
     double X;
@@ -45,7 +48,7 @@ public:
     DynArrayP(void);
     
     //  Добавление элемента (точка)
-    void Store(Point);
+    void Add(Point);
     
     Point& operator[] (int num);
     
@@ -83,7 +86,7 @@ public:
     DynArrayS(void);
     
     //  Добавление элемента (отрезок)
-    void Store(Section);
+    void Add(Section);
     
     //  Получить элемент
     Section Get(int num);
@@ -110,3 +113,5 @@ private:
     Section *_Sections;
     unsigned _Size;
 };
+
+#endif

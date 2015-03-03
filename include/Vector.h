@@ -6,6 +6,9 @@
 //  Copyright (c) 2015 Никита Попов. All rights reserved.
 //
 
+#ifndef VECTOR_H
+#define VECTOR_H
+
 struct Vector2
 {
     double X, Y;
@@ -21,7 +24,7 @@ struct Vector2
         return V_Res;
     };
      */
-    Vector2 operator +(const Vector2& V)
+    Vector2 operator +(const Vector2 &V)
     {
         Vector2 V_Res(X,Y);
         V_Res.X += V.X;
@@ -30,7 +33,7 @@ struct Vector2
     };
     
     //  Умножение вектора на число
-    Vector2 operator *(const double& A)
+    Vector2 operator *(const double &A)
     {
         Vector2 V_Res(X,Y);
         V_Res.X *= A;
@@ -38,3 +41,5 @@ struct Vector2
         return V_Res;
     };
 };
+
+#endif

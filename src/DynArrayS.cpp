@@ -18,7 +18,7 @@ DynArrayS::DynArrayS(void)
 }
 
 //  Добавление элемента
-void DynArrayS::Store(Section S)
+void DynArrayS::Add(Section S)
 {
     if (_Sections == 0)
     {

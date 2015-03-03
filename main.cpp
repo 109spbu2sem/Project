@@ -10,6 +10,7 @@
 #include <cmath>
 #include "DynArray.h"
 #include "Vector.h"
+#include "LinkedList.h"
 
 using namespace std;
 
@@ -20,7 +21,8 @@ int main(int argc, const char * argv[])
     //---------------------------------------------------------
     Point P;
     unsigned n = 2;
-    DynArrayP StorageP;  //  Массив точек
+    LinkedList StorageP;  //  Связанный список точек
+    //  DynArrayP StorageP;  //  Массив точек
     unsigned AnsP[2];
     AnsP[0] = 0;
     AnsP[1] = 1;
@@ -36,12 +38,12 @@ int main(int argc, const char * argv[])
     cout << "                   Y: ";
     cin >> P.Y;
     cout << endl;
-    StorageP.Store(P);
+    StorageP.Add(P);
     cout << "Введите координату X: ";
     cin >> P.X;
     cout << "                   Y: ";
     cin >> P.Y;
-    StorageP.Store(P);
+    StorageP.Add(P);
     cout << endl;
     
     //  Через цикл получаем остальные
@@ -58,7 +60,7 @@ int main(int argc, const char * argv[])
         cin >> P.Y;
         cout << endl;
         
-        StorageP.Store(P);
+        StorageP.Add(P);
         
         ++n;
     }
@@ -88,7 +90,7 @@ int main(int argc, const char * argv[])
     cout << "                   Y2: ";
     cin >> S.B.Y;
     cout << endl;
-    StorageS.Store(S);
+    StorageS.Add(S);
     cout << "Введите координату X1: ";
     cin >> S.A.X;
     cout << "                   Y1: ";
@@ -98,7 +100,7 @@ int main(int argc, const char * argv[])
     cout << "                   Y2: ";
     cin >> S.B.Y;
     cout << endl;
-    StorageS.Store(S);
+    StorageS.Add(S);
     cout << endl;
     
     //  Через цикл получаем остальные
@@ -119,7 +121,7 @@ int main(int argc, const char * argv[])
         cin >> S.B.Y;
         cout << endl;
         
-        StorageS.Store(S);
+        StorageS.Add(S);
         
         ++m;
     }
@@ -130,35 +132,14 @@ int main(int argc, const char * argv[])
     Vector2 V1(1, 0);
     Vector2 V2(3, -4);
     
-    Vector2 V3 = V1 + V2;
-            V3 = V1.operator+(V2);
-    
-    Vector2 V4 = V3 * 3;
-            V4 = V3.operator*(3);
-    
-    DynArrayP SP;
-    SP.Store(P);
-    SP.Store(P);
-    
-    Point P1 = SP[1];
-          P1 = SP.operator[](1);
-    
     //---------------------------------------------------------
     //------------------------ ЗАДАНИЯ ------------------------
     //---------------------------------------------------------
-    
+/*
     //  1. Найти точки, между которыми наименьшее расстояние, поменять их местами в массиве
     double MinDistance = (sqrt(pow((StorageP.Get(0).X - StorageP.Get(1).X), 2) + pow((StorageP.Get(0).Y - StorageP.Get(1).Y), 2)));
     try
     {
-        //
-        int k = 0;
-        int *pk = &k;
-        *pk = 33;
-        int &rk = k;
-        rk = 34;
-        k = 35;
-        //
         for (unsigned i = 0; i < n; ++i)
         {
             for (unsigned j = 1; j < n; ++j)
@@ -191,7 +172,10 @@ int main(int argc, const char * argv[])
     {
         cout << e.what() << endl << endl;
     }
-    
+    //---------------------------------------------------------
+ */
+ 
+/*
     //  2. Даны две точки и какое-то расстояние. Модифицировать эти точки так, чтобы расстояние между ними стало равным данному.
     double DistanceBetweenTwoPoints;
     
@@ -213,9 +197,37 @@ int main(int argc, const char * argv[])
     {
         cout << e.what() << endl << endl;
     }
+ */
+ 
+/*
+    //  3. Тесты на уроке
+    //  Операции сложения векторов и умножения вектора на число
+    Vector2 V3 = V1 + V2;
+            V3 = V1.operator+(V2);
+ 
+    Vector2 V4 = V3 * 3;
+            V4 = V3.operator*(3);
+ 
+    //  Получение доступа к точке по номеру в массиве
+    DynArrayP SP;
+    SP.Store(P);
+    SP.Store(P);
+ 
+    Point P1 = SP[1];
+          P1 = SP.operator[](1);
+ 
     //---------------------------------------------------------
+ */
+    StorageP.Rewind();
     
-    //  3. Вводим с клавиатуры отрезки + определяем все, ортогональные друг другу
+    while (StorageP.CanMoveNext())
+    {
+        cout << StorageP.GetCurrent().X << " " << StorageP.GetCurrent().Y << endl;
+        StorageP.MoveNext();
+    }
+    
+/*
+    //  4. Вводим с клавиатуры отрезки + определяем все, ортогональные друг другу
         //  Определяем ортогональные отрезки и модифицируем их так, чтобы они стали параллельными
     {
         try
@@ -243,7 +255,7 @@ int main(int argc, const char * argv[])
             cout << e.what() << endl << endl;
         }
     }
-        
+*/
     cout << endl;
     return 0;
 }

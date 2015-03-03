@@ -17,7 +17,7 @@ DynArrayP::DynArrayP(void)
 }
 
 //  Добавление элемента
-void DynArrayP::Store(Point P)
+void DynArrayP::Add(Point P)
 {
     if (_Points == 0)
     {
