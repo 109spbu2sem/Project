@@ -12,6 +12,7 @@ struct Point    //  Точка
     double Y;
 };
 
+/*
 struct Section  //  Отрезок
 {
     //  Координаты начала
@@ -21,6 +22,13 @@ struct Section  //  Отрезок
     double X2;
     double Y2;
 
+};
+*/
+
+struct Section
+{
+    Point A;  //  Начальная точка
+    Point B;  //  Конечная точка
 };
 
 struct Arc      //  Дуга
@@ -39,12 +47,16 @@ public:
     //  Добавление элемента (точка)
     void Store(Point);
     
+    Point& operator[] (int num);
+    
     //  Получить элемент
     Point Get(int num);
     
     //  Изменить элемент
     void Set(int num, Point P);
+    
     Point *Value(int i);
+    Point &RefValue(int i);
     
     //  Изменение координат
     //  void ChangeCorrdinates;
@@ -78,10 +90,12 @@ public:
     
     //  Изменить элемент
     void Set(int num, Section S);
+    
     Section *Value(int i);
+    Section &RefValue(int i);
     
     //  Изменение координат
-    //  void ChangeCorrdinates;
+    Section *ChangeCoordinate(int num, unsigned Flag);
     
     //  Удалить элемент
     void Drop(int num);

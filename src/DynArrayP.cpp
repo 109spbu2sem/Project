@@ -1,71 +1,79 @@
 //
-//  DynArrayS.cpp
+//  DynArrayP.cpp
 //  Project_2Sem
 //
-//  Created by Никита Попов on 01.03.15.
+//  Created by Никита Попов on 24.02.15.
 //  Copyright (c) 2015 Никита Попов. All rights reserved.
 //
 
-#include "DynArray.h"
+#include "..\include\DynArray.h"
 #include <stdexcept>
 
 //  Создание хранилища
-DynArrayS::DynArrayS(void)
+DynArrayP::DynArrayP(void)
 {
-    _Sections = 0;
+    _Points = 0;
     _Size = 0;
 }
 
 //  Добавление элемента
-void DynArrayS::Store(Section S)
+void DynArrayP::Store(Point P)
 {
-    if (_Sections == 0)
+    if (_Points == 0)
     {
-        _Sections = new Section;
-        (*_Sections).X1 = S.X1;
-        (*_Sections).Y1 = S.Y1;
-        (*_Sections).X2 = S.X2;
-        (*_Sections).Y2 = S.Y2;
+        _Points = new Point;
+        (*_Points).X = P.X;
+        (*_Points).Y = P.Y;
         _Size++;
+        //  _Points ->
     }
     else
     {
-        Section *NewSections = new Section[_Size + 1];
+        Point *NewPoints = new Point[_Size + 1];
         
         //  Копируем старые элементы в новый массив
         for (unsigned s = 0; s < _Size; ++s)
         {
-            NewSections[s] = _Sections[s];
+            NewPoints[s] = _Points[s];
         }
         
         //  Добавляем новый
-        NewSections[_Size] = S;
+            //  NewPoints[_Size] = P; - Равносильно
+        NewPoints[_Size].X = P.X;
+        NewPoints[_Size].Y = P.Y;
         
         //  Освобождаем занимаемую старыми элементами память
-        delete[] _Sections;
+        delete[] _Points;
         
         //  Копируем обратно
-        _Sections = NewSections;
+        _Points = NewPoints;
         _Size++;
     }
 }
 
+Point& DynArrayP::operator[] (int num)
+{
+    if (num >= _Size)
+        throw std::invalid_argument("> Bad array index");
+    return _Points[num];
+}
+
 //  Удаление элемента
-void DynArrayS::Drop(int num)
+void DynArrayP::Drop(int num)
 {
     
 }
 
 //  Получение элемента
-Section DynArrayS::Get(int num)
+Point DynArrayP::Get(int num)
 {
     if ((num >= _Size) || (num < 0)) throw std::invalid_argument("> Bad array index");
-    return _Sections[num];
+    return _Points[num];
 }
 
 //  Изменение элемента | его значение
-Section *DynArrayS::Value(int num)
+Point *DynArrayP::Value(int num)
 {
     if ((num >= _Size) || (num < 0)) throw std::invalid_argument("> Bad array index");
-    return _Sections + num;
+    return _Points + num;
 }

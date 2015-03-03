@@ -8,7 +8,8 @@
 
 #include <iostream>
 #include <cmath>
-#include "DynArray.h"
+#include "..\include\DynArray.h"
+#include "..\include\Vector.h"
 
 using namespace std;
 
@@ -79,23 +80,23 @@ int main(int argc, const char * argv[])
          << "Заполняем массив отрезков\n"
          << "-------------------------\n"
          << "Введите координату X1: ";
-    cin >> S.X1;
+    cin >> S.A.X;
     cout << "                   Y1: ";
-    cin >> S.Y1;
+    cin >> S.A.Y;
     cout << "                   X2: ";
-    cin >> S.X2;
+    cin >> S.B.X;
     cout << "                   Y2: ";
-    cin >> S.Y2;
+    cin >> S.B.Y;
     cout << endl;
     StorageS.Store(S);
     cout << "Введите координату X1: ";
-    cin >> S.X1;
+    cin >> S.A.X;
     cout << "                   Y1: ";
-    cin >> S.Y1;
+    cin >> S.A.Y;
     cout << "                   X2: ";
-    cin >> S.X2;
+    cin >> S.B.X;
     cout << "                   Y2: ";
-    cin >> S.Y2;
+    cin >> S.B.Y;
     cout << endl;
     StorageS.Store(S);
     cout << endl;
@@ -104,24 +105,43 @@ int main(int argc, const char * argv[])
     while (true)
     {
         cout << "Введите координату X1: ";
-        cin >> S.X1;
-        if (S.X1 == 00)
+        cin >> S.A.X;
+        if (S.A.X == 00)
         {
             cout << "-- Конец ввода отрезков --" << endl << endl;
             break;
         }
         cout << "                   Y1: ";
-        cin >> S.Y1;
+        cin >> S.A.Y;
         cout << "                   X2: ";
-        cin >> S.X2;
+        cin >> S.B.X;
         cout << "                   Y2: ";
-        cin >> S.Y2;
+        cin >> S.B.Y;
         cout << endl;
         
         StorageS.Store(S);
         
         ++m;
     }
+    
+    //---------------------------------------------------------
+    //------------------------ ВЕКТОРЫ ------------------------
+    //---------------------------------------------------------
+    Vector2 V1(1, 0);
+    Vector2 V2(3, -4);
+    
+    Vector2 V3 = V1 + V2;
+            V3 = V1.operator+(V2);
+    
+    Vector2 V4 = V3 * 3;
+            V4 = V3.operator*(3);
+    
+    DynArrayP SP;
+    SP.Store(P);
+    SP.Store(P);
+    
+    Point P1 = SP[1];
+          P1 = SP.operator[](1);
     
     //---------------------------------------------------------
     //------------------------ ЗАДАНИЯ ------------------------
@@ -131,6 +151,14 @@ int main(int argc, const char * argv[])
     double MinDistance = (sqrt(pow((StorageP.Get(0).X - StorageP.Get(1).X), 2) + pow((StorageP.Get(0).Y - StorageP.Get(1).Y), 2)));
     try
     {
+        //
+        int k = 0;
+        int *pk = &k;
+        *pk = 33;
+        int &rk = k;
+        rk = 34;
+        k = 35;
+        //
         for (unsigned i = 0; i < n; ++i)
         {
             for (unsigned j = 1; j < n; ++j)
@@ -199,9 +227,9 @@ int main(int argc, const char * argv[])
                     if (i != j)
                     {
                         //  Определяем ортогональные отрезки
-                        if ((((StorageS.Get(i).X1 - StorageS.Get(i).X2) - (StorageS.Get(j).Y1 - StorageS.Get(j).Y2)) == 0) && (((StorageS.Get(j).X1 - StorageS.Get(j).X2) + (StorageS.Get(i).Y1 - StorageS.Get(i).Y2) == 0)))
+                        if ((((StorageS.Get(i).A.X - StorageS.Get(i).B.X) - (StorageS.Get(j).A.Y - StorageS.Get(j).B.Y)) == 0) && (((StorageS.Get(j).A.X - StorageS.Get(j).B.X) + (StorageS.Get(i).A.Y - StorageS.Get(i).B.Y) == 0)))
                         {
-                            cout << "Отрезок с координатами концов (" << StorageS.Get(i).X1 << ";" << StorageS.Get(i).Y1 << ") и (" << StorageS.Get(i).X2 << ";" << StorageS.Get(i).Y2  << ") ортогонален отрезку с координатами концов (" << StorageS.Get(j).X1 << ";" << StorageS.Get(j).Y1 << ") и (" << StorageS.Get(j).X2 << ";" << StorageS.Get(j).Y2  << ")" << endl;
+                            cout << "Отрезок с координатами концов (" << StorageS.Get(i).A.X << ";" << StorageS.Get(i).A.Y << ") и (" << StorageS.Get(i).B.X << ";" << StorageS.Get(i).B.Y  << ") ортогонален отрезку с координатами концов (" << StorageS.Get(j).A.X << ";" << StorageS.Get(j).A.Y << ") и (" << StorageS.Get(j).B.X << ";" << StorageS.Get(j).B.Y  << ")" << endl;
                             
                             //  Модифицируем их так, чтобы они стали параллельными
                             //  Замена местами координат (X1 -> Y2, X2 -> Y1, Y1 -> X1, Y2 -> X2);
