@@ -1,7 +1,5 @@
 #include "mainwindow.h"
 #include <QApplication>
-#include "globals.h"
-//#include "storages.h"
 
 int Create(int argc, char *argv[])
 {

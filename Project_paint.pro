@@ -20,7 +20,7 @@ SOURCES += main.cpp\
 HEADERS  += mainwindow.h \
     storages.h \
     objectpropertieswindow.h \
-    globals.h
+    global.h
 
 FORMS    += mainwindow.ui \
     objectpropertieswindow.ui

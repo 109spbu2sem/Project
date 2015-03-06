@@ -1,7 +1,8 @@
 #include "objectpropertieswindow.h"
 #include "ui_objectpropertieswindow.h"
-#include "globals.h"
 #include <QString>
+#include "storages.h"
+#include "global.h"
 
 objectPropertiesWindow::objectPropertiesWindow(QWidget *parent) :
 	QDialog(parent),
@@ -51,6 +52,7 @@ void objectPropertiesWindow::on_buttonBox_accepted()
 		if (!ok) break;
 		//here some actions
 		//GLOBAL::storage.points.add(p);
+		//storage.points.add(p);
 		break;
 	}
 	//ADD SEGMENT
