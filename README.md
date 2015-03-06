@@ -15,13 +15,11 @@
 # Структура
   `main.cpp`  
   `ReadMe.md`  
-  `/include`
-
+  `/include`  
     `DynArray.h`  
     `LinkedList.h`   
     `Vector.h`  
-  `/src`    
-  
+  `/src`  
     `DynArrayP.cpp`  
     `DynArrayS.cpp`  
     `LinkedList.cpp`  
