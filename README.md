@@ -13,14 +13,23 @@
 
 # Структура
   `main.cpp`
+  
   `ReadMe.md`
+  
   /`include`
+  
   _`DynArray.h`
+  
   _`LinkedList.h`
+  
   _`Vector.h`
+  
   /`src`
+  
   _`DynArrayP.cpp`
+  
   _`DynArrayS.cpp`
+  
   _`LinkedList.cpp`
   
 # Домашние задания
