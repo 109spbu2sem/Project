@@ -17,7 +17,7 @@
   /`include`  
   _`DynArray.h`  
   _`LinkedList.h`  
-  _`Vector.h` 
+  _`Vector.h`  
   /`src`  
   _`DynArrayP.cpp`  
   _`DynArrayS.cpp`  
