@@ -13,17 +13,17 @@
 2. 
 
 # Структура
-  `main.cpp`  
-  `ReadMe.md`  
-  `/include`  
-    `DynArray.h`  
-    `LinkedList.h`   
-    `Vector.h`  
-  `/src`  
-    `DynArrayP.cpp`  
-    `DynArrayS.cpp`  
-    `LinkedList.cpp`  
-  
+    main.cpp  
+    ReadMe.md
+    /include  
+      DynArray.h  
+      LinkedList.h   
+      Vector.h  
+    /src  
+      DynArrayP.cpp  
+      DynArrayS.cpp  
+      LinkedList.cpp  
+ 
 # Домашние задания
 
 ## 1. Продумать хранилище отрезков
