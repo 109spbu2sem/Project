@@ -1,76 +1,64 @@
 #include <iostream>
 #include "storages.h"
 
-//----------------------------------------------------------------
-//--------------------------Points--------------------------------
-//----------------------------------------------------------------
-void storagepoints::add(Point p)
+//----------------------------------------------------------------------
+//--------------------------------VECTOR-------------------------------
+//----------------------------------------------------------------------
+Vector Vector::operator+ (const Vector &v)
 {
-	//if storage is empty
-	if (_points == 0)
-	{
-		_points = new Point;
-		(*_points).x = p.x;
-		(*_points).y = p.y;
-		_size = 1;
-		return;
-	}
-	else
-	{
-		_size++;
-		//copy old
-		Point *newpoints = new Point[_size];//temp
-		for (unsigned i = 0; i < _size - 1; i++)
-			newpoints[i] = _points[i];
-		//erase old
-		delete[] _points;
-		//add new
-		newpoints[_size - 1] = p;
-		_points = newpoints;
-		return;
-	}
-	return;
+	Vector result(x + v.x, y + v.y);
+	return result;
 }
 
-Point& storagepoints::operator[] (unsigned num)
+void Vector::operator+= (const Vector &v)
 {
-	if (num >= _size) throw std::invalid_argument("Bad array index");
-	return _points[num];
+	x += v.x;
+	y += v.y;
 }
 
-//----------------------------------------------------------------
-//--------------------------Segments-----------------------------
-//----------------------------------------------------------------
-
-void storagesegments::add(Segment s)
+Vector Vector::operator- (const Vector &v)
 {
-	//if storage is empty
-	if (_segments == 0)
-	{
-		_segments = new Segment;
-		_segments[0] = s;
-		_size = 1;
-		return;
-	}
-	else
-	{
-		_size++;
-		//copy old
-		Segment *newseg = new Segment[_size];//temp
-		for (unsigned i = 0; i < _size - 1; i++)
-			newseg[i] = _segments[i];
-		//erase old
-		delete[] _segments;
-		//add new
-		newseg[_size - 1] = s;
-		_segments = newseg;
-		return;
-	}
-	return;
+	Vector result(x - v.x, y - v.y);
+	return result;
 }
 
-Segment& storagesegments::operator[] (unsigned num)
+void Vector::operator-= (const Vector &v)
 {
-	if (num >= _size) throw std::invalid_argument("Bad array index");
-	return _segments[num];
+	x -= v.x;
+	y -= v.y;
 }
+
+Vector Vector::operator* (const Vector &v)
+{
+	Vector result(x * v.x, y * v.y);
+	return result;
+}
+
+Vector Vector::operator* (const double &a)
+{
+	Vector result(x * a, y * a);
+	return result;
+}
+
+Vector Vector::operator*= (const double &a)
+{
+	Vector result(x * a, y * a);
+	return result;
+}
+
+double Vector::length()
+{
+	return sqrt(x*x + y*y);
+}
+
+double Vector::module()
+{
+	return sqrt(x*x + y*y);
+}
+
+Vector Vector::unit_v()
+{
+	Vector result(x / length(), y / length());
+	return result;
+}
+//----------------------------------------------------------------------
