@@ -1,13 +1,13 @@
 //
-//  DynArray.h
+//  Storage.h
 //  Project_2Sem
 //
 //  Created by Никита Попов on 24.02.15.
 //  Copyright (c) 2015 Никита Попов. All rights reserved.
 //
 
-#ifndef DYNARRAY_H
-#define DYNARRAY_H
+#ifndef _Storage_h
+#define _Storage_h
 
 struct Point    //  Точка
 {

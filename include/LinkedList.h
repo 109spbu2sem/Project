@@ -9,7 +9,8 @@
 #ifndef LINKEDLIST_H
 #define LINKEDLIST_H
 
-#include "DynArray.h"
+#include "Storage_Template.h"
+#include "Storage.h"
 
 //  Список
 class LinkedList
@@ -51,17 +52,17 @@ public:
     {
         if (_CurrentCell)
             return _CurrentCell -> Data;
-        else break;
+        else return _FirstCell -> Data;  //  ??
     };  //
     void MoveNext()
     {
         if (_CurrentCell -> Next)
             _CurrentCell = _CurrentCell -> Next;
-    };       //  Перемещение к следующему хранилищу
+    };  //  Перемещение к следующему хранилищу
     void Rewind()
     {
         _CurrentCell = _FirstCell;
-    };         //  Возвращает текущий элемент
+    };  //  Возвращает текущий элемент
     bool CanMoveNext()
     {
         if (_CurrentCell -> Next)

@@ -6,7 +6,7 @@
 //  Copyright (c) 2015 Никита Попов. All rights reserved.
 //
 
-#include "DynArray.h"
+#include "Storage.h"
 #include <stdexcept>
 
 //  Создание хранилища

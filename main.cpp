@@ -8,9 +8,11 @@
 
 #include <iostream>
 #include <cmath>
-#include "DynArray.h"
+#include "Storage.h"
 #include "Vector.h"
-#include "LinkedList.h"
+
+#include "LinkedList_Template.h"
+#include "Storage_Template.h"
 
 using namespace std;
 
@@ -19,6 +21,7 @@ int main(int argc, const char * argv[])
     //---------------------------------------------------------
     //------------------------  ТОЧКИ  ------------------------
     //---------------------------------------------------------
+    /*
     Point P;
     unsigned n = 2;
     LinkedList StorageP;  //  Связанный список точек
@@ -131,7 +134,7 @@ int main(int argc, const char * argv[])
     //---------------------------------------------------------
     Vector2 V1(1, 0);
     Vector2 V2(3, -4);
-    
+    */
     //---------------------------------------------------------
     //------------------------ ЗАДАНИЯ ------------------------
     //---------------------------------------------------------
@@ -218,6 +221,8 @@ int main(int argc, const char * argv[])
  
     //---------------------------------------------------------
  */
+    
+/*
     StorageP.Rewind();
     
     while (StorageP.CanMoveNext())
@@ -225,6 +230,7 @@ int main(int argc, const char * argv[])
         cout << StorageP.GetCurrent().X << " " << StorageP.GetCurrent().Y << endl;
         StorageP.MoveNext();
     }
+ */
     
 /*
     //  4. Вводим с клавиатуры отрезки + определяем все, ортогональные друг другу
@@ -256,6 +262,21 @@ int main(int argc, const char * argv[])
         }
     }
 */
+    
+
+    //  5. Использование шаблонов
+    Storage_Template<Point> S1;
+    Point P1;
+    S1.Add(P1);
+    S1[0].X = 90;
+    
+    while (1)
+    {
+        LinkedList<Point> L;
+        for (int k = 0; k < 5; ++k)
+            L.Add(Point());
+    }
+    
     cout << endl;
     return 0;
 }

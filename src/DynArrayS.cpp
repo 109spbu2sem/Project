@@ -7,7 +7,7 @@
 //
 
 #include <iostream>
-#include "DynArray.h"
+#include "Storage.h"
 #include <stdexcept>
 
 //  Создание хранилища

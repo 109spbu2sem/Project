@@ -32,7 +32,7 @@ void LinkedList::Add(const Point &P)
     ++_Size;
 };
 
-Point &LinkedList::operator[](unsigned num)
+Point &LinkedList::operator[] (unsigned num)
 {
     if (num >= _Size)
         throw std::invalid_argument("> Bad array index");
