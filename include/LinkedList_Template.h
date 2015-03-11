@@ -23,6 +23,7 @@ template<typename Item> class LinkedList
     
 public:
     //  Создание списка
+    //  Constructor
     LinkedList(void)
     {
         _FirstCell = 0;
@@ -31,7 +32,25 @@ public:
         _Size = 0;
     };
     
+    //  Copying constructor
+    LinkedList(const LinkedList &L)
+    {
+        if(_FirstCell)
+        {
+            _CurrentCell = _FirstCell;
+            do
+            {
+                Cell *CC = _CurrentCell -> Next;
+                delete _CurrentCell;
+                _CurrentCell = CC;
+            }
+            while (_CurrentCell);
+        }
+        //  ??
+    };
+    
     //  Удаление списка
+    //  Destructor
     ~LinkedList(void)
     {
         if(_FirstCell)
@@ -52,6 +71,9 @@ public:
     
     //  Получение доступа по номеру элемента
     Item &operator[] (unsigned num);
+    
+    //  Создание копий хранилища
+    void operator= (const LinkedList &L);
     
     //  Узнать кол-во элементов
     unsigned Size() const
@@ -120,6 +142,23 @@ template<typename Item> Item &LinkedList<Item>::operator[] (unsigned num)
         Current = Current -> Next;
     }
     return Current -> Data;
+};
+
+//  Копирование списка
+template<typename Item> void LinkedList<Item>::operator= (const LinkedList &L)
+{
+    if(_FirstCell)
+    {
+        _CurrentCell = _FirstCell;
+        do
+        {
+            Cell *CC = _CurrentCell -> Next;
+            delete _CurrentCell;
+            _CurrentCell = CC;
+        }
+        while (_CurrentCell);
+    }
+    //  ??
 };
 
 #endif

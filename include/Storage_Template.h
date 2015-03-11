@@ -9,6 +9,23 @@
 #ifndef _Storage_Template_h
 #define _Storage_Template_h
 
+struct Point    //  Точка
+{
+    double X;
+    double Y;
+};
+
+struct Section
+{
+    Point A;  //  Начальная точка
+    Point B;  //  Конечная точка
+};
+
+struct Arc      //  Дуга
+{
+    
+};
+
 template<typename Item> class Storage_Template
 {
 private:
@@ -17,13 +34,30 @@ private:
     
 public:
     //  Создание хранилища
+    //  Constructor
     Storage_Template(void)
     {
         _Items = 0;
         _Size = 0;
     };
     
+    //  Copying constructor
+    Storage_Template(const Storage_Template &S)
+    {
+        _Items = 0;
+        _Size = S._Size;
+        if(_Size)
+        {
+            _Items = new Item[S.Size()];
+            for (unsigned k = 0; k < S._Size; ++k)
+            {
+                _Items[k] = S._Items[k];
+            }
+        }
+    };
+    
     //  Удаление хранилища
+    //  Destructor
     ~Storage_Template(void)
     {
         if (_Items) delete[] _Items;
@@ -33,6 +67,9 @@ public:
     void Add(Item);
     
     Item& operator[] (int num);
+    
+    //  Создание копий хранилища
+    void operator= (const Storage_Template &S);
     
     //  Получить элемент
     Item Get(int num);
@@ -92,6 +129,18 @@ template<typename Item> Item& Storage_Template<Item>::operator[] (int num)
         throw std::invalid_argument("> Bad array index");
     return _Items[num];
 }
+
+//  Копирование хранилища
+template<typename Item> void Storage_Template<Item>::operator= (const Storage_Template &S)
+{
+    if(_Items) delete[] _Items;
+    _Items = new Item[S.Size()];
+    for (unsigned k = 0; k < S._Size; ++k)
+    {
+        _Items[k] = S._Items[k];
+    }
+    _Size = S._Size;
+};
 
 //  Удаление элемента
 template<typename Item> void Storage_Template<Item>::Drop(int num)
