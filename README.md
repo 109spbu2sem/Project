@@ -1,4 +1,4 @@
-#UBER\_KICKASS\_PAINT\_2015\_PRO\_EDITION
+# UBER\_KICKASS\_PAINT\_2015\_PRO\_EDITION
 
 ## Что должна делать программа?
 1. Рисовать примитивы, менять их расположение
@@ -15,16 +15,21 @@
 2. 
 
 ## Структура
+###### Неактуальные файлы отмечены тильдой (~)
     main.cpp  
     ReadMe.md
     /include  
-      DynArray.h  
-      LinkedList.h   
+      ~Storage.h  
+      Storage_Template.h  
+      ~LinkedList.h  
+      LinkedList_Template.h  
       Vector.h  
     /src  
       DynArrayP.cpp  
       DynArrayS.cpp  
       LinkedList.cpp  
+    /test  
+      test.cpp
  
 ## Домашние задания
 
