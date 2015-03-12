@@ -1,107 +1,62 @@
 #include <iostream>
-#include <cmath>
-#include "Structures.h"
+#include "storages.h"
 
-using namespace std;
-
-int main(int argc, const char * argv[])
+int main()
 {
-	setlocale(0, "");
-	//    Point P1;
-	//    P1.X = 2;  P1.Y = 3;
-	//    
-	//    Point P2;
-	//    P2.X = -2; P2.Y = 4;
-	//    
-	//    Point P3;
-	//    P3.X = 17; P3.Y = -3;
-	//    
-	//    DynArray Storage;
-	//    Storage.Store(P1);
-	//    Storage.Store(P2);
-	//    Storage.Store(P3);
-	//    
-	//    
-	//    try
-	//    {
-	//        cout << Storage.Get(0).X << endl;
-	//        cout << Storage.Get(1).X << endl;
-	//        cout << Storage.Get(2).X << endl;
-	//    }
-	//    catch (invalid_argument e)
-	//    {
-	//        cout << e.what() << endl;
-	//    }
-
-	Point P;
-	unsigned n = 2;
-	DynArrayPoint Storage;
-	unsigned Ans[2];
-	Ans[0] = 0;
-	Ans[1] = 1;
-
-	cout << "Чтобы прекратить вводить координаты введите 00" << endl;
-
-	//  Первые две точки обязательны
-	cin >> P.X >> P.Y;
-	cout << endl;
-	Storage.Store(P);
-	cin >> P.X >> P.Y;
-	Storage.Store(P);
-	cout << endl;
-
-	//  Через цикл получаем остальные
-	while (true)
+	Point p;
+	storagepoints storagep;
+	//-------------------searching minimum
+	unsigned n;
+	std::cin >> n;
+	std::cin >> p.x;
+	std::cin >> p.y;
+	double min = 400;
+	unsigned min1;
+	unsigned min2;
+	storagep.add(p);
+	for (unsigned i = 1; i < n; i++)
 	{
-		cin >> P.X;
-		if (P.X == 00)
+		std::cin >> p.x;
+		std::cin >> p.y;
+		storagep.add(p);
+		for (unsigned j = 0; j < i; j++)
 		{
-			cout << "-- Конец ввода --" << endl << endl;
-			break;
-		}
-		cin >> P.Y;
-		cout << endl;
-
-		Storage.Store(P);
-
-		++n;
-	}
-
-	double min = (sqrt(pow((Storage.Get(0).X - Storage.Get(1).X), 2) + pow((Storage.Get(0).Y - Storage.Get(1).Y), 2)));
-	try
-	{
-		for (unsigned i = 0; i < n; ++i)
-		{
-			for (unsigned k = 1; k < n; ++k)
+			if (pow(storagep[i].x - storagep[j].x, 2) + pow(storagep[i].y - storagep[j].y, 2) < min)
 			{
-				if (i != k)
-					if ((sqrt(pow((Storage.Get(i).X - Storage.Get(k).X), 2) + pow((Storage.Get(i).Y - Storage.Get(k).Y), 2))) < min)
-					{
-					min = (sqrt(pow((Storage.Get(i).X - Storage.Get(k).X), 2) + pow((Storage.Get(i).Y - Storage.Get(k).Y), 2)));
-					Ans[0] = i;
-					Ans[1] = k;
-					}
+				min = pow(storagep[i].x - storagep[j].x, 2) + pow(storagep[i].y - storagep[j].y, 2);
+				min1 = j;
+				min2 = i;
 			}
 		}
-
-		cout << "Min distance: " << min << endl;
-		cout << "1: " << Storage.Get(Ans[0]).X << " " << Storage.Get(Ans[0]).Y << endl;
-		cout << "2: " << Storage.Get(Ans[1]).X << " " << Storage.Get(Ans[1]).Y << endl << endl;
-
-		//  Меняем эти две точки местами
-		Point P1 = Storage.Get(Ans[0]);
-		(*Storage.Value(Ans[0])) = (*Storage.Value(Ans[1]));
-		(*Storage.Value(Ans[1])) = P1;
-
-		cout << "1: " << Storage.Get(Ans[0]).X << " " << Storage.Get(Ans[0]).Y << endl;
-		cout << "2: " << Storage.Get(Ans[1]).X << " " << Storage.Get(Ans[1]).Y << endl << endl;
 	}
-	catch (invalid_argument e)
+	std::cout << "p1 = " << storagep[min1].x << " " << storagep[min1].y << std::endl;
+	std::cout << "p2 = " << storagep[min2].x << " " << storagep[min2].y << std::endl;
+	//-------------------
+	storagesegments storage_s;
+	std::cin >> n;
+	for (unsigned i = 0; i < n; i++)
 	{
-		cout << e.what() << endl;
+		Point p1;
+		//point
+		std::cin >> p.x;
+		std::cin >> p.y;
+		//vector
+		std::cin >> p1.x;
+		std::cin >> p1.y;
+		//add new segment (p,p1) to storage
+		storage_s.add(Segment{ p, p1 });
 	}
-
-	cout << endl;
-	system("pause");
+	//searching for orthogonal segments
+	for (unsigned i = 0; i < storage_s.size() - 1; i++)
+	{
+		for (unsigned j = 1; j < storage_s.size(); j++)
+		{
+			if (storage_s[i].d.x * storage_s[j].d.x + storage_s[i].d.y * storage_s[j].d.y == 0)//check for orthogonal
+			{
+				std::cout << "s[" << i << "].d= " << storage_s[min1].d.x << " " << storage_s[min1].d.y << std::endl;
+				std::cout << "s[" << j << "].d= " << storage_s[min2].d.x << " " << storage_s[min2].d.y << std::endl;
+			}
+		}
+	}
 	return 0;
 }
