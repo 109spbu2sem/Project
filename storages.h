@@ -234,7 +234,7 @@ public:
 template<typename Item> Item& Storage_Array<Item>::operator[] (unsigned num)
 {
 	if (num >= _size) throw std::invalid_argument("Bad array index");
-	return _points[num];
+	return _items[num];
 }
 
 template<typename Item> void Storage_Array<Item>::operator=(const Storage_Array &storage)
@@ -246,7 +246,7 @@ template<typename Item> void Storage_Array<Item>::operator=(const Storage_Array 
 	_size = storage._size;
 }
 
-template<typename Item> void Storage_Array<Item>::add(const Item&)
+template<typename Item> void Storage_Array<Item>::add(const Item& p)
 {
 	//if storage is empty
 	if (_items == 0)
