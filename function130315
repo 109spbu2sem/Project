@@ -1,0 +1,116 @@
+#include <iostream>
+#include <cmath>
+using namespace std;
+
+
+// y = x * x - 2 * x - 3;
+
+double functionZNACHENIE (double x)
+{
+	return (x * x - 2 * x - 3);
+}
+
+double ZNACHENIEPROIZVODNOI (double x)
+{
+	return (2 * x - 2);
+}
+
+double ZNACHENIEX (double y)
+{
+	return (y + 2)/2;
+}
+
+/*
+double f1 (double x )
+{
+	return (x * x - 2 * x - 3);
+}
+
+double f2 (double x )
+{
+	return (x * x * x - 2 * x - 3);
+}
+
+
+template<typename T> T ff(T a)
+{
+	return a*a;
+}
+
+double find_zero1(double a, double b, double(*f)(double), double eps = 1e-6)
+{
+	f(1);
+	return 0;
+}
+
+double find_zero2(double a, double b, double(*f)(double), double eps = 1e-6)
+{
+	return 0;
+}
+*/
+
+
+int main()
+{
+	setlocale (LC_ALL, "Russian");
+	double y, x;
+	cout << "Задана неизвестная функция y(x) = 0" << endl;
+	//cout << "Введите значение x = "; cin >> x;
+	double e, a, b, ymin = DBL_MAX, xmin;
+	cout << "Задайте точность: e = "; cin >> e;
+	a = 0, b = 10;
+	/*
+	cout << "Задайте промежуток на котором будем проверять знаки: " << endl;
+	cout << "x(a) = "; 	cin >> a;  // от нуля до десяти (тест) 
+	cout << "x(b) = "; 	cin >> b;
+	*/
+	for (double i = a; i < b; i += e)
+	{
+		y = ZNACHENIEPROIZVODNOI (i);
+		
+		if (functionZNACHENIE(i) < 0)
+		{
+			ymin = functionZNACHENIE(i);
+			while (functionZNACHENIE(i) < 0)
+			{
+				i = i + e;
+				if (i > 10)
+				{
+					cout << "Корень не найден!" << endl;
+					break;
+				}
+			}
+			x = i;
+			cout << "Корень x = " << x << endl;
+			break;
+		}
+
+		if (functionZNACHENIE(i) > 0)
+		{
+			ymin = functionZNACHENIE(i);
+			while (functionZNACHENIE(i) > 0)
+			{
+				i = i + e;
+				if (i > 10)
+				{
+					cout << "Корень не найден!" << endl;
+					break;
+				}
+			}
+			x = i;
+			cout << "Корень x = " << x << endl;
+			break;
+		}
+
+	}
+
+	/*
+	double zero1 = find_zero1(0, 10, f1);
+	double zero2 = find_zero2(0, 10, f2);
+	*/
+	
+	
+	
+	
+	return 0;
+}
