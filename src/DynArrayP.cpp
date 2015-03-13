@@ -6,6 +6,8 @@
 //  Copyright (c) 2015 Никита Попов. All rights reserved.
 //
 
+#include <iostream>
+#include "Structures.h"
 #include "Storage.h"
 #include <stdexcept>
 

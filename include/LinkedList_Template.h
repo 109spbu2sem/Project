@@ -6,8 +6,8 @@
 //  Copyright (c) 2015 Никита Попов. All rights reserved.
 //
 
-#ifndef _LinkedList_Template_h
-#define _LinkedList_Template_h
+#ifndef LINKEDLIST_TEMPLATE_H
+#define LINKEDLIST_TEMPLATE_H
 
 template<typename Item> class LinkedList
 {

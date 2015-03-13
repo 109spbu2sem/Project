@@ -6,8 +6,10 @@
 //  Copyright (c) 2015 Никита Попов. All rights reserved.
 //
 
+#include <iostream>
 #include <stdio.h>
 #include <stdexcept>
+#include "Structures.h"
 #include "LinkedList.h"
 
 void LinkedList::Add(const Point &P)

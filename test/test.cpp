@@ -9,7 +9,7 @@
 #include <stdio.h>
 #include <iostream>
 #include <cmath>
-#include "Vector.h"
+#include "Structures.h"
 #include "LinkedList_Template.h"
 #include "Storage_Template.h"
 

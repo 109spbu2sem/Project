@@ -7,6 +7,7 @@
 //
 
 #include <iostream>
+#include "Structures.h"
 #include "Storage.h"
 #include <stdexcept>
 

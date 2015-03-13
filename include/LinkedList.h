@@ -9,9 +9,6 @@
 #ifndef LINKEDLIST_H
 #define LINKEDLIST_H
 
-#include "Storage_Template.h"
-#include "Storage.h"
-
 //  Список
 class LinkedList
 {

@@ -6,9 +6,10 @@
 //  Copyright (c) 2015 Никита Попов. All rights reserved.
 //
 
+#include <stdio.h>
 #include <iostream>
 #include <cmath>
-#include "Vector.h"
+#include "Structures.h"
 #include "LinkedList_Template.h"
 #include "Storage_Template.h"
 
@@ -16,13 +17,14 @@ using namespace std;
 
 int main(int argc, const char * argv[])
 {
+/*
     //---------------------------------------------------------
     //------------------------  ТОЧКИ  ------------------------
     //---------------------------------------------------------
-    /*
+
     Point P;
     unsigned n = 2;
-    LinkedList StorageP;  //  Связанный список точек
+    Storage<Point> StorageP;  //  Связанный список точек
     //  DynArrayP StorageP;  //  Массив точек
     unsigned AnsP[2];
     AnsP[0] = 0;
@@ -71,7 +73,7 @@ int main(int argc, const char * argv[])
     //---------------------------------------------------------
     Section S;
     unsigned m = 2;
-    DynArrayS StorageS;  //  Массив отрезков
+    Storage<Section> StorageS;  //  Массив отрезков
     unsigned AnsS[2];
     AnsS[0] = 0;
     AnsS[1] = 1;
@@ -132,7 +134,8 @@ int main(int argc, const char * argv[])
     //---------------------------------------------------------
     Vector2 V1(1, 0);
     Vector2 V2(3, -4);
-    */
+*/
+    
     //---------------------------------------------------------
     //------------------------ ЗАДАНИЯ ------------------------
     //---------------------------------------------------------
@@ -175,7 +178,7 @@ int main(int argc, const char * argv[])
     }
     //---------------------------------------------------------
  */
- 
+
 /*
     //  2. Даны две точки и какое-то расстояние. Модифицировать эти точки так, чтобы расстояние между ними стало равным данному.
     double DistanceBetweenTwoPoints;
@@ -191,7 +194,13 @@ int main(int argc, const char * argv[])
         }
         else
         {
-            //  Замена координат точки
+            //  Модифицируем координаты точки, чтобы изменилось расстояние
+            Point ChangeP;
+            ChangeP.X = StorageP.Get(1).X;
+            ChangeP.Y = StorageP.Get(0).Y + sqrt((DistanceBetweenTwoPoints - StorageP.Get(0).X + StorageP.Get(1).X) * (DistanceBetweenTwoPoints + StorageP.Get(0).X - StorageP.Get(1).X));
+            (*StorageP.Value(1)) = ChangeP;
+            
+            cout << "DistanceBetweenTwoPoints" << sqrt(pow((StorageP.Get(0).X - StorageP.Get(1).X), 2) + pow((StorageP.Get(0).Y - StorageP.Get(1).Y), 2)) << endl;
         }
     }
     catch (invalid_argument e)
@@ -249,6 +258,21 @@ int main(int argc, const char * argv[])
                             
                             //  Модифицируем их так, чтобы они стали параллельными
                             //  Замена местами координат (X1 -> Y2, X2 -> Y1, Y1 -> X1, Y2 -> X2);
+                            Section SwapS;
+                            SwapS.A.X = StorageS.Get(j).A.Y;
+                            SwapS.A.Y = StorageS.Get(j).B.X;
+                            SwapS.B.X = StorageS.Get(j).B.Y;
+                            SwapS.B.Y = StorageS.Get(j).A.X;
+                            (*StorageS.Value(j)) = SwapS;
+                            
+                            cout << "X1 = " << StorageS.Get(j).A.X
+                                 << endl
+                                 << "Y1 = " << StorageS.Get(j).A.Y
+                                 << endl
+                                 << "X2 = " << StorageS.Get(j).B.X
+                                 << endl
+                                 << "Y2 = " << StorageS.Get(j).B.Y
+                                 << endl;
                         }
                     }
                 }
@@ -259,22 +283,7 @@ int main(int argc, const char * argv[])
             cout << e.what() << endl << endl;
         }
     }
-*/
-    
-
-    //  5. Использование шаблонов
-    Storage_Template<Point> S1;
-    Point P1;
-    S1.Add(P1);
-    S1[0].X = 90;
-    
-    while (1)
-    {
-        LinkedList<Point> L;
-        for (int k = 0; k < 5; ++k)
-            L.Add(Point());
-    }
-    
+  */  
     cout << endl;
     return 0;
 }

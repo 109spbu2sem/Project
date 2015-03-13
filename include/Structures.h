@@ -1,13 +1,30 @@
 //
-//  Vector.h
+//  Structures.h
 //  Project_2Sem
 //
-//  Created by Никита Попов on 03.03.15.
+//  Created by Никита Попов on 13.03.15.
 //  Copyright (c) 2015 Никита Попов. All rights reserved.
 //
 
-#ifndef VECTOR_H
-#define VECTOR_H
+#ifndef STRUCTURES_H
+#define STRUCTURES_H
+
+struct Point    //  Точка
+{
+    double X;
+    double Y;
+};
+
+struct Section
+{
+    Point A;  //  Начальная точка
+    Point B;  //  Конечная точка
+};
+
+struct Arc      //  Дуга
+{
+    
+};
 
 struct Vector2
 {
@@ -16,13 +33,13 @@ struct Vector2
     
     //  Сложение векторов
     /*
-    Vector2 Sum(const Vector2& V)
-    {
-        Vector2 V_Res(X,Y);
-        V_Res.X += V.X;
-        V_Res.Y += V.Y;
-        return V_Res;
-    };
+     Vector2 Sum(const Vector2& V)
+     {
+     Vector2 V_Res(X,Y);
+     V_Res.X += V.X;
+     V_Res.Y += V.Y;
+     return V_Res;
+     };
      */
     Vector2 operator +(const Vector2 &V)
     {

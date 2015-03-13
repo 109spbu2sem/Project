@@ -6,39 +6,8 @@
 //  Copyright (c) 2015 Никита Попов. All rights reserved.
 //
 
-#ifndef _Storage_h
-#define _Storage_h
-
-struct Point    //  Точка
-{
-    double X;
-    double Y;
-};
-
-/*
-struct Section  //  Отрезок
-{
-    //  Координаты начала
-    double X1;
-    double Y1;
-    //  Координаты конца
-    double X2;
-    double Y2;
-
-};
-*/
-
-struct Section
-{
-    Point A;  //  Начальная точка
-    Point B;  //  Конечная точка
-};
-
-struct Arc      //  Дуга
-{
-
-};
-
+#ifndef STORAGE_H
+#define STORAGE_H
 
 //  Массив точек
 class DynArrayP
