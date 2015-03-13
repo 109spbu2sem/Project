@@ -14,13 +14,14 @@ TEMPLATE = app
 
 SOURCES += main.cpp\
         mainwindow.cpp \
-    storages.cpp \
-    objectpropertieswindow.cpp
+    objectpropertieswindow.cpp \
+    gui.cpp \
+    core.cpp
 
 HEADERS  += mainwindow.h \
-    storages.h \
     objectpropertieswindow.h \
-    global.h
+    gui.h \
+    core.h
 
 FORMS    += mainwindow.ui \
     objectpropertieswindow.ui
