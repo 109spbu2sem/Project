@@ -13,6 +13,10 @@
  + Отрезки (Sections)  
  + ~~Дуги    (Arcs)~~  
 
+2. **Скриншот макета GUI**  
+  
+![Screenshot](https://github.com/109spbu2sem/Project/blob/tapochek97/qt/screenshot.png?raw=true "Screenshot")
+
 ## Структура
 ###### Неактуальные файлы отмечены тильдой (~)
     main.cpp  
@@ -26,6 +30,14 @@
       DynArrayP.cpp  
       DynArrayS.cpp  
       LinkedList.cpp  
+    /qt
+      main.cpp  
+      main.qml  
+      qml.qrc  
+      Paint.pro  
+      Paint.pro.user  
+      deployment.pri  
+      screenshot.png  
     /test  
       test.cpp  
     ReadMe.md  
