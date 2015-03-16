@@ -59,7 +59,7 @@
      </rect>
     </property>
    </widget>
-   <widget class="QPushButton" name="pushButton">
+   <widget class="QPushButton" name="saveButton">
     <property name="geometry">
      <rect>
       <x>910</x>
@@ -72,7 +72,7 @@
      <string>Save</string>
     </property>
    </widget>
-   <widget class="QPushButton" name="pushButton_2">
+   <widget class="QPushButton" name="saveasButton">
     <property name="geometry">
      <rect>
       <x>1010</x>
@@ -85,7 +85,7 @@
      <string>Save As</string>
     </property>
    </widget>
-   <widget class="QPushButton" name="pushButton_3">
+   <widget class="QPushButton" name="openButton">
     <property name="geometry">
      <rect>
       <x>1110</x>
@@ -98,7 +98,7 @@
      <string>Open</string>
     </property>
    </widget>
-   <widget class="QPushButton" name="pushButton_4">
+   <widget class="QPushButton" name="closeButton">
     <property name="geometry">
      <rect>
       <x>1010</x>
@@ -111,7 +111,7 @@
      <string>Close</string>
     </property>
    </widget>
-   <widget class="QPushButton" name="pushButton_5">
+   <widget class="QPushButton" name="newButton">
     <property name="geometry">
      <rect>
       <x>910</x>
@@ -124,7 +124,7 @@
      <string>New</string>
     </property>
    </widget>
-   <widget class="QWidget" name="">
+   <widget class="QWidget" name="layoutWidget">
     <property name="geometry">
      <rect>
       <x>910</x>

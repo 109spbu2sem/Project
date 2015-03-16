@@ -25,3 +25,12 @@ void MainWindow::on_buttonAdd_clicked()
 	objectPropertiesWindow *ow = new objectPropertiesWindow(this);
 	ow->show();
 }
+
+void MainWindow::on_newButton_clicked()
+{
+    QGraphicsScene scene;
+	scene.addText("WTF");
+	
+	ui->graphicsView->setScene(&scene);
+	view.show();
+}

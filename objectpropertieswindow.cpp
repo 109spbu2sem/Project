@@ -1,8 +1,5 @@
 #include "objectpropertieswindow.h"
 #include "ui_objectpropertieswindow.h"
-#include <QString>
-#include "storages.h"
-#include "global.h"
 
 objectPropertiesWindow::objectPropertiesWindow(QWidget *parent) :
 	QDialog(parent),
