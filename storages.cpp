@@ -1,7 +1,5 @@
-#include "structures.h"
-#include <cmath>
-
-#define PI 3.1415926535897932384
+#include <iostream>
+#include "storages.h"
 
 //----------------------------------------------------------------------
 //--------------------------------VECTOR-------------------------------
@@ -58,36 +56,9 @@ double Vector::module()
 	return sqrt(x*x + y*y);
 }
 
-Vector Vector::unit_vector()
+Vector Vector::unit_v()
 {
 	Vector result(x / length(), y / length());
 	return result;
 }
-//---------------------------------------------------------------------
-
-double Angle::grads()
-{
-	return angle / PI * 180;
-}
-
 //----------------------------------------------------------------------
-//-------------------------------ARC-----------------------------------
-//---------------------------------------------------------------------
-
-double Arc::area()
-{
-	return angle.angle * d.length() * d.length() / 2;
-}
-
-double Arc::length()
-{
-	return d.length() * angle.angle;
-}
-
-Segment Arc::chord()
-{
-	Segment s;
-	s.o = { o.x + d.x, o.y + d.y };
-	s.d = { d.x * (cos(angle.angle) - 1), d.y * (sin(angle.angle) - 1) };
-	return s;
-}

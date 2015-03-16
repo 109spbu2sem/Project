@@ -1,8 +1,44 @@
 #ifndef STORAGES_H
 #define STORAGES_H
 
-#include <iostream>
+class Vector
+{
+private:
+public:
+	double x;
+	double y;
+	Vector(double _x, double _y)
+	{
+		x = _x;
+		y = _y;
+	};
+	Vector()
+	{
+		x = 0;
+		y = 0;
+	};
+	Vector operator+ (const Vector &v);
+	void operator+= (const Vector &v);
+	Vector operator- (const Vector &v);
+	void operator-= (const Vector &v);
+	Vector operator* (const Vector &v);//scalar
+	Vector operator* (const double &a);
+	Vector operator*= (const double &a);
+	double length();//returns length
+	double module();//returns length
+	Vector unit_v();//returns unit vector
+};
 
+struct Point
+{
+	double x;
+	double y;
+};
+struct Segment
+{
+	Point o;//begin
+	Vector d;//direction
+};
 //------------------------------------------------------------------------
 //----------------------------------LIST---------------------------------
 //------------------------------------------------------------------------
@@ -94,10 +130,6 @@ public:
 	//removes _current item
 	void remove_next();
 	void clear();
-	unsigned size() const
-	{
-		return _size;
-	}
 };
 
 template<typename Item> void Storage_List<Item>::add(const Item &item)
@@ -124,7 +156,6 @@ template<typename Item> void Storage_List<Item>::add(const Item &item)
 	}
 	return;
 }
-
 //removes next item
 template<typename Item> void Storage_List<Item>::remove_next()
 {
@@ -198,14 +229,6 @@ public:
 	{
 		return _size;
 	}
-	void clear()
-	{
-		if (_items)
-		{
-			_size = 0;
-			delete[] _items;
-		}
-	}
 };
 
 template<typename Item> Item& Storage_Array<Item>::operator[] (unsigned num)
@@ -223,12 +246,12 @@ template<typename Item> void Storage_Array<Item>::operator=(const Storage_Array 
 	_size = storage._size;
 }
 
-template<typename Item> void Storage_Array<Item>::add(const Item& item)
+template<typename Item> void Storage_Array<Item>::add(const Item& p)
 {
 	//if storage is empty
 	if (_items == 0)
 	{
-		_items = new Item(item);
+		_items = new Item(p);
 		_size = 1;
 		return;
 	}
@@ -242,7 +265,7 @@ template<typename Item> void Storage_Array<Item>::add(const Item& item)
 		//erase old
 		delete[] _items;
 		//add new
-		newitems[_size - 1] = item;
+		newitems[_size - 1] = p;
 		_items = newitems;
 		return;
 	}
