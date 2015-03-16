@@ -1,6 +1,8 @@
 #ifndef STORAGES_H
 #define STORAGES_H
 
+#include <iostream>
+
 //------------------------------------------------------------------------
 //----------------------------------LIST---------------------------------
 //------------------------------------------------------------------------
@@ -92,6 +94,10 @@ public:
 	//removes _current item
 	void remove_next();
 	void clear();
+	unsigned size() const
+	{
+		return _size;
+	}
 };
 
 template<typename Item> void Storage_List<Item>::add(const Item &item)
@@ -118,6 +124,7 @@ template<typename Item> void Storage_List<Item>::add(const Item &item)
 	}
 	return;
 }
+
 //removes next item
 template<typename Item> void Storage_List<Item>::remove_next()
 {
@@ -191,6 +198,14 @@ public:
 	{
 		return _size;
 	}
+	void clear()
+	{
+		if (_items)
+		{
+			_size = 0;
+			delete[] _items;
+		}
+	}
 };
 
 template<typename Item> Item& Storage_Array<Item>::operator[] (unsigned num)
@@ -208,12 +223,12 @@ template<typename Item> void Storage_Array<Item>::operator=(const Storage_Array 
 	_size = storage._size;
 }
 
-template<typename Item> void Storage_Array<Item>::add(const Item& p)
+template<typename Item> void Storage_Array<Item>::add(const Item& item)
 {
 	//if storage is empty
 	if (_items == 0)
 	{
-		_items = new Item(p);
+		_items = new Item(item);
 		_size = 1;
 		return;
 	}
@@ -227,7 +242,7 @@ template<typename Item> void Storage_Array<Item>::add(const Item& p)
 		//erase old
 		delete[] _items;
 		//add new
-		newitems[_size - 1] = p;
+		newitems[_size - 1] = item;
 		_items = newitems;
 		return;
 	}

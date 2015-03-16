@@ -38,30 +38,6 @@ public:
 	double grads();
 };
 
-class Arc
-{
-public:
-	Point o;
-	Vector d;
-	Angle angle;
-
-	Arc()
-	{
-		o = { 0, 0 };
-		d = { 0, 0 };
-		angle = 0;
-	}
-	Arc(Point &p, Vector &z, Angle &a)
-	{
-		o = p;
-		d = z;
-		angle = a;
-	}
-	double length();
-	double area();
-	Segment chord();
-};
-
 struct Point
 {
 	double x;
@@ -71,6 +47,31 @@ struct Segment
 {
 	Point o;//begin
 	Vector d;//direction
+};
+
+class Arc
+{
+public:
+	Point o;
+	Vector d;
+	Angle angle;
+
+	Arc()
+	{
+		o.x = 0;
+		o.y = 0;
+		d = { 0, 0 };
+		angle = 0;
+	};
+	Arc(Point &p, Vector &z, Angle &a)
+	{
+		o = p;
+		d = z;
+		angle = a;
+	};
+	double length();
+	double area();
+	Segment chord();
 };
 
 #endif

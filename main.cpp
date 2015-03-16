@@ -1,6 +1,6 @@
 #include <iostream>
-#include "lib/storages.h"
-#include "lib/structures.h"
+#include "storages.h"
+#include "structures.h"
 
 int main()
 {

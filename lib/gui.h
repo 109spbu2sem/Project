@@ -7,9 +7,9 @@ class GUI
 public:
 	GUI();
 	~GUI();
-	void Draw(Point &point);
-	void Draw(Segment &segment);
-	void Draw(Arc &arc);
+	void Draw(double point_x, double point_y);//Point
+	void Draw(double point_x, double point_y, double vector_x, double vector_y);//Segment
+	void Draw(double point_x, double point_y, double vector_x, double vector_y, double radius);//Arc
 	void WriteError(unsigned ErrorKey);
 };
 
