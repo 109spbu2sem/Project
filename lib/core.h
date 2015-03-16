@@ -19,8 +19,8 @@ public:
 	void AddRule(Point &point, Segment &segment, unsigned rule, ...);
 	void AddRule(Segment &segment_1, Segment &segment_2, unsigned rule, ...);
 	void AddRule(Segment &segment, Arc &arc, unsigned rule, ...);*/
-	void ChangeStatus(double x, double y);
-	void ChangeStatus(double x1, double y1, double x2, double y2);
+	void ChangeStatus(double x, double y, unsigned char status_key);
+	void ChangeStatus(double x1, double y1, double x2, double y2, unsigned char status_key);
 	void ChangeProperty(unsigned property_key, ...);
 };
 

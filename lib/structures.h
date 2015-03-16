@@ -1,12 +1,15 @@
 #ifndef STRUCTURES_H
 #define STRUCTURES_H
 
+#include "ObjectSkin.h"
+
 class Vector
 {
-private:
 public:
+	//----structure
 	double x;
 	double y;
+	//----functions
 	Vector(double _x, double _y)
 	{
 		x = _x;
@@ -21,12 +24,12 @@ public:
 	void operator+= (const Vector &v);
 	Vector operator- (const Vector &v);
 	void operator-= (const Vector &v);
-	Vector operator* (const Vector &v);//scalar
+	Vector operator* (const Vector &v);		// scalar
 	Vector operator* (const double &a);
 	Vector operator*= (const double &a);
-	double length();//returns length
-	double module();//returns length
-	Vector unit_vector();//returns unit vector
+	double length();		// returns length
+	double module();		// returns length
+	Vector unit_vector();// returns unit vector
 };
 
 class Angle
@@ -35,7 +38,7 @@ public:
 	double angle;
 
 	Angle(double a = 0) { angle = a; }
-	double grads();
+	double grads();			// returns angle in grads
 };
 
 struct Point
@@ -45,17 +48,18 @@ struct Point
 };
 struct Segment
 {
-	Point o;//begin
-	Vector d;//direction
+	Point o;			// begin
+	Vector d;		// direction
 };
 
 class Arc
 {
 public:
+	//----structure
 	Point o;
 	Vector d;
 	Angle angle;
-
+	//----functions
 	Arc()
 	{
 		o.x = 0;
@@ -69,9 +73,9 @@ public:
 		d = z;
 		angle = a;
 	};
-	double length();
-	double area();
-	Segment chord();
+	double length(); // returns length of the arc
+	double area();	  // returns area of the sector
+	Segment chord(); // returns chord of the sector
 };
 
 #endif
