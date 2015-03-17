@@ -9,10 +9,10 @@
 ## Что есть
 
 1. **Графические примитивы**  
-+ Точки   (Points)  
-+ Отрезки (Sections)  
-+ ~~Дуги    (Arcs)~~  
-
+  + Точки   (Points)  
+  + Отрезки (Sections)  
+  + ~~Дуги    (Arcs)~~  
+  
 2. **Скриншот макета GUI**  
 
 ![Screenshot](https://github.com/109spbu2sem/Project/blob/tapochek97/qt/screenshot.png?raw=true "Screenshot")
