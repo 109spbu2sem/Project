@@ -10,8 +10,10 @@
 #include <iostream>
 #include <cmath>
 #include "Structures.h"
+//#include "LinkedList.h"
 #include "LinkedList_Template.h"
 #include "Storage_Template.h"
+#include "TreeStorage.h"
 
 using namespace std;
 
@@ -283,7 +285,62 @@ int main(int argc, const char * argv[])
             cout << e.what() << endl << endl;
         }
     }
-  */  
+  */
+ 
+/*
+    //  Test of LinkedList::Viewer
+    Point P;
+    P.X = 0;
+    P.Y = 0;
+    
+    LinkedList<Point> LL;
+    LL.Add(P);
+    LL.Add(P);
+    LL.Add(P);
+    
+    LinkedList<Point>::Viewer LLV(LL);
+    LinkedList<Point>::Viewer LLV2(LL);
+    LLV2.MoveNext();
+    
+    while (LLV2.CanMoveNext())
+    {
+        if (LLV.GetValue().X < LLV2.GetValue().X)
+            cout << "Wrong pair" << endl;
+        LLV.MoveNext();
+        LLV2.MoveNext();
+    }
+    
+    LLV = LL.GetStartingViewer();
+    while (LLV.CanMoveNext())
+    {
+        cout << LLV.GetValue().X << endl;
+        LLV.MoveNext();
+    }
+    
+    LLV = LL.GetStartingViewer();
+    while (LLV.CanMoveNext())
+    {
+        LLV.GetValue().X += 2;
+        LLV.MoveNext();
+    }
+    
+    LLV = LL.GetStartingViewer();
+    while (LLV.CanMoveNext())
+    {
+        cout << LLV.GetValue().X << endl;
+        LLV.MoveNext();
+    }
+*/
+    
+    //  Test TreeStorage
+    Tree_Storage<int, int> Tree;
+    Tree.Add(0, 0);
+    Tree.Add(1, 1);
+    Tree.Add(0, 0);
+    
+    if (Tree.HasA(1))
+        cout << "There is 1" << endl;
+    
     cout << endl;
     return 0;
 }

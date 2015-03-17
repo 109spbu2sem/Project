@@ -15,18 +15,13 @@ struct Point    //  Точка
     double Y;
 };
 
-struct Section
+struct Section  //  Отрезок
 {
     Point A;  //  Начальная точка
     Point B;  //  Конечная точка
 };
 
-struct Arc      //  Дуга
-{
-    
-};
-
-struct Vector2
+struct Vector2  //  Вектор
 {
     double X, Y;
     Vector2(double _X, double _Y):X(_X), Y(_Y){};
@@ -58,5 +53,47 @@ struct Vector2
         return V_Res;
     };
 };
+
+//==============================================
+//==============================================
+//==============================================
+
+//struct Angle    //  Угол
+//{
+//    double Value;
+//    
+//private:
+//    Angle()
+//    {
+//        Value = 0;
+//    }
+//    double Grads();
+//};
+//
+//struct Arc      //  Дуга
+//{
+//public:
+//    Point P;
+//    Vector2 V;
+//    Angle Angle;
+//    
+//    Arc()
+//    {
+//        P.X = 0;
+//        P.Y = 0;
+//        V = { 0, 0 };
+//        Angle = 0;
+//    };
+//    
+//    Arc(Point &P1, Vector2 &V1, Angle &Angle1)
+//    {
+//        P = P1;
+//        V = V1;
+//        Angle = Angle1;
+//    };
+//    double Length();
+//    double Area();
+//    Section Chord();
+//};
 
 #endif

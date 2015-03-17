@@ -12,6 +12,7 @@
 //  Список
 class LinkedList
 {
+private:
     struct Cell
     {
         Point Data;
@@ -23,6 +24,45 @@ class LinkedList
     unsigned _Size;
     
 public:
+    class Viewer
+    {
+    private:
+        LinkedList::Cell *_CurrentCell;
+        LinkedList *_Parent;
+        
+    public:
+        Viewer()
+        {
+            _CurrentCell = 0;
+        };
+        Viewer(LinkedList &L)
+        {
+            _CurrentCell = L._FirstCell;
+            _Parent = &L;
+        };
+        Point& GetValue()
+        {
+            if (_CurrentCell)
+                return _CurrentCell -> Data;
+            else throw std::runtime_error("> There is no such point");
+        };
+        void MoveNext()
+        {
+            if (_CurrentCell)
+                _CurrentCell = _CurrentCell -> Next;
+        };  //  Перемещение к следующему хранилищу
+        void Rewind()
+        {
+            _CurrentCell = _Parent -> _FirstCell;
+        };  //  Возвращает текущий элемент
+        bool CanMoveNext()
+        {
+            if (_CurrentCell && _CurrentCell -> Next)
+                return true;
+            return false;
+        };
+    };
+    
     //  Создание списка
     LinkedList()
     {
@@ -43,33 +83,12 @@ public:
     {
         return _Size;
     };
-
     
-    Point & GetCurrent()
+    Viewer GetStartingViewer()
     {
-        if (_CurrentCell)
-            return _CurrentCell -> Data;
-        else return _FirstCell -> Data;  //  ??
-    };  //
-    void MoveNext()
-    {
-        if (_CurrentCell -> Next)
-            _CurrentCell = _CurrentCell -> Next;
-    };  //  Перемещение к следующему хранилищу
-    void Rewind()
-    {
-        _CurrentCell = _FirstCell;
-    };  //  Возвращает текущий элемент
-    bool CanMoveNext()
-    {
-        if (_CurrentCell -> Next)
-            return true;
-        return false;
+        Viewer V(*this);
+        return V;
     };
-
-
-private:
-    
 };
 
 #endif

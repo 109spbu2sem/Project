@@ -12,16 +12,57 @@ ApplicationWindow
     {
         Menu
         {
-            title: qsTr("File")
+            title: qsTr("Project")
             MenuItem
             {
-                text: qsTr("&Open")
+                text: qsTr("&Open new...")
                 onTriggered: console.log("Open action triggered");
             }
             MenuItem
             {
-                text: qsTr("Exit")
-                onTriggered: Qt.quit();
+                text: qsTr("&Open existing...")
+                onTriggered: console.log("Open action triggered");
+            }
+            MenuItem
+            {
+                text: qsTr("&Save...")
+                onTriggered: console.log("Save action triggered");
+            }
+            MenuItem
+            {
+                text: qsTr("&Print")
+                onTriggered: console.log("Print action triggered");
+            }
+            MenuItem
+            {
+                text: qsTr("Close project")
+                onTriggered: console.log("Close action triggered");
+            }
+        }
+
+        Menu
+        {
+            title: qsTr("Settings")
+            MenuItem
+            {
+                text: qsTr("&Change language")
+            }
+            MenuItem
+            {
+                text: qsTr("&Change GUI")
+            }
+        }
+
+        Menu
+        {
+            title: qsTr("Help")
+            MenuItem
+            {
+                text: qsTr("&About Paint")
+            }
+            MenuItem
+            {
+                text: qsTr("&Send feedback")
             }
         }
 }

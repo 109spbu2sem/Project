@@ -9,12 +9,12 @@
 ## Что есть
 
 1. **Графические примитивы**  
- + Точки   (Points)  
- + Отрезки (Sections)  
- + ~~Дуги    (Arcs)~~  
++ Точки   (Points)  
++ Отрезки (Sections)  
++ ~~Дуги    (Arcs)~~  
 
 2. **Скриншот макета GUI**  
-  
+
 ![Screenshot](https://github.com/109spbu2sem/Project/blob/tapochek97/qt/screenshot.png?raw=true "Screenshot")
 
 ## Структура
@@ -25,11 +25,13 @@
       ~Storage.h  
       Storage_Template.h  
       ~LinkedList.h  
-      LinkedList_Template.h  
+      LinkedList_Template.h   
+      TreeStorage.h  
     /src  
       DynArrayP.cpp  
       DynArrayS.cpp  
       LinkedList.cpp  
+      TreeStorage.cpp  
     /qt
       main.cpp  
       main.qml  
@@ -41,7 +43,7 @@
     /test  
       test.cpp  
     ReadMe.md  
- 
+
 ## Домашние задания
 
 ### 1. Продумать хранилище отрезков

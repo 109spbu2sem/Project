@@ -16,6 +16,43 @@ private:
     unsigned _Size;
     
 public:
+    class Viewer
+    {
+    private:
+        Item *_Current;
+        Item *_Limit;
+        
+    public:
+        Viewer()
+        {
+            _Current = 0;
+        };
+        Viewer(Storage &S)
+        {
+            _Current = S._Items;
+            _Limit = S._Items + S.Size();
+        };
+        Item& GetValue()
+        {
+            if (_Current)
+                return *_Current;
+            else throw std::runtime_error("> There is no such point");
+        };
+        void MoveNext()
+        {
+            if (_Current)
+            {
+                _Current++;
+            }
+        };  //  Перемещение к следующему хранилищу
+        bool CanMoveNext()
+        {
+            if (_Current < _Limit)
+                return true;
+            return false;
+        };
+    };
+    
     //  Создание хранилища
     //  Constructor
     Storage(void)
@@ -70,6 +107,11 @@ public:
     unsigned Size()const
     {
         return _Size;
+    };
+    
+    Viewer GetStartingViewer()
+    {
+        return Viewer(*this);
     };
 };
 
