@@ -35,5 +35,8 @@
     <ClInclude Include="..\include\vec2.h">
       <Filter>Заголовки</Filter>
     </ClInclude>
+    <ClInclude Include="tree_storage.h">
+      <Filter>Заголовки</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

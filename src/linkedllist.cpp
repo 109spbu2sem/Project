@@ -18,14 +18,3 @@ void linkedlist::add(const Point&p){
 	}
 	++_size;
 }
-Point &linkedlist::operator[](unsigned pos){	
-	if (pos >= _size) throw std::invalid_argument("Bad index");
-	cell *current = _firstcell;
-	unsigned counter = 0;
-	while (++counter != pos && current && current->next){
-		current = current->next;
-	}
-	return current->data;
-
-		
-}

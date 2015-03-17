@@ -6,10 +6,24 @@ private:
 	Item *_items;
 	unsigned _size;
 public:
+	class Viewer{
+		Item *_cur;
+		Item *_limit;
+	public:
+		Viewer(){_cur = 0;_limit = 0;}
+		Viewer(storage_template<Item> &s){
+			_cur = s._items;
+			_limit = s._items + s._size;
+		}
+		Item& getValue(){if (_cur) return *_cur;
+		throw std::runtime_error("No such item");};
+		void moveNext(){if (_cur && _cur < _limit) _cur++;}
+		bool canMoveNext(){ if (_cur < _limit ) return true; return false;};
+	};
 	//constructor
 	storage_template(void){
 		_items = 0;
-		_size = 0;
+		_size = 0;		
 	};
 	// copying constr
 	storage_template(const storage_template &s){
@@ -34,7 +48,11 @@ public:
 	//get _size
 	unsigned size() const{
 		return _size;
-	}
+	}	
+	Viewer getStartingViewer(){
+		return Viewer(*this);		
+	};
+
 };
 
 template<typename Item> void storage_template<Item>::add(const Item& p)

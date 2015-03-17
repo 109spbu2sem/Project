@@ -2,6 +2,7 @@
 #include "storages.h"
 #include "storage.h"
 #include "linkedlist.h"
+#include "tree_storage.h"
 #include "vec2.h"
 
 int main()
@@ -11,6 +12,46 @@ int main()
 	s1.add(p);
 	s1[0].x = 90;
 	storage_template<Segment> ss1;
+	storage_template<Point>::Viewer pv(s1);
+	while (pv.canMoveNext()){
+		pv.getValue().x +=2;
+		pv.moveNext();
+	}
+
+	tree_storage<int,double> ts;
+	ts.add(1,2.3);
+	ts.add(2,23.3);
+	ts.add(4,443.3);
+	std::cout << "ts.hasA(2)" << ts.hasA(2) << std::endl;
+	std::cout << "ts.hasA(222)" << ts.hasA(222) << std::endl;
+
+
+	pv = s1.getStartingViewer();
+	while (pv.canMoveNext()){
+		std::cout << pv.getValue().x;
+		pv.moveNext();
+	}
+
+
+
+
+
+
+	linkedlist ll;
+	ll.add(p);
+	ll.add(p);
+
+	linkedlist::Viewer lv1(ll);
+	linkedlist::Viewer lv2(ll);
+	lv2.moveNext();
+
+	while(lv2.canMoveNext()){
+		if (lv1.getValue().x < lv2.getValue().x)
+			std::cout << "Wrong pair" <<std::endl;
+		lv1.moveNext();
+		lv2.moveNext();
+	}
+	
 
 
 
@@ -32,14 +73,8 @@ int main()
 	linkedlist sp;
 
 	sp.add(p);
-	sp.add(p);
-	Point p1 = sp[1];
+	sp.add(p);	
 
-	sp.rewind();
-	while ( sp.canMoveNext() ) {
-		std::cout << sp.getCurrent().x <<','<< sp.getCurrent().y << std::endl;
-		sp.moveNext();
-	}
 
 
 	//Point p1 = sp.operator[](1);

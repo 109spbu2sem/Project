@@ -15,7 +15,7 @@ template<typename T>  T ff(T a){
 
 double find_zero1(double a,double b,double(*f)(double), double eps = 1e-6){
 	//////
-	f(1);
+	(*f)(1);
 	return 0;
 }
 double find_zero2(double a,double b,double(*f)(double), double eps = 1e-6){

@@ -1,24 +1,36 @@
 #include "storages.h"
 #include <stdexcept>
 
-linkedlist::cell *_curcell;
-linkedlist::cell *_curcell1;
-linkedlist::cell *_curcell2;
 
 class linkedlist{
-	cell *_firstcell;
-	cell *_lastcell;
-	unsigned _size;
-	
-public:
 	struct cell{
 		Point data;
 		cell *next;
 	};
-	linkedlist(){ _firstcell =  0;_lastcell = 0;_curcell = 0;_size = 0;};
+	cell *_firstcell;
+	cell *_lastcell;
+	unsigned _size;	
+public:
+	class Viewer{
+		linkedlist::cell *_cur;		
+	public:		
+		Viewer(){_cur = 0;}
+		Viewer(linkedlist&l){
+			_cur = l._firstcell;			
+		}
+
+		Point & getValue(){if (_cur) return _cur->data;
+		throw std::runtime_error("No such point");};
+		void moveNext(){if (_cur) _cur = _cur->next;};
+		bool canMoveNext(){if ( _cur ) return true; return false;};
+	};
+
+
+	friend class Viewer;
+	linkedlist(){ _firstcell =  0;_lastcell = 0;_size = 0;};
 	~linkedlist(){
 		if (_firstcell){
-			 _curcell = _firstcell;
+			cell* _curcell = _firstcell;
 			do{
 				cell *cc = _curcell->next;
 				delete _curcell;
@@ -26,22 +38,14 @@ public:
 			}
 			while (_curcell );
 		}
-		
+
 	}
 	void add(const Point&);
-	Point &operator[](unsigned);
 	unsigned size() const{return _size;};
 
-	cell* getFirst();
-
-
-	Point & getCurrent() { if ( !_curcell) throw std::out_of_range("No current elem"); return _curcell->data; };
-	void moveNext(){if (_curcell->next) _curcell = _curcell->next;};
-	void rewind() {_curcell = _firstcell;};
-	bool canMoveNext(){
-		if (_curcell->next) return true;
-		return false;
-	}
-
-
+	Viewer getStartingViewer(){
+		Viewer v(*this);		
+		return v;
+	};
 };
+

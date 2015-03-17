@@ -21,6 +21,7 @@
     <ClInclude Include="..\include\storages.h" />
     <ClInclude Include="..\include\structs.h" />
     <ClInclude Include="..\include\vec2.h" />
+    <ClInclude Include="tree_storage.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{1E571C58-2F99-4503-B3EB-BCAD5D214C2C}</ProjectGuid>
