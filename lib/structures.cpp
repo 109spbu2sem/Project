@@ -67,7 +67,7 @@ Vector Vector::unit_vector()
 
 double Angle::grads()
 {
-	return angle / PI * 180;
+	return *angle / PI * 180;
 }
 
 //----------------------------------------------------------------------
@@ -76,18 +76,21 @@ double Angle::grads()
 
 double Arc::area()
 {
-	return angle.angle * d.length() * d.length() / 2;
+	return *angle.angle * d.length() * d.length() / 2;
 }
 
 double Arc::length()
 {
-	return d.length() * angle.angle;
+	return d.length() * *angle.angle;
 }
 
-Segment Arc::chord()
+/*Segment Arc::chord()
 {
 	Segment s;
-	s.o = { o.x + d.x, o.y + d.y };
-	s.d = { d.x * (cos(angle.angle) - 1), d.y * (sin(angle.angle) - 1) };
+	double a;
+	s->p1->x = *(o->x) + d.x;
+	s.p2->y = o->y + d.y;
+	s.p2->x = d.x * (cos(angle.angle) - 1);
+	s.p2->y = d.y * (sin(angle.angle) - 1);
 	return s;
-}
+}*/

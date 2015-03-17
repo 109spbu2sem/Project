@@ -1,7 +1,7 @@
 #ifndef CORE_H
 #define CORE_H
 #include "structures.h"
-#include "storages.h"
+#include "storage_array.h"
 
 class CORE
 {
