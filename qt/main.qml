@@ -4,8 +4,10 @@ import QtQuick.Controls 1.2
 ApplicationWindow
 {
     visible: true
+
     width: 1280
     height: 720
+
     title: qsTr("Paint")
 
     menuBar: MenuBar
@@ -16,26 +18,32 @@ ApplicationWindow
             MenuItem
             {
                 text: qsTr("&Open new...")
+                shortcut: "Ctrl+Shift+N"
                 onTriggered: console.log("Open action triggered");
             }
+            MenuSeparator {}
             MenuItem
             {
                 text: qsTr("&Open existing...")
+                shortcut: "Ctrl+O"
                 onTriggered: console.log("Open action triggered");
             }
             MenuItem
             {
                 text: qsTr("&Save...")
+                shortcut: "Ctrl+S"
                 onTriggered: console.log("Save action triggered");
             }
             MenuItem
             {
                 text: qsTr("&Print")
+                shortcut: "Ctrl+P"
                 onTriggered: console.log("Print action triggered");
             }
             MenuItem
             {
                 text: qsTr("Close project")
+                shortcut: "Ctrl+E"
                 onTriggered: console.log("Close action triggered");
             }
         }
@@ -46,10 +54,12 @@ ApplicationWindow
             MenuItem
             {
                 text: qsTr("&Change language")
+                shortcut: "Alt+L"
             }
             MenuItem
             {
                 text: qsTr("&Change GUI")
+                shortcut: "Alt+G"
             }
         }
 
@@ -70,11 +80,11 @@ ApplicationWindow
 Item
 {
     id: workspace
-    x: 38
-    y: 27
-    width: 870
-    height: 651
-    }
+    x: -291
+    y: -369
+    width: 1616
+    height: 1344
+}
 
     ToolButton
     {
@@ -84,7 +94,7 @@ Item
         width: 120
         height: 42
         text: "Add object"
-        scale: 1
+        activeFocusOnPress: true
     }
 
     ToolButton
@@ -95,6 +105,7 @@ Item
         width: 120
         height: 42
         text: "Load..."
+        activeFocusOnPress: true
     }
 
     ToolButton
@@ -105,6 +116,7 @@ Item
         width: 120
         height: 42
         text: "Add rule"
+        activeFocusOnPress: true
     }
 
     ToolButton
@@ -115,6 +127,7 @@ Item
         width: 120
         height: 42
         text: "Save..."
+        activeFocusOnPress: true
     }
 
     Text {
@@ -123,11 +136,21 @@ Item
         y: 27
         width: 288
         height: 506
-        text: qsTr(" List of all objects:")
+        text: " List of all objects:"
+        enabled: true
         font.bold: true
         horizontalAlignment: Text.AlignLeft
         wrapMode: Text.NoWrap
         textFormat: Text.PlainText
         font.pixelSize: 16
+    }
+
+    Rectangle {
+        id: rectangle1
+        x: 38
+        y: 27
+        width: 870
+        height: 651
+        color: "#ffffff"
     }
 }
