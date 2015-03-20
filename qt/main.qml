@@ -110,6 +110,7 @@ ApplicationWindow
                     y: 5
                     color: "white"
                     font.bold: true
+                    style: Text.Raised
                     text: "Choose type of object"
                     style: Text.Raised
                 }
