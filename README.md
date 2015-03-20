@@ -28,6 +28,7 @@
     /qt
       main.cpp  
       main.qml  
+      About.qml  
       qml.qrc  
       Paint.pro  
       Paint.pro.user  
