@@ -1,4 +1,5 @@
 TEMPLATE = app
+CONFIG += console
 
 QT += qml quick widgets
 
@@ -11,3 +12,5 @@ QML_IMPORT_PATH =
 
 # Default rules for deployment.
 include(deployment.pri)
+
+FORMS +=

@@ -10,6 +10,8 @@
 #define __Project_2Sem__TreeStorage__
 
 #include <stdio.h>
+#include <iostream>
+#include <stdexcept>
 
 template<typename A, typename B> class Tree_Storage
 {
@@ -21,6 +23,7 @@ template<typename A, typename B> class Tree_Storage
         Cell *Left;
         Cell *Right;
     };
+    
     Cell *_Root;  //  Корень
     
 public:
@@ -59,11 +62,18 @@ public:
                 {
                     Parent = Current;
                     Current -> b = b;
+                    return;
                 }
                 if (Current -> a < a)
+                {
+                    Parent = Current;
                     Current = Current -> Right;
+                }
                 else
+                {
+                    Parent = Current;
                     Current = Current -> Left;
+                }
             }
             if (Parent -> a < a)
                 Parent -> Right = NewCell;
@@ -74,7 +84,7 @@ public:
     bool HasA(const A& a)
     {
         Cell *Current = _Root;
-        while (!Current)
+        while (Current)
         {
             if (Current -> a == a) return true;
             if (Current -> a < a)
@@ -82,7 +92,7 @@ public:
             else
                 Current = Current -> Left;
         }
-        throw 1;
+        return 0;
     };
     
     B& GetBbyA(const A& a);
