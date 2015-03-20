@@ -108,6 +108,7 @@ ApplicationWindow
                     y: 5
                     color: "white"
                     font.bold: true
+                    style: Text.Raised
                     text: "Choose type of object"
                 }
 
@@ -135,8 +136,11 @@ ApplicationWindow
                             Text
                             {
                                 id: textPoint
-                                y: 110
-                                horizontalAlignment: textPoint.AlignHCenter
+                                y: 100
+                                width: 100
+                                height: 30
+                                horizontalAlignment: Text.AlignHCenter
+                                verticalAlignment: Text.AlignVCenter
                                 text: "Point"
                             }
                             onClicked: {  loadDialog.close(); console.log("loadDialog -> Point");  }
@@ -156,8 +160,11 @@ ApplicationWindow
                             Text
                             {
                                 id: textSection
-                                y: 110
-                                horizontalAlignment: textSection.AlignHCenter
+                                y: 100
+                                width: 100
+                                height: 30
+                                horizontalAlignment: Text.AlignHCenter
+                                verticalAlignment: Text.AlignVCenter
                                 text: "Section"
                             }
                             onClicked: {  loadDialog.close(); console.log("loadDialog -> Section");  }
@@ -177,8 +184,11 @@ ApplicationWindow
                             Text
                             {
                                 id: textArc
-                                y: 110
-                                horizontalAlignment: textArc.AlignHCenter
+                                y: 100
+                                width: 100
+                                height: 30
+                                horizontalAlignment: Text.AlignHCenter
+                                verticalAlignment: Text.AlignVCenter
                                 text: "Arc"
                             }
                             onClicked: {  loadDialog.close(); console.log("loadDialog -> Arc");  }
