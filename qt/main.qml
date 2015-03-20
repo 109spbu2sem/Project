@@ -98,8 +98,8 @@ ApplicationWindow
 
         contentItem: Rectangle
             {
-                color: "lightskyblue"
-                implicitWidth: 400
+                color: "lightblue"
+                implicitWidth: 340
                 implicitHeight: 200
 
                 Text
