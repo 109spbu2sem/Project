@@ -83,6 +83,7 @@ ApplicationWindow
     {
         id: fileDialog
         title: "Please choose a file"
+
         onAccepted:
         {
             console.log("You chose: " + fileDialog.fileUrls)
@@ -95,7 +96,7 @@ ApplicationWindow
 
     Dialog
     {
-        id: loadDialog
+        id: addObjectDialog
 
         contentItem: Rectangle
             {
@@ -112,7 +113,6 @@ ApplicationWindow
                     font.bold: true
                     style: Text.Raised
                     text: "Choose type of object"
-                    style: Text.Raised
                 }
 
                 Grid
@@ -127,7 +127,7 @@ ApplicationWindow
                         spacing: 10
                         ToolButton
                         {
-                            id: pointLoadDialogButton
+                            id: pointAddObjectDialogButton
                             width: 100
                             height: 130
                             Rectangle
@@ -146,12 +146,12 @@ ApplicationWindow
                                 verticalAlignment: Text.AlignVCenter
                                 text: "Point"
                             }
-                            onClicked: {  loadDialog.close(); console.log("loadDialog -> Point");  }
+                            onClicked: {  addObjectDialog.close(); console.log("addObjectDialog -> Point");  }
                         }
 
                         ToolButton
                         {
-                            id: sectionLoadDialogButton
+                            id: sectionAddObjectDialogButton
                             width: 100
                             height: 130
                             Rectangle
@@ -170,12 +170,12 @@ ApplicationWindow
                                 verticalAlignment: Text.AlignVCenter
                                 text: "Section"
                             }
-                            onClicked: {  loadDialog.close(); console.log("loadDialog -> Section");  }
+                            onClicked: {  addObjectDialog.close(); console.log("addObjectDialog -> Section");  }
                         }
 
                         ToolButton
                         {
-                            id: arcLoadDialogButton
+                            id: arcAddObjectDialogButton
                             width: 100
                             height: 130
                             Rectangle
@@ -194,20 +194,20 @@ ApplicationWindow
                                 verticalAlignment: Text.AlignVCenter
                                 text: "Arc"
                             }
-                            onClicked: {  loadDialog.close(); console.log("loadDialog -> Arc");  }
+                            onClicked: {  addObjectDialog.close(); console.log("addObjectDialog -> Arc");  }
                         }
                     }
                 }
 
                 Button
                 {
-                    id: okLoadDialogButton
+                    id: okAddObjectDialogButton
                     x: 10
                     y: 175
                     width: 90
                     height: 21
                     text: "OK"
-                    onClicked: {  loadDialog.close(); console.log("loadDialog -> Nothing");  }
+                    onClicked: {  addObjectDialog.close(); console.log("addObjectDialog -> Nothing");  }
                 }
             }
     }
@@ -230,7 +230,7 @@ ApplicationWindow
         height: 42
         text: "Add object"
         activeFocusOnPress: true
-        onClicked: loadDialog.open()
+        onClicked: addObjectDialog.open()
     }
 
     ToolButton
@@ -254,6 +254,7 @@ ApplicationWindow
         height: 42
         text: "Add rule"
         activeFocusOnPress: true
+        enabled: false
     }
 
     ToolButton
@@ -293,4 +294,3 @@ ApplicationWindow
         color: "#ffffff"
     }
 }
-
