@@ -6,26 +6,22 @@
 class Point
 {
 public:
-	double *x;
-	double *y;
+	double *_x;
+	double *_y;
 
 	Point(double *xx = 0, double *yy = 0)
 	{
-		x = xx;
-		y = yy;
+		_x = xx;
+		_y = yy;
 	}
 	Point(double xx, double yy)
 	{
-		x = new double;
-		*x = xx;
-		y = new double;
-		*y = yy;
+		_x = new double;
+		*_x = xx;
+		_y = new double;
+		*_y = yy;
 	}
-	~Point()
-	{
-		delete x;
-		delete y;
-	}
+	~Point() {}
 };
 
 class Segment
@@ -40,26 +36,12 @@ public:
 		p2 = 0;
 	}
 
-	Segment(double x1, double y1, double x2, double y2)
-	{
-		p1 = new Point;
-		*p1->x = x1;
-		*p1->y = y1;
-		p2 = new Point;
-		*p2->x = x2;
-		*p2->y = y2;
-	}
-
 	Segment(Point *point1, Point *point2)
 	{
 		p1 = point1;
 		p2 = point2;
 	}
-	~Segment()
-	{
-		delete p1;
-		delete p2;
-	}
+	~Segment() {}
 };
 
 class Vector
@@ -81,8 +63,8 @@ public:
 	};
 	Vector(Segment *seg)
 	{
-		x = seg->p1->x - seg->p2->x;
-		y = seg->p1->y - seg->p2->y;
+		x = seg->p1->_x - seg->p2->_x;
+		y = seg->p1->_y - seg->p2->_y;
 	};
 	Vector operator+ (const Vector &v);
 	void operator+= (const Vector &v);
@@ -116,15 +98,15 @@ public:
 	//----functions
 	Arc()
 	{
-		o->x = 0;
-		o->y = 0;
+		o->_x = 0;
+		o->_y = 0;
 		d = { 0, 0 };
 		angle = 0;
 	};
 	Arc(Point &p, Vector &z, Angle &a)
 	{
-		o->x = p.x;
-		o->y = p.y;
+		o->_x = p._x;
+		o->_y = p._y;
 		d = z;
 		angle = a;
 	};

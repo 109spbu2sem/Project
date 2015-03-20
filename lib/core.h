@@ -2,12 +2,13 @@
 #define CORE_H
 #include "structures.h"
 #include "storage_array.h"
+#include "storage_list.h"
 
 class CORE
 {
 private:
-	Storage_Array<Point> _storage_of_points;
-	Storage_Array<Segment> _storage_of_segments;
+	Storage_Array<Point*> _storage_of_points;
+	Storage_Array<Segment*> _storage_of_segments;
 	Storage_Array<Arc> _storage_of_arcs;
 public:
 	CORE();

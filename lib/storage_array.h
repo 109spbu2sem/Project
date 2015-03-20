@@ -36,7 +36,7 @@ public:
 	// destructor
 	~Storage_Array(void)
 	{
-		if (_items) delete[] _items;
+		if (_items)	delete[] _items;
 	};
 	/// we can work with storage as an array
 	Item& operator[] (unsigned num);

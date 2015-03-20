@@ -18,23 +18,23 @@ CORE::~CORE()
 
 void CORE::AddObject(double point_x, double point_y)
 {
-	Point p(point_x, point_y);
+	Point *p = new Point(point_x, point_y);
 	CORE::_storage_of_points.add(p);
 }
 
 void CORE::AddObject(double point_x1, double point_y1, double point_x2, double point_y2)
 {
 	Point *p1 = new Point(point_x1, point_y1);
-	CORE::_storage_of_points.add(*p1);
+	CORE::_storage_of_points.add(p1);
 	Point *p2 = new Point(point_x2, point_y2);
-	CORE::_storage_of_points.add(*p2);
+	CORE::_storage_of_points.add(p2);
 	Segment *s = new Segment(p1, p2);
-	CORE::_storage_of_segments.add(*s);
+	CORE::_storage_of_segments.add(s);
 }
 
 void CORE::AddObject(double point_x, double point_y, double vector_x, double vector_y, double angle)
 {
-	CORE::_storage_of_arcs.add(Arc{ Point{ point_x, point_y }, Vector{ vector_x, vector_y }, Angle{ angle } });
+	//CORE::_storage_of_arcs.add(Arc{ Point{ point_x, point_y }, Vector{ vector_x, vector_y }, Angle{ angle } });
 }
 
 void CORE::ChangeStatus(double x, double y, unsigned char status_key)
@@ -61,22 +61,22 @@ void CORE::ChangeStatus(double x, double y, unsigned char status_key)
 			min_j = i;
 		}
 	}*/
-	size = _storage_of_arcs.size();
+	/*size = _storage_of_arcs.size();
 	int min_k = -1;
-	/*for (unsigned i = 0; i < size; i++)
+	for (unsigned i = 0; i < size; i++)
 	{
 		if (length(_storage_of_arcs[i].o.x, _storage_of_arcs[i].o.y, x, y) < min)
 		{
 			min = length(_storage_of_arcs[i].o.x, _storage_of_arcs[i].o.y, x, y);
 			min_k = i;
 		}
-	}*/
+	}
 	if (min_k >= 0)
 	{
 		//change picking
 	}
-	else
-	{
+	else 
+	{*/
 		if (min_j >= 0)
 		{
 			//change picking
@@ -89,7 +89,7 @@ void CORE::ChangeStatus(double x, double y, unsigned char status_key)
 			}
 			else return;
 		}
-	}
+	//}
 	return;
 }
 
@@ -120,7 +120,7 @@ void CORE::ChangeStatus(double x1, double y1, double x2, double y2, unsigned cha
 	unsigned size = _storage_of_points.size();
 	for (unsigned i = 0; i < size; i++)
 	{
-		if (isInArea(*_storage_of_points[i].x, *_storage_of_points[i].y, x1, y1, x2, y2))
+		if (isInArea(*_storage_of_points[i]->_x, *_storage_of_points[i]->_y, x1, y1, x2, y2))
 		{
 			//change selection
 		}
@@ -130,8 +130,8 @@ void CORE::ChangeStatus(double x1, double y1, double x2, double y2, unsigned cha
 	size = _storage_of_segments.size();
 	for (unsigned i = 0; i < size; i++)
 	{
-		if (isInArea(*_storage_of_segments[i].p1->x, *_storage_of_segments[i].p1->y, x1, y1, x2, y2) &&
-			 isInArea(*_storage_of_segments[i].p2->x, *_storage_of_segments[i].p2->y, x1, y1, x2, y2))
+		if (isInArea(*_storage_of_segments[i]->p1->_x, *_storage_of_segments[i]->p1->_y, x1, y1, x2, y2) &&
+			 isInArea(*_storage_of_segments[i]->p2->_x, *_storage_of_segments[i]->p2->_y, x1, y1, x2, y2))
 		{
 			//change selection
 		}
