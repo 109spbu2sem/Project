@@ -1,5 +1,6 @@
 import QtQuick 2.3
 import QtQuick.Controls 1.2
+import QtQuick.Controls.Styles 1.2
 import QtQuick.Dialogs 1.2
 
 ApplicationWindow
@@ -98,17 +99,19 @@ ApplicationWindow
 
         contentItem: Rectangle
             {
-                color: "lightskyblue"
-                implicitWidth: 400
+                color: "lightblue"
+                implicitWidth: 340
                 implicitHeight: 200
 
                 Text
                 {
+                    id: title
                     x: 10
                     y: 5
                     color: "white"
                     font.bold: true
                     text: "Choose type of object"
+                    style: Text.Raised
                 }
 
                 Grid
@@ -121,7 +124,7 @@ ApplicationWindow
                     Row
                     {
                         spacing: 10
-                        Button
+                        ToolButton
                         {
                             id: pointLoadDialogButton
                             width: 100
@@ -134,15 +137,18 @@ ApplicationWindow
                             }
                             Text
                             {
-                                id: textPoint
-                                y: 110
-                                horizontalAlignment: textPoint.AlignHCenter
+                                id:textPoint
+                                y: 100
+                                width: 100
+                                height: 30
+                                horizontalAlignment: Text.AlignHCenter
+                                verticalAlignment: Text.AlignVCenter
                                 text: "Point"
                             }
-                            onClicked: {  dialog.close(); console.log("loadDialog -> Point");  }
+                            onClicked: {  loadDialog.close(); console.log("loadDialog -> Point");  }
                         }
 
-                        Button
+                        ToolButton
                         {
                             id: sectionLoadDialogButton
                             width: 100
@@ -156,14 +162,17 @@ ApplicationWindow
                             Text
                             {
                                 id: textSection
-                                y: 110
-                                horizontalAlignment: textSection.AlignHCenter
+                                y: 100
+                                width: 100
+                                height: 30
+                                horizontalAlignment: Text.AlignHCenter
+                                verticalAlignment: Text.AlignVCenter
                                 text: "Section"
                             }
-                            onClicked: {  dialog.close(); console.log("loadDialog -> Section");  }
+                            onClicked: {  loadDialog.close(); console.log("loadDialog -> Section");  }
                         }
 
-                        Button
+                        ToolButton
                         {
                             id: arcLoadDialogButton
                             width: 100
@@ -177,11 +186,14 @@ ApplicationWindow
                             Text
                             {
                                 id: textArc
-                                y: 110
-                                horizontalAlignment: textArc.AlignHCenter
+                                y: 100
+                                width: 100
+                                height: 30
+                                horizontalAlignment: Text.AlignHCenter
+                                verticalAlignment: Text.AlignVCenter
                                 text: "Arc"
                             }
-                            onClicked: {  dialog.close(); console.log("loadDialog -> Arc");  }
+                            onClicked: {  loadDialog.close(); console.log("loadDialog -> Arc");  }
                         }
                     }
                 }
@@ -193,10 +205,10 @@ ApplicationWindow
                     y: 175
                     width: 90
                     height: 21
-                    text: "Ok"
+                    text: "OK"
                     onClicked: {  loadDialog.close(); console.log("loadDialog -> Nothing");  }
                 }
-    }
+            }
     }
 
     Item
@@ -256,7 +268,7 @@ ApplicationWindow
 
     Text
     {
-        id: text1
+        id: textList
         x: 952
         y: 27
         width: 288
@@ -272,7 +284,7 @@ ApplicationWindow
 
     Rectangle
     {
-        id: rectangle1
+        id: rectangle
         x: 38
         y: 27
         width: 870
