@@ -139,7 +139,7 @@ ApplicationWindow
                                 horizontalAlignment: textPoint.AlignHCenter
                                 text: "Point"
                             }
-                            onClicked: {  dialog.close(); console.log("loadDialog -> Point");  }
+                            onClicked: {  loadDialog.close(); console.log("loadDialog -> Point");  }
                         }
 
                         Button
@@ -160,7 +160,7 @@ ApplicationWindow
                                 horizontalAlignment: textSection.AlignHCenter
                                 text: "Section"
                             }
-                            onClicked: {  dialog.close(); console.log("loadDialog -> Section");  }
+                            onClicked: {  loadDialog.close(); console.log("loadDialog -> Section");  }
                         }
 
                         Button
@@ -181,7 +181,7 @@ ApplicationWindow
                                 horizontalAlignment: textArc.AlignHCenter
                                 text: "Arc"
                             }
-                            onClicked: {  dialog.close(); console.log("loadDialog -> Arc");  }
+                            onClicked: {  loadDialog.close(); console.log("loadDialog -> Arc");  }
                         }
                     }
                 }
