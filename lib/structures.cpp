@@ -30,10 +30,9 @@ void Vector::operator-= (const Vector &v)
 	y -= v.y;
 }
 
-Vector Vector::operator* (const Vector &v)
+double Vector::operator* (const Vector &v)
 {
-	Vector result(x * v.x, y * v.y);
-	return result;
+	return x * v.x + y * v.y;
 }
 
 Vector Vector::operator* (const double &a)

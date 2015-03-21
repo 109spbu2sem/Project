@@ -13,6 +13,13 @@ template<typename Item> class Storage_Array
 private:
 	Item *_items;
 	unsigned _size;
+	unsigned _memory;
+
+
+	unsigned To2(unsigned b)
+	{
+		return 1 << b;
+	}
 public:
 	friend class ArrayViewer < Item > ;
 	// constructor
@@ -20,16 +27,18 @@ public:
 	{
 		_items = 0;
 		_size = 0;
+		_memory = 0;
 	};
 	// copying constructor
-	Storage_Array(const Storage_Array &s)
+	Storage_Array(const Storage_Array &storage)
 	{
-		_size = s._size;
+		_size = storage._size;
+		_memory = storage._memory;
 		if (_size)
 		{
-			_items = new Item[s.size()];
-			for (int i = 0; i < s.size(); i++)
-				_items[i] = s._items[i];
+			_items = new Item[To2(_memory)];
+			for (int i = 0; i < _size; i++)
+				_items[i] = storage._items[i];
 		}
 		else _items = 0;
 	}
@@ -55,8 +64,13 @@ public:
 		if (_items)
 		{
 			_size = 0;
+			_memory = 0;
 			delete[] _items;
 		}
+	}
+	int myWeight()
+	{
+		return sizeof(_items) * sizeof(Item) * To2(_memory);
 	}
 	// get pointer to first cell of array
 	ArrayViewer<Item> getStartingViewer()
@@ -75,10 +89,11 @@ template<typename Item> Item& Storage_Array<Item>::operator[] (unsigned num)
 template<typename Item> void Storage_Array<Item>::operator=(const Storage_Array &storage)
 {
 	if (_items) delete[] _items;
-	_items = new Item[storage._size];
+	_items = new Item[To2(storage._memory)];
 	for (int i = 0; i < storage._size; i++)
 		_items[i] = storage._items[i];
 	_size = storage._size;
+	_memory = storage._memory;
 }
 
 template<typename Item> void Storage_Array<Item>::add(const Item& item)
@@ -88,20 +103,25 @@ template<typename Item> void Storage_Array<Item>::add(const Item& item)
 	{
 		_items = new Item(item);
 		_size = 1;
+		_memory = 1;
 		return;
 	}
 	else
 	{
 		_size++;
-		//copy old
-		Item *newitems = new Item[_size];//temp
-		for (unsigned i = 0; i < _size - 1; i++)
-			newitems[i] = _items[i];
-		//erase old
-		delete[] _items;
+		if (_size == To2(_memory))
+		{
+			_memory++;
+			//copy old
+			Item *newitems = new Item[To2(_memory)];//temp
+			for (unsigned i = 0; i < _size - 1; i++)
+				newitems[i] = _items[i];
+			//erase old
+			delete[] _items;
+			_items = newitems;
+		}
 		//add new
-		newitems[_size - 1] = item;
-		_items = newitems;
+		_items[_size - 1] = item;
 		return;
 	}
 	return;

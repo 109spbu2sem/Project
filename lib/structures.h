@@ -21,7 +21,11 @@ public:
 		_y = new double;
 		*_y = yy;
 	}
-	~Point() {}
+	~Point() 
+	{
+		delete _x;
+		delete _y;
+	}
 };
 
 class Segment
@@ -70,7 +74,7 @@ public:
 	void operator+= (const Vector &v);
 	Vector operator- (const Vector &v);
 	void operator-= (const Vector &v);
-	Vector operator* (const Vector &v);		// scalar
+	double operator* (const Vector &v);		// scalar
 	Vector operator* (const double &a);
 	Vector operator*= (const double &a);
 	double length();		// returns length
