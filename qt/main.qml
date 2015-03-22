@@ -10,6 +10,8 @@ ApplicationWindow
 
     title: qsTr("Paint")
 
+    x: 60
+    y: 80
     width: 1280
     height: 720
 
@@ -324,8 +326,6 @@ ApplicationWindow
                 id: buttonGridLayout
 
                 y: parent.height
-                width: 300
-                height: 200
 
                 rows: 2
                 columns: 2
@@ -333,58 +333,85 @@ ApplicationWindow
                 rowSpacing: 10
                 columnSpacing: 10
 
-                ToolButton
+                Item
                 {
-                    id: addObjectButton
                     x: 0
                     y: -40
-                    activeFocusOnPress: true
-                    onClicked: addObjectDialog.open()
-
                     width: 145
                     height: 42
 
-                    text: "Add object"
+                    ToolButton
+                    {
+                        id: addObjectButton
+
+                        activeFocusOnPress: true
+                        onClicked: addObjectDialog.open()
+
+                        width: 145
+                        height: 42
+
+                        text: "Add object"
+                    }
                 }
 
-                ToolButton
+                Item
                 {
-                    id: loadButton
                     x: 155
                     y: -40
-                    activeFocusOnPress: true
-                    onClicked: fileDialog.open()
-
                     width: 145
                     height: 42
 
-                    text: "Load..."
+                    ToolButton
+                    {
+                        id: loadButton
+
+                        activeFocusOnPress: true
+                        onClicked: {  fileDialog.open(); }
+
+                        width: 145
+                        height: 42
+
+                        text: "Load..."
+                    }
                 }
 
-                ToolButton
+                Item
                 {
-                    id: addRuleButton
                     x: 0
                     y: 12
-                    activeFocusOnPress: true
-                    enabled: false
-
                     width: 145
                     height: 42
 
-                    text: "Add rule"
+                    ToolButton
+                    {
+                        id: addRuleButton
+
+                        activeFocusOnPress: true
+                        enabled: false
+
+                        width: 145
+                        height: 42
+
+                        text: "Add rule"
+                    }
                 }
 
-                ToolButton
+                Item
                 {
-                    id: saveButton
                     x: 155
                     y: 12
-
                     width: 145
                     height: 42
 
-                    text: "Save..."
+                    ToolButton
+                    {
+                        id: saveButton
+
+                        width: 145
+                        height: 42
+
+                        text: "Save..."
+                    }
                 }
             }
         }
