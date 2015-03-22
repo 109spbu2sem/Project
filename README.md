@@ -37,3 +37,8 @@
     /test  
       ~test.cpp  
     ReadMe.md  
+
+## Полезности
++ Ссылка на документацию к [Qt 5.4](http://doc.qt.io/qt-5/index.html)  
++ Ссылка на список [классов Qt 5.4](http://doc.qt.io/qt-5/classes.html)
++ Ссылка на список [типов QML](http://doc.qt.io/qt-5/qmltypes.html)
