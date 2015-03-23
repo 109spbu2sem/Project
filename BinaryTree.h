@@ -17,7 +17,7 @@ public:
 		_cur = 0;
 	}
 	~BinaryTree() {
-		cell parent = _cur;
+		cell*parent = _cur;
 		while (_cur) {
 			while (_cur->left)
 				_cur = _cur->left;
