@@ -3,9 +3,10 @@ import QtQuick.Controls 1.2
 import QtQuick.Controls.Styles 1.2
 import QtQuick.Dialogs 1.2
 import QtQuick.Layouts 1.1
+import 'MenuDialogs' as MenuDialog
 
 ApplicationWindow
-{
+{    
     visible: true
 
     title: qsTr("Paint")
@@ -83,27 +84,13 @@ ApplicationWindow
             MenuItem
             {
                 text: qsTr("&About Paint")
+                onTriggered: MenuDialog.AboutDialog.open()
             }
 
             MenuItem
             {
                 text: qsTr("&Send feedback")
             }
-        }
-    }
-
-    FileDialog
-    {
-        id: fileDialog
-        title: "Please choose a file"
-
-        onAccepted:
-        {
-            console.log("You chose: " + fileDialog.fileUrls)
-        }
-        onRejected:
-        {
-            console.log("Canceled")
         }
     }
 
@@ -356,27 +343,6 @@ ApplicationWindow
 
                 Item
                 {
-                    x: 155
-                    y: -40
-                    width: 145
-                    height: 42
-
-                    ToolButton
-                    {
-                        id: loadButton
-
-                        activeFocusOnPress: true
-                        onClicked: {  fileDialog.open(); }
-
-                        width: 145
-                        height: 42
-
-                        text: "Load..."
-                    }
-                }
-
-                Item
-                {
                     x: 0
                     y: 12
                     width: 145
@@ -393,6 +359,27 @@ ApplicationWindow
                         height: 42
 
                         text: "Add rule"
+                    }
+                }
+
+                Item
+                {
+                    x: 155
+                    y: -40
+                    width: 145
+                    height: 42
+
+                    ToolButton
+                    {
+                        id: loadButton
+
+                        activeFocusOnPress: true
+                        onClicked: {  fileDialog.open(); }
+
+                        width: 145
+                        height: 42
+
+                        text: "Load..."
                     }
                 }
 
