@@ -7,6 +7,9 @@ import 'MenuDialogs' as MenuDialog
 
 ApplicationWindow
 {    
+    property int xpos
+    property int ypos
+
     visible: true
 
     title: qsTr("Paint")
@@ -239,16 +242,6 @@ ApplicationWindow
             }
     }
 
-    Item
-    {
-        id: workspace
-
-        x: -300
-        y: -400
-        width: 1600
-        height: 1400
-    }
-
 
     GridLayout
     {
@@ -256,13 +249,13 @@ ApplicationWindow
         columnSpacing: 40
 
         x: 40
-        y: 40
+        y: 35
         width: parent.width - 80
         height: parent.height - 80
 
         Rectangle
         {
-            id: rectangle
+            id: backgroundRect
 
             width: 860
             height: 640
@@ -271,8 +264,49 @@ ApplicationWindow
             Layout.minimumWidth: 600
             Layout.minimumHeight: 400
 
-            color: "#ffffff"
+            color: "white"
+
+            Canvas
+            {
+                id: mainCanvas
+
+                anchors.fill: parent
+
+                MouseArea
+                {
+                    anchors.fill: parent
+
+                    onPressed:
+                    {
+                        xpos = mouseX
+                        ypos = mouseY
+                        mainCanvas.requestPaint()
+                    }
+                    onMouseXChanged:
+                    {
+                        xpos = mouseX
+                        ypos = mouseY
+                        mainCanvas.requestPaint()
+                    }
+                    onMouseYChanged:
+                    {
+                        xpos = mouseX
+                        ypos = mouseY
+                        mainCanvas.requestPaint()
+                    }
+                }
+
+                onPaint:
+                {
+                    var ctx = getContext('2d')
+                    ctx.fillStyle = "lightblue"
+                    ctx.fillRect(xpos - 2, ypos - 1, 5, 5)
+
+                }
+            }
+
         }
+
 
         GridLayout
         {
