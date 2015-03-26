@@ -14,3 +14,7 @@ QML_IMPORT_PATH =
 include(deployment.pri)
 
 FORMS +=
+
+DISTFILES += \
+    qml/main.qml \
+    qml/MenuDialogs/AboutDialog.qml
