@@ -34,8 +34,10 @@
       TreeStorage.cpp  
     /qt
       main.cpp  
-      main.qml  
-      About.qml  
+      /qml  
+        main.qml  
+        /MenuDialogs  
+          AboutDialog.qml  
       qml.qrc  
       Paint.pro  
       Paint.pro.user  
