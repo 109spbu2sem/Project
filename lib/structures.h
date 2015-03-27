@@ -31,19 +31,19 @@ public:
 class Segment
 {
 public:
-	Point *p1; // begin
-	Point *p2; // end
+	Point *_p1; // begin
+	Point *_p2; // end
 
 	Segment()
 	{
-		p1 = 0;
-		p2 = 0;
+		_p1 = 0;
+		_p2 = 0;
 	}
 
 	Segment(Point *point1, Point *point2)
 	{
-		p1 = point1;
-		p2 = point2;
+		_p1 = point1;
+		_p2 = point2;
 	}
 	~Segment() {}
 };
@@ -67,8 +67,8 @@ public:
 	};
 	Vector(Segment *seg)
 	{
-		x = seg->p1->_x - seg->p2->_x;
-		y = seg->p1->_y - seg->p2->_y;
+		x = seg->_p1->_x - seg->_p2->_x;
+		y = seg->_p1->_y - seg->_p2->_y;
 	};
 	Vector operator+ (const Vector &v);
 	void operator+= (const Vector &v);
@@ -92,27 +92,45 @@ public:
 	double grads();			// returns angle in grads
 };
 
+class Circle
+{
+public:
+	//----structure
+	Point* _o;
+	double* _r;
+
+	//----functions
+	Circle()
+	{
+		_o = 0;
+		_r = 0;
+	}
+	Circle(Point *p, double *r)
+	{
+		_o = p;
+		_r = r;
+	}
+};
+
 class Arc
 {
 public:
 	//----structure
-	Point *o;
-	Vector d;
-	Angle angle;
+	Point *_o;
+	Vector _d;
+	Angle _angle;
 	//----functions
 	Arc()
 	{
-		o->_x = 0;
-		o->_y = 0;
-		d = { 0, 0 };
-		angle = 0;
+		_o = 0;
+		_d = { 0, 0 };
+		_angle = 0;
 	};
-	Arc(Point &p, Vector &z, Angle &a)
+	Arc(Point *p, Vector &z, Angle &a)
 	{
-		o->_x = p._x;
-		o->_y = p._y;
-		d = z;
-		angle = a;
+		_o = p;
+		_d = z;
+		_angle = a;
 	};
 	double length(); // returns length of the arc
 	double area();	  // returns area of the sector

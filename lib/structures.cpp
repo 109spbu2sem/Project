@@ -1,7 +1,6 @@
 #include "structures.h"
+#include "global.h"
 #include <cmath>
-
-#define PI 3.1415926535897932384
 
 //----------------------------------------------------------------------
 //--------------------------------VECTOR-------------------------------
@@ -75,12 +74,12 @@ double Angle::grads()
 
 double Arc::area()
 {
-	return *angle.angle * d.length() * d.length() / 2;
+	return *_angle.angle * _d.length() * _d.length() / 2;
 }
 
 double Arc::length()
 {
-	return d.length() * *angle.angle;
+	return _d.length() * *_angle.angle;
 }
 
 /*Segment Arc::chord()

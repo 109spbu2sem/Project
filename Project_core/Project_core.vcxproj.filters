@@ -32,6 +32,9 @@
     <ClCompile Include="..\lib\structures.cpp">
       <Filter>Main code files</Filter>
     </ClCompile>
+    <ClCompile Include="..\lib\global.cpp">
+      <Filter>Main code files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\lib\Color.h">
@@ -56,6 +59,15 @@
       <Filter>Headers</Filter>
     </ClInclude>
     <ClInclude Include="..\lib\structures.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\lib\global.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\lib\matrix.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\lib\point2point_con.h">
       <Filter>Headers</Filter>
     </ClInclude>
   </ItemGroup>

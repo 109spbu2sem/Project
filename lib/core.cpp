@@ -1,10 +1,5 @@
 #include "core.h"
-#include <cmath>
-
-double length(double x1, double y1, double x2, double y2)
-{
-	return sqrt((x1 - x2)*(x1 - x2) + (y1 - y2)*(y1 - y2));
-}
+#include "gui.h"
 
 CORE::CORE()
 {
@@ -18,23 +13,28 @@ CORE::~CORE()
 
 void CORE::AddObject(double point_x, double point_y)
 {
-	Point *p = new Point(point_x, point_y);
-	CORE::_storage_of_points.add(p);
+	Point p(_storage_of_coordinates.add(point_x), _storage_of_coordinates.add(point_y));
+	_storage_of_points.add(p);
 }
 
 void CORE::AddObject(double point_x1, double point_y1, double point_x2, double point_y2)
 {
-	Point *p1 = new Point(point_x1, point_y1);
-	CORE::_storage_of_points.add(p1);
-	Point *p2 = new Point(point_x2, point_y2);
-	CORE::_storage_of_points.add(p2);
-	Segment *s = new Segment(p1, p2);
-	CORE::_storage_of_segments.add(s);
+	Point p1(_storage_of_coordinates.add(point_x1), _storage_of_coordinates.add(point_y1));
+	Point p2(_storage_of_coordinates.add(point_x2), _storage_of_coordinates.add(point_y2));
+	Segment s(_storage_of_points.add(p1), _storage_of_points.add(p2));
+	_storage_of_segments.add(s);
 }
 
 void CORE::AddObject(double point_x, double point_y, double vector_x, double vector_y, double angle)
 {
 	//CORE::_storage_of_arcs.add(Arc{ Point{ point_x, point_y }, Vector{ vector_x, vector_y }, Angle{ angle } });
+}
+
+void CORE::AddObject(double point_x, double point_y, double radius)
+{
+	Point p(_storage_of_coordinates.add(point_x), _storage_of_coordinates.add(point_y));
+	Circle c(_storage_of_points.add(p), _storage_of_coordinates.add(radius));
+	_storage_of_circles.add(c);
 }
 
 void CORE::ChangeStatus(double x, double y, unsigned char status_key)
@@ -120,7 +120,7 @@ void CORE::ChangeStatus(double x1, double y1, double x2, double y2, unsigned cha
 	unsigned size = _storage_of_points.size();
 	for (unsigned i = 0; i < size; i++)
 	{
-		if (isInArea(*_storage_of_points[i]->_x, *_storage_of_points[i]->_y, x1, y1, x2, y2))
+		if (isInArea(*_storage_of_points[i]._x, *_storage_of_points[i]._y, x1, y1, x2, y2))
 		{
 			//change selection
 		}
@@ -130,8 +130,8 @@ void CORE::ChangeStatus(double x1, double y1, double x2, double y2, unsigned cha
 	size = _storage_of_segments.size();
 	for (unsigned i = 0; i < size; i++)
 	{
-		if (isInArea(*_storage_of_segments[i]->p1->_x, *_storage_of_segments[i]->p1->_y, x1, y1, x2, y2) &&
-			 isInArea(*_storage_of_segments[i]->p2->_x, *_storage_of_segments[i]->p2->_y, x1, y1, x2, y2))
+		if (isInArea(*_storage_of_segments[i]._p1->_x, *_storage_of_segments[i]._p1->_y, x1, y1, x2, y2) &&
+			 isInArea(*_storage_of_segments[i]._p2->_x, *_storage_of_segments[i]._p2->_y, x1, y1, x2, y2))
 		{
 			//change selection
 		}

@@ -47,12 +47,14 @@ public:
 	{
 		if (_items)	delete[] _items;
 	};
+
+	Item* getPointer(unsigned num);
 	/// we can work with storage as an array
 	Item& operator[] (unsigned num);
 	/// we can produce copy of storage
 	void operator= (const Storage_Array &storage);
 	/// add elem
-	void add(const Item&);
+	Item* add(const Item&);
 	// get _size
 	unsigned size() const
 	{
@@ -67,10 +69,6 @@ public:
 			_memory = 0;
 			delete[] _items;
 		}
-	}
-	int myWeight()
-	{
-		return sizeof(_items) * sizeof(Item) * To2(_memory);
 	}
 	// get pointer to first cell of array
 	ArrayViewer<Item> getStartingViewer()
@@ -96,7 +94,13 @@ template<typename Item> void Storage_Array<Item>::operator=(const Storage_Array 
 	_memory = storage._memory;
 }
 
-template<typename Item> void Storage_Array<Item>::add(const Item& item)
+template<typename Item> Item* Storage_Array<Item>::getPointer(unsigned num)
+{
+	if (num >= _size) throw std::invalid_argument("Bad array index");
+	return _items + num;
+}
+
+template<typename Item> Item* Storage_Array<Item>::add(const Item& item)
 {
 	//if storage is empty
 	if (_items == 0)
@@ -104,7 +108,7 @@ template<typename Item> void Storage_Array<Item>::add(const Item& item)
 		_items = new Item(item);
 		_size = 1;
 		_memory = 1;
-		return;
+		return _items;
 	}
 	else
 	{
@@ -122,9 +126,9 @@ template<typename Item> void Storage_Array<Item>::add(const Item& item)
 		}
 		//add new
 		_items[_size - 1] = item;
-		return;
+		return _items + _size - 1;
 	}
-	return;
+	return _items;
 }
 
 //-----------------------------------------------------------------------
