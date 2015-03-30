@@ -3,7 +3,7 @@
 
 struct Point
 {
-	double x; 
+	double x;
 	double y;
 };
 
@@ -76,7 +76,7 @@ template<typename Item> void LinkedList<Item>::Add(Item p)
 	}
 }
 
-template<typename Item> void LinkedList<Item>::Del(int num) 
+template<typename Item> void LinkedList<Item>::Del(int num)
 {
 	if (num > _size)
 		throw std::invalid_argument("Bad index");
@@ -123,7 +123,7 @@ template<typename Item> int LinkedList<Item>::size()
 template<typename Item> void LinkedList<Item>::MoveNext()
 {
 	if (_CurrentCell->next)
-	_CurrentCell = _CurrentCell->next;
+		_CurrentCell = _CurrentCell->next;
 }
 
 template<typename Item> void LinkedList<Item>::Rewind()
@@ -131,4 +131,4 @@ template<typename Item> void LinkedList<Item>::Rewind()
 	_CurrentCell = _FirstCell;
 }
 
-#endif 
+#endif

@@ -72,7 +72,7 @@ template<typename Item> void storage<Item>::add(Item p)
 
 template<typename Item> void storage<Item>::del(int num)
 {
-	if (num == _size - 1) 
+	if (num == _size - 1)
 	{
 		Item*newItem = new Item[_size - 1];
 		for (unsigned i = 0; i < _size - 1; i++)
@@ -81,7 +81,7 @@ template<typename Item> void storage<Item>::del(int num)
 		_items = newItem;
 		--_size;
 	}
-	else 
+	else
 	{
 		Item*newItem = new Item[_size - 1];
 		for (unsigned i = num; i < _size - 1; i++)
