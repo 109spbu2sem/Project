@@ -138,20 +138,37 @@ public:
 	{
 		if (c1 == 0) return;
 		cell *parent = c1->parent;
-		//cell* T1 = c1->left;
 		cell*c2 = c1->right;
 		if (c2 == 0) return;
 		cell *T2 = c2->left;
-		//cell *T3 = c2->right;
-
 		c1->right = T2;
 		T2->parent = c1;
-
 		c2->left = c1;
 		c1->parent = c2;
-
 		c2->parent = parent;
-		if (parent) {
+		if (parent) 
+		{
+			if (parent->right == c1)
+				parent->right = c2;
+			else
+				parent->left = c2;
+		}
+	};
+
+	void rotCCW2(cell *c1)
+	{
+		if (c1 == 0) return;
+		cell*parent = c1->parent;
+		cell*c2 = c1->left;
+		if (c2 == 0) return;
+		cell*T2 = c2->right;
+		c1->left = T2;
+		T2->parent = c1;
+		c2->right = c1;
+		c1->parent = c2;
+		c2->parent = parent;
+		if (parent) 
+		{
 			if (parent->right == c1)
 				parent->right = c2;
 			else
