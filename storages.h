@@ -1,3 +1,5 @@
+#ifndef STORAGES_H
+#define STORAGES_H
 struct Point
 {
 	double x;
@@ -64,3 +66,4 @@ public:
 		return _size;
 	}
 };
+#endif STORAGES_H
