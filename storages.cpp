@@ -1,12 +1,10 @@
 #include <iostream>
 #include "storages.h"
 
-//----------------------------------------------------------------
-//--------------------------Points--------------------------------
-//----------------------------------------------------------------
+
 void storagepoints::add(Point p)
 {
-	//if storage is empty
+	
 	if (_points == 0)
 	{
 		_points = new Point;
@@ -18,8 +16,8 @@ void storagepoints::add(Point p)
 	else
 	{
 		_size++;
-		//copy old
-		Point *newpoints = new Point[_size];//temp
+		
+		Point *newpoints = new Point[_size];
 		for (unsigned i = 0; i < _size - 1; i++)
 			newpoints[i] = _points[i];
 		//erase old
@@ -38,13 +36,11 @@ Point& storagepoints::operator[] (unsigned num)
 	return _points[num];
 }
 
-//----------------------------------------------------------------
-//--------------------------Segments-----------------------------
-//----------------------------------------------------------------
+
 
 void storagesegments::add(Segment s)
 {
-	//if storage is empty
+	
 	if (_segments == 0)
 	{
 		_segments = new Segment;
@@ -55,13 +51,13 @@ void storagesegments::add(Segment s)
 	else
 	{
 		_size++;
-		//copy old
-		Segment *newseg = new Segment[_size];//temp
+		
+		Segment *newseg = new Segment[_size];
 		for (unsigned i = 0; i < _size - 1; i++)
 			newseg[i] = _segments[i];
-		//erase old
+		
 		delete[] _segments;
-		//add new
+		
 		newseg[_size - 1] = s;
 		_segments = newseg;
 		return;

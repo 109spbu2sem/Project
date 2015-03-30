@@ -57,37 +57,30 @@ template<typename Item> void LinkedList<Item>::add(Item a) {
 		++_size; 
 	}
 }
-template<typename Item> Item LinkedList<Item>::get(unsigned i) { //посылем в функцию номер(кол-во раз сколько мы будем 
-	//nextать элементы списка начина€ с первого так как мы можем только так "стрелочку перемещать") 
-	if (i > _size) // если больше размера то выдаст то что в скобках(св€зь c catch с мейне)
+template<typename Item> Item LinkedList<Item>::get(unsigned i) {
+	if (i > _size)
 		throw std::invalid_argument("Bad index");
-	_CurrentCell = _FirstCell; //стрелочку на первый
-	if (i == 1) //отдельно если 1 элемент добавлен
-		return _CurrentCell->data; //возвращаем координаты(ах да -> значит тоже самое что и ".*" просто так удобней(как хочешь))
-	for (unsigned j = 0; j < i - 1; ++j) { //некстаем до нужного элемента который хотим получить
+	_CurrentCell = _FirstCell; 
+	if (i == 1) 
+		return _CurrentCell->data;
+	for (unsigned j = 0; j < i - 1; ++j) { 
 		_CurrentCell = _CurrentCell->next;
 	}
 	return _CurrentCell->data;
 }
-template<typename Item> void LinkedList<Item>::del(int i) { //сам написал этой функции не было на паре (какой € молодец)
-	if (i > _size) //вспоминаем
+template<typename Item> void LinkedList<Item>::del(int i) { 
+	if (i > _size) 
 		throw std::invalid_argument("Bad index");
-	_CurrentCell = _FirstCell; //€ уже говорил дл€ чего
-	//if (i == 1) { //отдельно дл€ случа€ удалени€ первого элемента
-		//_FirstCell = _FirstCell->next; //естессна первый удалим значит первый это уже второй
-		//delete[] _CurrentCell; // удал€ем первый наконец
-		//--_size; //ну блин
-	//	return; // чтобы функци€ дальше не пошла работать
-	//}
-	for (int j = 0; j < i - 2; ++j) { //некстаем до нужного элемента(с циклом намудрил но работает правильно)
+	_CurrentCell = _FirstCell; 
+		
+	for (int j = 0; j < i - 2; ++j) {
 		_CurrentCell = _CurrentCell->next;
 	}
-	cell*newcur = new cell; //выдел€ем пам€ть 
-	newcur = _CurrentCell->next->next; // нуууу вроде пон€тно типа ссылаюсь через один элемент
-	//(ссылаюсь на следующий в котором ссылаюсь на следующий(вот такой вот парадокс(хз подход€щее ли слово(ой, все))))
-	delete[] _CurrentCell->next; //а да € дохожу тем циклом не до нужной €чейки а типа до предыдущей
-	//(т.е. мне следующую надо удалить) удал€ю
-	_CurrentCell->next = newcur; //теперь присваиваю той которую удалил на через следующий(ну блин сложно объ€снить)
+	cell*newcur = new cell; 
+	newcur = _CurrentCell->next->next; 
+	
+	delete[] _CurrentCell->next; 
+	_CurrentCell->next = newcur; 
 	--_size;
 }
 
