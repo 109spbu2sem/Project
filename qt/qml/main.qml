@@ -3,7 +3,6 @@ import QtQuick.Controls 1.2
 import QtQuick.Controls.Styles 1.2
 import QtQuick.Dialogs 1.2
 import QtQuick.Layouts 1.1
-import 'MenuDialogs' as MenuDialog
 
 ApplicationWindow
 {    
@@ -87,7 +86,7 @@ ApplicationWindow
             MenuItem
             {
                 text: qsTr("&About Paint")
-                onTriggered: MenuDialog.AboutDialog.open()
+                onTriggered: ;
             }
 
             MenuItem
@@ -242,6 +241,13 @@ ApplicationWindow
             }
     }
 
+    FileDialog
+    {
+        id: fileDialog
+
+        onAccepted: {  console.log('File added');  }
+
+    }
 
     GridLayout
     {
