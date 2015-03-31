@@ -10,7 +10,7 @@
 #include <iostream>
 #include <cmath>
 #include "Structures.h"
-//#include "LinkedList.h"
+//  #include "LinkedList.h"
 #include "LinkedList_Template.h"
 #include "Storage_Template.h"
 #include "TreeStorage.h"
@@ -331,7 +331,7 @@ int main(int argc, const char * argv[])
         LLV.MoveNext();
     }
 */
-    
+/*
     //  Test TreeStorage
     Tree_Storage<int, int> Tree;
     Tree.Add(0, 0);
@@ -340,7 +340,8 @@ int main(int argc, const char * argv[])
     
     if (Tree.HasA(1))
         cout << "There is 1" << endl;
-    
+    else cout << "There is no 1" << endl;
+*/    
     cout << endl;
     return 0;
 }

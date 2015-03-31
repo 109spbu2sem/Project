@@ -1,13 +1,13 @@
 //
-//  Point2SectionDistance.h
+//  IsPointOnSection.h
 //  Project_2Sem
 //
 //  Created by Никита Попов on 31.03.15.
 //  Copyright (c) 2015 Никита Попов. All rights reserved.
 //
 
-#ifndef Project_2Sem_Point2SectionDistance_h
-#define Project_2Sem_Point2SectionDistance_h
+#ifndef Project_2Sem_IsPointOnSection_h
+#define Project_2Sem_IsPointOnSection_h
 
 class IConstraint             //  Ограничение
 {
@@ -16,13 +16,12 @@ public:
     virtual double Diff(double *Par) = 0;  //  Массив частных производной по тем параметрам, которые используются в формул
 };
 
-class Point2SectionDistance: public IConstraint
+class IsPointOnSection: public IConstraint
 {
     Point P;
     Section S;
-    double *Dist;
 public:
-    Point2SectionDistance(Point & P, Section & S, double *Dist);
+    IsPointOnSection(Point & P, Section & S);
     virtual double Error()
     {
         double Error = (sqrt(pow((S.A.X - P.X), 2) + pow((S.A.Y - P.Y), 2)) + (sqrt(pow((S.B.X - P.X), 2) + pow((S.B.Y - P.Y), 2)))) - sqrt(pow((S.A.X - S.B.X), 2) + pow((S.A.Y - S.B.Y), 2));
