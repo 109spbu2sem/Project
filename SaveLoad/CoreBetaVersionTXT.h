@@ -33,7 +33,8 @@ template<typename Item> DynArray<Item>::DynArray()
 	_items = 0;
 	_size = 0;
 }
-template<typename Item> DynArray<Item>::~DynArray() {
+template<typename Item> DynArray<Item>::~DynArray() 
+{
 	if (_items)
 		delete[] _items;
 }

@@ -4,7 +4,7 @@
 using namespace std;
 
 
-void save(DynArray<point> action,DynArray<section> action2 )
+void save(DynArray<point>&action,DynArray<section>&action2 )
 {
 	int size_points = action.size();
 	fstream save1;
@@ -91,10 +91,11 @@ int main()
 		Section.add(s);
 	}
 	
-	//save(Point, Section);
+	save(Point, Section);
 	load(Point, Section);
 	int size_points = Point.size();
 	int size_sections = Section.size();
+	/*
 	for (int i = 0; i < size_points; i++)
 	{
 		cout << i + 1 << " x = " << Point.get(i).x << endl;
@@ -107,5 +108,6 @@ int main()
 		cout << i + 1 << " x2 = " << Section.get(i).b.x << endl;
 		cout << i + 1 << " y2 = " << Section.get(i).b.y << endl;
 	}
+	*/
 	return 0;
 }
