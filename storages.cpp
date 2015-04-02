@@ -1,12 +1,13 @@
 #include <iostream>
 #include "storages.h"
 
-//----------------------------------------------------------------
-//--------------------------Points--------------------------------
-//----------------------------------------------------------------
+//----------------------------------
+//-------------Points---------------
+//----------------------------------
+
 void storagepoints::add(Point p)
 {
-	//if storage is empty
+	// if storage is empty
 	if (_points == 0)
 	{
 		_points = new Point;
@@ -18,13 +19,13 @@ void storagepoints::add(Point p)
 	else
 	{
 		_size++;
-		//copy old
-		Point *newpoints = new Point[_size];//temp
+		// copy old
+		Point *newpoints = new Point[_size];
 		for (unsigned i = 0; i < _size - 1; i++)
-			newpoints[i] = _points[i];
-		//erase old
+			newpoints[i] = _points[i];// почему мы обращаемся к _points как к массиву, это массив чего и где он задается?
+		// erase old
 		delete[] _points;
-		//add new
+		// add new
 		newpoints[_size - 1] = p;
 		_points = newpoints;
 		return;
@@ -38,13 +39,13 @@ Point& storagepoints::operator[] (unsigned num)
 	return _points[num];
 }
 
-//----------------------------------------------------------------
-//--------------------------Segments-----------------------------
-//----------------------------------------------------------------
+//----------------------------------
+//-----------Segments---------------
+//----------------------------------
 
 void storagesegments::add(Segment s)
 {
-	//if storage is empty
+	// if storage is empty
 	if (_segments == 0)
 	{
 		_segments = new Segment;
@@ -56,7 +57,7 @@ void storagesegments::add(Segment s)
 	{
 		_size++;
 		//copy old
-		Segment *newseg = new Segment[_size];//temp
+		Segment *newseg = new Segment[_size];
 		for (unsigned i = 0; i < _size - 1; i++)
 			newseg[i] = _segments[i];
 		//erase old
@@ -67,10 +68,9 @@ void storagesegments::add(Segment s)
 		return;
 	}
 	return;
-}
-
+};
 Segment& storagesegments::operator[] (unsigned num)
 {
 	if (num >= _size) throw std::invalid_argument("Bad array index");
 	return _segments[num];
-}
+};

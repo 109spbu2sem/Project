@@ -1,3 +1,5 @@
+#ifndef STORAGES_H
+#define STORAGES_H
 struct Point
 {
 	double x;
@@ -5,62 +7,63 @@ struct Point
 };
 struct Segment
 {
-	Point o;//begin
-	Point d;//direction
+	Point o;
+	Point d;
 };
-//points
+// POINTS
 class storagepoints
 {
 private:
 	Point *_points;
 	unsigned _size;
 public:
-	//constructor
+	// constructor
 	storagepoints(void)
 	{
 		_points = 0;
 		_size = 0;
 	};
-	//destructor
+	// destructor
 	~storagepoints(void)
 	{
 		delete[] _points;
 	};
-	///we can work with storage as an array
+	// we can work with storage as an array
 	Point& operator[] (unsigned num);
-	///add elem
+	// add elements
 	void add(Point);
-	//get _size
+	// get size
 	unsigned size() const
 	{
 		return _size;
-	}
+	};
 };
-//segments
+// SEGMENTS
 class storagesegments
 {
 private:
 	Segment *_segments;
 	unsigned _size;
 public:
-	//constructor
+	// constructor
 	storagesegments(void)
 	{
 		*_segments;
 		_size = 0;
 	};
-	//destructor
+	// destructor
 	~storagesegments(void)
 	{
 		delete[] _segments;
 	};
-	///we can work with storage as an array
+	// we can work with storage as an array
 	Segment& operator[] (unsigned num);
-	///add elem
+	// add elements
 	void add(Segment);
-	//get _size
+	// get _size
 	unsigned size() const
 	{
 		return _size;
-	}
+	};
 };
+#endif STORAGES_H
