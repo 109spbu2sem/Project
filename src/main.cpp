@@ -5,6 +5,9 @@
 #include "tree_storage.h"
 #include "vec2.h"
 
+using std::cout;
+using std::endl;
+
 class IConstraint{
 public:
 	virtual double error() = 0;
@@ -29,7 +32,7 @@ public:
 
 		return 0;
 	};
-}
+};
 
 
 
@@ -43,17 +46,37 @@ public:
 	double diff(double *par){
 
 		if (par == p1)
-			return ...;
+			return 0;
 		if (par == p2) 
-			return ...
+			return 0;
 
 		return 0;
 	};
-}
-
+};
 
 int main()
 {
+	tree_storage<int,double> ts;
+	ts.add(1,2.3);
+	ts.add(2,23.3);
+	ts.add(4,443.3);
+	ts.add(3,3.2);
+	ts.add(5,5.2);
+	ts.add(6,552.2);
+	ts.add(7,7.2);
+	ts.add(8,2);
+
+	cout << ts.size() <<endl;
+
+	tree_storage<int,double>::Viewer<int,double> v(ts);
+
+	do {
+		cout << v.getValue().a << " : " << v.getValue().b << endl;
+		v.moveNext();
+	}
+	while (v.canMoveNext());
+
+
 	storage_template<Point> s1;
 	Point p;
 	s1.add(p);
@@ -64,13 +87,6 @@ int main()
 		pv.getValue().x +=2;
 		pv.moveNext();
 	}
-
-	tree_storage<int,double> ts;
-	ts.add(1,2.3);
-	ts.add(2,23.3);
-	ts.add(4,443.3);
-	std::cout << "ts.hasA(2)" << ts.hasA(2) << std::endl;
-	std::cout << "ts.hasA(222)" << ts.hasA(222) << std::endl;
 
 
 	pv = s1.getStartingViewer();

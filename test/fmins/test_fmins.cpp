@@ -1,5 +1,8 @@
 #include <iostream>
+#include "Constraint.h"
+
 using namespace std;
+
 double err(double D, double x1,double y1,double x2,double y2){
 	return D - sqrt((x1-x2)*(x1-x2)+(y1-y2)*(y1-y2));
 }
@@ -15,45 +18,51 @@ double dfdy2(double D, double x1,double y1,double x2,double y2){
 	return 2*err(D,x1,y1,x2,y2)*(y1-y2)/sqrt((x1-x2)*(x1-x2)+(y1-y2)*(y1-y2));
 }
 
-
-int main(){
-	double x1 = 1;
-	double y1 = 2;
-	double x2 = 4;
-	double y2 = 1;
-	double D = 1;	
+void find_para(IConstraint *constr,double **para ,int num_par){
 	const double f_epsi = 1e-6;
-	double f_cur = f(D,x1,y1,x2,y2);
+	double f_cur = constr->error();
 	cout << "Starting error" << f_cur <<endl;
 	double f_prev = 0; 
 	do{		
 		f_prev = f_cur;
-		double dx = dfdx2(D,x1,y1,x2,y2);
-		double dy = dfdy2(D,x1,y1,x2,y2);
+		
 		double step_min = 0.000001;
 		double step_max = 1000;
-		double fmin = f(D,x1,y1,x2+step_min*dx,y2+step_min*dy);
-		double fmax = f(D,x1,y1,x2+step_max*dx,y2+step_max*dy);
-		double step1 = step_min + 0.25*(step_max - step_min);
-		double step2 = step_min + 0.75*(step_max - step_min);
-		double f1 = f(D,x1,y1,x2+step1*dx,y2+step1*dy);
-		double f2 = f(D,x1,y1,x2+step2*dx,y2+step2*dy);
+		// Вычислим приращение вектора параметров через градиент ошибки
+		double *dx = new double[num_par];
+		for (int k = 0;k < num_par;++k)
+			dx[k] = -step_min*constr->diff(para[k]);
+		// Изменим значения параметров
+		for (int k = 0;k<num_par;++k)
+			*para[k] += dx[k];
+		delete[] dx;
 
-		while ( abs(f1-f2) >f_epsi ) {
-			if (f1 < f2) step_max = step2;
-			else step_min = step1;
-			step1 = step_min + 0.25*(step_max - step_min);
-			step2 = step_min + 0.75*(step_max - step_min);
-			f1 = f(D,x1,y1,x2-step1*dx,y2-step1*dy);
-			f2 = f(D,x1,y1,x2-step2*dx,y2-step2*dy);
-		}	
-		cout << "s1" << step1 << endl;
-		x2 -= step1*dx;
-		y2 -= step1*dy;
-		f_cur = f(D,x1,y1,x2,y2);
-		//cout << "Error reached = " << f_cur << endl;
+		f_cur = constr->error();
+		cout << "Error reached = " << f_cur << endl;
 	}while(abs(f_prev - f_cur) > f_epsi);
 	cout << "Error reached = " << f_cur << endl;
-	cout <<"x2 = " << x2 << " y2 = " << y2 << endl;
+}
+
+
+int main(){
+	struct point{
+		double x,y;
+	};
+	point center1 = {1,2};
+	point center2 = {0,1};
+	double R1  = 0.1;
+	double R2 = 0.3;
+
+	ContactCircle *ccconstr = new ContactCircle(&center1.x,&center1.y,&center2.x,&center2.y,&R1,&R2);
+	double *paraddr[6];
+	paraddr[0] = &center1.x;
+	paraddr[1] = &center1.y;
+	paraddr[2] = &center2.x;
+	paraddr[3] = &center2.y;
+	paraddr[4] = &R1;
+	paraddr[5] = &R2;
+	find_para(ccconstr,paraddr,6);
+
+
 	return 0;
 }

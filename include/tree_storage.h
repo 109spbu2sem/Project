@@ -2,55 +2,95 @@
 #define _TREESTOR_H
 template<typename A,typename B> class tree_storage
 {
-	struct cell{
-		cell *left;
-		cell *right;
-		cell *parent;
+public:
+	struct tuple{
 		A a;
 		B b;
 	};
-	cell *_root;
-	int heightdiff(cell *);
-	int height(cell *);
-	void rotCCW(cell *);
-public:
-	tree_storage(){_root = 0;};
+	tree_storage(){_root = 0;_size = 0;};
 	~tree_storage(){};
 
+
+	template<typename A,typename B>class Viewer{
+		typename tree_storage<A,B>::cell *_cur;		
+	public:		
+		Viewer(){_cur = 0;}
+		Viewer(tree_storage&s){
+			_cur = s._root;			
+			if (_cur)
+				while (_cur->left)
+					_cur = _cur->left;				
+		}
+
+		typename tree_storage::tuple & getValue(){
+			if (_cur) return _cur->data;
+			throw std::runtime_error("Invalid viewer");};
+
+		void moveNext(){
+			if (_cur->right != 0){
+				_cur = _cur->right;
+				while (_cur->left)
+					_cur = _cur->left;
+			}
+			else{				
+				if (_cur->parent){
+					if (_cur->parent->left == _cur) 
+						// Находимся слева от родителя
+						_cur = _cur->parent;
+					else{
+						// Находимся справа от родителя
+						while (_cur->parent && _cur == _cur->parent->right)
+							_cur = _cur->parent;
+						_cur = _cur->parent;
+					}
+				}
+			}
+			
+		};
+		bool canMoveNext(){
+			if ( _cur == 0) return false;
+			return true;
+		};
+	};
 	void add(const A& a,const B& b ){
 		if (_root == 0){
 			_root = new cell;
 			_root->parent = 0;
-			_root->a = a;
-			_root->b = b;
+			_root->data.a = a;
+			_root->data.b = b;
 			_root->left = _root->right = 0;
 		}
 		else{
 			cell *newcell = new cell;
-			newcell->a = a;
-			newcell->b = b;
+			newcell->data.a = a;
+			newcell->data.b = b;
 			newcell->left = 0;
 			newcell->right = 0;
 
 			cell *cur = _root;
 			cell *parent = 0;
 			while (cur){
-				if (cur->a == a) cur->b = b;
+				if (cur->data.a == a){
+					cur->data.b = b;
+					return;
+				}
+					
 				parent = cur;
-				if (cur->a < a) 					
+				if (cur->data.a < a) 					
 					cur = cur->right;
 				else cur = cur->left;
 			}
-			if (parent->a < a) parent->right = newcell;
+			if (parent->data.a < a) parent->right = newcell;
 			else parent->left = newcell;
 			newcell->parent = parent;
 		}
+		++_size;
 	}
 	bool hasA(const A& a){
 		cell *cur = _root;
 		while (cur){			
-			if (cur->a == a ) return true;
-			if (cur->a < a) cur = cur->right;
+			if (cur->data.a == a ) return true;
+			if (cur->data.a < a) cur = cur->right;
 			else cur = cur->left;
 		}
 		return false;
@@ -64,6 +104,22 @@ public:
 		}
 		throw 1;
 	};
+	unsigned size()const {return _size;};
+
+private:
+		struct cell{
+		cell *left;
+		cell *right;
+		cell *parent;
+		tuple data;
+	};
+	cell *_root;
+	unsigned _size;
+	int heightdiff(cell *);
+	int height(cell *);
+	void rotCCW(cell *);
+
+	friend class Viewer<A,B>;
 };
 
 template<typename A,typename B> int tree_storage<A,B>::heightdiff(cell *c){
