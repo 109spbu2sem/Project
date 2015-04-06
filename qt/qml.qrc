@@ -1,6 +1,6 @@
 <RCC>
     <qresource prefix="/">
-    <file>qml/main.qml</file>
-    <file>qml/MenuDialogs/AboutDialog.qml</file>
+        <file>main.qml</file>
+        <file>MainForm.ui.qml</file>
     </qresource>
 </RCC>

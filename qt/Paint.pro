@@ -1,9 +1,9 @@
 TEMPLATE = app
-CONFIG += console
 
-QT += qml quick widgets
+QT += qml quick
 
-SOURCES += main.cpp
+SOURCES += main.cpp \
+    GUI.cpp
 
 RESOURCES += qml.qrc
 
@@ -13,8 +13,5 @@ QML_IMPORT_PATH =
 # Default rules for deployment.
 include(deployment.pri)
 
-FORMS +=
-
-DISTFILES += \
-    qml/main.qml \
-    qml/MenuDialogs/AboutDialog.qml
+HEADERS += \
+    GUI.h
