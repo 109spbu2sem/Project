@@ -22,9 +22,38 @@ public:
 	void value(int num1, int num2);
 	//Size
 	int size();
-private:
-	Item*_items;
-	int _size;
+	template<typename Item> class Viewer{
+		typename DynArray::Item*_cur;
+		typename DynArray::_item*_items;
+		unsigned _count;
+	public:
+		Viewer() {
+			*_cur = 0;
+			*_items = 0;
+			_count = 0;
+		}
+		Viewer(DynArray<Item> s) {
+			_items = s._items;
+		}
+		void MoveNext() {
+			if (_count + 1 < _size) {
+				++count;
+				_cur = _items[count];
+			}
+			else
+				throw std::invalid_argument("Bad Index");
+		}
+		bool CanMoveNext() {
+			if (_count + 1 < _size) true;
+			else false;
+		}
+		void Return() {
+			count = 0;
+		}
+	};
+	private:
+		Item*_items;
+		int _size;
 };
 template<typename Item> DynArray<Item>::DynArray()
 {
@@ -79,8 +108,8 @@ template<typename Item> Item DynArray<Item>::get(int num) {
 template<typename Item> int DynArray<Item>::size() {
 	return _size;
 }
-template<typename Item> void DynArray<Item>::value(int num1, int num2) {
+/*template<typename Item> void DynArray<Item>::value(int num1, int num2) {
 	_items[num2].b.x = _items[num2].a.x + (_items[num1].b.x - _items[num1].a.x);
 	_items[num2].a.y = _items[num2].b.y - (_items[num1].b.y - _items[num1].a.y);
-}
+}*/
 #endif STORAGE_H
