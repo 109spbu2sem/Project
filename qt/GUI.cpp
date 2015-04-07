@@ -8,3 +8,10 @@
 
 #include "GUI.h"
 #include <QQmlApplicationEngine>
+
+QString Scene::changeStatusBar(QString String)
+{
+    emit statusBarChanged();
+
+    return String;
+}

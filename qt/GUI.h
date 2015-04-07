@@ -9,8 +9,34 @@
 #ifndef __Project_2Sem__GUI__
 #define __Project_2Sem__GUI__
 
+//  C++
 #include <stdio.h>
+//  QT
 #include <QQmlApplicationEngine>
+#include <QObject>
+//  Custom
+#include "Structures.h"
+
+class Scene : public QObject
+{
+    Q_OBJECT
+
+public:
+    Scene();
+
+    ~Scene();
+
+public slots:
+    void requestPaint(Point &P);
+    QString changeStatusBar(QString String);
+
+    signals:
+    void sceneChanged();
+    void statusBarChanged();
+
+private:
+
+};
 
 class GUI
 {
@@ -31,7 +57,7 @@ public:
     {
         int xpos = P.X;
         int ypos = P.Y;
-        QObject mainCanvas.requestPaint();
+        //QObject mainCanvas.requestPaint();
     }
     
 //    Q_INVOKABLE void Draw(Segment &S)

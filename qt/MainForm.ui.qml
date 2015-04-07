@@ -4,6 +4,7 @@ import QtQuick.Window 2.2
 import QtQuick.Controls.Styles 1.2
 import QtQuick.Dialogs 1.2
 import QtQuick.Layouts 1.1
+import scene.module 1.0
 
 GridLayout
 {
@@ -41,6 +42,7 @@ GridLayout
                     xpos = mouseX
                     ypos = mouseY
                     mainCanvas.requestPaint()
+                    statusBar.text = changeStatusBar("Project changed")
                 }
                 onMouseXChanged:
                 {

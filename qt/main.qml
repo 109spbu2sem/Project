@@ -4,6 +4,7 @@ import QtQuick.Window 2.2
 import QtQuick.Controls.Styles 1.2
 import QtQuick.Dialogs 1.2
 import QtQuick.Layouts 1.1
+import scene.module 1.0
 
 ApplicationWindow
 {
@@ -18,16 +19,6 @@ ApplicationWindow
     y: 80
     width: 1280
     height: 720
-
-    statusBar:
-        StatusBar
-        {
-            RowLayout
-            {
-                anchors.fill: parent
-                Label { text: "Ready for work" }
-            }
-        }
 
     menuBar:
         MenuBar
@@ -257,8 +248,15 @@ ApplicationWindow
     FileDialog
     {
         id: fileDialog
-
-        onAccepted: {  console.log('File added');  }
+        title: qsTr("Select a file")
+        selectMultiple: false
+        selectFolder: false
+        nameFilters: [ "All files (*)" ]
+        selectedNameFilter: "All files (*)"
+        onAccepted:
+        {
+            statusBar.text = fileUrl.toString().add("file://", "")
+            console.log('File added');  }
 
     }
 
@@ -267,4 +265,20 @@ ApplicationWindow
         width: parent.width - 80
         height: parent.height - 80
     }
+
+    statusBar:
+        StatusBar
+        {
+            RowLayout
+            {
+                anchors.fill: parent
+
+                Label
+                {
+                    id: statusBar
+
+                    text: "Ready for work"
+                }
+            }
+        }
 }
