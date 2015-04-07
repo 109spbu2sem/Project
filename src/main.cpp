@@ -2,46 +2,81 @@
 #include "storages.h"
 #include "storage.h"
 #include "linkedlist.h"
-#include "vec2.h"
 #include "tree_storage.h"
+#include "vec2.h"
 
-class  Iconstaint{
+using std::cout;
+using std::endl;
+
+class IConstraint{
 public:
-	virtual double error()=0;
-	virtual double diff(double *par)=0;
+	virtual double error() = 0;
+	virtual double diff(double *par) = 0;
 };
-class Point2PointDistance:public Iconstaint{
+
+class Point2PointDistance:public IConstraint{
 	double *p1x,*p1y,*p2x,*p2y;
 	double *dist;
 public:
-	Point2PointDistance(Point & p1,Point& p2,double *distance);
+	Point2PointDistance(Point & p1,Point& p2,double * distance);
 	virtual double error(){
-		double dist1=sqrt((*p1x-*p2x)*(*p1x-*p2x)+(*p1y-*p2y)*(*p1y-*p2y));
-		return (dist1-*dist)*(dist1-*dist);
+		double dist1 = sqrt((*p1x - *p2x)*(*p1x - *p2x) + (*p1y -*p2y)*(*p1y - *p2y));
+		return (dist1 - *dist)*(dist1 - *dist);
 	};
 	virtual double diff(double *par){
-		if(par==p1){
-			return ;
+		if (par == p1x){
+			return 0;
 		}
 
+
+
+		return 0;
 	};
-}
+};
+
+
+
+
+
 
 class Constraint2{
-	double *p1,*p2,*p3,*p4;
+	double * p1,*p2,*p3,*p4;
 public:
 	double error();
 	double diff(double *par){
-		if(par==p1)
-			return ...;
-		if(par--p2)
-			return ...;
-		return 0;
 
-}
+		if (par == p1)
+			return 0;
+		if (par == p2) 
+			return 0;
+
+		return 0;
+	};
+};
 
 int main()
 {
+	tree_storage<int,double> ts;
+	ts.add(1,2.3);
+	ts.add(2,23.3);
+	ts.add(4,443.3);
+	ts.add(3,3.2);
+	ts.add(5,5.2);
+	ts.add(6,552.2);
+	ts.add(7,7.2);
+	ts.add(8,2);
+
+	cout << ts.size() <<endl;
+
+	tree_storage<int,double>::Viewer<int,double> v(ts);
+
+	do {
+		cout << v.getValue().a << " : " << v.getValue().b << endl;
+		v.moveNext();
+	}
+	while (v.canMoveNext());
+
+
 	storage_template<Point> s1;
 	Point p;
 	s1.add(p);
@@ -53,18 +88,13 @@ int main()
 		pv.moveNext();
 	}
 
-	tree_storage<int,double> ts;
-	ts.add(1,2.3);
-	ts.add(2,23.3);
-	ts.add(4,443.3);
-	std::cout << "ts.hasA(2)" << ts.hasA(2) << std::endl;
-	std::cout << "ts.hasA(222)" << ts.hasA(222) << std::endl;
 
 	pv = s1.getStartingViewer();
 	while (pv.canMoveNext()){
 		std::cout << pv.getValue().x;
 		pv.moveNext();
 	}
+
 
 
 
@@ -84,6 +114,10 @@ int main()
 		lv1.moveNext();
 		lv2.moveNext();
 	}
+	
+
+
+
 
 
 
@@ -102,9 +136,7 @@ int main()
 	linkedlist sp;
 
 	sp.add(p);
-	sp.add(p);
-	
-
+	sp.add(p);	
 
 
 
