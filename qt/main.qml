@@ -31,7 +31,11 @@ ApplicationWindow
                 {
                     text: qsTr("&Open new...")
                     shortcut: "Ctrl+Shift+N"
-                    onTriggered: loadButton.clicked();
+                    onTriggered:
+                    {
+                        statusBar.text = qsTr('<font color="green">New project opened<font>')
+                        loadButton.clicked()
+                    }
                 }
 
                 MenuSeparator {}
@@ -40,28 +44,44 @@ ApplicationWindow
                 {
                     text: qsTr("&Open existing...")
                     shortcut: "Ctrl+O"
-                    onTriggered: loadButton.clicked();
+                    onTriggered:
+                    {
+                        statusBar.text = qsTr('<font color="green">Project opened<font>')
+                        loadButton.clicked()
+                    }
                 }
 
                 MenuItem
                 {
                     text: qsTr("&Save...")
                     shortcut: "Ctrl+S"
-                    onTriggered: console.log("Save action triggered");
+                    onTriggered:
+                    {
+                        statusBar.text = qsTr('<font color="green">Project saved<font>')
+                        console.log("Save action triggered")
+                    }
                 }
 
                 MenuItem
                 {
                     text: qsTr("&Print")
                     shortcut: "Ctrl+P"
-                    onTriggered: console.log("Print action triggered");
+                    onTriggered:
+                    {
+                        statusBar.text = qsTr('<font color="green">Project printed<font>')
+                        console.log("Print action triggered")
+                    }
                 }
 
                 MenuItem
                 {
                     text: qsTr("Close project")
                     shortcut: "Ctrl+E"
-                    onTriggered: console.log("Close action triggered");
+                    onTriggered:
+                    {
+                        statusBar.text = qsTr('<font color="black">Project closed<font>')
+                        console.log("Close action triggered")
+                    }
                 }
             }
 
@@ -255,16 +275,217 @@ ApplicationWindow
         selectedNameFilter: "All files (*)"
         onAccepted:
         {
-            statusBar.text = fileUrl.toString().add("file://", "")
-            console.log('File added');  }
+            statusBar.text = fileUrl.toString()
+            console.log('File added')
+        }
 
     }
 
-    MainForm
+    GridLayout
     {
-        width: parent.width - 80
+        columns: 2
+        columnSpacing: 40
+
+        x: 40
+        y: 35
+        width:  parent.width - 80
         height: parent.height - 80
+
+        Rectangle
+        {
+            id: backgroundRect
+
+            width: 860
+            height: 640
+            Layout.fillWidth: true
+            Layout.fillHeight: true
+            Layout.minimumWidth: 600
+            Layout.minimumHeight: 400
+
+            color: "white"
+
+            Canvas
+            {
+                id: mainCanvas
+
+                anchors.fill: parent
+
+                MouseArea
+                {
+                    anchors.fill: parent
+
+                    onPressed:
+                    {
+                        xpos = mouseX
+                        ypos = mouseY
+                        mainCanvas.requestPaint()
+                        statusBar.text = qsTr('<font color="red">Project changed<font>')
+                    }
+                    onMouseXChanged:
+                    {
+                        xpos = mouseX
+                        ypos = mouseY
+                        mainCanvas.requestPaint()
+                    }
+                    onMouseYChanged:
+                    {
+                        xpos = mouseX
+                        ypos = mouseY
+                        mainCanvas.requestPaint()
+                    }
+                }
+
+                onPaint:
+                {
+                    var ctx = getContext('2d')
+                    ctx.fillStyle = "lightblue"
+                    ctx.fillRect(xpos - 2, ypos - 1, 5, 5)
+
+                }
+            }
+        }
+
+        GridLayout
+        {
+            width: 300
+            rows: 2
+            rowSpacing: 40
+
+            Rectangle
+            {
+                x: 0
+                y: 0
+                width: 300
+                height: 500
+                Layout.fillHeight: true
+
+                Label
+                {
+                    id: objectListLabel
+
+                    x: 0
+                    y: 0
+                    height: 20
+                    Layout.row: 1
+
+                    text: qsTr("List of all objects:")
+                }
+
+                Text
+                {
+                    id: textList
+                    enabled: true
+
+                    x: 0
+                    y: 20
+                    width: 300
+                    height: 480
+                    Layout.row: 2
+
+                    font.bold: true
+                    horizontalAlignment: Text.AlignLeft
+                    wrapMode: Text.NoWrap
+                    textFormat: Text.PlainText
+                    font.pixelSize: 16
+                }
+            }
+
+            GridLayout
+            {
+                id: buttonGridLayout
+
+                y: parent.height
+
+                rows: 2
+                columns: 2
+                Layout.row: 2
+                rowSpacing: 10
+                columnSpacing: 10
+
+                Item
+                {
+                    x: 0
+                    y: -40
+                    width: 145
+                    height: 42
+
+                    ToolButton
+                    {
+                        id: addObjectButton
+
+                        activeFocusOnPress: true
+                        onClicked: addObjectDialog.open()
+
+                        width: 145
+                        height: 42
+
+                        text: "Add object"
+                    }
+                }
+
+                Item
+                {
+                    x: 0
+                    y: 12
+                    width: 145
+                    height: 42
+
+                    ToolButton
+                    {
+                        id: addRuleButton
+
+                        activeFocusOnPress: true
+                        enabled: false
+
+                        width: 145
+                        height: 42
+
+                        text: "Add rule"
+                    }
+                }
+
+                Item
+                {
+                    x: 155
+                    y: -40
+                    width: 145
+                    height: 42
+
+                    ToolButton
+                    {
+                        id: loadButton
+
+                        activeFocusOnPress: true
+                        onClicked: {  fileDialog.open(); }
+
+                        width: 145
+                        height: 42
+
+                        text: "Load..."
+                    }
+                }
+
+                Item
+                {
+                    x: 155
+                    y: 12
+                    width: 145
+                    height: 42
+
+                    ToolButton
+                    {
+                        id: saveButton
+
+                        width: 145
+                        height: 42
+
+                        text: "Save..."
+                    }
+                }
+            }
+        }
     }
+
 
     statusBar:
         StatusBar
@@ -277,7 +498,7 @@ ApplicationWindow
                 {
                     id: statusBar
 
-                    text: "Ready for work"
+                    text: "<font color='green'>Ready for work<font>"
                 }
             }
         }

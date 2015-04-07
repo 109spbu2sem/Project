@@ -17,9 +17,11 @@
 //  Custom
 #include "Structures.h"
 
-class Scene : public QObject
+class GUI : public QObject
 {
     Q_OBJECT
+    Q_PROPERTY(QString statusBar READ statusBar WRITE setStatusBar NOTIFY statusBarChanged)
+    //  Q_PROPERTY(Point mousePosition READ mousePosition WRITE setMousePosition NOTIFY mousePositionChanged)
 
 public:
     Scene(){}
@@ -28,52 +30,17 @@ public:
 
 public slots:
     void requestPaint(Point &P){}
-    QString changeStatusBar(QString String);
+
+    QString statusBar();
+    void setStatusBar(const QString String);
 
     signals:
-    void sceneChanged();
     void statusBarChanged();
 
 private:
+    QString _statusBar;
 
 };
 
-class GUI
-{
-    QQmlApplicationEngine engine;
-
-public:
-    GUI()
-    {
-        engine.load(QUrl(QStringLiteral("qrc:/main.qml")));
-    }
-    
-    ~GUI()
-    {
-        //delete &engine;
-    }
-    
-    Q_INVOKABLE void Draw(Point &P)
-    {
-        int xpos = P.X;
-        int ypos = P.Y;
-        //QObject mainCanvas.requestPaint();
-    }
-    
-//    Q_INVOKABLE void Draw(Segment &S)
-//    {
-        
-//    }
-    
-//    Q_INVOKABLE void Draw(Arc &A)
-//    {
-        
-//    }
-    
-//    Q_INVOKABLE void WriteError(unsigned int ErrorKey)
-//    {
-        
-//    }
-};
 
 #endif /* defined(__Project_2Sem__GUI__) */

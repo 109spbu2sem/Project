@@ -9,9 +9,16 @@
 #include "GUI.h"
 #include <QQmlApplicationEngine>
 
-QString Scene::changeStatusBar(QString String)
+QString Scene::statusBar()
 {
-    emit statusBarChanged();
+    return _statusBar;
+}
 
-    return String;
+void Scene::setStatusBar(const QString statusBarText)
+{
+    if (!(_statusBar == statusBarText))
+    {
+        _statusBar = statusBarText;
+        emit statusBarChanged();
+    }
 }
