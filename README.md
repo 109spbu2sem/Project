@@ -22,11 +22,14 @@
     main.cpp  
     /include  
       Structures.h  
-      ~Storage.h  
+      ~ Storage.h  
       Storage_Template.h  
-      ~LinkedList.h  
+      ~ LinkedList.h  
       LinkedList_Template.h   
       TreeStorage.h  
+      /constraints  
+        IsPointOnSection.h  
+        ~ Point2SectionDistance.h  
     /src  
       DynArrayP.cpp  
       DynArrayS.cpp  
@@ -34,10 +37,11 @@
       TreeStorage.cpp  
     /qt
       main.cpp  
-      /qml  
-        main.qml  
-        /MenuDialogs  
-          AboutDialog.qml  
+      GUI.cpp  
+      GUI.h  
+      Structure.h  
+      main.qml  
+      MainForm.ui.qml  
       qml.qrc  
       Paint.pro  
       Paint.pro.user  
@@ -59,7 +63,7 @@
 **Решение в `test.cpp`**  
 
 ### 2. Дополнить программу
-1. Написать программу, позволяющую пользователю вводить информацию о точках и отрезках + проверяющую, принадлежат ли какие-либо введенные точки введенным отрезкам. " `%point_name%` принадлежит `%segment_name%` "  
+1. ~~Написать программу, позволяющую пользователю вводить информацию о точках и отрезках + проверяющую, принадлежат ли какие-либо введенные точки введенным отрезкам. " `%point_name%` принадлежит `%segment_name%` "~~  
 **Решение в `IsPointOnSection.h`**  
 2. Избавиться от `[]` в `Point &LinkedList::operator[] ()`  
 3. ~~В `LinkedList.h` дописать `Point & GetCurrent` *50 строка*~~  
