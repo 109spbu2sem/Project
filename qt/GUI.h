@@ -22,12 +22,12 @@ class Scene : public QObject
     Q_OBJECT
 
 public:
-    Scene();
+    Scene(){}
 
-    ~Scene();
+    ~Scene(){}
 
 public slots:
-    void requestPaint(Point &P);
+    void requestPaint(Point &P){}
     QString changeStatusBar(QString String);
 
     signals:
