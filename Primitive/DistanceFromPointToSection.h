@@ -32,7 +32,7 @@ public:
 	}
 	double GetY(double x, double y, double x1, double y1, double x2, double y2)
 	{
-		double X, Y;
+		double Y;
 		Y = (-x*x2*y2 + y*y1*y2 + x*x2*y1 - y*y1*y1 + x1*x2*y2 - x2*x2*y1) / (y1*y2 - y1*y1 + x1*x2 - x2*x2);
 		return Y;
 	}
@@ -66,6 +66,11 @@ public:
 		if (par == _y2) return 2 * (*_d - (sqrt(error()) + *_d))*(*_y2 - (GetY(*_x, *_y, *_x1, *_y1, *_x2, *_y2))) / sqrt((sqrt(error()) + *_d));
 		if (par == _d) return 2 * (*_d - (sqrt(error()) + *_d));
 		return 0;
+	};
+
+	unsigned type()
+	{
+		return 1;
 	};
 };
 #endif

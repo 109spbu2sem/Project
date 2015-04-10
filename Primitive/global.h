@@ -9,6 +9,7 @@ class IConstraint
 public:
 	virtual double error() = 0;
 	virtual double diff(double *par) = 0;
+	virtual unsigned type() = 0;
 };
 
 
