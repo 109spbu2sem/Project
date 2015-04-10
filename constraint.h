@@ -32,6 +32,10 @@ public:
 			return 2 * (*_d - length(*_p1x, *_p1y, *_p2x, *_p2y));
 		return 0;
 	}
+	unsigned type()
+	{
+		return 1;
+	}
 };
 
 
