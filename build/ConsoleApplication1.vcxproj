@@ -17,10 +17,14 @@
     <ClCompile Include="..\src\structs.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="..\include\Advanced_hasher.h" />
+    <ClInclude Include="..\include\brute_hasher.h" />
+    <ClInclude Include="..\include\hash_storage.h" />
     <ClInclude Include="..\include\linkedlist.h" />
     <ClInclude Include="..\include\storages.h" />
     <ClInclude Include="..\include\structs.h" />
     <ClInclude Include="..\include\tree_storage.h" />
+    <ClInclude Include="..\include\twothreetree.h" />
     <ClInclude Include="..\include\vec2.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">

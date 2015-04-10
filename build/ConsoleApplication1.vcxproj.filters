@@ -38,5 +38,17 @@
     <ClInclude Include="..\include\tree_storage.h">
       <Filter>Заголовки</Filter>
     </ClInclude>
+    <ClInclude Include="..\include\twothreetree.h">
+      <Filter>Заголовки</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\hash_storage.h">
+      <Filter>Заголовки</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\brute_hasher.h">
+      <Filter>Заголовки</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\Advanced_hasher.h">
+      <Filter>Заголовки</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

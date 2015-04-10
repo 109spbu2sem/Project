@@ -4,6 +4,9 @@
 #include "linkedlist.h"
 #include "tree_storage.h"
 #include "vec2.h"
+#include "brute_hasher.h"
+#include "advanced_hasher.h"
+#include "hash_storage.h"
 
 using std::cout;
 using std::endl;
@@ -56,6 +59,27 @@ public:
 
 int main()
 {
+	double d = 0.123123;
+
+	unsigned sum = 0;
+	unsigned char *pc = (unsigned char *)(&d);
+	for (int k =0;k< sizeof(d);++k){
+		sum += *pc;
+		cout << int(*pc++)<<endl;
+	}
+	cout << "Sum = " << sum << endl;
+
+	BruteHasher<double> b;
+	cout << b(d) <<endl;
+
+	hash_storage<double,int> stor;
+	hash_storage<double,int,AdvancedHasher<double> > storAdv;
+
+
+
+
+
+
 	tree_storage<int,double> ts;
 	ts.add(1,2.3);
 	ts.add(2,23.3);
