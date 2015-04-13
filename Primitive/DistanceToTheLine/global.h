@@ -2,7 +2,7 @@
 #define PI 3.1415926535897932384
 
 double length(double, double, double, double);
-double DistancePointLine(double, double, double, double, double, double, double);
+double DistPointLine(double, double, double, double, double, double, double);
 
 class IConstraint
 {

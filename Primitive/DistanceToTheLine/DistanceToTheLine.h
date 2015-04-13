@@ -3,15 +3,15 @@
 #include "global.h"
 #include <cmath>
 
-double length(double x1, double y1, double x2, double y2)
-{
-	return sqrt((x1 - x2)*(x1 - x2) + (y1 - y2)*(y1 - y2));
-}
-
-
 class DistanceToTheLine :public IConstraint
 {
 	double*_x, *_y, *_x1, *_y1, *_x2, *_y2, *_d;
+
+
+	double length(double x1, double y1, double x2, double y2);
+	double GetX(double x, double y, double x1, double y1, double x2, double y2);
+	double GetY(double x, double y, double x1, double y1, double x2, double y2);
+	double DistPointLine(double x, double y, double x1, double y1, double x2, double y2);
 public:
 	DistanceToTheLine(double*x, double *y, double *x1, double *y1, double *x2, double *y2, double *d)
 	{
@@ -23,26 +23,6 @@ public:
 		_y2 = y2;
 		_d = d;
 	}
-	double GetX(double x, double y, double x1, double y1, double x2, double y2)
-	{
-		double X, Y;
-		Y = (-x*x2*y2 + y*y1*y2 + x*x2*y1 - y*y1*y1 + x1*x2*y2 - x2*x2*y1) / (y1*y2 - y1*y1 + x1*x2 - x2*x2);
-		X = (y1*Y + x*x2 - y*y1) / x2;
-		return X;
-	}
-	double GetY(double x, double y, double x1, double y1, double x2, double y2)
-	{
-		double Y;
-		Y = (-x*x2*y2 + y*y1*y2 + x*x2*y1 - y*y1*y1 + x1*x2*y2 - x2*x2*y1) / (y1*y2 - y1*y1 + x1*x2 - x2*x2);
-		return Y;
-	}
-	double DistPointLine(double x, double y, double x1, double y1, double x2, double y2)
-	{
-		double X = GetX(x, y, x1, y1, x2, y2);
-		double Y = GetY(x, y, x1, y1, x2, y2);
-		return length(X, Y, x, y);
-	}
-
 	double error()
 	{
 		double err = DistPointLine(*_x, *_y, *_x1, *_y1, *_x2, *_y2);

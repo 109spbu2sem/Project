@@ -11,9 +11,10 @@
     </ProjectConfiguration>
   </ItemGroup>
   <PropertyGroup Label="Globals">
-    <ProjectGuid>{13831A65-9FA8-4375-9412-92C7E51F4CDE}</ProjectGuid>
+    <ProjectGuid>{ECDDADF9-0838-4631-9898-B898F0B7CCA9}</ProjectGuid>
     <Keyword>Win32Proj</Keyword>
-    <RootNamespace>DistanceToTheLine</RootNamespace>
+    <RootNamespace>ConsoleApplication5</RootNamespace>
+    <ProjectName>DistanceToTheLineNEW</ProjectName>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
@@ -79,8 +80,8 @@
     <ClCompile Include="DistanceToTheLine.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="DistanceToTheLine.h" />
     <ClInclude Include="global.h" />
+    <ClInclude Include="DistanceToTheLine.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
