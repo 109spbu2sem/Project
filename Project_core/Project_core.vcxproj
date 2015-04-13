@@ -70,6 +70,8 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="..\lib\Color.cpp" />
+    <ClCompile Include="..\lib\constraints\DistancePoint-Section.cpp" />
+    <ClCompile Include="..\lib\constraints\DistanceToTheLine.cpp" />
     <ClCompile Include="..\lib\core.cpp" />
     <ClCompile Include="..\lib\global.cpp" />
     <ClCompile Include="..\lib\gui.cpp" />
@@ -80,13 +82,17 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\lib\Color.h" />
+    <ClInclude Include="..\lib\constraints\AngleSegment-Segment.h" />
+    <ClInclude Include="..\lib\constraints\Collector.h" />
+    <ClInclude Include="..\lib\constraints\DistancePoint-Point.h" />
+    <ClInclude Include="..\lib\constraints\DistancePoint-Section.h" />
+    <ClInclude Include="..\lib\constraints\DistanceToTheLine.h" />
     <ClInclude Include="..\lib\core.h" />
     <ClInclude Include="..\lib\global.h" />
     <ClInclude Include="..\lib\gui.h" />
     <ClInclude Include="..\lib\LineSkin.h" />
     <ClInclude Include="..\lib\matrix.h" />
     <ClInclude Include="..\lib\ObjectSkin.h" />
-    <ClInclude Include="..\lib\point2point_con.h" />
     <ClInclude Include="..\lib\storage_array.h" />
     <ClInclude Include="..\lib\storage_list.h" />
     <ClInclude Include="..\lib\structures.h" />

@@ -3,11 +3,14 @@
 
 double length(double, double, double, double);
 
-class iConstraint
+double min(double, double);
+
+class IConstraint
 {
 public:
 	virtual double error() = 0;
 	virtual double diff(double *par) = 0;
+	virtual unsigned type() = 0;
 };
 
 

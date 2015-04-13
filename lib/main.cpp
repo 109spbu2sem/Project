@@ -4,6 +4,8 @@
 int main()
 {
 	CORE testcore;
+	GUI testgui(&testcore);
+	testcore.ConnectGUI(&testgui);
 	//while (1)
 	{
 		for (int i = 0; i < 120; i++)

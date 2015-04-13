@@ -9,6 +9,9 @@
       <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
       <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
     </Filter>
+    <Filter Include="Constraints">
+      <UniqueIdentifier>{c82eb132-63d2-4860-abfb-d95763262512}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\lib\Color.cpp">
@@ -34,6 +37,12 @@
     </ClCompile>
     <ClCompile Include="..\lib\global.cpp">
       <Filter>Main code files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\lib\constraints\DistancePoint-Section.cpp">
+      <Filter>Constraints</Filter>
+    </ClCompile>
+    <ClCompile Include="..\lib\constraints\DistanceToTheLine.cpp">
+      <Filter>Constraints</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -67,8 +76,20 @@
     <ClInclude Include="..\lib\matrix.h">
       <Filter>Headers</Filter>
     </ClInclude>
-    <ClInclude Include="..\lib\point2point_con.h">
-      <Filter>Headers</Filter>
+    <ClInclude Include="..\lib\constraints\DistancePoint-Point.h">
+      <Filter>Constraints</Filter>
+    </ClInclude>
+    <ClInclude Include="..\lib\constraints\DistancePoint-Section.h">
+      <Filter>Constraints</Filter>
+    </ClInclude>
+    <ClInclude Include="..\lib\constraints\Collector.h">
+      <Filter>Constraints</Filter>
+    </ClInclude>
+    <ClInclude Include="..\lib\constraints\DistanceToTheLine.h">
+      <Filter>Constraints</Filter>
+    </ClInclude>
+    <ClInclude Include="..\lib\constraints\AngleSegment-Segment.h">
+      <Filter>Constraints</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
