@@ -1,10 +1,11 @@
 #ifndef CONSTRAINT_H
 #define CONSTRAINT_H
-#include "global.h"
+#include "global.h" // взять из этой же папки
 
 class Point2Point:public iConstraint
 {
 	double *_p1x, *_p1y, *_p2x, *_p2y, *_d;
+	// тут объявить все функции кроме тех, которые ниже, объемные выносятся в cpp файл
 public:
 	Point2Point(double *p1x, double *p1y, double *p2x, double *p2y, double *d)
 	{
