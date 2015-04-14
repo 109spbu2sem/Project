@@ -91,5 +91,8 @@
     <ClInclude Include="..\lib\constraints\AngleSegment-Segment.h">
       <Filter>Constraints</Filter>
     </ClInclude>
+    <ClInclude Include="..\lib\constraints\ThreePointsOnTheLine.h">
+      <Filter>Constraints</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

@@ -5,6 +5,7 @@
 #include "constraints\DistancePoint-Section.h"
 #include "constraints\DistanceToTheLine.h"
 #include "constraints\AngleSegment-Segment.h"
+#include "constraints\ThreePointsOnTheLine.h"
 
 CORE::CORE()
 {
@@ -124,6 +125,24 @@ void CORE::AddRule(unsigned type, double value)
 		if (/*Picked only 3 Points or Point and Segment*/)
 		{
 			DistanceToTheLine rule(/*point's and segment's parameters*/px, py, p1x, p1y, p2x, p2y, _storage_of_coordinates.add(value));
+			_storage_of_constraints.add(rule);
+		}
+		return;
+	}
+	case 4:
+	{
+		if (/*Picked only 4 Points or 2 Points and Segment or 2 Segments*/)
+		{
+			AngleSegmentSegment rule(/*point's and segment's parameters*/, _storage_of_coordinates.add(value));
+			_storage_of_constraints.add(rule);
+		}
+		return;
+	}
+	case 5:
+	{
+		if (/*Picked only 3 Points or Point and Segment*/)
+		{
+			ThreePoints rule(/*point's and segment's parameters*/, _storage_of_coordinates.add(value));
 			_storage_of_constraints.add(rule);
 		}
 		return;

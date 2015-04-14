@@ -87,6 +87,7 @@
     <ClInclude Include="..\lib\constraints\DistancePoint-Point.h" />
     <ClInclude Include="..\lib\constraints\DistancePoint-Section.h" />
     <ClInclude Include="..\lib\constraints\DistanceToTheLine.h" />
+    <ClInclude Include="..\lib\constraints\ThreePointsOnTheLine.h" />
     <ClInclude Include="..\lib\core.h" />
     <ClInclude Include="..\lib\global.h" />
     <ClInclude Include="..\lib\gui.h" />

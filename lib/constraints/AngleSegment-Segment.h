@@ -3,7 +3,7 @@
 #include "..\global.h"
 #include <cmath>
 
-// (c) Alena // type = 5
+// (c) Alena // type = 4
 
 class AngleSegmentSegment :public IConstraint
 {
@@ -64,7 +64,7 @@ public:
 	}
 	virtual unsigned type()
 	{
-		return 5;
+		return 4;
 	}
 };
 #endif // ANGLE_SEGMENT_SEGMENT_H
