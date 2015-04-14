@@ -2,8 +2,8 @@
 #define _ADVANCED_HASHER_H
 template <typename hashable> class AdvancedHasher{
 public:
-	unsigned operator(const hashable &h){
-
+	unsigned operator()(const hashable &h){
+		return 0;
 	}
 };
 #endif

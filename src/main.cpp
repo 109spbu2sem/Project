@@ -59,6 +59,9 @@ public:
 
 int main()
 {
+	storage_template<Point> ps;
+
+
 	double d = 0.123123;
 
 	unsigned sum = 0;
@@ -74,6 +77,9 @@ int main()
 
 	hash_storage<double,int> stor;
 	hash_storage<double,int,AdvancedHasher<double> > storAdv;
+	
+	hash_storage<double,int,AdvancedHasher<double> >::Viewer<double,int> hstorViewer(storAdv);
+
 
 
 
@@ -124,12 +130,12 @@ int main()
 
 
 
-	linkedlist ll;
+	linkedlist<Point> ll;
 	ll.add(p);
 	ll.add(p);
 
-	linkedlist::Viewer lv1(ll);
-	linkedlist::Viewer lv2(ll);
+	linkedlist<Point>::Viewer<Point> lv1(ll);
+	linkedlist<Point>::Viewer<Point> lv2(ll);
 	lv2.moveNext();
 
 	while(lv2.canMoveNext()){
@@ -157,7 +163,7 @@ int main()
 	vec2 v4 = v3 + v2;
 
 	//storagepoints sp;
-	linkedlist sp;
+	linkedlist<Point> sp;
 
 	sp.add(p);
 	sp.add(p);	

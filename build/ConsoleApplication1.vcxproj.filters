@@ -50,5 +50,8 @@
     <ClInclude Include="..\include\Advanced_hasher.h">
       <Filter>Заголовки</Filter>
     </ClInclude>
+    <ClInclude Include="..\include\storage.h">
+      <Filter>Заголовки</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

@@ -1,32 +1,38 @@
-#include "storages.h"
+#ifndef _LINKEDLIST_H
+#define _LINKEDLIST_H
 #include <stdexcept>
 
-
-class linkedlist{
+template<typename T> class linkedlist{
 	struct cell{
-		Point data;
+		T data;
 		cell *next;
 	};
 	cell *_firstcell;
 	cell *_lastcell;
 	unsigned _size;	
 public:
-	class Viewer{
-		linkedlist::cell *_cur;		
+	template<typename T> class Viewer{
+		typename linkedlist<T>::cell *_cur;		
 	public:		
 		Viewer(){_cur = 0;}
 		Viewer(linkedlist&l){
-			_cur = l._firstcell;			
+			_cur = l._firstcell;
 		}
-
-		Point & getValue(){if (_cur) return _cur->data;
-		throw std::runtime_error("No such point");};
-		void moveNext(){if (_cur) _cur = _cur->next;};
-		bool canMoveNext(){if ( _cur ) return true; return false;};
+		T & getValue(){
+			if (_cur) return _cur->data;
+			throw std::runtime_error("Invalid viewer");
+		};
+		void moveNext(){
+			if (_cur) _cur = _cur->next;			
+		};
+		bool canMoveNext(){
+			if ( _cur ) return true; 
+			return false;
+		};
 	};
 
 
-	friend class Viewer;
+	friend class Viewer<T>;
 	linkedlist(){ _firstcell =  0;_lastcell = 0;_size = 0;};
 	~linkedlist(){
 		if (_firstcell){
@@ -40,12 +46,24 @@ public:
 		}
 
 	}
-	void add(const Point&);
+	void add(const T&p){
+		if (_firstcell == 0){
+			_firstcell =  new cell;
+			_firstcell->data = p;		
+			_firstcell->next = 0;		
+			_lastcell = _firstcell;
+		}
+		else{
+			cell *newcell = new cell;
+			newcell->data = p;
+			newcell->next = 0;
+			// св€жем с предыдущей €чейкой
+			_lastcell->next = newcell;
+			_lastcell = newcell;
+		}
+		++_size;
+	}
 	unsigned size() const{return _size;};
-
-	Viewer getStartingViewer(){
-		Viewer v(*this);		
-		return v;
-	};
 };
 
+#endif

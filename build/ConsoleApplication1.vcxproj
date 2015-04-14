@@ -21,6 +21,7 @@
     <ClInclude Include="..\include\brute_hasher.h" />
     <ClInclude Include="..\include\hash_storage.h" />
     <ClInclude Include="..\include\linkedlist.h" />
+    <ClInclude Include="..\include\storage.h" />
     <ClInclude Include="..\include\storages.h" />
     <ClInclude Include="..\include\structs.h" />
     <ClInclude Include="..\include\tree_storage.h" />
