@@ -1,17 +1,7 @@
 #ifndef CONSTRAINT_H
 #define CONSTRAINT_H
-#include < cmath >
-#include "storage.h"
-double length(double x1, double y1, double x2, double y2)
-{
-	return sqrt((x1 - x2)*(x1 - x2) + (y1 - y2)*(y1 - y2));
-}
-	class IConstraint{
-	public:
-		virtual double error() = 0;
-		virtual double diff(double *par) = 0;
+#include "global.h" 
 
-	};
 	class ContactCircle :public IConstraint{
 		double *_p1x, *_p1y, *_r1, *_p2x, *_p2y, *_r2;
 
