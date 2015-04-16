@@ -2,7 +2,7 @@
 #define OBJECTSKIN_H
 #include "LineSkin.h"
 
-class ObjectSkin
+/*template <typename Item> */class ObjectSkin
 {
 private:
 	bool _visible; // false(0) invisible, true(1) visible
@@ -14,11 +14,9 @@ public:
 	ObjectSkin();
 	~ObjectSkin();
 	void changeVisible();
-	void changeSelect(bool b = true)
-	{
-		_select = b;
-	}
+	void changeSelect(bool b = true);
 	virtual unsigned objectType() = 0;
+	//virtual Item& getLink() = 0;
 };
 
 #endif // OBJECTSKIN_H 

@@ -1,24 +1,26 @@
 #ifndef CORE_H
 #define CORE_H
 #include "structures.h"
-#include "storage_array.h"
-#include "storage_list.h"
+#include "Storages\storage_array.h"
+#include "Storages\storage_list.h"
 #include "global.h"
 
 class CORE
 {
 private:
-	Storage_Array<double> _storage_of_coordinates;
+	Storage_Array<double> _storage_of_parameters;
 	Storage_Array<Point> _storage_of_points;
 	Storage_Array<Segment> _storage_of_segments;
 	Storage_Array<Circle> _storage_of_circles;
-	Storage_List<IConstraint> _storage_of_constraints;
-	Storage_List<ObjectSkin> _selected_objects;
+	Storage_List<IConstraint*> _storage_of_constraints;
+	Storage_List<ObjectSkin*> _selected_objects;
 	GUI* mygui;
 
 	void Redraw();
 	void BuildFigure(IConstraint*, Storage_Array<double*>*);
-	void MainCalculate();
+	void Calculate();
+
+	bool checkPicking(unsigned);
 public:
 	CORE();
 	CORE(GUI* gui)

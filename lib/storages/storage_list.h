@@ -1,7 +1,7 @@
 #ifndef STORAGE_LIST_H
 #define STORAGE_LIST_H
 
-#include <iostream>
+#include <cmath>
 
 template<typename Item> class ListViewer;
 
@@ -95,7 +95,7 @@ public:
 		return;
 	}
 	//removes _current item
-	void remove_next();
+	void remove(ListViewer<Item>*);
 	void clear();
 	unsigned size() const
 	{
@@ -135,15 +135,17 @@ template<typename Item> void Storage_List<Item>::add(const Item &item)
 }
 
 //removes next item
-template<typename Item> void Storage_List<Item>::remove_next()
+template<typename Item> void Storage_List<Item>::remove(ListViewer<Item>* viewer)
 {
-	if (_current->next)
+	Cell* _cur = _first;
+	while (_current->next != viewer->_current)
 	{
-		Cell *temp = _current->next;
-		_current->next = _current->next->next;
-		delete temp;
-		_size--;
+		_cur = _cur->next;
 	}
+	_cur->next = _cur->next->next;
+	_cur = viewer->_current;
+	if (viewer->canMoveNext()) viewer->moveNext();
+	delete _cur;
 	return;
 }
 //clears storage
@@ -184,10 +186,6 @@ public:
 	}
 	Item& getValue() { if (_current) return _current->data; throw std::runtime_error("No such item"); };
 	void moveNext() { if (_current) _current = _current->next; };
-	void rewind()
-	{
-
-	};
 	bool canMoveNext()
 	{
 		if (_current) return true; return false;

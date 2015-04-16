@@ -34,15 +34,21 @@ void CORE::Redraw()
 	return;
 }
 
-void CORE::MainCalculate()
+void CORE::Calculate()
 {
 	ConstraintCollector collector;
-	Storage_Array<double*> parameters;
-	for (ListViewer<IConstraint> i; i.canMoveNext(); i.moveNext())
+	Storage_Array< double* > parameters;
+	for (ListViewer< IConstraint* > i(_storage_of_constraints); i.canMoveNext(); i.moveNext())
 	{
-		collector.addConstraint(&i.getValue());
+		collector.addConstraint(i.getValue());
+	}
+	for (ArrayViewer< double > i(_storage_of_parameters); i.canMoveNext(); i.moveNext())
+	{
+		parameters.add(&i.getValue());
 	}
 	BuildFigure(&collector, &parameters);
+	Redraw();
+	return;
 }
 
 void CORE::BuildFigure(IConstraint* constraint, Storage_Array<double*>* parameters)
@@ -74,14 +80,14 @@ void CORE::BuildFigure(IConstraint* constraint, Storage_Array<double*>* paramete
 
 void CORE::AddObject(double point_x, double point_y)
 {
-	Point p(_storage_of_coordinates.add(point_x), _storage_of_coordinates.add(point_y));
+	Point p(_storage_of_parameters.add(point_x), _storage_of_parameters.add(point_y));
 	_storage_of_points.add(p);
 }
 
 void CORE::AddObject(double point_x1, double point_y1, double point_x2, double point_y2)
 {
-	Point p1(_storage_of_coordinates.add(point_x1), _storage_of_coordinates.add(point_y1));
-	Point p2(_storage_of_coordinates.add(point_x2), _storage_of_coordinates.add(point_y2));
+	Point p1(_storage_of_parameters.add(point_x1), _storage_of_parameters.add(point_y1));
+	Point p2(_storage_of_parameters.add(point_x2), _storage_of_parameters.add(point_y2));
 	Segment s(_storage_of_points.add(p1), _storage_of_points.add(p2));
 	_storage_of_segments.add(s);
 }
@@ -93,9 +99,14 @@ void CORE::AddObject(double point_x, double point_y, double vector_x, double vec
 
 void CORE::AddObject(double point_x, double point_y, double radius)
 {
-	Point p(_storage_of_coordinates.add(point_x), _storage_of_coordinates.add(point_y));
-	Circle c(_storage_of_points.add(p), _storage_of_coordinates.add(radius));
+	Point p(_storage_of_parameters.add(point_x), _storage_of_parameters.add(point_y));
+	Circle c(_storage_of_points.add(p), _storage_of_parameters.add(radius));
 	_storage_of_circles.add(c);
+}
+
+bool CORE::checkPicking(unsigned type)
+{
+
 }
 
 void CORE::AddRule(unsigned type, double value)
@@ -104,9 +115,22 @@ void CORE::AddRule(unsigned type, double value)
 	{
 	case 1:
 	{
+		switch (_selected_objects.size())
+		{
+		case 1:
+			_selected_objects.rewind();
+			if (_selected_objects.get()->objectType() == 2)
+			{
+				Point2Point* rule = new Point2Point(/*point's parameters*/_selected_objects.get(), p1y, p2x, p2y, _storage_of_parameters.add(value));
+			}
+			return;
+		case 2:
+		default:
+			return;
+		}
 		if (/*Picked only 2 Points*/)
 		{
-			Point2Point rule(/*point's parameters*/p1x, p1y, p2x, p2y, _storage_of_coordinates.add(value));
+			Point2Point* rule = new Point2Point(/*point's parameters*/p1x, p1y, p2x, p2y, _storage_of_parameters.add(value));
 			_storage_of_constraints.add(rule);
 		}
 		return;
@@ -115,7 +139,7 @@ void CORE::AddRule(unsigned type, double value)
 	{
 		if (/*Picked only Point and Segment*/)
 		{
-			DistanceFromPointToSection rule(/*point's and segment's parameters*/px, py, p1x, p1y, p2x, p2y, _storage_of_coordinates.add(value));
+			DistanceFromPointToSection* rule = new DistanceFromPointToSection(/*point's and segment's parameters*/px, py, p1x, p1y, p2x, p2y, _storage_of_parameters.add(value));
 			_storage_of_constraints.add(rule);
 		}
 		return;
@@ -124,7 +148,7 @@ void CORE::AddRule(unsigned type, double value)
 	{
 		if (/*Picked only 3 Points or Point and Segment*/)
 		{
-			DistanceToTheLine rule(/*point's and segment's parameters*/px, py, p1x, p1y, p2x, p2y, _storage_of_coordinates.add(value));
+			DistanceToTheLine* rule = new DistanceToTheLine(/*point's and segment's parameters*/px, py, p1x, p1y, p2x, p2y, _storage_of_parameters.add(value));
 			_storage_of_constraints.add(rule);
 		}
 		return;
@@ -133,7 +157,7 @@ void CORE::AddRule(unsigned type, double value)
 	{
 		if (/*Picked only 4 Points or 2 Points and Segment or 2 Segments*/)
 		{
-			AngleSegmentSegment rule(/*point's and segment's parameters*/, _storage_of_coordinates.add(value));
+			AngleSegmentSegment* rule = new AngleSegmentSegment(/*point's and segment's parameters*/, _storage_of_parameters.add(value));
 			_storage_of_constraints.add(rule);
 		}
 		return;
@@ -142,7 +166,7 @@ void CORE::AddRule(unsigned type, double value)
 	{
 		if (/*Picked only 3 Points or Point and Segment*/)
 		{
-			ThreePoints rule(/*point's and segment's parameters*/, _storage_of_coordinates.add(value));
+			ThreePoints* rule = new ThreePoints(/*point's and segment's parameters*/, _storage_of_parameters.add(value));
 			_storage_of_constraints.add(rule);
 		}
 		return;
@@ -265,18 +289,21 @@ void CORE::Select(double x, double y)
 	if (min_k >= 0)
 	{
 		_storage_of_circles[min_k].changeSelect();
+		_selected_objects.add(&_storage_of_circles[min_k]);
 	}
 	else
 	{
 		if (min_j >= 0)
 		{
 			_storage_of_segments[min_j].changeSelect();
+			_selected_objects.add(&_storage_of_circles[min_j]);
 		}
 		else
 		{
 			if (min_i >= 0)
 			{
 				_storage_of_points[min_i].changeSelect();
+				_selected_objects.add(&_storage_of_circles[min_i]);
 			}
 			else return;
 		}
@@ -313,7 +340,7 @@ void CORE::ChangeStatus(double x1, double y1, double x2, double y2, unsigned cha
 	{
 		if (isInArea(*_storage_of_points[i]._x, *_storage_of_points[i]._y, x1, y1, x2, y2))
 		{
-			//change selection
+			//change status
 		}
 	}
 
@@ -324,7 +351,7 @@ void CORE::ChangeStatus(double x1, double y1, double x2, double y2, unsigned cha
 		if (isInArea(*_storage_of_segments[i]._p1->_x, *_storage_of_segments[i]._p1->_y, x1, y1, x2, y2) &&
 			 isInArea(*_storage_of_segments[i]._p2->_x, *_storage_of_segments[i]._p2->_y, x1, y1, x2, y2))
 		{
-			//change selection
+			//change status
 		}
 	}
 	return;
@@ -339,7 +366,7 @@ void CORE::Select(double x1, double y1, double x2, double y2)
 		if (isInArea(*_storage_of_points[i]._x, *_storage_of_points[i]._y, x1, y1, x2, y2))
 		{
 			_storage_of_points[i].changeSelect();
-			_selected_objects.add(_storage_of_points[i]);
+			_selected_objects.add(&_storage_of_points[i]);
 		}
 	}
 
@@ -351,16 +378,17 @@ void CORE::Select(double x1, double y1, double x2, double y2)
 			isInArea(*_storage_of_segments[i]._p2->_x, *_storage_of_segments[i]._p2->_y, x1, y1, x2, y2))
 		{
 			_storage_of_segments[i].changeSelect();
-			_selected_objects.add(_storage_of_segments[i]);
+			_selected_objects.add(&_storage_of_segments[i]);
 		}
 	}
+	// select circles
 	size = _storage_of_circles.size();
 	for (unsigned i = 0; i < size; i++)
 	{
 		if (isInArea(*_storage_of_circles[i]._o->_x, *_storage_of_circles[i]._o->_y, x1, y1, x2, y2))
 		{
 			_storage_of_circles[i].changeSelect();
-			_selected_objects.add(_storage_of_circles[i]);
+			_selected_objects.add(&_storage_of_circles[i]);
 		}
 	}
 	return;
@@ -368,8 +396,8 @@ void CORE::Select(double x1, double y1, double x2, double y2)
 
 void CORE::ClearSelection()
 {
-	for (ListViewer<ObjectSkin> i(_selected_objects); i.canMoveNext(); i.moveNext())
+	for (ListViewer< ObjectSkin* > i(_selected_objects); i.canMoveNext(); i.moveNext())
 	{
-		i.getValue().changeSelect(false);
+		i.getValue()->changeSelect(false);
 	}
 }

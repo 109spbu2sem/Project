@@ -92,10 +92,11 @@
     <ClInclude Include="..\lib\global.h" />
     <ClInclude Include="..\lib\gui.h" />
     <ClInclude Include="..\lib\LineSkin.h" />
-    <ClInclude Include="..\lib\matrix.h" />
     <ClInclude Include="..\lib\ObjectSkin.h" />
-    <ClInclude Include="..\lib\storage_array.h" />
-    <ClInclude Include="..\lib\storage_list.h" />
+    <ClInclude Include="..\lib\storages\heshtable.h" />
+    <ClInclude Include="..\lib\storages\matrix.h" />
+    <ClInclude Include="..\lib\storages\storage_array.h" />
+    <ClInclude Include="..\lib\storages\storage_list.h" />
     <ClInclude Include="..\lib\structures.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

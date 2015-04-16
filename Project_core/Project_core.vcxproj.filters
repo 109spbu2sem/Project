@@ -12,6 +12,9 @@
     <Filter Include="Constraints">
       <UniqueIdentifier>{c82eb132-63d2-4860-abfb-d95763262512}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Headers\Storages">
+      <UniqueIdentifier>{a583b64c-cd16-4093-8a2e-c39c884b215d}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\lib\Color.cpp">
@@ -61,19 +64,10 @@
     <ClInclude Include="..\lib\ObjectSkin.h">
       <Filter>Headers</Filter>
     </ClInclude>
-    <ClInclude Include="..\lib\storage_array.h">
-      <Filter>Headers</Filter>
-    </ClInclude>
-    <ClInclude Include="..\lib\storage_list.h">
-      <Filter>Headers</Filter>
-    </ClInclude>
     <ClInclude Include="..\lib\structures.h">
       <Filter>Headers</Filter>
     </ClInclude>
     <ClInclude Include="..\lib\global.h">
-      <Filter>Headers</Filter>
-    </ClInclude>
-    <ClInclude Include="..\lib\matrix.h">
       <Filter>Headers</Filter>
     </ClInclude>
     <ClInclude Include="..\lib\constraints\DistancePoint-Point.h">
@@ -93,6 +87,18 @@
     </ClInclude>
     <ClInclude Include="..\lib\constraints\ThreePointsOnTheLine.h">
       <Filter>Constraints</Filter>
+    </ClInclude>
+    <ClInclude Include="..\lib\storages\heshtable.h">
+      <Filter>Headers\Storages</Filter>
+    </ClInclude>
+    <ClInclude Include="..\lib\storages\matrix.h">
+      <Filter>Headers\Storages</Filter>
+    </ClInclude>
+    <ClInclude Include="..\lib\storages\storage_array.h">
+      <Filter>Headers\Storages</Filter>
+    </ClInclude>
+    <ClInclude Include="..\lib\storages\storage_list.h">
+      <Filter>Headers\Storages</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

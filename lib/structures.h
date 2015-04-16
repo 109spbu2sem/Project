@@ -3,7 +3,7 @@
 
 #include "ObjectSkin.h"
 
-class Point: public ObjectSkin
+class Point: public ObjectSkin //<Point>
 {
 public:
 	double *_x;
@@ -30,9 +30,13 @@ public:
 	{
 		return 1;
 	}
+	/*virtual Point& getLink()
+	{
+		return *this;
+	}*/
 };
 
-class Segment : public ObjectSkin
+class Segment : public ObjectSkin //<Segment>
 {
 public:
 	Point *_p1; // begin
@@ -53,6 +57,10 @@ public:
 	virtual unsigned objectType()
 	{
 		return 2;
+	}
+	virtual Segment& getLink()
+	{
+		return *this;
 	}
 };
 
@@ -90,7 +98,7 @@ public:
 	Vector unit_vector();// returns unit vector
 };
 
-class Angle : public ObjectSkin
+class Angle : public ObjectSkin //<Angle>
 {
 public:
 	double *angle;
@@ -102,9 +110,13 @@ public:
 	{
 		return 3;
 	}
+	/*virtual Angle& getLink()
+	{
+		return *this;
+	}*/
 };
 
-class Circle : public ObjectSkin
+class Circle : public ObjectSkin //<Circle>
 {
 public:
 	//----structure
@@ -126,9 +138,13 @@ public:
 	{
 		return 4;
 	}
+	/*virtual Circle& getLink()
+	{
+		return *this;
+	}*/
 };
 
-class Arc : public ObjectSkin
+class Arc : public ObjectSkin //<Arc>
 {
 public:
 	//----structure
@@ -155,6 +171,10 @@ public:
 	{
 		return 4;
 	}
+	/*virtual Arc& getLink()
+	{
+		return *this;
+	}*/
 };
 
 #endif
