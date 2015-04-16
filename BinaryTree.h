@@ -3,16 +3,79 @@
 
 template<typename A, typename B> class BinaryTree
 {
+	struct tuple
+	{
+		A a;
+		B b;
+	};
 	struct cell
 	{
 		cell*left;
 		cell*right;
-		A a;
-		B b;
+		cell *tuple;
+		cell*parent;
 	};
-	cell*_root; // êîðåíü
-	cell*_cur;  // òåêóùèé
-	cell*parent;
+	cell*_root;
+	cell*_cur;
+
+
+	template<typename A, typename B> class Viewer
+	{
+		typename BinaryTree <A, B>::cell *_cur;
+		typename BinaryTree <A, B>::cell *_rightmost;
+	public:
+		Viewer()
+		{
+			_cur = 0;
+			_rightmost = 0;
+		}
+		Viewer(BinaryTree&s)
+		{
+			_cur = s._root;
+			_rightmost = s._root;
+			if (_cur)
+			{
+				while (_cur->left)
+					_cur = _cur->left;
+				while (_rightmost->right)
+					_rightmost = _rightmost->right;
+			}
+		}
+
+		typename BinaryTree <A, B>::tuple & getCurrent()// обращение к текущему
+		{
+			if (_cur) return _cur->data;
+			throw runtime_error("invalid");
+
+		};
+		void moveNext()// перемещение к следующему элементу
+		{
+			if (_cur->right != 0)
+			{
+				_cur = _cur->right;
+				while (_cur->left)
+					_cur = _cur->left;
+			}
+			else
+			{
+				if (_cur->left == 0)
+				{
+					if (_cur->parent->left == _cur)
+						_cur = _cur->parent;
+					else
+					while (_cur->parent && _cur == _cur->parent->right)
+						_cur = _cur->parent;
+					_cur = _cur->parent;
+				}
+			}
+		};
+		bool canMoveNext() // возможность обращения к сл эл
+		{
+			if (_rightmost == _cur) return false;
+			return true;
+
+		}
+	};
 public:
 	BinaryTree()
 	{
@@ -22,7 +85,7 @@ public:
 	~BinaryTree()
 	{
 		_cur = _root;
-		parent = _cur;
+		cell *parent = _cur;
 		while (parent)
 		{
 
@@ -70,6 +133,7 @@ public:
 		else
 		{
 			cell*newcell = new cell;
+			cell* parent;
 			newcell->a = a;
 			newcell->b = b;
 			newcell->left = 0;
@@ -175,7 +239,6 @@ public:
 				parent->left = c2;
 		}
 	};
-	void
 };
 
 #endif
