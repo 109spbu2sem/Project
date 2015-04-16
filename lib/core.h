@@ -4,6 +4,9 @@
 #include "Storages\storage_array.h"
 #include "Storages\storage_list.h"
 #include "global.h"
+#include "gui.h"
+
+class GUI;
 
 class CORE
 {
@@ -20,7 +23,6 @@ private:
 	void BuildFigure(IConstraint*, Storage_Array<double*>*);
 	void Calculate();
 
-	bool checkPicking(unsigned);
 public:
 	CORE();
 	CORE(GUI* gui)

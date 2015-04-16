@@ -20,9 +20,31 @@ public:
 	}
 };
 
+template <typename hashtype> class HashRs
+{
+public:
+	unsigned operator()(const hashtype &h)
+	{
+		unsigned i = sizeof(h);
+		const char * str = static_cast<const char*>h;
+		static const unsigned b = 378551;
+		unsigned a = 63689;
+		unsigned hash = 0;
+
+		for (; i > 0; str++, i--)
+		{
+			hash = hash * a + (unsigned char)(*str);
+			a *= b;
+		}
+
+		return hash;
+
+	}
+};
+
 template <typename FirstType, typename SecondType> class HeshViewer;
 
-template <typename FirstType, typename SecondType, typename HeshType = StringHesh<FirstType>> class HeshTable
+template <typename FirstType, typename SecondType, typename HeshType = HashRs<FirstType>> class HeshTable
 {
 private:
 	struct ABstruct

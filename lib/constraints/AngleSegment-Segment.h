@@ -35,45 +35,21 @@ public:
 	double diff(double *par)
 	{
 		if (par == _p1x)
-			return _angle(*_p1x, *_p1y, *_p2x, *_p2y, *_p3x, *_p3y, *_p4x, *_p4y, *_a);
-		//return 2 * sqrt(error())* ((*_p4x - *_p3x)*(pow(length(*_p1x, *_p1y, *_p2x, *_p2y),2)) +
-		//((*_p1x - *_p2x)*((*_p1x - *_p2x)*(*_p3x - *_p4x) + (*_p1y - *_p2y) * (*_p3y - *_p4y)))) /
-		//(length(*_p3x, *_p3y, *_p4x, *_p4y)*(pow(length(*_p1x, *_p1y, *_p2x, *_p2y), 3)));
+			return _angle(_p1x, _p1y, _p2x, _p2y, _p3x, _p3y, _p4x, _p4y, _a);
 		if (par == _p2x)
-			return -(_angle(*_p1x, *_p1y, *_p2x, *_p2y, *_p3x, *_p3y, *_p4x, *_p4y, *_a));
-		/*return (-2) * sqrt(error())* ((*_p4x - *_p3x)*(pow(length(*_p1x, *_p1y, *_p2x, *_p2y), 2)) +
-		((*_p1x - *_p2x)*((*_p1x - *_p2x)*(*_p3x - *_p4x) + (*_p1y - *_p2y) * (*_p3y - *_p4y)))) /
-		(length(*_p3x, *_p3y, *_p4x, *_p4y)*(pow(length(*_p1x, *_p1y, *_p2x, *_p2y), 3)));*/
+			return -(_angle(_p1x, _p1y, _p2x, _p2y, _p3x, _p3y, _p4x, _p4y, _a));
 		if (par == _p3x)
-			return _angle(*_p3x, *_p3y, *_p4x, *_p4y, *_p1x, *_p1y, *_p2x, *_p2y, *_a);
-		//return 2 * sqrt(error())* ((*_p2x - *_p1x)*(pow(length(*_p3x, *_p3y, *_p4x, *_p4y), 2)) +
-		//((*_p3x - *_p4x)*((*_p1x - *_p2x)*(*_p3x - *_p4x) + (*_p1y - *_p2y) * (*_p3y - *_p4y)))) /
-		//(length(*_p1x, *_p1y, *_p2x, *_p2y)*(pow(length(*_p3x, *_p3y, *_p4x, *_p4y), 3)));
+			return _angle(_p3x, _p3y, _p4x, _p4y, _p1x, _p1y, _p2x, _p2y, _a);
 		if (par == _p4x)
-			return -(_angle(*_p3x, *_p3y, *_p4x, *_p4y, *_p1x, *_p1y, *_p2x, *_p2y, *_a));
-		//return (-2) * sqrt(error())* ((*_p2x - *_p1x)*(pow(length(*_p3x, *_p3y, *_p4x, *_p4y), 2)) +
-		//((*_p3x - *_p4x)*((*_p1x - *_p2x)*(*_p3x - *_p4x) + (*_p1y - *_p2y) * (*_p3y - *_p4y)))) /
-		//(length(*_p1x, *_p1y, *_p2x, *_p2y)*(pow(length(*_p3x, *_p3y, *_p4x, *_p4y), 3)));
+			return -(_angle(_p3x, _p3y, _p4x, _p4y, _p1x, _p1y, _p2x, _p2y, _a));
 		if (par == _p1y)
-			return _angle(*_p1y, *_p1x, *_p2y, *_p2x, *_p3y, *_p3x, *_p4y, *_p4x, *_a);
-		/*return (2 * sqrt(error())* ((*_p4y - *_p3y)*(pow(length(*_p1x, *_p1y, *_p2x, *_p2y), 2)) +
-		((*_p2y - *_p1y)*((*_p1x - *_p2x)*(*_p3x - *_p4x) + (*_p1y - *_p2y) * (*_p3y - *_p4y)))) /
-		(length(*_p3x, *_p3y, *_p4x, *_p4y)*(pow(length(*_p1x, *_p1y, *_p2x, *_p2y), 3))));*/
+			return _angle(_p1y, _p1x, _p2y, _p2x, _p3y, _p3x, _p4y, _p4x, _a);
 		if (par == _p2y)
-			return -(_angle(*_p1y, *_p1x, *_p2y, *_p2x, *_p3y, *_p3x, *_p4y, *_p4x, *_a));
-		/*return ((-2) * sqrt(error())* ((*_p4y - *_p3y)*(pow(length(*_p1x, *_p1y, *_p2x, *_p2y), 2)) +
-		((*_p2y - *_p1y)*((*_p1x - *_p2x)*(*_p3x - *_p4x) + (*_p1y - *_p2y) * (*_p3y - *_p4y)))) /
-		(length(*_p3x, *_p3y, *_p4x, *_p4y)*(pow(length(*_p1x, *_p1y, *_p2x, *_p2y), 3))));*/
+			return -(_angle(_p1y, _p1x, _p2y, _p2x, _p3y, _p3x, _p4y, _p4x, _a));
 		if (par == _p3y)
-			return _angle(*_p3y, *_p3x, *_p4y, *_p4x, *_p1y, *_p1x, *_p2y, *_p2x, *_a);
-		/*return 2 * sqrt(error())* ((*_p2y - *_p1y)*(pow(length(*_p3x, *_p3y, *_p4x, *_p4y), 2), 2) +
-		((*_p3y - *_p4y)*((*_p1x - *_p2x)*(*_p3x - *_p4x) + (*_p1y - *_p2y) * (*_p3y - *_p4y)))) /
-		(length(*_p1x, *_p1y, *_p2x, *_p2y)*(pow(length(*_p3x, *_p3y, *_p4x, *_p4y), 3)));*/
+			return _angle(_p3y, _p3x, _p4y, _p4x, _p1y, _p1x, _p2y, _p2x, _a);
 		if (par == _p4y)
-			return -(_angle(*_p3y, *_p3x, *_p4y, *_p4x, *_p1y, *_p1x, *_p2y, *_p2x, *_a));
-		/*return (-2) * sqrt(error())* ((*_p2y - *_p1y)*(pow(length(*_p3x, *_p3y, *_p4x, *_p4y), 2), 2) +
-		((*_p3y - *_p4y)*((*_p1x - *_p2x)*(*_p3x - *_p4x) + (*_p1y - *_p2y) * (*_p3y - *_p4y)))) /
-		(length(*_p1x, *_p1y, *_p2x, *_p2y)*(pow(length(*_p3x, *_p3y, *_p4x, *_p4y), 3)));*/
+			return -(_angle(_p3y, _p3x, _p4y, _p4x, _p1y, _p1x, _p2y, _p2x, _a));
 		return 0;
 	}
 	unsigned type()

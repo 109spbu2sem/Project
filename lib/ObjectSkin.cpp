@@ -10,7 +10,7 @@ ObjectSkin::~ObjectSkin()
 {
 }
 
-void ObjectSkin::changeSelect(bool b = true)
+void ObjectSkin::changeSelect(bool b)
 {
 	_select = b;
 }

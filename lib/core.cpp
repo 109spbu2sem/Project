@@ -104,72 +104,202 @@ void CORE::AddObject(double point_x, double point_y, double radius)
 	_storage_of_circles.add(c);
 }
 
-bool CORE::checkPicking(unsigned type)
-{
-
-}
-
 void CORE::AddRule(unsigned type, double value)
 {
 	switch (type)
 	{
 	case 1:
-	{
-		switch (_selected_objects.size())
-		{
-		case 1:
-			_selected_objects.rewind();
-			if (_selected_objects.get()->objectType() == 2)
-			{
-				Point2Point* rule = new Point2Point(/*point's parameters*/_selected_objects.get(), p1y, p2x, p2y, _storage_of_parameters.add(value));
-			}
-			return;
-		case 2:
-		default:
-			return;
-		}
-		if (/*Picked only 2 Points*/)
-		{
-			Point2Point* rule = new Point2Point(/*point's parameters*/p1x, p1y, p2x, p2y, _storage_of_parameters.add(value));
-			_storage_of_constraints.add(rule);
-		}
-		return;
+	{ // may add multiselect for points and segments
+			  switch (_selected_objects.size())
+			  {
+			  case 1:
+			  {
+						_selected_objects.rewind();
+						Segment* obj = dynamic_cast<Segment*>(_selected_objects.get());
+						if (obj)
+						{
+							Point2Point* rule = new Point2Point(obj->_p1->_x, obj->_p1->_y, obj->_p2->_x, obj->_p2->_y, _storage_of_parameters.add(value));
+							_storage_of_constraints.add(rule);
+						}
+						return;
+			  }
+			  case 2:
+			  {
+						_selected_objects.rewind();
+						Point* obj1 = dynamic_cast<Point*>(_selected_objects.get());
+						_selected_objects.moveNext();
+						Point* obj2 = dynamic_cast<Point*>(_selected_objects.get());
+						if (obj1 && obj2)
+						{
+							Point2Point* rule = new Point2Point(obj1->_x, obj1->_y, obj2->_x, obj2->_y, _storage_of_parameters.add(value));
+							_storage_of_constraints.add(rule);
+						}
+						return;
+			  }
+			  default:
+				  return;
+			  }
 	}
 	case 2:
 	{
-		if (/*Picked only Point and Segment*/)
-		{
-			DistanceFromPointToSection* rule = new DistanceFromPointToSection(/*point's and segment's parameters*/px, py, p1x, p1y, p2x, p2y, _storage_of_parameters.add(value));
-			_storage_of_constraints.add(rule);
-		}
-		return;
+			  switch (_selected_objects.size())
+			  {
+			  case 2:
+			  {
+						_selected_objects.rewind();
+						Point* obj1 = dynamic_cast<Point*>(_selected_objects.get());
+						if (obj1)
+						{
+							_selected_objects.moveNext();
+							Segment* obj2 = dynamic_cast<Segment*>(_selected_objects.get());
+							if (obj2)
+							{
+								DistanceFromPointToSection* rule = new DistanceFromPointToSection(obj1->_x, obj1->_y, obj2->_p1->_x,
+									obj2->_p1->_y, obj2->_p2->_x, obj2->_p2->_y, _storage_of_parameters.add(value));
+								_storage_of_constraints.add(rule);
+								return;
+							}
+						}
+						Segment* ob2 = dynamic_cast<Segment*>(_selected_objects.get());
+						if (ob2)
+						{
+							_selected_objects.moveNext();
+							Point* ob1 = dynamic_cast<Point*>(_selected_objects.get());
+							if (ob1)
+							{
+								DistanceFromPointToSection* rule = new DistanceFromPointToSection(ob1->_x, ob1->_y, ob2->_p1->_x,
+									ob2->_p1->_y, ob2->_p2->_x, ob2->_p2->_y, _storage_of_parameters.add(value));
+								_storage_of_constraints.add(rule);
+								return;
+							}
+						}
+						return;
+			  }
+			  case 3:
+
+				  return;
+			  default:
+				  return;
+			  }
 	}
 	case 3:
 	{
-		if (/*Picked only 3 Points or Point and Segment*/)
-		{
-			DistanceToTheLine* rule = new DistanceToTheLine(/*point's and segment's parameters*/px, py, p1x, p1y, p2x, p2y, _storage_of_parameters.add(value));
-			_storage_of_constraints.add(rule);
-		}
-		return;
+			  switch (_selected_objects.size())
+			  {
+			  case 2:
+			  {
+						_selected_objects.rewind();
+						Point* obj1 = dynamic_cast<Point*>(_selected_objects.get());
+						if (obj1)
+						{
+							_selected_objects.moveNext();
+							Segment* obj2 = dynamic_cast<Segment*>(_selected_objects.get());
+							if (obj2)
+							{
+								DistanceToTheLine* rule = new DistanceToTheLine(obj1->_x, obj1->_y, obj2->_p1->_x,
+									obj2->_p1->_y, obj2->_p2->_x, obj2->_p2->_y, _storage_of_parameters.add(value));
+								_storage_of_constraints.add(rule);
+								return;
+							}
+						}
+						Segment* ob2 = dynamic_cast<Segment*>(_selected_objects.get());
+						if (ob2)
+						{
+							_selected_objects.moveNext();
+							Point* ob1 = dynamic_cast<Point*>(_selected_objects.get());
+							if (ob1)
+							{
+								DistanceToTheLine* rule = new DistanceToTheLine(ob1->_x, ob1->_y, ob2->_p1->_x,
+									ob2->_p1->_y, ob2->_p2->_x, ob2->_p2->_y, _storage_of_parameters.add(value));
+								_storage_of_constraints.add(rule);
+								return;
+							}
+						}
+						return;
+			  }
+			  case 3:
+
+				  return;
+			  default:
+				  return;
+			  }
 	}
 	case 4:
 	{
-		if (/*Picked only 4 Points or 2 Points and Segment or 2 Segments*/)
-		{
-			AngleSegmentSegment* rule = new AngleSegmentSegment(/*point's and segment's parameters*/, _storage_of_parameters.add(value));
-			_storage_of_constraints.add(rule);
-		}
-		return;
+			  switch (_selected_objects.size())
+			  {
+			  case 2:
+				  return;
+			  case 3:
+				  return;
+			  case 4:
+			  {
+						_selected_objects.rewind();
+						Point* obj1 = dynamic_cast<Point*>(_selected_objects.get());
+						_selected_objects.moveNext();
+						Point* obj2 = dynamic_cast<Point*>(_selected_objects.get());
+						_selected_objects.moveNext();
+						Point* obj3 = dynamic_cast<Point*>(_selected_objects.get());
+						_selected_objects.moveNext();
+						Point* obj4 = dynamic_cast<Point*>(_selected_objects.get());
+						if (obj1 && obj2 && obj3 && obj4)
+						{
+							AngleSegmentSegment* rule = new AngleSegmentSegment(
+								obj1->_x, obj1->_y,
+								obj2->_x, obj2->_y,
+								obj3->_x, obj3->_y,
+								obj4->_x, obj4->_y,
+								_storage_of_parameters.add(value));
+							_storage_of_constraints.add(rule);
+						}
+						return;
+			  }
+			  default:
+				  return;
+			  }
+		/*Picked only 4 Points or 2 Points and Segment or 2 Segments*/
 	}
 	case 5:
 	{
-		if (/*Picked only 3 Points or Point and Segment*/)
-		{
-			ThreePoints* rule = new ThreePoints(/*point's and segment's parameters*/, _storage_of_parameters.add(value));
-			_storage_of_constraints.add(rule);
-		}
-		return;
+			  switch (_selected_objects.size())
+			  {
+			  case 2:
+			  {
+						_selected_objects.rewind();
+						Point* obj1 = dynamic_cast<Point*>(_selected_objects.get());
+						if (obj1)
+						{
+							_selected_objects.moveNext();
+							Segment* obj2 = dynamic_cast<Segment*>(_selected_objects.get());
+							if (obj2)
+							{
+								ThreePoints* rule = new ThreePoints(obj1->_x, obj1->_y, obj2->_p1->_x,
+									obj2->_p1->_y, obj2->_p2->_x, obj2->_p2->_y);
+								_storage_of_constraints.add(rule);
+								return;
+							}
+						}
+						Segment* ob2 = dynamic_cast<Segment*>(_selected_objects.get());
+						if (ob2)
+						{
+							_selected_objects.moveNext();
+							Point* ob1 = dynamic_cast<Point*>(_selected_objects.get());
+							if (ob1)
+							{
+								ThreePoints* rule = new ThreePoints(ob1->_x, ob1->_y, ob2->_p1->_x,
+									ob2->_p1->_y, ob2->_p2->_x, ob2->_p2->_y);
+								_storage_of_constraints.add(rule);
+								return;
+							}
+						}
+						return;
+			  }
+			  case 3:
+
+				  return;
+			  default:
+				  return;
+			  }
 	}
 	default:
 		return;

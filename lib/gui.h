@@ -1,6 +1,9 @@
 #ifndef GUI_H
 #define GUI_H
 
+#include "core.h"
+
+class CORE;
 
 class GUI
 {
