@@ -80,6 +80,9 @@ void CORE::BuildFigure(IConstraint* constraint, Storage_Array<double*>* paramete
 
 void CORE::AddObject(double point_x, double point_y)
 {
+	/*double *x = _storage_of_parameters.add(point_x);
+	double *y = _storage_of_parameters.add(point_y);
+	Point p(x,y);*/
 	Point p(_storage_of_parameters.add(point_x), _storage_of_parameters.add(point_y));
 	_storage_of_points.add(p);
 }

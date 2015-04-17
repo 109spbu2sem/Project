@@ -155,7 +155,7 @@ public:
 	Arc()
 	{
 		_o = 0;
-		_d = { 0, 0 };
+		_d = Vector(0, 0);
 		_angle = 0;
 	};
 	Arc(Point *p, Vector &z, Angle &a)
