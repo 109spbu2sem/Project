@@ -14,17 +14,8 @@ public:
 		_x = xx;
 		_y = yy;
 	}
-	Point(double xx, double yy)
-	{
-		_x = new double;
-		*_x = xx;
-		_y = new double;
-		*_y = yy;
-	}
 	~Point() 
 	{
-		delete _x;
-		delete _y;
 	}
 	virtual unsigned objectType()
 	{

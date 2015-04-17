@@ -26,7 +26,7 @@ public:
 	unsigned operator()(const hashtype &h)
 	{
 		unsigned i = sizeof(h);
-		const char * str = static_cast<const char*>h;
+		const char * str = static_cast<const char*>&h;
 		static const unsigned b = 378551;
 		unsigned a = 63689;
 		unsigned hash = 0;

@@ -11,6 +11,20 @@ GUI::~GUI()
 	
 }
 
+void GUI::start()
+{
+	while (true)
+	{
+	double x,y;
+	std::cin >> x;
+	std::cin >> y;
+	if (!x && !y) break;
+	mycore->AddObject(x, y);
+	}
+	mycore->Calculate();
+	return;
+}
+
 void GUI::Draw(double point_x, double point_y)
 {
 	std::cout << point_x << "\t" << point_y << std::endl;

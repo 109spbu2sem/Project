@@ -1,17 +1,13 @@
 #include "core.h"
 #include "gui.h"
+#include "storages\storage_array.h"
+#include "storages\storage_list.h"
 
 int main()
 {
 	CORE testcore;
 	GUI testgui(&testcore);
 	testcore.ConnectGUI(&testgui);
-	//while (1)
-	{
-		for (int i = 0; i < 120; i++)
-		{
-			testcore.AddObject(i, i + 1);
-		}
-	}
+	testgui.start();
 	return 0;
 }

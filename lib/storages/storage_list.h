@@ -74,7 +74,7 @@ public:
 	}
 	Item get() { return _current->data; }
 	//add element to storage
-	void add(const Item&);
+	Item* add(const Item&);
 	//set _current as _first
 	void rewind()
 	{
@@ -109,7 +109,7 @@ public:
 	};
 };
 
-template<typename Item> void Storage_List<Item>::add(const Item &item)
+template<typename Item> Item* Storage_List<Item>::add(const Item &item)
 {
 	if (_first)//add new item
 	{
@@ -119,7 +119,7 @@ template<typename Item> void Storage_List<Item>::add(const Item &item)
 		_last->data = item;
 		_last->next = 0;
 		_size++;
-		return;
+		return &(_last->data);
 	}
 	else//create first item
 	{
@@ -129,9 +129,8 @@ template<typename Item> void Storage_List<Item>::add(const Item &item)
 		_last = _first;
 		_current = _first;
 		_size = 1;
-		return;
+		return &(_last->data);
 	}
-	return;
 }
 
 //removes next item

@@ -19,15 +19,15 @@ CORE::~CORE()
 
 void CORE::Redraw()
 {
-	for (ArrayViewer<Point> i(_storage_of_points); i.canMoveNext(); i.moveNext())
+	for (ListViewer<Point> i(_storage_of_points); i.canMoveNext(); i.moveNext())
 	{
 		mygui->Draw(*i.getValue()._x, *i.getValue()._y);
 	}
-	for (ArrayViewer<Segment> i(_storage_of_segments); i.canMoveNext(); i.moveNext())
+	for (ListViewer<Segment> i(_storage_of_segments); i.canMoveNext(); i.moveNext())
 	{
 		mygui->Draw(*i.getValue()._p1->_x, *i.getValue()._p1->_y, *i.getValue()._p2->_x, *i.getValue()._p2->_y);
 	}
-	for (ArrayViewer<Circle> i(_storage_of_circles); i.canMoveNext(); i.moveNext())
+	for (ListViewer<Circle> i(_storage_of_circles); i.canMoveNext(); i.moveNext())
 	{
 		mygui->Draw(*i.getValue()._o->_x, *i.getValue()._o->_y, *i.getValue()._r);
 	}
@@ -42,7 +42,7 @@ void CORE::Calculate()
 	{
 		collector.addConstraint(i.getValue());
 	}
-	for (ArrayViewer< double > i(_storage_of_parameters); i.canMoveNext(); i.moveNext())
+	for (ListViewer< double > i(_storage_of_parameters); i.canMoveNext(); i.moveNext())
 	{
 		parameters.add(&i.getValue());
 	}
@@ -312,10 +312,11 @@ void CORE::AddRule(unsigned type, double value)
 void CORE::ChangeStatus(double x, double y, unsigned char status_key)
 {
 	/*Try to search points in small radius*/
-	unsigned size = _storage_of_points.size();
+	/*unsigned size = _storage_of_points.size();
 	double min = 2;
 	int min_i = -1;
-	for (unsigned i = 0; i < size; i++)
+	//for (unsigned i = 0; i < size; i++)
+	for (ListViewer<Point> i(_storage_of_points); i.canMoveNext(); i.moveNext())
 	{
 		if (length(*_storage_of_points[i]._x, *_storage_of_points[i]._y, x, y) < min)
 		{
@@ -353,7 +354,7 @@ void CORE::ChangeStatus(double x, double y, unsigned char status_key)
 			min_k = i;
 		}
 	}*/
-	if (min_k >= 0)
+	/*if (min_k >= 0)
 	{
 		_storage_of_circles[min_k].changeVisible();
 	}
@@ -372,13 +373,13 @@ void CORE::ChangeStatus(double x, double y, unsigned char status_key)
 			else return;
 		}
 	}
-	return;
+	return;*/
 }
 
 void CORE::Select(double x, double y)
 {
 	/*Try to search points in small radius*/
-	unsigned size = _storage_of_points.size();
+	/*unsigned size = _storage_of_points.size();
 	double min = 2;
 	int min_i = -1;
 	for (unsigned i = 0; i < size; i++)
@@ -419,7 +420,7 @@ void CORE::Select(double x, double y)
 	min_k = i;
 	}
 	}*/
-	if (min_k >= 0)
+	/*if (min_k >= 0)
 	{
 		_storage_of_circles[min_k].changeSelect();
 		_selected_objects.add(&_storage_of_circles[min_k]);
@@ -441,7 +442,7 @@ void CORE::Select(double x, double y)
 			else return;
 		}
 	}
-	return;
+	return;*/
 }
 
 bool isInArea(double x, double y, double x1, double y1, double x2, double y2)
@@ -468,7 +469,7 @@ bool isInArea(double x, double y, double x1, double y1, double x2, double y2)
 void CORE::ChangeStatus(double x1, double y1, double x2, double y2, unsigned char status_key)
 {
 	// select points
-	unsigned size = _storage_of_points.size();
+	/*unsigned size = _storage_of_points.size();
 	for (unsigned i = 0; i < size; i++)
 	{
 		if (isInArea(*_storage_of_points[i]._x, *_storage_of_points[i]._y, x1, y1, x2, y2))
@@ -487,41 +488,41 @@ void CORE::ChangeStatus(double x1, double y1, double x2, double y2, unsigned cha
 			//change status
 		}
 	}
-	return;
+	return;*/
 }
 
 void CORE::Select(double x1, double y1, double x2, double y2)
 {
 	// select points
 	unsigned size = _storage_of_points.size();
-	for (unsigned i = 0; i < size; i++)
+	for (ListViewer<Point> i(_storage_of_points); i.canMoveNext(); i.moveNext())
 	{
-		if (isInArea(*_storage_of_points[i]._x, *_storage_of_points[i]._y, x1, y1, x2, y2))
+		if (isInArea(*i.getValue()._x, *i.getValue()._y, x1, y1, x2, y2))
 		{
-			_storage_of_points[i].changeSelect();
-			_selected_objects.add(&_storage_of_points[i]);
+			i.getValue().changeSelect();
+			_selected_objects.add(&i.getValue());
 		}
 	}
 
 	// select segments
 	size = _storage_of_segments.size();
-	for (unsigned i = 0; i < size; i++)
+	for (ListViewer<Segment> i(_storage_of_segments); i.canMoveNext(); i.moveNext())
 	{
-		if (isInArea(*_storage_of_segments[i]._p1->_x, *_storage_of_segments[i]._p1->_y, x1, y1, x2, y2) &&
-			isInArea(*_storage_of_segments[i]._p2->_x, *_storage_of_segments[i]._p2->_y, x1, y1, x2, y2))
+		if (isInArea(*i.getValue()._p1->_x, *i.getValue()._p1->_y, x1, y1, x2, y2) &&
+			isInArea(*i.getValue()._p2->_x, *i.getValue()._p2->_y, x1, y1, x2, y2))
 		{
-			_storage_of_segments[i].changeSelect();
-			_selected_objects.add(&_storage_of_segments[i]);
+			i.getValue().changeSelect();
+			_selected_objects.add(&i.getValue());
 		}
 	}
 	// select circles
 	size = _storage_of_circles.size();
-	for (unsigned i = 0; i < size; i++)
+	for (ListViewer<Circle> i(_storage_of_circles); i.canMoveNext(); i.moveNext())
 	{
-		if (isInArea(*_storage_of_circles[i]._o->_x, *_storage_of_circles[i]._o->_y, x1, y1, x2, y2))
+		if (isInArea(*i.getValue()._o->_x, *i.getValue()._o->_y, x1, y1, x2, y2))
 		{
-			_storage_of_circles[i].changeSelect();
-			_selected_objects.add(&_storage_of_circles[i]);
+			i.getValue().changeSelect();
+			_selected_objects.add(&i.getValue());
 		}
 	}
 	return;
