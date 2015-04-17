@@ -8,7 +8,6 @@ private:
 public:
 	ID()
 	{
-		//_myid = generateID();
 		_myid = 0;
 	}
 	ID(unsigned id)
@@ -18,6 +17,23 @@ public:
 	unsigned getID()
 	{
 		return _myid;
+	}
+};
+
+
+class IDgenerator
+{
+private:
+	unsigned _last;
+public:
+	IDgenerator()
+	{
+		_last = 0;
+	}
+	ID generateID()
+	{
+		_last++;
+		return ID(_last);
 	}
 };
 
