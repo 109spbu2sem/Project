@@ -118,169 +118,6 @@ ApplicationWindow
             }
         }
 
-    Dialog
-    {
-        id: addObjectDialog
-
-        contentItem:
-            Rectangle
-            {
-                implicitWidth: 340
-                implicitHeight: 200
-
-                color: "lightblue"
-
-                Text
-                {
-                    id: title
-
-                    x: 10
-                    y: 5
-
-                    text: "Choose type of object"
-                    color: "white"
-                    font.bold: true
-                    style: Text.Raised
-                }
-
-                Grid
-                {
-                    id: objectChoose
-
-                    x: 10
-                    y: 25
-
-                    Row
-                    {
-                        spacing: 10
-
-                        ToolButton
-                        {
-                            id: pointAddObjectDialogButton
-
-                            width: 100
-                            height: 130
-
-                            Rectangle
-                            {
-                                width: 100
-                                height: 100
-
-                                color: "red"
-                            }
-
-                            Text
-                            {
-                                id:textPoint
-
-                                y: 100
-                                width: 100
-                                height: 30
-                                horizontalAlignment: Text.AlignHCenter
-                                verticalAlignment: Text.AlignVCenter
-
-                                text: "Point"
-                            }
-
-                            onClicked:
-                            {
-                                addObjectDialog.close();
-                                console.log("addObjectDialog -> Point");
-                            }
-                        }
-
-                        ToolButton
-                        {
-                            id: sectionAddObjectDialogButton
-
-                            width: 100
-                            height: 130
-
-                            Rectangle
-                            {
-                                width: 100
-                                height: 100
-
-                                color: "green"
-                            }
-
-                            Text
-                            {
-                                id: textSection
-
-                                y: 100
-                                width: 100
-                                height: 30
-                                horizontalAlignment: Text.AlignHCenter
-                                verticalAlignment: Text.AlignVCenter
-
-                                text: "Section"
-                            }
-
-                            onClicked:
-                            {
-                                addObjectDialog.close();
-                                console.log("addObjectDialog -> Section");
-                            }
-                        }
-
-                        ToolButton
-                        {
-                            id: arcAddObjectDialogButton
-
-                            width: 100
-                            height: 130
-
-                            Rectangle
-                            {
-                                width: 100
-                                height: 100
-
-                                color: "blue"
-                            }
-
-                            Text
-                            {
-                                id: textArc
-
-                                y: 100
-                                width: 100
-                                height: 30
-                                horizontalAlignment: Text.AlignHCenter
-                                verticalAlignment: Text.AlignVCenter
-
-                                text: "Arc"
-                            }
-
-                            onClicked:
-                            {
-                                addObjectDialog.close();
-                                console.log("addObjectDialog -> Arc");
-                            }
-                        }
-                    }
-                }
-
-                Button
-                {
-                    id: okAddObjectDialogButton
-
-                    x: 10
-                    y: 175
-                    width: 90
-                    height: 21
-
-                    text: "OK"
-
-                    onClicked:
-                    {
-                        addObjectDialog.close();
-                        console.log("addObjectDialog -> Nothing");
-                    }
-                }
-            }
-        }
-
     FileDialog
     {
         id: fileDialog
@@ -307,58 +144,181 @@ ApplicationWindow
         width:  parent.width - 80
         height: parent.height - 80
 
-        Rectangle
+        Column
         {
-            id: backgroundRect
-
-            width: 860
-            height: 640
             Layout.fillWidth: true
             Layout.fillHeight: true
             Layout.minimumWidth: 600
             Layout.minimumHeight: 400
 
-            color: "white"
-
-            Canvas
+            ToolBar
             {
-                id: mainCanvas
+                id: toolBar
+                width: parent.width
 
-                anchors.fill: parent
-
-                antialiasing: true
-
-                onPaint:
+                RowLayout
                 {
-                    var ctx = getContext('2d')
-                    ctx.fillStyle = "lightblue"
-                    ctx.lineWidth = 1.5
-                    ctx.beginPath()
-                    ctx.moveTo(lastX, lastY)
-                    lastX = mouseArea.mouseX
-                    lastY = mouseArea.mouseY
-                    ctx.lineTo(lastX, lastY)
-                    ctx.stroke()
-                    ctx.save()
+                    spacing: 10
+
+                    ToolButton
+                    {
+                        id: pointAddObjectDialogButton
+
+                        width: 40
+                        height: 40
+
+                        Rectangle
+                        {
+                            width: parent.width
+                            height: parent.height
+
+                            color: "red"
+                        }
+
+                        Text
+                        {
+                            id:textPoint
+
+                            y: 10
+                            width: parent.width
+                            horizontalAlignment: Text.AlignHCenter
+                            verticalAlignment: Text.AlignVCenter
+
+                            text: "Point"
+                            color: 'white'
+                        }
+
+                        onClicked:
+                        {
+                            // gui.drawPoint();
+                            console.log("toolBar -> Point");
+                        }
+                    }
+
+                    ToolButton
+                    {
+                        id: sectionAddObjectDialogButton
+
+                        width: 40
+                        height: 40
+
+                        Rectangle
+                        {
+                            width: parent.width
+                            height: parent.height
+
+                            color: "green"
+                        }
+
+                        Text
+                        {
+                            id: textSection
+
+                            y: 10
+                            width: parent.width
+                            horizontalAlignment: Text.AlignHCenter
+                            verticalAlignment: Text.AlignVCenter
+
+                            text: "Section"
+                            color: 'white'
+                        }
+
+                        onClicked:
+                        {
+                            // gui.drawSection();
+                            console.log("toolBar -> Section");
+                        }
+                    }
+
+                    ToolButton
+                    {
+                        id: arcAddObjectDialogButton
+
+                        width: 40
+                        height: 40
+
+                        Rectangle
+                        {
+                            width: parent.width
+                            height: parent.height
+
+                            color: "blue"
+                        }
+
+                        Text
+                        {
+                            id: textArc
+
+                            y: 10
+                            width: parent.width
+                            horizontalAlignment: Text.AlignHCenter
+                            verticalAlignment: Text.AlignVCenter
+
+                            text: "Arc"
+                            color: 'white'
+                        }
+
+                        onClicked:
+                        {
+                            // gui.drawArc();
+                            console.log("toolBar -> Arc");
+                        }
+                    }
                 }
+            }
 
-                MouseArea
+            Rectangle
+            {
+                id: backgroundRect
+
+                width: parent.width
+                height: parent.height - 50
+                Layout.fillWidth: true
+                Layout.fillHeight: true
+                Layout.minimumWidth: 600
+                Layout.minimumHeight: 400
+
+                color: "white"
+
+                Canvas
                 {
-                    id: mouseArea
+                    id: mainCanvas
 
                     anchors.fill: parent
 
-                    onPressed:
+                    antialiasing: true
+
+                    onPaint:
                     {
-                        addObjectDialog.open()
-                        lastX = mouseX
-                        lastY = mouseY
-                        //statusBar.text = gui.setStatusBar("Project changed")
+                        var ctx = getContext('2d')
+                        ctx.fillStyle = "lightblue"
+                        ctx.lineWidth = 1.5
+                        ctx.beginPath()
+                        ctx.moveTo(lastX, lastY)
+                        ctx.fillRect(lastX, lastY, 2, 2)
+                        ctx.stroke()
+
                     }
-                    onPositionChanged:
+
+                    MouseArea
                     {
-                        mainCanvas.requestPaint()
-                        //mainCanvas.markDirty()
+                        id: mouseArea
+
+                        anchors.fill: parent
+
+                        onPressed:
+                        {
+                            addObjectDialog.open()
+                            lastX = mouseX
+                            lastY = mouseY
+                            mainCanvas.requestPaint()
+                            //statusBar.text = gui.setStatusBar("Project changed")
+                        }
+                        onPositionChanged:
+                        {
+                            mainCanvas.requestPaint()
+                            //mainCanvas.markDirty()
+                        }
                     }
                 }
             }
