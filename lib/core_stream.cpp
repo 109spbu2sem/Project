@@ -37,9 +37,8 @@ CORE::Primitive CORE::GetFromStream()
 			ans.p2_x = 0;
 			ans.p2_y = 0;
 			ans.r = 0;
-			if (_pointstream.getValue().isSelected())
-				ans.color.setColor(SELECTEDCOLOR);
-			else ans.color = _pointstream.getValue().color;
+			ans.color = _pointstream.getValue().color;
+			ans.select = _pointstream.getValue().isSelected();
 
 			if (_pointstream.canMoveNext()) _pointstream.moveNext();
 			else _streamstate = SEGMENTCASE;
@@ -60,9 +59,8 @@ CORE::Primitive CORE::GetFromStream()
 			ans.p2_x = *_segmentstream.getValue()._p2->_x;
 			ans.p2_y = *_segmentstream.getValue()._p2->_y;
 			ans.r = 0;
-			if (_segmentstream.getValue().isSelected())
-				ans.color.setColor(SELECTEDCOLOR);
-			else	ans.color = _segmentstream.getValue().color;
+			ans.color = _segmentstream.getValue().color;
+			ans.select = _segmentstream.getValue().isSelected();
 			
 
 			if (_segmentstream.canMoveNext()) _segmentstream.moveNext();
@@ -83,9 +81,8 @@ CORE::Primitive CORE::GetFromStream()
 			ans.p2_x = 0;
 			ans.p2_y = 0;
 			ans.r = *_circlestream.getValue()._r;
-			if (_circlestream.getValue().isSelected())
-				ans.color = _circlestream.getValue().color;
-			else ans.color.setColor(SELECTEDCOLOR);
+			ans.color = _circlestream.getValue().color;
+			ans.select = _circlestream.getValue().isSelected();
 	
 			if (_circlestream.canMoveNext()) _circlestream.moveNext();
 			else _streamstate = STREAMISCLOSE;

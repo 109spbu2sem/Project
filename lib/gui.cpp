@@ -67,7 +67,7 @@ bool MainWindow::Redraw()
 			mycore->CloseStream();
 			return true;
 		}
-
+		if (p.select) p.color.setColor(COLORDEF);
 		QPen pen(QColor(p.color.getColor(1), p.color.getColor(2), p.color.getColor(3)));
 		
 	switch (p.type)

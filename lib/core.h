@@ -68,16 +68,13 @@ public:
 	void AddRule(unsigned type, double value);
 	void AddRule(unsigned type);
 
-	void ChangeStatus(double x, double y, unsigned char status_key); // need refine
-	void ChangeStatus(double x1, double y1, double x2, double y2, unsigned char status_key); // need refine
+	void ChangeStatus(unsigned char status_key); // need refine
 
 	void Select(double x, double y);
 	void Select(double x1, double y1, double x2, double y2);
 	void ClearSelection();
 
 	void DeleteSelected();
-
-	void ChangeProperty(unsigned property_key, ...);
 
 	void IWantSave(std::string fileway);
 	void IWantLoad(std::string fileway);
@@ -92,6 +89,7 @@ public:
 		double p2_y;
 		double r;
 		Color color;
+		bool select;
 	};
 
 	bool OpenStream();
