@@ -15,31 +15,33 @@
 #include <QQmlApplicationEngine>
 #include <QObject>
 //  Custom
-#include "Structures.h"
+#include "./include/core/Structures.h"
+#include "./include/core/LinkedList_Template.h"
 
 class GUI : public QObject
 {
     Q_OBJECT
     Q_PROPERTY(QString statusBar READ statusBar WRITE setStatusBar NOTIFY statusBarChanged)
-    //  Q_PROPERTY(Point mousePosition READ mousePosition WRITE setMousePosition NOTIFY mousePositionChanged)
+    Q_PROPERTY(Point newPoint READ newPoint WRITE setNewPoint NOTIFY newPointChanged)
 
 public:
-    Scene(){}
-
-    ~Scene(){}
+     GUI(){}
+    ~GUI(){}
 
 public slots:
-    void requestPaint(Point &P){}
+    const QString statusBar();
+    void setStatusBar(const QString &String);
 
-    QString statusBar();
-    void setStatusBar(const QString String);
+    const Point newPoint();
+    void setNewPoint(Point P);
 
     signals:
     void statusBarChanged();
+    void newPointChanged();
 
 private:
     QString _statusBar;
-
+    Point _newPoint;
 };
 
 

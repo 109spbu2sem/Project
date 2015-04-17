@@ -6,19 +6,31 @@
 //  Copyright (c) 2015 Никита Попов. All rights reserved.
 //
 
-#include "GUI.h"
+#include "./include/gui/GUI.h"
 #include <QQmlApplicationEngine>
 
-QString Scene::statusBar()
+const QString GUI::statusBar()
 {
     return _statusBar;
 }
 
-void Scene::setStatusBar(const QString statusBarText)
+void GUI::setStatusBar(const QString &statusBarText)
 {
-    if (!(_statusBar == statusBarText))
+    if (statusBarText != _statusBar)
     {
         _statusBar = statusBarText;
         emit statusBarChanged();
     }
+}
+
+const Point GUI::newPoint()
+{
+    return _newPoint;
+}
+
+void GUI::setNewPoint(Point P)
+{
+    _newPoint = P;
+
+    emit newPointChanged();
 }

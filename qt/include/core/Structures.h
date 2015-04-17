@@ -21,13 +21,13 @@ struct Section  //  Отрезок
     Point B;  //  Конечная точка
 };
 
-/* struct Vector2  //  Вектор
+struct Vector2  //  Вектор
 {
     double X, Y;
     Vector2(double _X, double _Y):X(_X), Y(_Y){};
     
     //  Сложение векторов
-
+    /*
      Vector2 Sum(const Vector2& V)
      {
      Vector2 V_Res(X,Y);
@@ -35,7 +35,7 @@ struct Section  //  Отрезок
      V_Res.Y += V.Y;
      return V_Res;
      };
-
+     */
     Vector2 operator +(const Vector2 &V)
     {
         Vector2 V_Res(X,Y);
@@ -53,7 +53,7 @@ struct Section  //  Отрезок
         return V_Res;
     };
 };
-*/
+
 //==============================================
 //==============================================
 //==============================================

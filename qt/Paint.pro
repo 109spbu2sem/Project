@@ -3,7 +3,12 @@ TEMPLATE = app
 QT += qml quick
 
 SOURCES += main.cpp \
-    GUI.cpp
+    src/core/DynArrayP.cpp \
+    src/core/DynArrayS.cpp \
+    src/core/LinkedList.cpp \
+    src/core/TreeStorage.cpp \
+    src/gui/GUI.cpp \
+    src/saveload/SaveLoad.cpp
 
 RESOURCES += qml.qrc
 
@@ -14,5 +19,12 @@ QML_IMPORT_PATH =
 include(deployment.pri)
 
 HEADERS += \
-    GUI.h \
-    Structures.h
+    include/core/constraints/IsPointOnSection.h \
+    include/core/constraints/Point2SectionDistance.h \
+    include/core/LinkedList.h \
+    include/core/LinkedList_Template.h \
+    include/core/Storage.h \
+    include/core/Storage_Template.h \
+    include/core/Structures.h \
+    include/core/TreeStorage.h \
+    include/gui/GUI.h

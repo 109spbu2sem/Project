@@ -9,13 +9,14 @@
 #include <QQuickWindow>
 #include <QSurfaceFormat>
 #include <QQmlEngine>
-#include "GUI.h"
+#include "./include/gui/GUI.h"
+#include "./src/gui/GUI.cpp"
 
 int main(int argc, char *argv[])
 {
     QGuiApplication app(argc, argv);
 
-    qmlRegisterType<Scene>("scene.module", 1, 0, "Scene");
+    qmlRegisterType<GUI>("scene.module", 1, 0, "GUI");
 
     int rc = 0;
 

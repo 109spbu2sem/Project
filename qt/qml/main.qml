@@ -1,6 +1,5 @@
 import QtQuick 2.4
 import QtQuick.Controls 1.2
-import QtQuick.Window 2.2
 import QtQuick.Controls.Styles 1.2
 import QtQuick.Dialogs 1.2
 import QtQuick.Layouts 1.1
@@ -8,8 +7,8 @@ import scene.module 1.0
 
 ApplicationWindow
 {
-    property int xpos
-    property int ypos
+    property real lastX
+    property real lastY
 
     visible: true
 
@@ -33,7 +32,7 @@ ApplicationWindow
                     shortcut: "Ctrl+Shift+N"
                     onTriggered:
                     {
-                        statusBar.text = qsTr('<font color="green">New project opened<font>')
+                        statusBar.text = setStatusBar('New project opened')
                         loadButton.clicked()
                     }
                 }
@@ -75,7 +74,7 @@ ApplicationWindow
 
                 MenuItem
                 {
-                    text: qsTr("Close project")
+                    text: qsTr("&Close project")
                     shortcut: "Ctrl+E"
                     onTriggered:
                     {
@@ -183,7 +182,11 @@ ApplicationWindow
                                 text: "Point"
                             }
 
-                            onClicked: {  addObjectDialog.close(); console.log("addObjectDialog -> Point");  }
+                            onClicked:
+                            {
+                                addObjectDialog.close();
+                                console.log("addObjectDialog -> Point");
+                            }
                         }
 
                         ToolButton
@@ -214,7 +217,11 @@ ApplicationWindow
                                 text: "Section"
                             }
 
-                            onClicked: {  addObjectDialog.close(); console.log("addObjectDialog -> Section");  }
+                            onClicked:
+                            {
+                                addObjectDialog.close();
+                                console.log("addObjectDialog -> Section");
+                            }
                         }
 
                         ToolButton
@@ -245,7 +252,11 @@ ApplicationWindow
                                 text: "Arc"
                             }
 
-                            onClicked: {  addObjectDialog.close(); console.log("addObjectDialog -> Arc");  }
+                            onClicked:
+                            {
+                                addObjectDialog.close();
+                                console.log("addObjectDialog -> Arc");
+                            }
                         }
                     }
                 }
@@ -253,7 +264,6 @@ ApplicationWindow
                 Button
                 {
                     id: okAddObjectDialogButton
-                    onClicked: {  addObjectDialog.close(); console.log("addObjectDialog -> Nothing");  }
 
                     x: 10
                     y: 175
@@ -261,6 +271,12 @@ ApplicationWindow
                     height: 21
 
                     text: "OK"
+
+                    onClicked:
+                    {
+                        addObjectDialog.close();
+                        console.log("addObjectDialog -> Nothing");
+                    }
                 }
             }
         }
@@ -310,37 +326,40 @@ ApplicationWindow
 
                 anchors.fill: parent
 
-                MouseArea
-                {
-                    anchors.fill: parent
-
-                    onPressed:
-                    {
-                        xpos = mouseX
-                        ypos = mouseY
-                        mainCanvas.requestPaint()
-                        statusBar.text = qsTr('<font color="red">Project changed<font>')
-                    }
-                    onMouseXChanged:
-                    {
-                        xpos = mouseX
-                        ypos = mouseY
-                        mainCanvas.requestPaint()
-                    }
-                    onMouseYChanged:
-                    {
-                        xpos = mouseX
-                        ypos = mouseY
-                        mainCanvas.requestPaint()
-                    }
-                }
+                antialiasing: true
 
                 onPaint:
                 {
                     var ctx = getContext('2d')
                     ctx.fillStyle = "lightblue"
-                    ctx.fillRect(xpos - 2, ypos - 1, 5, 5)
+                    ctx.lineWidth = 1.5
+                    ctx.beginPath()
+                    ctx.moveTo(lastX, lastY)
+                    lastX = mouseArea.mouseX
+                    lastY = mouseArea.mouseY
+                    ctx.lineTo(lastX, lastY)
+                    ctx.stroke()
+                    ctx.save()
+                }
 
+                MouseArea
+                {
+                    id: mouseArea
+
+                    anchors.fill: parent
+
+                    onPressed:
+                    {
+                        addObjectDialog.open()
+                        lastX = mouseX
+                        lastY = mouseY
+                        //statusBar.text = gui.setStatusBar("Project changed")
+                    }
+                    onPositionChanged:
+                    {
+                        mainCanvas.requestPaint()
+                        //mainCanvas.markDirty()
+                    }
                 }
             }
         }
@@ -359,34 +378,34 @@ ApplicationWindow
                 height: 500
                 Layout.fillHeight: true
 
-                Label
+                TableView
                 {
-                    id: objectListLabel
-
-                    x: 0
-                    y: 0
-                    height: 20
-                    Layout.row: 1
-
-                    text: qsTr("List of all objects:")
-                }
-
-                Text
-                {
-                    id: textList
-                    enabled: true
-
-                    x: 0
-                    y: 20
-                    width: 300
-                    height: 480
-                    Layout.row: 2
-
-                    font.bold: true
-                    horizontalAlignment: Text.AlignLeft
-                    wrapMode: Text.NoWrap
-                    textFormat: Text.PlainText
-                    font.pixelSize: 16
+                    id: table
+                    anchors.fill: parent
+                    TableViewColumn
+                    {
+                        role: 'type'
+                        title: "Type"
+                        width: 95
+                    }
+                    TableViewColumn
+                    {
+                        role: 'name'
+                        title: "Name"
+                        width: 100
+                    }
+                    TableViewColumn
+                    {
+                        role: 'x'
+                        title: "X"
+                        width: 50
+                    }
+                    TableViewColumn
+                    {
+                        role: 'y'
+                        title: "Y"
+                        width: 50
+                    }
                 }
             }
 
@@ -486,20 +505,24 @@ ApplicationWindow
         }
     }
 
-
     statusBar:
         StatusBar
         {
             RowLayout
             {
-                anchors.fill: parent
-
                 Label
                 {
                     id: statusBar
 
-                    text: "<font color='green'>Ready for work<font>"
+                    text: "Ready for work"
                 }
             }
         }
+
+    GUI
+    {
+        id: gui
+
+        statusBar: statusBar.text
+    }
 }
