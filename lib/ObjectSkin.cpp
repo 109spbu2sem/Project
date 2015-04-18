@@ -19,3 +19,13 @@ void ObjectSkin::changeVisible()
 {
 	_visible = !_visible;
 }
+
+bool ObjectSkin::isSelected()
+{
+   return _select;
+}
+
+bool ObjectSkin::isVisible()
+{
+   return _visible;
+}

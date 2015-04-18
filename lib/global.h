@@ -7,6 +7,8 @@
 #define PPPONL 4
 #define LL_ANGLE 5
 
+#define SELECTEDCOLOR 1
+
 double length(double, double, double, double);
 
 double min(double, double);

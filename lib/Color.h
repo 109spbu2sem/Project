@@ -9,7 +9,7 @@ public:
 	~Color();
 	void setColor(unsigned long);
 	void setColor(unsigned char, unsigned char, unsigned char);
-	unsigned getColor(char) const;
+	unsigned getColor(char mode = 0) const;
 };
 
 #endif // COLOR_H

@@ -15,6 +15,8 @@ public:
 	~ObjectSkin();
 	void changeVisible();
 	void changeSelect(bool b = 1);
+   bool isSelected();
+   bool isVisible();
 	virtual unsigned objectType() = 0;
 };
 

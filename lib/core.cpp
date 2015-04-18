@@ -21,15 +21,18 @@ void CORE::Redraw()
 {
 	for (ListViewer<Point> i(_storage_of_points); i.canMoveNext(); i.moveNext())
 	{
-		mygui->Draw(*i.getValue()._x, *i.getValue()._y);
+      if (i.getValue().isVisible())
+         mygui->Draw(*i.getValue()._x, *i.getValue()._y, i.getValue().isSelected()?SELECTEDCOLOR:i.getValue().background.getColor());
 	}
 	for (ListViewer<Segment> i(_storage_of_segments); i.canMoveNext(); i.moveNext())
 	{
-		mygui->Draw(*i.getValue()._p1->_x, *i.getValue()._p1->_y, *i.getValue()._p2->_x, *i.getValue()._p2->_y);
+      if (i.getValue().isVisible())
+		   mygui->Draw(*i.getValue()._p1->_x, *i.getValue()._p1->_y, *i.getValue()._p2->_x, *i.getValue()._p2->_y, i.getValue().isSelected()?SELECTEDCOLOR:i.getValue().background.getColor());
 	}
 	for (ListViewer<Circle> i(_storage_of_circles); i.canMoveNext(); i.moveNext())
 	{
-		mygui->Draw(*i.getValue()._o->_x, *i.getValue()._o->_y, *i.getValue()._r);
+      if (i.getValue().isVisible())
+		   mygui->Draw(*i.getValue()._o->_x, *i.getValue()._o->_y, *i.getValue()._r, i.getValue().isSelected()?SELECTEDCOLOR:i.getValue().background.getColor());
 	}
 	return;
 }
@@ -492,6 +495,7 @@ void CORE::Select(double x, double y)
 			else return;
 		}
 	}
+   Redraw();
 	return;
 }
 
@@ -575,6 +579,7 @@ void CORE::Select(double x1, double y1, double x2, double y2)
 			_selected_objects.add(&i.getValue());
 		}
 	}
+   Redraw();
 	return;
 }
 
@@ -583,5 +588,6 @@ void CORE::ClearSelection()
 	for (ListViewer< ObjectSkin* > i(_selected_objects); i.canMoveNext(); i.moveNext())
 	{
 		i.getValue()->changeSelect(false);
+      i.getValue()->background.setColor(0);
 	}
 }
