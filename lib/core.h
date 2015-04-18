@@ -24,13 +24,27 @@ private:
 	Storage_List<IConstraint*> _storage_of_constraints;
 	Storage_List<ObjectSkin*> _selected_objects;
 	
+	enum StreamState
+	{
+		STREAMISCLOSE,
+		/*AMOUNT_OF_POINTS,
+		AMOUNT_OF_SEGMENTS,
+		AMOUNT_OF_CIRCLES,
+		AMOUNT_OF_CONSTRAINTS,*/
+		POINTCASE,
+		SEGMENTCASE,
+		CIRCLECASE,
+		CONSTRAINT_TYPE,
+		ENDOFSTREAM
+	};
+
 	ListViewer<Point> _pointstream;
 	ListViewer<Segment> _segmentstream;
 	ListViewer<Circle> _circlestream;
 	ListViewer<IConstraint*> _constrstream;
-	unsigned _streamstate;
+	StreamState _streamstate;
 
-	void Redraw();
+	bool isInArea(double x, double y, double x1, double y1, double x2, double y2);
 	void BuildFigure(IConstraint*, Storage_Array<double*>*);
 	void BuildFigureNewton(IConstraint*, Storage_Array<double*>*);
 
@@ -39,7 +53,7 @@ public:
 	CORE(GUI* gui)
 	{
 		mygui = gui;
-		_streamstate = 0;
+		_streamstate = STREAMISCLOSE;
 	}
 	~CORE();
 	void Connect(GUI* gui, Save* save)
@@ -69,9 +83,21 @@ public:
 
 	void IWantSave(std::string fileway);
 
+	struct Primitive
+	{
+		unsigned id;
+		PRIMITIVE_TYPE type;
+		double p1_x;
+		double p1_y;
+		double p2_x;
+		double p2_y;
+		double r;
+		unsigned color;
+	};
+
 	bool OpenStream();
 	bool StreamIsOpened();
-	double GetFromStream(); // if stream is closed return std::logic_error
+	Primitive GetFromStream(); // if stream is closed return std::logic_error
 	void CloseStream();
 };
 

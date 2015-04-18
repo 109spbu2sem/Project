@@ -72,7 +72,10 @@
     <ClCompile Include="..\lib\Color.cpp" />
     <ClCompile Include="..\lib\constraints\DistancePoint-Section.cpp" />
     <ClCompile Include="..\lib\constraints\DistanceToTheLine.cpp" />
-    <ClCompile Include="..\lib\core.cpp" />
+    <ClCompile Include="..\lib\core_add.cpp" />
+    <ClCompile Include="..\lib\core_other.cpp" />
+    <ClCompile Include="..\lib\core_private.cpp" />
+    <ClCompile Include="..\lib\core_stream.cpp" />
     <ClCompile Include="..\lib\global.cpp" />
     <ClCompile Include="..\lib\gui.cpp" />
     <ClCompile Include="..\lib\LineSkin.cpp" />
@@ -92,6 +95,7 @@
     <ClInclude Include="..\lib\core.h" />
     <ClInclude Include="..\lib\global.h" />
     <ClInclude Include="..\lib\gui.h" />
+    <ClInclude Include="..\lib\Id.h" />
     <ClInclude Include="..\lib\LineSkin.h" />
     <ClInclude Include="..\lib\ObjectSkin.h" />
     <ClInclude Include="..\lib\storages\heshtable.h" />

@@ -20,9 +20,6 @@
     <ClCompile Include="..\lib\Color.cpp">
       <Filter>Main code files</Filter>
     </ClCompile>
-    <ClCompile Include="..\lib\core.cpp">
-      <Filter>Main code files</Filter>
-    </ClCompile>
     <ClCompile Include="..\lib\gui.cpp">
       <Filter>Main code files</Filter>
     </ClCompile>
@@ -47,6 +44,18 @@
     <ClCompile Include="..\lib\constraints\DistanceToTheLine.cpp">
       <Filter>Constraints</Filter>
     </ClCompile>
+    <ClCompile Include="..\lib\core_private.cpp">
+      <Filter>Main code files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\lib\core_add.cpp">
+      <Filter>Main code files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\lib\core_other.cpp">
+      <Filter>Main code files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\lib\core_stream.cpp">
+      <Filter>Main code files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\lib\Color.h">
@@ -62,9 +71,6 @@
       <Filter>Headers</Filter>
     </ClInclude>
     <ClInclude Include="..\lib\ObjectSkin.h">
-      <Filter>Headers</Filter>
-    </ClInclude>
-    <ClInclude Include="..\lib\structures.h">
       <Filter>Headers</Filter>
     </ClInclude>
     <ClInclude Include="..\lib\global.h">
@@ -102,6 +108,12 @@
     </ClInclude>
     <ClInclude Include="..\lib\constraints\AspectRatio.h">
       <Filter>Constraints</Filter>
+    </ClInclude>
+    <ClInclude Include="..\lib\structures.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\lib\Id.h">
+      <Filter>Headers</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

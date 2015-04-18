@@ -210,3 +210,20 @@ void GUI::Draw(double point_x, double point_y, double radius, unsigned color)
    if (color) std::cout << "\t(s)";
    std::cout << std::endl;
 }
+
+bool GUI::Redraw()
+{
+	if (mycore->StreamIsOpened()) return false;
+	mycore->OpenStream();
+
+	for (unsigned i = 0; i < points_amount; i++)
+	{
+		std::cout << "(P) ";
+		std::cout << mycore->GetFromStream() << "\t" << mycore->GetFromStream();
+		if (mycore->GetFromStream()) std::cout << "\t(s)";
+		std::cout << std::endl;
+	}
+
+	mycore->CloseStream();
+	return true;
+}
