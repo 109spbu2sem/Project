@@ -111,7 +111,7 @@ void CORE::AddRule(unsigned type, double value)
 {
 	switch (type)
 	{
-	case 1:
+	case P2P_DIST:
 	{ // may add multiselect for points and segments
 			  switch (_selected_objects.size())
 			  {
@@ -121,7 +121,7 @@ void CORE::AddRule(unsigned type, double value)
 						Segment* obj = dynamic_cast<Segment*>(_selected_objects.get());
 						if (obj)
 						{
-							Point2Point* rule = new Point2Point(obj->_p1->_x, obj->_p1->_y, obj->_p2->_x, obj->_p2->_y, _storage_of_parameters.add(value));
+							Point2Point* rule = new Point2Point(obj->_p1->_x, obj->_p1->_y, obj->_p2->_x, obj->_p2->_y, _storage_of_constants.add(value));
 							_storage_of_constraints.add(rule);
 						}
 						return;
@@ -134,7 +134,7 @@ void CORE::AddRule(unsigned type, double value)
 						Point* obj2 = dynamic_cast<Point*>(_selected_objects.get());
 						if (obj1 && obj2)
 						{
-							Point2Point* rule = new Point2Point(obj1->_x, obj1->_y, obj2->_x, obj2->_y, _storage_of_parameters.add(value));
+							Point2Point* rule = new Point2Point(obj1->_x, obj1->_y, obj2->_x, obj2->_y, _storage_of_constants.add(value));
 							_storage_of_constraints.add(rule);
 						}
 						return;
@@ -143,7 +143,7 @@ void CORE::AddRule(unsigned type, double value)
 				  return;
 			  }
 	}
-	case 2:
+	case P2S_DIST:
 	{
 			  switch (_selected_objects.size())
 			  {
@@ -158,7 +158,7 @@ void CORE::AddRule(unsigned type, double value)
 							if (obj2)
 							{
 								DistanceFromPointToSection* rule = new DistanceFromPointToSection(obj1->_x, obj1->_y, obj2->_p1->_x,
-									obj2->_p1->_y, obj2->_p2->_x, obj2->_p2->_y, _storage_of_parameters.add(value));
+									obj2->_p1->_y, obj2->_p2->_x, obj2->_p2->_y, _storage_of_constants.add(value));
 								_storage_of_constraints.add(rule);
 								return;
 							}
@@ -171,7 +171,7 @@ void CORE::AddRule(unsigned type, double value)
 							if (ob1)
 							{
 								DistanceFromPointToSection* rule = new DistanceFromPointToSection(ob1->_x, ob1->_y, ob2->_p1->_x,
-									ob2->_p1->_y, ob2->_p2->_x, ob2->_p2->_y, _storage_of_parameters.add(value));
+									ob2->_p1->_y, ob2->_p2->_x, ob2->_p2->_y, _storage_of_constants.add(value));
 								_storage_of_constraints.add(rule);
 								return;
 							}
@@ -185,7 +185,7 @@ void CORE::AddRule(unsigned type, double value)
 				  return;
 			  }
 	}
-	case 3:
+	case P2L_DIST:
 	{
 			  switch (_selected_objects.size())
 			  {
@@ -200,7 +200,7 @@ void CORE::AddRule(unsigned type, double value)
 							if (obj2)
 							{
 								DistanceToTheLine* rule = new DistanceToTheLine(obj1->_x, obj1->_y, obj2->_p1->_x,
-									obj2->_p1->_y, obj2->_p2->_x, obj2->_p2->_y, _storage_of_parameters.add(value));
+									obj2->_p1->_y, obj2->_p2->_x, obj2->_p2->_y, _storage_of_constants.add(value));
 								_storage_of_constraints.add(rule);
 								return;
 							}
@@ -213,7 +213,7 @@ void CORE::AddRule(unsigned type, double value)
 							if (ob1)
 							{
 								DistanceToTheLine* rule = new DistanceToTheLine(ob1->_x, ob1->_y, ob2->_p1->_x,
-									ob2->_p1->_y, ob2->_p2->_x, ob2->_p2->_y, _storage_of_parameters.add(value));
+									ob2->_p1->_y, ob2->_p2->_x, ob2->_p2->_y, _storage_of_constants.add(value));
 								_storage_of_constraints.add(rule);
 								return;
 							}
@@ -227,7 +227,7 @@ void CORE::AddRule(unsigned type, double value)
 				  return;
 			  }
 	}
-	case 4:
+	case LL_ANGLE:
 	{
 			  switch (_selected_objects.size())
 			  {
@@ -262,47 +262,76 @@ void CORE::AddRule(unsigned type, double value)
 			  }
 		/*Picked only 4 Points or 2 Points and Segment or 2 Segments*/
 	}
-	case 5:
-	{
-			  switch (_selected_objects.size())
-			  {
-			  case 2:
-			  {
-						_selected_objects.rewind();
-						Point* obj1 = dynamic_cast<Point*>(_selected_objects.get());
-						if (obj1)
-						{
-							_selected_objects.moveNext();
-							Segment* obj2 = dynamic_cast<Segment*>(_selected_objects.get());
-							if (obj2)
-							{
-								ThreePoints* rule = new ThreePoints(obj1->_x, obj1->_y, obj2->_p1->_x,
-									obj2->_p1->_y, obj2->_p2->_x, obj2->_p2->_y);
-								_storage_of_constraints.add(rule);
-								return;
-							}
-						}
-						Segment* ob2 = dynamic_cast<Segment*>(_selected_objects.get());
-						if (ob2)
-						{
-							_selected_objects.moveNext();
-							Point* ob1 = dynamic_cast<Point*>(_selected_objects.get());
-							if (ob1)
-							{
-								ThreePoints* rule = new ThreePoints(ob1->_x, ob1->_y, ob2->_p1->_x,
-									ob2->_p1->_y, ob2->_p2->_x, ob2->_p2->_y);
-								_storage_of_constraints.add(rule);
-								return;
-							}
-						}
-						return;
-			  }
-			  case 3:
+	default:
+		return;
+	}
+}
 
-				  return;
-			  default:
-				  return;
-			  }
+void CORE::AddRule(unsigned type)
+{
+	switch (type)
+	{
+	case PPPONL:
+	{
+		switch (_selected_objects.size())
+		{
+		case 2:
+		{
+			_selected_objects.rewind();
+			Point* obj1 = dynamic_cast<Point*>(_selected_objects.get());
+			if (obj1)
+			{
+				_selected_objects.moveNext();
+				Segment* obj2 = dynamic_cast<Segment*>(_selected_objects.get());
+				if (obj2)
+				{
+					ThreePoints* rule = new ThreePoints(obj1->_x, obj1->_y, obj2->_p1->_x,
+						obj2->_p1->_y, obj2->_p2->_x, obj2->_p2->_y);
+					_storage_of_constraints.add(rule);
+					return;
+				}
+			}
+			Segment* ob2 = dynamic_cast<Segment*>(_selected_objects.get());
+			if (ob2)
+			{
+				_selected_objects.moveNext();
+				Point* ob1 = dynamic_cast<Point*>(_selected_objects.get());
+				if (ob1)
+				{
+					ThreePoints* rule = new ThreePoints(ob1->_x, ob1->_y, ob2->_p1->_x,
+						ob2->_p1->_y, ob2->_p2->_x, ob2->_p2->_y);
+					_storage_of_constraints.add(rule);
+					return;
+				}
+			}
+			return;
+		}
+		case 3:
+		{
+			_selected_objects.rewind();
+			Point* o1 = dynamic_cast<Point*>(_selected_objects.get());
+			if (o1)
+			{
+				_selected_objects.moveNext();
+				Point* o2 = dynamic_cast<Point*>(_selected_objects.get());
+				if (o2)
+				{
+					_selected_objects.moveNext();
+					Point* o3 = dynamic_cast<Point*>(_selected_objects.get());
+					if (o3)
+					{
+						ThreePoints* rule = new ThreePoints(o1->_x, o1->_y, o2->_x,
+							o2->_y, o3->_x, o3->_y);
+						_storage_of_constraints.add(rule);
+						return;
+					}
+				}
+			}
+			return;
+		}
+		default:
+			return;
+		}
 	}
 	default:
 		return;
@@ -379,35 +408,38 @@ void CORE::ChangeStatus(double x, double y, unsigned char status_key)
 void CORE::Select(double x, double y)
 {
 	/*Try to search points in small radius*/
-	/*unsigned size = _storage_of_points.size();
+	unsigned size = _storage_of_points.size();
 	double min = 2;
 	int min_i = -1;
-	for (unsigned i = 0; i < size; i++)
+	unsigned j = 0;
+	for (ListViewer<Point> i(_storage_of_points); i.canMoveNext(); i.moveNext(), j++)
 	{
-		if (length(*_storage_of_points[i]._x, *_storage_of_points[i]._y, x, y) < min)
+		if (length(*i.getValue()._x, *i.getValue()._y, x, y) < min)
 		{
-			min = length(*_storage_of_points[i]._x, *_storage_of_points[i]._y, x, y);
-			min_i = i;
+			min = length(*i.getValue()._x, *i.getValue()._y, x, y);
+			min_i = j;
 		}
 	}
 	size = _storage_of_segments.size();
 	int min_j = -1;
-	for (unsigned i = 0; i < size; i++)
+	j = 0;
+	for (ListViewer<Segment> i(_storage_of_segments); i.canMoveNext(); i.moveNext(), j++)
 	{
-		if (length(*_storage_of_segments[i]._p1->_x, *_storage_of_segments[i]._p1->_y, x, y) < min)
+		if (length(*i.getValue()._p1->_x, *i.getValue()._p1->_y, x, y) < min)
 		{
-			min = length(*_storage_of_segments[i]._p1->_x, *_storage_of_segments[i]._p1->_y, x, y);
-			min_j = i;
+			min = length(*i.getValue()._p1->_x, *i.getValue()._p1->_y, x, y);
+			min_j = j;
 		}
 	}
 	size = _storage_of_circles.size();
 	int min_k = -1;
-	for (unsigned i = 0; i < size; i++)
+	j = 0;
+	for (ListViewer<Circle> i(_storage_of_circles); i.canMoveNext(); i.moveNext(), j++)
 	{
-		if (length(*_storage_of_circles[i]._o->_x, *_storage_of_circles[i]._o->_y, x, y) < min)
+		if (length(*i.getValue()._o->_x, *i.getValue()._o->_y, x, y) < min)
 		{
-			min = length(*_storage_of_circles[i]._o->_x, *_storage_of_circles[i]._o->_y, x, y);
-			min_k = i;
+			min = length(*i.getValue()._o->_x, *i.getValue()._o->_y, x, y);
+			min_k = j;
 		}
 	}
 	/*size = _storage_of_arcs.size();
@@ -420,29 +452,47 @@ void CORE::Select(double x, double y)
 	min_k = i;
 	}
 	}*/
-	/*if (min_k >= 0)
+	if (min_i >= 0)
 	{
-		_storage_of_circles[min_k].changeSelect();
-		_selected_objects.add(&_storage_of_circles[min_k]);
+		unsigned j = 0;
+		ListViewer<Point> i(_storage_of_points);
+		for (; j < min_i; i.moveNext())
+		{
+			j++;
+		}
+		i.getValue().changeSelect();
+		_selected_objects.add(&i.getValue());
 	}
 	else
 	{
 		if (min_j >= 0)
 		{
-			_storage_of_segments[min_j].changeSelect();
-			_selected_objects.add(&_storage_of_circles[min_j]);
+			unsigned j = 0;
+			ListViewer<Segment> i(_storage_of_segments);
+			for (; j < min_i; i.moveNext())
+			{
+				j++;
+			}
+			i.getValue().changeSelect();
+			_selected_objects.add(&i.getValue());
 		}
 		else
 		{
-			if (min_i >= 0)
+			if (min_k >= 0)
 			{
-				_storage_of_points[min_i].changeSelect();
-				_selected_objects.add(&_storage_of_circles[min_i]);
+				unsigned j = 0;
+				ListViewer<Circle> i(_storage_of_circles);
+				for (; j < min_i; i.moveNext())
+				{
+					j++;
+				}
+				i.getValue().changeSelect();
+				_selected_objects.add(&i.getValue());
 			}
 			else return;
 		}
 	}
-	return;*/
+	return;
 }
 
 bool isInArea(double x, double y, double x1, double y1, double x2, double y2)

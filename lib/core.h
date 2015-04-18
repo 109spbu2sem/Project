@@ -12,6 +12,7 @@ class CORE
 {
 private:
 	Storage_List<double> _storage_of_parameters;
+	Storage_List<double> _storage_of_constants;
 	Storage_List<Point> _storage_of_points;
 	Storage_List<Segment> _storage_of_segments;
 	Storage_List<Circle> _storage_of_circles;
@@ -41,6 +42,7 @@ public:
 	void AddObject(double point_x, double point_y, double radius); // add circle, automatical add center of circle
 	void AddObject(double point_x, double point_y, double vector_x, double vector_y, double angle);
 	void AddRule(unsigned type, double value);
+	void AddRule(unsigned type);
 	void ChangeStatus(double x, double y, unsigned char status_key); // need refine
 	void ChangeStatus(double x1, double y1, double x2, double y2, unsigned char status_key); // need refine
 	void Select(double x, double y);
