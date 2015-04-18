@@ -51,9 +51,9 @@ public:
 		return 0;
 	};
 
-	virtual unsigned type()
+	virtual CONSTR_TYPE type()
 	{
-		return 2;
+		return CONSTR_P2SECTDIST;
 	};
 };
 #endif // DISTANCEPOINT_TO_SECTION_H

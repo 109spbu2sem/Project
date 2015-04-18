@@ -34,9 +34,9 @@ public:
 			return 2 * (*_d - length(*_p1x, *_p1y, *_p2x, *_p2y));
 		return 0;
 	}
-	virtual unsigned type()
+	virtual CONSTR_TYPE type()
 	{
-		return 1;
+		return CONSTR_P2PDIST;
 	}
 };
 

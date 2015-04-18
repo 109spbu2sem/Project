@@ -38,9 +38,9 @@ public:
 			return 2 * error()*(*_p1x - *_p2x);
 		return 0;
 	}
-	unsigned type()
+	virtual CONSTR_TYPE type()
 	{
-		return 5;
+		return CONSTR_3PONLINE;
 	}
 };
 

@@ -52,9 +52,9 @@ public:
 			return -(_angle(_p3y, _p3x, _p4y, _p4x, _p1y, _p1x, _p2y, _p2x, _a));
 		return 0;
 	}
-	unsigned type()
+	virtual CONSTR_TYPE type()
 	{
-		return 4;
+		return CONSTR_L2LANGLE;
 	}
 };
 #endif // ANGLE_SEGMENT_SEGMENT_H

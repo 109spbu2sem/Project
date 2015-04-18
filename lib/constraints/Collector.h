@@ -30,9 +30,9 @@ public:
 			res += _storage[k]->diff(par);
 		return res;
 	}
-	virtual unsigned type()
+	virtual CONSTR_TYPE type()
 	{
-		return 0;
+		return CONSTR_COLLECTOR;
 	}
 };
 #endif
