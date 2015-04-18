@@ -10,9 +10,9 @@ ObjectSkin::~ObjectSkin()
 {
 }
 
-void ObjectSkin::changeSelect()
+void ObjectSkin::changeSelect(bool b)
 {
-	_select = !_select;
+	_select = b;
 }
 
 void ObjectSkin::changeVisible()

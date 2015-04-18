@@ -1,7 +1,9 @@
-#ifndef STORAGES_H
-#define STORAGES_H
+#ifndef STORAGE_LIST_H
+#define STORAGE_LIST_H
 
-#include <iostream>
+#include <cmath>
+
+template<typename Item> class ListViewer;
 
 //------------------------------------------------------------------------
 //----------------------------------LIST---------------------------------
@@ -19,6 +21,7 @@ private:
 	Cell *_current;
 	unsigned _size;
 public:
+	friend class ListViewer < Item > ;
 	//constructor
 	Storage_List(void)
 	{
@@ -71,7 +74,7 @@ public:
 	}
 	Item get() { return _current->data; }
 	//add element to storage
-	void add(const Item&);
+	Item* add(const Item&);
 	//set _current as _first
 	void rewind()
 	{
@@ -79,28 +82,34 @@ public:
 		return;
 	}
 	//check
-	bool canMove_next()
+	bool canMoveNext()
 	{
 		if (_current->next) return false;
 		return true;
 	}
 	//move _current to next
-	void move_next()
+	void moveNext()
 	{
 		if (_current->next)
 			_current = _current->next;
 		return;
 	}
 	//removes _current item
-	void remove_next();
+	void remove(ListViewer<Item>*);
 	void clear();
 	unsigned size() const
 	{
 		return _size;
 	}
+	// get pointer to first cell of list
+	ListViewer<Item> getStartingViewer()
+	{
+		ListViewer<Item> v(*this);
+		return v;
+	};
 };
 
-template<typename Item> void Storage_List<Item>::add(const Item &item)
+template<typename Item> Item* Storage_List<Item>::add(const Item &item)
 {
 	if (_first)//add new item
 	{
@@ -110,7 +119,7 @@ template<typename Item> void Storage_List<Item>::add(const Item &item)
 		_last->data = item;
 		_last->next = 0;
 		_size++;
-		return;
+		return &(_last->data);
 	}
 	else//create first item
 	{
@@ -120,21 +129,22 @@ template<typename Item> void Storage_List<Item>::add(const Item &item)
 		_last = _first;
 		_current = _first;
 		_size = 1;
-		return;
+		return &(_last->data);
 	}
-	return;
 }
 
 //removes next item
-template<typename Item> void Storage_List<Item>::remove_next()
+template<typename Item> void Storage_List<Item>::remove(ListViewer<Item>* viewer)
 {
-	if (_current->next)
+	Cell* _cur = _first;
+	while (_current->next != viewer->_current)
 	{
-		Cell *temp = _current->next;
-		_current->next = _current->next->next;
-		delete temp;
-		_size--;
+		_cur = _cur->next;
 	}
+	_cur->next = _cur->next->next;
+	_cur = viewer->_current;
+	if (viewer->canMoveNext()) viewer->moveNext();
+	delete _cur;
 	return;
 }
 //clears storage
@@ -155,98 +165,30 @@ template<typename Item> void Storage_List<Item>::clear()
 	}
 	return;
 }
+
 //-----------------------------------------------------------------------
-//----------------------------Array-------------------------------------
+//-----------------------------Viewer------------------------------------
 //-----------------------------------------------------------------------
-template<typename Item> class Storage_Array
+
+template<typename Item> class ListViewer
 {
 private:
-	Item *_items;
-	unsigned _size;
+	typename Storage_List<Item>::Cell *_current;
 public:
-	//constructor
-	Storage_Array(void)
+	ListViewer()
 	{
-		_items = 0;
-		_size = 0;
+		_current = 0;
+	}
+	ListViewer(Storage_List<Item>& l)
+	{
+		_current = l._first;
+	}
+	Item& getValue() { if (_current) return _current->data; throw std::runtime_error("No such item"); };
+	void moveNext() { if (_current) _current = _current->next; };
+	bool canMoveNext()
+	{
+		if (_current) return true; return false;
 	};
-	//copying constructor
-	Storage_Array(const Storage_Array &s)
-	{
-		_size = s._size;
-		if (_size)
-		{
-			_items = new Item[s.size()];
-			for (int i = 0; i < s.size(); i++)
-				_items[i] = s._items[i];
-		}
-		else _items = 0;
-	}
-	//destructor
-	~Storage_Array(void)
-	{
-		if (_items) delete[] _items;
-	};
-	///we can work with storage as an array
-	Item& operator[] (unsigned num);
-	///we can produce copy of storage
-	void operator= (const Storage_Array &storage);
-	///add elem
-	void add(const Item&);
-	//get _size
-	unsigned size() const
-	{
-		return _size;
-	}
-	void clear()
-	{
-		if (_items)
-		{
-			_size = 0;
-			delete[] _items;
-		}
-	}
 };
 
-template<typename Item> Item& Storage_Array<Item>::operator[] (unsigned num)
-{
-	if (num >= _size) throw std::invalid_argument("Bad array index");
-	return _items[num];
-}
-
-template<typename Item> void Storage_Array<Item>::operator=(const Storage_Array &storage)
-{
-	if (_items) delete[] _items;
-	_items = new Item[storage._size];
-	for (int i = 0; i < storage._size; i++)
-		_items[i] = storage._items[i];
-	_size = storage._size;
-}
-
-template<typename Item> void Storage_Array<Item>::add(const Item& item)
-{
-	//if storage is empty
-	if (_items == 0)
-	{
-		_items = new Item(item);
-		_size = 1;
-		return;
-	}
-	else
-	{
-		_size++;
-		//copy old
-		Item *newitems = new Item[_size];//temp
-		for (unsigned i = 0; i < _size - 1; i++)
-			newitems[i] = _items[i];
-		//erase old
-		delete[] _items;
-		//add new
-		newitems[_size - 1] = item;
-		_items = newitems;
-		return;
-	}
-	return;
-}
-
-#endif // STORAGES_H
+#endif // STORAGE_LIST_H

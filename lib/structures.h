@@ -3,6 +3,58 @@
 
 #include "ObjectSkin.h"
 
+class Point: public ObjectSkin //<Point>
+{
+public:
+	double *_x;
+	double *_y;
+
+	Point(double *xx = 0, double *yy = 0)
+	{
+		_x = xx;
+		_y = yy;
+	}
+	~Point() 
+	{
+	}
+	virtual unsigned objectType()
+	{
+		return 1;
+	}
+	/*virtual Point& getLink()
+	{
+		return *this;
+	}*/
+};
+
+class Segment : public ObjectSkin //<Segment>
+{
+public:
+	Point *_p1; // begin
+	Point *_p2; // end
+
+	Segment()
+	{
+		_p1 = 0;
+		_p2 = 0;
+	}
+
+	Segment(Point *point1, Point *point2)
+	{
+		_p1 = point1;
+		_p2 = point2;
+	}
+	~Segment() {}
+	virtual unsigned objectType()
+	{
+		return 2;
+	}
+	virtual Segment& getLink()
+	{
+		return *this;
+	}
+};
+
 class Vector
 {
 public:
@@ -20,11 +72,16 @@ public:
 		x = 0;
 		y = 0;
 	};
+	Vector(Segment *seg)
+	{
+		x = seg->_p1->_x - seg->_p2->_x;
+		y = seg->_p1->_y - seg->_p2->_y;
+	};
 	Vector operator+ (const Vector &v);
 	void operator+= (const Vector &v);
 	Vector operator- (const Vector &v);
 	void operator-= (const Vector &v);
-	Vector operator* (const Vector &v);		// scalar
+	double operator* (const Vector &v);		// scalar
 	Vector operator* (const double &a);
 	Vector operator*= (const double &a);
 	double length();		// returns length
@@ -32,50 +89,83 @@ public:
 	Vector unit_vector();// returns unit vector
 };
 
-class Angle
+class Angle : public ObjectSkin //<Angle>
 {
 public:
-	double angle;
+	double *angle;
 
-	Angle(double a = 0) { angle = a; }
+	Angle() { angle = 0; }
+	Angle(double a) { *angle = a; }
 	double grads();			// returns angle in grads
+	virtual unsigned objectType()
+	{
+		return 3;
+	}
+	/*virtual Angle& getLink()
+	{
+		return *this;
+	}*/
 };
 
-struct Point
-{
-	double x;
-	double y;
-};
-struct Segment
-{
-	Point o;			// begin
-	Vector d;		// direction
-};
-
-class Arc
+class Circle : public ObjectSkin //<Circle>
 {
 public:
 	//----structure
-	Point o;
-	Vector d;
-	Angle angle;
+	Point* _o;
+	double* _r;
+
+	//----functions
+	Circle()
+	{
+		_o = 0;
+		_r = 0;
+	}
+	Circle(Point *p, double *r)
+	{
+		_o = p;
+		_r = r;
+	}
+	virtual unsigned objectType()
+	{
+		return 4;
+	}
+	/*virtual Circle& getLink()
+	{
+		return *this;
+	}*/
+};
+
+class Arc : public ObjectSkin //<Arc>
+{
+public:
+	//----structure
+	Point *_o;
+	Vector _d;
+	Angle _angle;
 	//----functions
 	Arc()
 	{
-		o.x = 0;
-		o.y = 0;
-		d = { 0, 0 };
-		angle = 0;
+		_o = 0;
+		_d = Vector(0, 0);
+		_angle = 0;
 	};
-	Arc(Point &p, Vector &z, Angle &a)
+	Arc(Point *p, Vector &z, Angle &a)
 	{
-		o = p;
-		d = z;
-		angle = a;
+		_o = p;
+		_d = z;
+		_angle = a;
 	};
 	double length(); // returns length of the arc
 	double area();	  // returns area of the sector
-	Segment chord(); // returns chord of the sector
+	//Segment chord(); // returns chord of the sector
+	virtual unsigned objectType()
+	{
+		return 4;
+	}
+	/*virtual Arc& getLink()
+	{
+		return *this;
+	}*/
 };
 
 #endif
