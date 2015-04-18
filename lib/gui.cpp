@@ -1,6 +1,8 @@
 #include "gui.h"
 #include "global.h"
 #include <iostream>
+#include <ios>
+#include <fstream>
 
 GUI::GUI()
 {
@@ -71,7 +73,7 @@ void GUI::show()
 				double v;
 				std::cout << "value: ";
 				std::cin >> v;
-				mycore->AddRule(P2P_DIST, v);
+				mycore->AddRule(CONSTR_P2PDIST, v);
 				break;
 			}
 			case 'b':
@@ -79,12 +81,12 @@ void GUI::show()
 				double v;
 				std::cout << "value: ";
 				std::cin >> v;
-				mycore->AddRule(P2L_DIST, v);
+				mycore->AddRule(CONSTR_P2LINEDIST, v);
 				break;
 			}
 			case 'c':
 			{
-				mycore->AddRule(PPPONL);
+				mycore->AddRule(CONSTR_3PONLINE);
 				break;
 			}
 			case 'd':
@@ -92,7 +94,7 @@ void GUI::show()
 				double v;
 				std::cout << "value: ";
 				std::cin >> v;
-				mycore->AddRule(LL_ANGLE, v);
+				mycore->AddRule(CONSTR_L2LANGLE, v);
 				break;
 			}
 			case 'e':
@@ -100,7 +102,7 @@ void GUI::show()
 				double v;
 				std::cout << "value: ";
 				std::cin >> v;
-				mycore->AddRule(P2S_DIST, v);
+				mycore->AddRule(CONSTR_P2SECTDIST, v);
 				break;
 			}
 			default:

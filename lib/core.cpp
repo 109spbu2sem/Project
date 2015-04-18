@@ -9,7 +9,7 @@
 
 CORE::CORE()
 {
-	
+	_streamstate = 0;
 }
 
 CORE::~CORE()
@@ -114,7 +114,7 @@ void CORE::AddRule(unsigned type, double value)
 {
 	switch (type)
 	{
-	case P2P_DIST:
+	case CONSTR_P2PDIST:
 	{ // may add multiselect for points and segments
 			  switch (_selected_objects.size())
 			  {
@@ -146,7 +146,7 @@ void CORE::AddRule(unsigned type, double value)
 				  return;
 			  }
 	}
-	case P2S_DIST:
+	case CONSTR_P2SECTDIST:
 	{
 			  switch (_selected_objects.size())
 			  {
@@ -188,7 +188,7 @@ void CORE::AddRule(unsigned type, double value)
 				  return;
 			  }
 	}
-	case P2L_DIST:
+	case CONSTR_P2LINEDIST:
 	{
 			  switch (_selected_objects.size())
 			  {
@@ -230,7 +230,7 @@ void CORE::AddRule(unsigned type, double value)
 				  return;
 			  }
 	}
-	case LL_ANGLE:
+	case CONSTR_L2LANGLE:
 	{
 			  switch (_selected_objects.size())
 			  {
@@ -274,7 +274,7 @@ void CORE::AddRule(unsigned type)
 {
 	switch (type)
 	{
-	case PPPONL:
+	case CONSTR_3PONLINE:
 	{
 		switch (_selected_objects.size())
 		{
@@ -588,6 +588,125 @@ void CORE::ClearSelection()
 	for (ListViewer< ObjectSkin* > i(_selected_objects); i.canMoveNext(); i.moveNext())
 	{
 		i.getValue()->changeSelect(false);
-      i.getValue()->background.setColor(0);
+      i.getValue()->background.setColor(COLORDEF);
 	}
+}
+
+bool CORE::OpenStream()
+{
+	if (_streamstate) return false;
+	
+	_streamstate = 1;
+	_pointstream = _storage_of_points.getStartingViewer();
+	_segmentstream = _storage_of_segments.getStartingViewer();
+	_circlestream = _storage_of_circles.getStartingViewer();
+	_constrstream = _storage_of_constraints.getStartingViewer();
+
+	return true;
+
+}
+
+bool CORE::StreamIsOpened()
+{
+	return _streamstate;
+}
+
+double CORE::GetFromStream()
+{
+	switch (_streamstate)
+	{
+		// stream of sizes
+	case 1:
+	{
+		_streamstate++;
+		return _storage_of_points.size();
+	}
+	case 2:
+	{
+		_streamstate++;
+		return _storage_of_segments.size();
+	}
+	case 3:
+	{
+		_streamstate++;
+		return _storage_of_circles.size();
+	}
+	case 4:
+	{
+		_streamstate++;
+		return _storage_of_constraints.size();
+	}
+		// stream of points
+	case 5:
+	{
+		_streamstate++;
+		return *_pointstream.getValue()._x;
+	}
+	case 6:
+	{
+		double ans = *_pointstream.getValue()._y;
+		_streamstate--;
+		if (_pointstream.canMoveNext()) _pointstream.moveNext();
+		else _streamstate += 2;
+		return ans;
+	}
+		// stream of segments
+	case 7:
+	{ 
+		_streamstate++;
+		return *_segmentstream.getValue()._p1->_x;
+	}
+	case 8:
+	{
+		_streamstate++;
+		return *_segmentstream.getValue()._p1->_y;
+	}
+	case 9:
+	{
+		_streamstate++;
+		return *_segmentstream.getValue()._p2->_x;
+	}
+	case 10:
+	{
+		double ans = *_segmentstream.getValue()._p2->_y;
+		_streamstate -= 3;
+		if (_segmentstream.canMoveNext()) _segmentstream.moveNext();
+		else _streamstate += 4;
+		return ans;
+	}
+		// stream of circles
+	case 11:
+	{
+		_streamstate++;
+		return *_circlestream.getValue()._o->_x;
+	}
+	case 12:
+	{
+		_streamstate++;
+		return *_circlestream.getValue()._o->_y;
+	}
+	case 13:
+	{
+		double ans = *_circlestream.getValue()._r;
+		_streamstate -= 2;
+		if (_segmentstream.canMoveNext()) _segmentstream.moveNext();
+		else _streamstate += 3;
+		return ans;
+	}
+		// stream of rules
+	case 14:
+	{
+		_streamstate++;
+		return _constrstream.getValue()->type;
+	}
+	default:
+		throw std::logic_error("Stream is closed");
+	}
+
+	return 0;
+}
+
+void CORE::CloseStream()
+{
+	_streamstate = 0;
 }

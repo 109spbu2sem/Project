@@ -11,6 +11,8 @@ class GUI;
 class CORE
 {
 private:
+	GUI* mygui;
+
 	Storage_List<double> _storage_of_parameters;
 	Storage_List<double> _storage_of_constants;
 	Storage_List<Point> _storage_of_points;
@@ -18,7 +20,12 @@ private:
 	Storage_List<Circle> _storage_of_circles;
 	Storage_List<IConstraint*> _storage_of_constraints;
 	Storage_List<ObjectSkin*> _selected_objects;
-	GUI* mygui;
+	
+	ListViewer<Point> _pointstream;
+	ListViewer<Segment> _segmentstream;
+	ListViewer<Circle> _circlestream;
+	ListViewer<IConstraint*> _constrstream;
+	unsigned _streamstate;
 
 	void Redraw();
 	void BuildFigure(IConstraint*, Storage_Array<double*>*);
@@ -28,6 +35,7 @@ public:
 	CORE(GUI* gui)
 	{
 		mygui = gui;
+		_stream = false;
 	}
 	~CORE();
 	void ConnectGUI(GUI* gui)
@@ -41,14 +49,23 @@ public:
 	void AddObject(double point_x1, double point_y1, double point_x2, double point_y2); // add segment, automatical adds 2 points
 	void AddObject(double point_x, double point_y, double radius); // add circle, automatical add center of circle
 	void AddObject(double point_x, double point_y, double vector_x, double vector_y, double angle);
+
 	void AddRule(unsigned type, double value);
 	void AddRule(unsigned type);
+
 	void ChangeStatus(double x, double y, unsigned char status_key); // need refine
 	void ChangeStatus(double x1, double y1, double x2, double y2, unsigned char status_key); // need refine
+
 	void Select(double x, double y);
 	void Select(double x1, double y1, double x2, double y2);
 	void ClearSelection();
+
 	void ChangeProperty(unsigned property_key, ...);
+
+	bool OpenStream();
+	bool StreamIsOpened();
+	double GetFromStream(); // if stream is closed return std::logic_error
+	void CloseStream();
 };
 
 #endif // CORE_H

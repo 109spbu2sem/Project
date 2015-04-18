@@ -3,6 +3,8 @@
 
 ObjectSkin::ObjectSkin()
 {
+	_visible = 1;
+	_select = 0;
 }
 
 

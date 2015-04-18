@@ -97,6 +97,9 @@
     <ClInclude Include="..\lib\storages\storage_array.h">
       <Filter>Headers\Storages</Filter>
     </ClInclude>
+    <ClInclude Include="..\lib\corestream.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
     <ClInclude Include="..\lib\storages\storage_list.h">
       <Filter>Headers\Storages</Filter>
     </ClInclude>
