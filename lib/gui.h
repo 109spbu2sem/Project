@@ -22,7 +22,7 @@ public:
 		mycore = core;
 	}
 
-	void start();
+	void show();
 
 	void Draw(double point_x, double point_y); // Point
 	void Draw(double point1_x, double point1_y, double point2_x, double point2_y); // Segment

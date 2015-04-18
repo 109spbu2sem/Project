@@ -8,6 +8,6 @@ int main()
 	CORE testcore;
 	GUI testgui(&testcore);
 	testcore.ConnectGUI(&testgui);
-	testgui.start();
+	testgui.show();
 	return 0;
 }
