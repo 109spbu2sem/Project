@@ -1,69 +1,44 @@
-#include <iostream> 
-#include <fstream>
-#include "Storage.h"
-using namespace std;
+#include "Save.h"
 
-
-void save(DynArray<point>&action, DynArray<section>&action2)
-{
-	fstream save1;
-	save1.open("test.txt", ios_base::out | ios_base::trunc);
-	save1 << "<?xml version=\"1.0\" encoding=\"utf - 8\"?>\n";
-	save1 << "<primitive>\n";
-	save1 << "	<point>\n";
-	save1 << "		<amount>" << action.size() << "</amount>\n";
-	for (unsigned i = 0; i < action.size(); i++)
-	save1 << "		<coordinates x=\"" 
-		<< action.get(i).x << "\" y=\"" 
-		<< action.get(i).y << "\">"
-		<< i+1 << " Point</coordinates>\n";
-	save1 << "	</point>\n";
-	save1 << "	<section>\n";
-	save1 << "		<amount>" << action2.size() << "</amount>\n";
-	for (unsigned i = 0; i < action2.size(); i++)
-		save1 << "		<coordinates Ax=\""
-		<< action2.get(i).a.x << "\" Ay=\""
-		<< action2.get(i).a.y << "\" Bx=\""
-		<< action2.get(i).b.x << "\" By=\""
-		<< action2.get(i).b.y << "\">"
-		<< i + 1 << " Section</coordinates>\n";
-	save1 << "	</section>\n";
-	save1 << "</primitive>\n";
-
-	save1.close();
+Save::Save(){
+	_way = "test.txt";
+};
+string Save::fileWay(string way) {
+	_way = way;
+	return _way;
 }
-int main()
-{
-	unsigned a, b;
-	DynArray<point> Point;
-	DynArray<section> Section;
-	point p;
-	section s;
-	cout << "Number of points --------> ";
-	cin >> a;
-	for (unsigned i = 0; i < a; ++i)
-	{
-		cout << i + 1 << " point " << "x = ";
-		cin >> p.x;
-		cout << i + 1 << " point " << "y = ";
-		cin >> p.y;
-		Point.add(p);
-	}
-	cout << "Number of sections --------> ";
-	cin >> b;
-	for (unsigned i = 0; i < b; ++i)
-	{
-		cout << i + 1 << " section " << "x1 = ";
-		cin >> s.a.x;
-		cout << i + 1 << " section " << "y1 = ";
-		cin >> s.a.y;
-		cout << i + 1 << " section " << "x2 = ";
-		cin >> s.b.x;
-		cout << i + 1 << " section " << "y2 = ";
-		cin >> s.b.y;
-		Section.add(s);
-	}
+void Save::save(){
+	if (_action.StreamIsOpened()) throw std::logic_error("Stream is opened");
+	else _action.OpenStream();
+	_save.open(_way, ios_base::out | ios_base::trunc);
+	unsigned sizePoints = _action.GetFromStream();
+	unsigned sizeSegments = _action.GetFromStream();
+	unsigned sizeCircles = _action.GetFromStream();
+	unsigned sizeConstraints = _action.GetFromStream();
+	_save << "<?xml version=\"1.0\" encoding=\"utf - 8\"?>\n";
+	_save << "<primitive>\n";
+	_save << "	<amount>\n";
+	_save << "		<point>" << sizePoints << "</point>\n";
+	_save << "		<segment>" << sizeSegments << "</segment>\n";
+	_save << "		<circle>" << sizeCircles << "</circle>\n";
+	_save << "		<constraint>" << sizeConstraints << "</constraint>\n";
+	_save << "	</amount>\n";
+	_save << "	<coordinates>\n";
+	for (unsigned i = 0;; ++i)
+		_save << "		<point x=\""
+		<< _action.GetFromStream() << "\" y=\""
+		<< _action.GetFromStream() << "\">"
+		<< " Point</point>\n";
+	for (unsigned i = 0;; ++i)
+		_save << "		<segment Ax=\""
+		<< _action.GetFromStream() << "\" Ay=\""
+		<< _action.GetFromStream() << "\" Bx=\""
+		<< _action.GetFromStream() << "\" By=\""
+		<< _action.GetFromStream() << "\">"
+		<< " Segment</segment>\n";
+	_save << "	</coordinates>\n";
+	_save << "</primitive>\n";
 
-	save(Point, Section);
-	return 0;
+	_save.close();
+	_action.CloseStream();
 }
