@@ -24,12 +24,12 @@ void Save::save(){
 	_save << "		<constraint>" << sizeConstraints << "</constraint>\n";
 	_save << "	</amount>\n";
 	_save << "	<coordinates>\n";
-	for (unsigned i = 0;; ++i)
+	for (unsigned i = 0; i < sizePoints; ++i)
 		_save << "		<point x=\""
 		<< _action.GetFromStream() << "\" y=\""
 		<< _action.GetFromStream() << "\">"
 		<< " Point</point>\n";
-	for (unsigned i = 0;; ++i)
+	for (unsigned i = 0; i < sizeSegments; ++i)
 		_save << "		<segment Ax=\""
 		<< _action.GetFromStream() << "\" Ay=\""
 		<< _action.GetFromStream() << "\" Bx=\""
