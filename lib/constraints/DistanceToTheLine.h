@@ -3,7 +3,7 @@
 #include "..\global.h"
 #include <cmath>
 
-// (c) Anton // type = 3
+// (c) Anton // type CONSTR_P2LINEDIST
 
 class DistanceToTheLine :public IConstraint
 {

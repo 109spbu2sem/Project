@@ -3,7 +3,7 @@
 #include "..\global.h"
 #include <cmath>
 
-// (c) Alena // type = 5
+// (c) Alena // type CONSTR_3PONLINE
 
 class ThreePoints :public IConstraint
 {

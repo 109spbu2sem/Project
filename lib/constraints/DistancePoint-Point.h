@@ -2,7 +2,7 @@
 #define DISTANCE_POINT_POINT_H
 #include "..\global.h"
 
-// (c) Alena // type = 1
+// (c) Alena // type CONSTR_P2PDIST
 
 class Point2Point :public IConstraint
 {
