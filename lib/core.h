@@ -35,7 +35,7 @@ public:
 	CORE(GUI* gui)
 	{
 		mygui = gui;
-		_stream = false;
+		_streamstate = 0;
 	}
 	~CORE();
 	void ConnectGUI(GUI* gui)

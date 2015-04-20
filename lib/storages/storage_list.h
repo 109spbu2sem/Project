@@ -189,10 +189,6 @@ public:
 	{
 		if (_current) return true; return false;
 	};
-	void remove()
-	{
-		_current = 0;
-	}
 };
 
 #endif // STORAGE_LIST_H

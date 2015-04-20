@@ -3,7 +3,7 @@
 #include "..\global.h"
 #include <cmath>
 
-// (c) Alena // type = 4
+// (c) Alena // type CONSTR_L2LANGLE
 
 class AngleSegmentSegment :public IConstraint
 {

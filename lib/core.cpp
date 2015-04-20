@@ -6,6 +6,7 @@
 #include "constraints\DistanceToTheLine.h"
 #include "constraints\AngleSegment-Segment.h"
 #include "constraints\ThreePointsOnTheLine.h"
+#include "constraints\AspectRatio.h"
 
 CORE::CORE()
 {
@@ -21,19 +22,41 @@ void CORE::Redraw()
 {
 	for (ListViewer<Point> i(_storage_of_points); i.canMoveNext(); i.moveNext())
 	{
-      if (i.getValue().isVisible())
-         mygui->Draw(*i.getValue()._x, *i.getValue()._y, i.getValue().isSelected()?SELECTEDCOLOR:i.getValue().background.getColor());
+		if (i.getValue().isVisible())
+			mygui->Draw(*i.getValue()._x, *i.getValue()._y, i.getValue().isSelected() ? SELECTEDCOLOR : i.getValue().color.getColor());
 	}
 	for (ListViewer<Segment> i(_storage_of_segments); i.canMoveNext(); i.moveNext())
 	{
       if (i.getValue().isVisible())
-		   mygui->Draw(*i.getValue()._p1->_x, *i.getValue()._p1->_y, *i.getValue()._p2->_x, *i.getValue()._p2->_y, i.getValue().isSelected()?SELECTEDCOLOR:i.getValue().background.getColor());
+			mygui->Draw(*i.getValue()._p1->_x, *i.getValue()._p1->_y, *i.getValue()._p2->_x, *i.getValue()._p2->_y, i.getValue().isSelected() ? SELECTEDCOLOR : i.getValue().color.getColor());
 	}
 	for (ListViewer<Circle> i(_storage_of_circles); i.canMoveNext(); i.moveNext())
 	{
-      if (i.getValue().isVisible())
-		   mygui->Draw(*i.getValue()._o->_x, *i.getValue()._o->_y, *i.getValue()._r, i.getValue().isSelected()?SELECTEDCOLOR:i.getValue().background.getColor());
+		if (i.getValue().isVisible())
+			mygui->Draw(*i.getValue()._o->_x, *i.getValue()._o->_y, *i.getValue()._r, i.getValue().isSelected() ? SELECTEDCOLOR : i.getValue().color.getColor());
 	}
+	return;
+}
+
+void BuildFigureNuton(IConstraint* constraint, Storage_Array<double*>* parameters)
+{
+	if (!constraint || !parameters) return; // check for true work
+	double current = constraint->error();
+	const double f_epsi = 1e-12;
+	double previous = 0;
+	double *dx = new double[parameters->size()];
+	do
+	{
+		previous = current;
+		for (unsigned i = 0; i < parameters->size(); i++)
+		{
+			dx[i] = constraint->error() / constraint->diff((*parameters)[i]); // calculate gradient
+			*(*parameters)[i] -= dx[i];										 // change parameters
+		}
+		current = constraint->error();
+		//std::cout << current << std::endl;
+	} while (abs(previous - current) > f_epsi);
+	delete[] dx;
 	return;
 }
 
@@ -49,7 +72,7 @@ void CORE::Calculate()
 	{
 		parameters.add(&i.getValue());
 	}
-	BuildFigure(&collector, &parameters);
+	BuildFigureNuton(&collector, &parameters);
 	Redraw();
 	return;
 }
@@ -73,9 +96,10 @@ void CORE::BuildFigure(IConstraint* constraint, Storage_Array<double*>* paramete
 		for (unsigned i = 0; i < parameters->size(); i++)
 			dx[i] = -step_min * constraint->diff((*parameters)[i]); // calculate gradient
 		for (unsigned i = 0; i < parameters->size(); i++)
-			*(*parameters)[i] += dx[i];										 // change parametrs
+			*(*parameters)[i] += dx[i];										 // change parameters
 
 		current = constraint->error();
+		//std::cout << current << std::endl;
 	} while (abs(previous - current) > f_epsi);
 	delete[] dx;
 	return;
@@ -235,7 +259,23 @@ void CORE::AddRule(unsigned type, double value)
 			  switch (_selected_objects.size())
 			  {
 			  case 2:
+			  {
+				  _selected_objects.rewind();
+				  Segment* obj1 = dynamic_cast<Segment*>(_selected_objects.get());
+				  _selected_objects.moveNext();
+				  Segment* obj2 = dynamic_cast<Segment*>(_selected_objects.get());
+				  if (obj1 && obj2)
+				  {
+					  AngleSegmentSegment* rule = new AngleSegmentSegment(
+						  obj1->_p1->_x, obj1->_p1->_y,
+						  obj1->_p2->_x, obj1->_p2->_y,
+						  obj2->_p1->_x, obj2->_p1->_y,
+						  obj2->_p2->_x, obj2->_p2->_y,
+						  _storage_of_constants.add(value));
+					  _storage_of_constraints.add(rule);
+				  }
 				  return;
+			  }
 			  case 3:
 				  return;
 			  case 4:
@@ -264,6 +304,35 @@ void CORE::AddRule(unsigned type, double value)
 				  return;
 			  }
 		/*Picked only 4 Points or 2 Points and Segment or 2 Segments*/
+	}
+	case CONSTR_3PRATIO:
+	{
+		switch (_selected_objects.size())
+		{
+		case 3:
+		{
+			_selected_objects.rewind();
+			Point* o1 = dynamic_cast<Point*>(_selected_objects.get());
+			if (o1)
+			{
+				_selected_objects.moveNext();
+				Point* o2 = dynamic_cast<Point*>(_selected_objects.get());
+				if (o2)
+				{
+					_selected_objects.moveNext();
+					Point* o3 = dynamic_cast<Point*>(_selected_objects.get());
+					if (o3)
+					{
+						AspectRatio* rule = new AspectRatio(o1->_x, o1->_y, o2->_x,
+							o2->_y, o3->_x, o3->_y, _storage_of_constants.add(value));
+						_storage_of_constraints.add(rule);
+						return;
+					}
+				}
+			}
+			return;
+		}
+		}
 	}
 	default:
 		return;
@@ -588,7 +657,7 @@ void CORE::ClearSelection()
 	for (ListViewer< ObjectSkin* > i(_selected_objects); i.canMoveNext(); i.moveNext())
 	{
 		i.getValue()->changeSelect(false);
-      i.getValue()->background.setColor(COLORDEF);
+		i.getValue()->color.setColor(COLORDEF);
 	}
 }
 
@@ -608,7 +677,7 @@ bool CORE::OpenStream()
 
 bool CORE::StreamIsOpened()
 {
-	return _streamstate;
+	return _streamstate?true:false;
 }
 
 double CORE::GetFromStream()
@@ -697,7 +766,7 @@ double CORE::GetFromStream()
 	case 14:
 	{
 		_streamstate++;
-		return _constrstream.getValue()->type;
+		return _constrstream.getValue()->type();
 	}
 	default:
 		throw std::logic_error("Stream is closed");

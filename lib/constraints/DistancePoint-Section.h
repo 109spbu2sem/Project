@@ -3,7 +3,7 @@
 #include "..\global.h"
 #include <cmath>
 
-// (c) Anton // type = 2
+// (c) Anton // type CONSTR_P2SECTDIST
 
 class DistanceFromPointToSection :public IConstraint
 {

@@ -1,8 +1,6 @@
 #include "gui.h"
 #include "global.h"
 #include <iostream>
-#include <ios>
-#include <fstream>
 
 GUI::GUI()
 {
@@ -170,6 +168,7 @@ void GUI::show()
 		}
 		case 'w':
 		{
+			std::cout << std::endl;
 			mycore->Calculate();
 			break;
 		}

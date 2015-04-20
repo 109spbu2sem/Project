@@ -3,7 +3,7 @@
 #include "..\global.h"
 #include "..\Storages\storage_array.h"
 
-// type = 0
+// type CONSTR_COLLECTOR
 
 class ConstraintCollector :public IConstraint
 {

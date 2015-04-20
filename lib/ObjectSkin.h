@@ -9,7 +9,7 @@ private:
 	bool _visible; // false(0) invisible, true(1) visible
 public:
 	LineSkin line;
-	Color background;
+	Color color;
 	//unsigned char visible; // 0 - invisible, 100 - full visible; // May be unused
 	ObjectSkin();
 	~ObjectSkin();
