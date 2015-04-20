@@ -259,7 +259,23 @@ void CORE::AddRule(unsigned type, double value)
 			  switch (_selected_objects.size())
 			  {
 			  case 2:
+			  {
+				  _selected_objects.rewind();
+				  Segment* obj1 = dynamic_cast<Segment*>(_selected_objects.get());
+				  _selected_objects.moveNext();
+				  Segment* obj2 = dynamic_cast<Segment*>(_selected_objects.get());
+				  if (obj1 && obj2)
+				  {
+					  AngleSegmentSegment* rule = new AngleSegmentSegment(
+						  obj1->_p1->_x, obj1->_p1->_y,
+						  obj1->_p2->_x, obj1->_p2->_y,
+						  obj2->_p1->_x, obj2->_p1->_y,
+						  obj2->_p2->_x, obj2->_p2->_y,
+						  _storage_of_constants.add(value));
+					  _storage_of_constraints.add(rule);
+				  }
 				  return;
+			  }
 			  case 3:
 				  return;
 			  case 4:
