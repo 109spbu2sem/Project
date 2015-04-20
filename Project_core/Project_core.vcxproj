@@ -83,6 +83,7 @@
   <ItemGroup>
     <ClInclude Include="..\lib\Color.h" />
     <ClInclude Include="..\lib\constraints\AngleSegment-Segment.h" />
+    <ClInclude Include="..\lib\constraints\AspectRatio.h" />
     <ClInclude Include="..\lib\constraints\Collector.h" />
     <ClInclude Include="..\lib\constraints\DistancePoint-Point.h" />
     <ClInclude Include="..\lib\constraints\DistancePoint-Section.h" />
