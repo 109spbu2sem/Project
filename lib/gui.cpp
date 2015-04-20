@@ -71,7 +71,7 @@ void GUI::show()
 				double v;
 				std::cout << "value: ";
 				std::cin >> v;
-				mycore->AddRule(P2P_DIST, v);
+				mycore->AddRule(CONSTR_P2PDIST, v);
 				break;
 			}
 			case 'b':
@@ -79,12 +79,12 @@ void GUI::show()
 				double v;
 				std::cout << "value: ";
 				std::cin >> v;
-				mycore->AddRule(P2L_DIST, v);
+				mycore->AddRule(CONSTR_P2LINEDIST, v);
 				break;
 			}
 			case 'c':
 			{
-				mycore->AddRule(PPPONL);
+				mycore->AddRule(CONSTR_3PONLINE);
 				break;
 			}
 			case 'd':
@@ -92,7 +92,7 @@ void GUI::show()
 				double v;
 				std::cout << "value: ";
 				std::cin >> v;
-				mycore->AddRule(LL_ANGLE, v);
+				mycore->AddRule(CONSTR_L2LANGLE, v);
 				break;
 			}
 			case 'e':
@@ -100,7 +100,7 @@ void GUI::show()
 				double v;
 				std::cout << "value: ";
 				std::cin >> v;
-				mycore->AddRule(P2S_DIST, v);
+				mycore->AddRule(CONSTR_P2SECTDIST, v);
 				break;
 			}
 			default:
@@ -168,6 +168,7 @@ void GUI::show()
 		}
 		case 'w':
 		{
+			std::cout << std::endl;
 			mycore->Calculate();
 			break;
 		}
@@ -186,17 +187,26 @@ void GUI::show()
 	return;
 }
 
-void GUI::Draw(double point_x, double point_y)
+void GUI::Draw(double point_x, double point_y, unsigned color)
 {
-	std::cout << point_x << "\t" << point_y << std::endl;
+   std::cout << "(P) ";
+	std::cout << point_x << "\t" << point_y;
+   if (color) std::cout << "\t(s)";
+   std::cout << std::endl;
 }
 
-void GUI::Draw(double point1_x, double point1_y, double point2_x, double point2_y)
+void GUI::Draw(double point1_x, double point1_y, double point2_x, double point2_y, unsigned color)
 {
-	std::cout << point1_x << "\t" << point1_y << "\t" << point2_x << "\t" << point2_y << "\t" << std::endl;
+   std::cout << "(S) ";
+	std::cout << point1_x << "\t" << point1_y << "\t" << point2_x << "\t" << point2_y << "\t";
+   if (color) std::cout << "\t(s)";
+   std::cout << std::endl;
 }
 
-void GUI::Draw(double point_x, double point_y, double radius)
+void GUI::Draw(double point_x, double point_y, double radius, unsigned color)
 {
-	std::cout << point_x << "\t" << point_y << "\t" << radius << std::endl;
+   std::cout << "(C) ";
+	std::cout << point_x << "\t" << point_y << "\t" << radius;
+   if (color) std::cout << "\t(s)";
+   std::cout << std::endl;
 }

@@ -1,11 +1,8 @@
 #ifndef PI
 #define PI 3.1415926535897932384
 
-#define P2P_DIST 1
-#define P2S_DIST 2
-#define P2L_DIST 3
-#define PPPONL 4
-#define LL_ANGLE 5
+#define SELECTEDCOLOR 1
+#define COLORDEF 0
 
 double length(double, double, double, double);
 
@@ -18,7 +15,8 @@ enum CONSTR_TYPE
 	CONSTR_P2SECTDIST,
 	CONSTR_P2LINEDIST,
 	CONSTR_3PONLINE,
-	CONSTR_L2LANGLE
+	CONSTR_L2LANGLE,
+	CONSTR_3PRATIO
 };
 
 class IConstraint

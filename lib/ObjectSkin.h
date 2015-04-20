@@ -9,12 +9,14 @@ private:
 	bool _visible; // false(0) invisible, true(1) visible
 public:
 	LineSkin line;
-	Color background;
+	Color color;
 	//unsigned char visible; // 0 - invisible, 100 - full visible; // May be unused
 	ObjectSkin();
 	~ObjectSkin();
 	void changeVisible();
 	void changeSelect(bool b = 1);
+   bool isSelected();
+   bool isVisible();
 	virtual unsigned objectType() = 0;
 };
 

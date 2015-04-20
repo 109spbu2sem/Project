@@ -21,7 +21,7 @@ void Color::setColor(unsigned char R, unsigned char G, unsigned char B)
 	_color = R * 65536 + G * 256 + B;
 }
 
-unsigned Color::getColor(char mode = 0) const
+unsigned Color::getColor(char mode) const
 {
 	if (!mode) return _color;
 	if (mode == 1) return (_color >> 16) & 0xFF;		// returns RED color
