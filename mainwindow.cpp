@@ -32,5 +32,4 @@ void MainWindow::on_newButton_clicked()
 	scene.addText("WTF");
 	
 	ui->graphicsView->setScene(&scene);
-	view.show();
 }

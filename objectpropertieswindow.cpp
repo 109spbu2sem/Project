@@ -41,35 +41,11 @@ void objectPropertiesWindow::on_buttonBox_accepted()
 	//ADD POINT
 	case 0:
 	{
-		bool ok;
-		Point p;
-		p.x = ui->textX1->text().toDouble(&ok);
-		if (!ok) break;
-		p.y = ui->textY1->text().toDouble(&ok);
-		if (!ok) break;
-		//here some actions
-		//GLOBAL::storage.points.add(p);
-		//storage.points.add(p);
 		break;
 	}
 	//ADD SEGMENT
 	case 1:
 	{
-		bool ok;
-		Point p;
-		Segment s;
-		p.x = ui->textX1->text().toDouble(&ok);
-		if (!ok) break;
-		p.y = ui->textY1->text().toDouble(&ok);
-		if (!ok) break;
-		s.o = p;
-		p.x = ui->textX2->text().toDouble(&ok);
-		if (!ok) break;
-		p.y = ui->textY2->text().toDouble(&ok);
-		if (!ok) break;
-		s.d = p;
-		//here some actions
-		//GLOBAL::storage.segments.add(s);
 		break;
 	}
 	}
