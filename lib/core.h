@@ -1,17 +1,20 @@
 #ifndef CORE_H
 #define CORE_H
 #include "structures.h"
-#include "Storages\storage_array.h"
-#include "Storages\storage_list.h"
+#include "storages\storage_list.h"
+#include "storages\storage_array.h"
 #include "global.h"
 #include "gui.h"
+#include <string>
 
 class GUI;
+class Save;
 
 class CORE
 {
 private:
 	GUI* mygui;
+	Save* mysave;
 
 	Storage_List<double> _storage_of_parameters;
 	Storage_List<double> _storage_of_constants;
@@ -29,6 +32,7 @@ private:
 
 	void Redraw();
 	void BuildFigure(IConstraint*, Storage_Array<double*>*);
+	void BuildFigureNewton(IConstraint*, Storage_Array<double*>*);
 
 public:
 	CORE();
@@ -38,9 +42,10 @@ public:
 		_streamstate = 0;
 	}
 	~CORE();
-	void ConnectGUI(GUI* gui)
+	void Connect(GUI* gui, Save* save)
 	{
 		mygui = gui;
+		mysave = save;
 	}
 
 	void Calculate();
@@ -61,6 +66,8 @@ public:
 	void ClearSelection();
 
 	void ChangeProperty(unsigned property_key, ...);
+
+	void IWantSave(std::string fileway);
 
 	bool OpenStream();
 	bool StreamIsOpened();

@@ -38,7 +38,7 @@ void CORE::Redraw()
 	return;
 }
 
-void BuildFigureNuton(IConstraint* constraint, Storage_Array<double*>* parameters)
+void CORE::BuildFigureNewton(IConstraint* constraint, Storage_Array<double*>* parameters)
 {
 	if (!constraint || !parameters) return; // check for true work
 	double current = constraint->error();
@@ -72,7 +72,7 @@ void CORE::Calculate()
 	{
 		parameters.add(&i.getValue());
 	}
-	BuildFigureNuton(&collector, &parameters);
+	BuildFigureNewton(&collector, &parameters);
 	Redraw();
 	return;
 }
@@ -112,6 +112,7 @@ void CORE::AddObject(double point_x, double point_y)
 	Point p(x,y);*/
 	Point p(_storage_of_parameters.add(point_x), _storage_of_parameters.add(point_y));
 	_storage_of_points.add(p);
+	Redraw();
 }
 
 void CORE::AddObject(double point_x1, double point_y1, double point_x2, double point_y2)
@@ -120,6 +121,7 @@ void CORE::AddObject(double point_x1, double point_y1, double point_x2, double p
 	Point p2(_storage_of_parameters.add(point_x2), _storage_of_parameters.add(point_y2));
 	Segment s(_storage_of_points.add(p1), _storage_of_points.add(p2));
 	_storage_of_segments.add(s);
+	Redraw();
 }
 
 void CORE::AddObject(double point_x, double point_y, double vector_x, double vector_y, double angle)
@@ -132,6 +134,7 @@ void CORE::AddObject(double point_x, double point_y, double radius)
 	Point p(_storage_of_parameters.add(point_x), _storage_of_parameters.add(point_y));
 	Circle c(_storage_of_points.add(p), _storage_of_parameters.add(radius));
 	_storage_of_circles.add(c);
+	Redraw();
 }
 
 void CORE::AddRule(unsigned type, double value)
@@ -492,6 +495,94 @@ void CORE::Select(double x, double y)
 			min_i = j;
 		}
 	}
+	if (min_i >= 0)
+	{
+		unsigned j = 0;
+		ListViewer<Point> i(_storage_of_points);
+		for (; j < min_i; i.moveNext())
+		{
+			j++;
+		}
+		i.getValue().changeSelect();
+		_selected_objects.add(&i.getValue());
+		Redraw();
+		return;
+	}
+	size = _storage_of_segments.size();
+	int min_j = -1;
+	j = 0;
+	double A = 0, B = 0, C = 0;
+	for (ListViewer<Segment> i(_storage_of_segments); i.canMoveNext(); i.moveNext(), j++)
+	{
+		A = *i.getValue()._p2->_y - *i.getValue()._p1->_y;
+		B = *i.getValue()._p1->_x - *i.getValue()._p2->_x;
+		C = *i.getValue()._p1->_y * *i.getValue()._p2->_x - *i.getValue()._p1->_x * *i.getValue()._p2->_y;
+		if ((abs(A*x + B*y + C) / sqrt(A*A + B*B) < min) &&
+			(length(*i.getValue()._p1->_x, *i.getValue()._p1->_y, x, y) <
+			((A*x + B*y + C)*(A*x + B*y + C) / (A*A + B*B) +
+			length(*i.getValue()._p1->_x, *i.getValue()._p1->_y, *i.getValue()._p2->_x, *i.getValue()._p2->_y)))
+			&& (length(*i.getValue()._p2->_x, *i.getValue()._p2->_y, x, y) <
+			((A*x + B*y + C)*(A*x + B*y + C) / (A*A + B*B) +
+			length(*i.getValue()._p1->_x, *i.getValue()._p1->_y, *i.getValue()._p2->_x, *i.getValue()._p2->_y))))
+		{
+			min = abs(A*x + B*y + C) / sqrt(A*A + B*B);
+			min_j = j;
+		}
+	}
+	if (min_j >= 0)
+	{
+		unsigned j = 0;
+		ListViewer<Segment> i(_storage_of_segments);
+		for (; j < min_i; i.moveNext())
+		{
+			j++;
+		}
+		i.getValue().changeSelect();
+		_selected_objects.add(&i.getValue());
+		Redraw();
+		return;
+	}
+	size = _storage_of_circles.size();
+	int min_k = -1;
+	j = 0;
+	for (ListViewer<Circle> i(_storage_of_circles); i.canMoveNext(); i.moveNext(), j++)
+	{
+		if ((length(*i.getValue()._o->_x, *i.getValue()._o->_y, x, y) < (*i.getValue()._r + min)) &&
+			(length(*i.getValue()._o->_x, *i.getValue()._o->_y, x, y) > (*i.getValue()._r - min)))
+		{
+			min = abs(length(*i.getValue()._o->_x, *i.getValue()._o->_y, x, y) - *i.getValue()._r);
+			min_k = j;
+		}
+	}
+	if (min_k >= 0)
+	{
+		unsigned j = 0;
+		ListViewer<Circle> i(_storage_of_circles);
+		for (; j < min_k; i.moveNext())
+		{
+			j++;
+		}
+		i.getValue().changeSelect();
+		_selected_objects.add(&i.getValue());
+		Redraw();
+		return;
+	}
+	return;
+}
+//{
+	/*Try to search points in small radius*/
+	/*unsigned size = _storage_of_points.size();
+	double min = 2;
+	int min_i = -1;
+	unsigned j = 0;
+	for (ListViewer<Point> i(_storage_of_points); i.canMoveNext(); i.moveNext(), j++)
+	{
+		if (length(*i.getValue()._x, *i.getValue()._y, x, y) < min)
+		{
+			min = length(*i.getValue()._x, *i.getValue()._y, x, y);
+			min_i = j;
+		}
+	}
 	size = _storage_of_segments.size();
 	int min_j = -1;
 	j = 0;
@@ -523,7 +614,7 @@ void CORE::Select(double x, double y)
 	min = length(_storage_of_arcs[i].o.x, _storage_of_arcs[i].o.y, x, y);
 	min_k = i;
 	}
-	}*/
+	}
 	if (min_i >= 0)
 	{
 		unsigned j = 0;
@@ -566,7 +657,7 @@ void CORE::Select(double x, double y)
 	}
    Redraw();
 	return;
-}
+}*/
 
 bool isInArea(double x, double y, double x1, double y1, double x2, double y2)
 {
@@ -778,4 +869,9 @@ double CORE::GetFromStream()
 void CORE::CloseStream()
 {
 	_streamstate = 0;
+}
+
+void CORE::IWantSave(std::string fileway)
+{
+
 }

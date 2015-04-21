@@ -7,7 +7,7 @@ int main()
 {
 	CORE testcore;
 	GUI testgui(&testcore);
-	testcore.ConnectGUI(&testgui);
+	testcore.Connect(&testgui, 0);
 	testgui.show();
 	return 0;
 }
