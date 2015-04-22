@@ -6,7 +6,6 @@
 #include "constraints\DistanceToTheLine.h"
 #include "constraints\AngleSegment-Segment.h"
 #include "constraints\ThreePointsOnTheLine.h"
-#include "constraints\AspectRatio.h"
 
 CORE::CORE()
 {
@@ -15,7 +14,7 @@ CORE::CORE()
 
 CORE::~CORE()
 {
-	
+
 }
 
 void CORE::Redraw()
@@ -23,40 +22,18 @@ void CORE::Redraw()
 	for (ListViewer<Point> i(_storage_of_points); i.canMoveNext(); i.moveNext())
 	{
 		if (i.getValue().isVisible())
-			mygui->Draw(*i.getValue()._x, *i.getValue()._y, i.getValue().isSelected() ? SELECTEDCOLOR : i.getValue().color.getColor());
+			mygui->Draw(*i.getValue()._x, *i.getValue()._y, i.getValue().isSelected() ? SELECTEDCOLOR : i.getValue().background.getColor());
 	}
 	for (ListViewer<Segment> i(_storage_of_segments); i.canMoveNext(); i.moveNext())
 	{
-      if (i.getValue().isVisible())
-			mygui->Draw(*i.getValue()._p1->_x, *i.getValue()._p1->_y, *i.getValue()._p2->_x, *i.getValue()._p2->_y, i.getValue().isSelected() ? SELECTEDCOLOR : i.getValue().color.getColor());
+		if (i.getValue().isVisible())
+			mygui->Draw(*i.getValue()._p1->_x, *i.getValue()._p1->_y, *i.getValue()._p2->_x, *i.getValue()._p2->_y, i.getValue().isSelected() ? SELECTEDCOLOR : i.getValue().background.getColor());
 	}
 	for (ListViewer<Circle> i(_storage_of_circles); i.canMoveNext(); i.moveNext())
 	{
 		if (i.getValue().isVisible())
-			mygui->Draw(*i.getValue()._o->_x, *i.getValue()._o->_y, *i.getValue()._r, i.getValue().isSelected() ? SELECTEDCOLOR : i.getValue().color.getColor());
+			mygui->Draw(*i.getValue()._o->_x, *i.getValue()._o->_y, *i.getValue()._r, i.getValue().isSelected() ? SELECTEDCOLOR : i.getValue().background.getColor());
 	}
-	return;
-}
-
-void BuildFigureNuton(IConstraint* constraint, Storage_Array<double*>* parameters)
-{
-	if (!constraint || !parameters) return; // check for true work
-	double current = constraint->error();
-	const double f_epsi = 1e-12;
-	double previous = 0;
-	double *dx = new double[parameters->size()];
-	do
-	{
-		previous = current;
-		for (unsigned i = 0; i < parameters->size(); i++)
-		{
-			dx[i] = constraint->error() / constraint->diff((*parameters)[i]); // calculate gradient
-			*(*parameters)[i] -= dx[i];										 // change parameters
-		}
-		current = constraint->error();
-		//std::cout << current << std::endl;
-	} while (abs(previous - current) > f_epsi);
-	delete[] dx;
 	return;
 }
 
@@ -72,7 +49,7 @@ void CORE::Calculate()
 	{
 		parameters.add(&i.getValue());
 	}
-	BuildFigureNuton(&collector, &parameters);
+	BuildFigure(&collector, &parameters);
 	Redraw();
 	return;
 }
@@ -96,10 +73,9 @@ void CORE::BuildFigure(IConstraint* constraint, Storage_Array<double*>* paramete
 		for (unsigned i = 0; i < parameters->size(); i++)
 			dx[i] = -step_min * constraint->diff((*parameters)[i]); // calculate gradient
 		for (unsigned i = 0; i < parameters->size(); i++)
-			*(*parameters)[i] += dx[i];										 // change parameters
+			*(*parameters)[i] += dx[i];										 // change parametrs
 
 		current = constraint->error();
-		//std::cout << current << std::endl;
 	} while (abs(previous - current) > f_epsi);
 	delete[] dx;
 	return;
@@ -112,6 +88,7 @@ void CORE::AddObject(double point_x, double point_y)
 	Point p(x,y);*/
 	Point p(_storage_of_parameters.add(point_x), _storage_of_parameters.add(point_y));
 	_storage_of_points.add(p);
+	Redraw();
 }
 
 void CORE::AddObject(double point_x1, double point_y1, double point_x2, double point_y2)
@@ -132,6 +109,7 @@ void CORE::AddObject(double point_x, double point_y, double radius)
 	Point p(_storage_of_parameters.add(point_x), _storage_of_parameters.add(point_y));
 	Circle c(_storage_of_points.add(p), _storage_of_parameters.add(radius));
 	_storage_of_circles.add(c);
+	Redraw();
 }
 
 void CORE::AddRule(unsigned type, double value)
@@ -140,199 +118,154 @@ void CORE::AddRule(unsigned type, double value)
 	{
 	case CONSTR_P2PDIST:
 	{ // may add multiselect for points and segments
-			  switch (_selected_objects.size())
-			  {
-			  case 1:
-			  {
-						_selected_objects.rewind();
-						Segment* obj = dynamic_cast<Segment*>(_selected_objects.get());
-						if (obj)
-						{
-							Point2Point* rule = new Point2Point(obj->_p1->_x, obj->_p1->_y, obj->_p2->_x, obj->_p2->_y, _storage_of_constants.add(value));
-							_storage_of_constraints.add(rule);
-						}
-						return;
-			  }
-			  case 2:
-			  {
-						_selected_objects.rewind();
-						Point* obj1 = dynamic_cast<Point*>(_selected_objects.get());
-						_selected_objects.moveNext();
-						Point* obj2 = dynamic_cast<Point*>(_selected_objects.get());
-						if (obj1 && obj2)
-						{
-							Point2Point* rule = new Point2Point(obj1->_x, obj1->_y, obj2->_x, obj2->_y, _storage_of_constants.add(value));
-							_storage_of_constraints.add(rule);
-						}
-						return;
-			  }
-			  default:
-				  return;
-			  }
+						   switch (_selected_objects.size())
+						   {
+						   case 1:
+						   {
+									 _selected_objects.rewind();
+									 Segment* obj = dynamic_cast<Segment*>(_selected_objects.get());
+									 if (obj)
+									 {
+										 Point2Point* rule = new Point2Point(obj->_p1->_x, obj->_p1->_y, obj->_p2->_x, obj->_p2->_y, _storage_of_constants.add(value));
+										 _storage_of_constraints.add(rule);
+									 }
+									 return;
+						   }
+						   case 2:
+						   {
+									 _selected_objects.rewind();
+									 Point* obj1 = dynamic_cast<Point*>(_selected_objects.get());
+									 _selected_objects.moveNext();
+									 Point* obj2 = dynamic_cast<Point*>(_selected_objects.get());
+									 if (obj1 && obj2)
+									 {
+										 Point2Point* rule = new Point2Point(obj1->_x, obj1->_y, obj2->_x, obj2->_y, _storage_of_constants.add(value));
+										 _storage_of_constraints.add(rule);
+									 }
+									 return;
+						   }
+						   default:
+							   return;
+						   }
 	}
 	case CONSTR_P2SECTDIST:
 	{
-			  switch (_selected_objects.size())
-			  {
-			  case 2:
-			  {
-						_selected_objects.rewind();
-						Point* obj1 = dynamic_cast<Point*>(_selected_objects.get());
-						if (obj1)
-						{
-							_selected_objects.moveNext();
-							Segment* obj2 = dynamic_cast<Segment*>(_selected_objects.get());
-							if (obj2)
-							{
-								DistanceFromPointToSection* rule = new DistanceFromPointToSection(obj1->_x, obj1->_y, obj2->_p1->_x,
-									obj2->_p1->_y, obj2->_p2->_x, obj2->_p2->_y, _storage_of_constants.add(value));
-								_storage_of_constraints.add(rule);
-								return;
-							}
-						}
-						Segment* ob2 = dynamic_cast<Segment*>(_selected_objects.get());
-						if (ob2)
-						{
-							_selected_objects.moveNext();
-							Point* ob1 = dynamic_cast<Point*>(_selected_objects.get());
-							if (ob1)
-							{
-								DistanceFromPointToSection* rule = new DistanceFromPointToSection(ob1->_x, ob1->_y, ob2->_p1->_x,
-									ob2->_p1->_y, ob2->_p2->_x, ob2->_p2->_y, _storage_of_constants.add(value));
-								_storage_of_constraints.add(rule);
-								return;
-							}
-						}
-						return;
-			  }
-			  case 3:
+							  switch (_selected_objects.size())
+							  {
+							  case 2:
+							  {
+										_selected_objects.rewind();
+										Point* obj1 = dynamic_cast<Point*>(_selected_objects.get());
+										if (obj1)
+										{
+											_selected_objects.moveNext();
+											Segment* obj2 = dynamic_cast<Segment*>(_selected_objects.get());
+											if (obj2)
+											{
+												DistanceFromPointToSection* rule = new DistanceFromPointToSection(obj1->_x, obj1->_y, obj2->_p1->_x,
+													obj2->_p1->_y, obj2->_p2->_x, obj2->_p2->_y, _storage_of_constants.add(value));
+												_storage_of_constraints.add(rule);
+												return;
+											}
+										}
+										Segment* ob2 = dynamic_cast<Segment*>(_selected_objects.get());
+										if (ob2)
+										{
+											_selected_objects.moveNext();
+											Point* ob1 = dynamic_cast<Point*>(_selected_objects.get());
+											if (ob1)
+											{
+												DistanceFromPointToSection* rule = new DistanceFromPointToSection(ob1->_x, ob1->_y, ob2->_p1->_x,
+													ob2->_p1->_y, ob2->_p2->_x, ob2->_p2->_y, _storage_of_constants.add(value));
+												_storage_of_constraints.add(rule);
+												return;
+											}
+										}
+										return;
+							  }
+							  case 3:
 
-				  return;
-			  default:
-				  return;
-			  }
+								  return;
+							  default:
+								  return;
+							  }
 	}
 	case CONSTR_P2LINEDIST:
 	{
-			  switch (_selected_objects.size())
-			  {
-			  case 2:
-			  {
-						_selected_objects.rewind();
-						Point* obj1 = dynamic_cast<Point*>(_selected_objects.get());
-						if (obj1)
-						{
-							_selected_objects.moveNext();
-							Segment* obj2 = dynamic_cast<Segment*>(_selected_objects.get());
-							if (obj2)
-							{
-								DistanceToTheLine* rule = new DistanceToTheLine(obj1->_x, obj1->_y, obj2->_p1->_x,
-									obj2->_p1->_y, obj2->_p2->_x, obj2->_p2->_y, _storage_of_constants.add(value));
-								_storage_of_constraints.add(rule);
-								return;
-							}
-						}
-						Segment* ob2 = dynamic_cast<Segment*>(_selected_objects.get());
-						if (ob2)
-						{
-							_selected_objects.moveNext();
-							Point* ob1 = dynamic_cast<Point*>(_selected_objects.get());
-							if (ob1)
-							{
-								DistanceToTheLine* rule = new DistanceToTheLine(ob1->_x, ob1->_y, ob2->_p1->_x,
-									ob2->_p1->_y, ob2->_p2->_x, ob2->_p2->_y, _storage_of_constants.add(value));
-								_storage_of_constraints.add(rule);
-								return;
-							}
-						}
-						return;
-			  }
-			  case 3:
+							  switch (_selected_objects.size())
+							  {
+							  case 2:
+							  {
+										_selected_objects.rewind();
+										Point* obj1 = dynamic_cast<Point*>(_selected_objects.get());
+										if (obj1)
+										{
+											_selected_objects.moveNext();
+											Segment* obj2 = dynamic_cast<Segment*>(_selected_objects.get());
+											if (obj2)
+											{
+												DistanceToTheLine* rule = new DistanceToTheLine(obj1->_x, obj1->_y, obj2->_p1->_x,
+													obj2->_p1->_y, obj2->_p2->_x, obj2->_p2->_y, _storage_of_constants.add(value));
+												_storage_of_constraints.add(rule);
+												return;
+											}
+										}
+										Segment* ob2 = dynamic_cast<Segment*>(_selected_objects.get());
+										if (ob2)
+										{
+											_selected_objects.moveNext();
+											Point* ob1 = dynamic_cast<Point*>(_selected_objects.get());
+											if (ob1)
+											{
+												DistanceToTheLine* rule = new DistanceToTheLine(ob1->_x, ob1->_y, ob2->_p1->_x,
+													ob2->_p1->_y, ob2->_p2->_x, ob2->_p2->_y, _storage_of_constants.add(value));
+												_storage_of_constraints.add(rule);
+												return;
+											}
+										}
+										return;
+							  }
+							  case 3:
 
-				  return;
-			  default:
-				  return;
-			  }
+								  return;
+							  default:
+								  return;
+							  }
 	}
 	case CONSTR_L2LANGLE:
 	{
-			  switch (_selected_objects.size())
-			  {
-			  case 2:
-			  {
-				  _selected_objects.rewind();
-				  Segment* obj1 = dynamic_cast<Segment*>(_selected_objects.get());
-				  _selected_objects.moveNext();
-				  Segment* obj2 = dynamic_cast<Segment*>(_selected_objects.get());
-				  if (obj1 && obj2)
-				  {
-					  AngleSegmentSegment* rule = new AngleSegmentSegment(
-						  obj1->_p1->_x, obj1->_p1->_y,
-						  obj1->_p2->_x, obj1->_p2->_y,
-						  obj2->_p1->_x, obj2->_p1->_y,
-						  obj2->_p2->_x, obj2->_p2->_y,
-						  _storage_of_constants.add(value));
-					  _storage_of_constraints.add(rule);
-				  }
-				  return;
-			  }
-			  case 3:
-				  return;
-			  case 4:
-			  {
-						_selected_objects.rewind();
-						Point* obj1 = dynamic_cast<Point*>(_selected_objects.get());
-						_selected_objects.moveNext();
-						Point* obj2 = dynamic_cast<Point*>(_selected_objects.get());
-						_selected_objects.moveNext();
-						Point* obj3 = dynamic_cast<Point*>(_selected_objects.get());
-						_selected_objects.moveNext();
-						Point* obj4 = dynamic_cast<Point*>(_selected_objects.get());
-						if (obj1 && obj2 && obj3 && obj4)
-						{
-							AngleSegmentSegment* rule = new AngleSegmentSegment(
-								obj1->_x, obj1->_y,
-								obj2->_x, obj2->_y,
-								obj3->_x, obj3->_y,
-								obj4->_x, obj4->_y,
-								_storage_of_parameters.add(value));
-							_storage_of_constraints.add(rule);
-						}
-						return;
-			  }
-			  default:
-				  return;
-			  }
-		/*Picked only 4 Points or 2 Points and Segment or 2 Segments*/
-	}
-	case CONSTR_3PRATIO:
-	{
-		switch (_selected_objects.size())
-		{
-		case 3:
-		{
-			_selected_objects.rewind();
-			Point* o1 = dynamic_cast<Point*>(_selected_objects.get());
-			if (o1)
-			{
-				_selected_objects.moveNext();
-				Point* o2 = dynamic_cast<Point*>(_selected_objects.get());
-				if (o2)
-				{
-					_selected_objects.moveNext();
-					Point* o3 = dynamic_cast<Point*>(_selected_objects.get());
-					if (o3)
-					{
-						AspectRatio* rule = new AspectRatio(o1->_x, o1->_y, o2->_x,
-							o2->_y, o3->_x, o3->_y, _storage_of_constants.add(value));
-						_storage_of_constraints.add(rule);
-						return;
-					}
-				}
-			}
-			return;
-		}
-		}
+							switch (_selected_objects.size())
+							{
+							case 2:
+								return;
+							case 3:
+								return;
+							case 4:
+							{
+									  _selected_objects.rewind();
+									  Point* obj1 = dynamic_cast<Point*>(_selected_objects.get());
+									  _selected_objects.moveNext();
+									  Point* obj2 = dynamic_cast<Point*>(_selected_objects.get());
+									  _selected_objects.moveNext();
+									  Point* obj3 = dynamic_cast<Point*>(_selected_objects.get());
+									  _selected_objects.moveNext();
+									  Point* obj4 = dynamic_cast<Point*>(_selected_objects.get());
+									  if (obj1 && obj2 && obj3 && obj4)
+									  {
+										  AngleSegmentSegment* rule = new AngleSegmentSegment(
+											  obj1->_x, obj1->_y,
+											  obj2->_x, obj2->_y,
+											  obj3->_x, obj3->_y,
+											  obj4->_x, obj4->_y,
+											  _storage_of_parameters.add(value));
+										  _storage_of_constraints.add(rule);
+									  }
+									  return;
+							}
+							default:
+								return;
+							}
+							/*Picked only 4 Points or 2 Points and Segment or 2 Segments*/
 	}
 	default:
 		return;
@@ -345,65 +278,65 @@ void CORE::AddRule(unsigned type)
 	{
 	case CONSTR_3PONLINE:
 	{
-		switch (_selected_objects.size())
-		{
-		case 2:
-		{
-			_selected_objects.rewind();
-			Point* obj1 = dynamic_cast<Point*>(_selected_objects.get());
-			if (obj1)
-			{
-				_selected_objects.moveNext();
-				Segment* obj2 = dynamic_cast<Segment*>(_selected_objects.get());
-				if (obj2)
-				{
-					ThreePoints* rule = new ThreePoints(obj1->_x, obj1->_y, obj2->_p1->_x,
-						obj2->_p1->_y, obj2->_p2->_x, obj2->_p2->_y);
-					_storage_of_constraints.add(rule);
-					return;
-				}
-			}
-			Segment* ob2 = dynamic_cast<Segment*>(_selected_objects.get());
-			if (ob2)
-			{
-				_selected_objects.moveNext();
-				Point* ob1 = dynamic_cast<Point*>(_selected_objects.get());
-				if (ob1)
-				{
-					ThreePoints* rule = new ThreePoints(ob1->_x, ob1->_y, ob2->_p1->_x,
-						ob2->_p1->_y, ob2->_p2->_x, ob2->_p2->_y);
-					_storage_of_constraints.add(rule);
-					return;
-				}
-			}
-			return;
-		}
-		case 3:
-		{
-			_selected_objects.rewind();
-			Point* o1 = dynamic_cast<Point*>(_selected_objects.get());
-			if (o1)
-			{
-				_selected_objects.moveNext();
-				Point* o2 = dynamic_cast<Point*>(_selected_objects.get());
-				if (o2)
-				{
-					_selected_objects.moveNext();
-					Point* o3 = dynamic_cast<Point*>(_selected_objects.get());
-					if (o3)
-					{
-						ThreePoints* rule = new ThreePoints(o1->_x, o1->_y, o2->_x,
-							o2->_y, o3->_x, o3->_y);
-						_storage_of_constraints.add(rule);
-						return;
-					}
-				}
-			}
-			return;
-		}
-		default:
-			return;
-		}
+							switch (_selected_objects.size())
+							{
+							case 2:
+							{
+									  _selected_objects.rewind();
+									  Point* obj1 = dynamic_cast<Point*>(_selected_objects.get());
+									  if (obj1)
+									  {
+										  _selected_objects.moveNext();
+										  Segment* obj2 = dynamic_cast<Segment*>(_selected_objects.get());
+										  if (obj2)
+										  {
+											  ThreePoints* rule = new ThreePoints(obj1->_x, obj1->_y, obj2->_p1->_x,
+												  obj2->_p1->_y, obj2->_p2->_x, obj2->_p2->_y);
+											  _storage_of_constraints.add(rule);
+											  return;
+										  }
+									  }
+									  Segment* ob2 = dynamic_cast<Segment*>(_selected_objects.get());
+									  if (ob2)
+									  {
+										  _selected_objects.moveNext();
+										  Point* ob1 = dynamic_cast<Point*>(_selected_objects.get());
+										  if (ob1)
+										  {
+											  ThreePoints* rule = new ThreePoints(ob1->_x, ob1->_y, ob2->_p1->_x,
+												  ob2->_p1->_y, ob2->_p2->_x, ob2->_p2->_y);
+											  _storage_of_constraints.add(rule);
+											  return;
+										  }
+									  }
+									  return;
+							}
+							case 3:
+							{
+									  _selected_objects.rewind();
+									  Point* o1 = dynamic_cast<Point*>(_selected_objects.get());
+									  if (o1)
+									  {
+										  _selected_objects.moveNext();
+										  Point* o2 = dynamic_cast<Point*>(_selected_objects.get());
+										  if (o2)
+										  {
+											  _selected_objects.moveNext();
+											  Point* o3 = dynamic_cast<Point*>(_selected_objects.get());
+											  if (o3)
+											  {
+												  ThreePoints* rule = new ThreePoints(o1->_x, o1->_y, o2->_x,
+													  o2->_y, o3->_x, o3->_y);
+												  _storage_of_constraints.add(rule);
+												  return;
+											  }
+										  }
+									  }
+									  return;
+							}
+							default:
+								return;
+							}
 	}
 	default:
 		return;
@@ -419,60 +352,60 @@ void CORE::ChangeStatus(double x, double y, unsigned char status_key)
 	//for (unsigned i = 0; i < size; i++)
 	for (ListViewer<Point> i(_storage_of_points); i.canMoveNext(); i.moveNext())
 	{
-		if (length(*_storage_of_points[i]._x, *_storage_of_points[i]._y, x, y) < min)
-		{
-			min = length(*_storage_of_points[i]._x, *_storage_of_points[i]._y, x, y);
-			min_i = i;
-		}
+	if (length(*_storage_of_points[i]._x, *_storage_of_points[i]._y, x, y) < min)
+	{
+	min = length(*_storage_of_points[i]._x, *_storage_of_points[i]._y, x, y);
+	min_i = i;
+	}
 	}
 	size = _storage_of_segments.size();
 	int min_j = -1;
 	for (unsigned i = 0; i < size; i++)
 	{
-		if (length(*_storage_of_segments[i]._p1->_x, *_storage_of_segments[i]._p1->_y, x, y) < min)
-		{
-			min = length(*_storage_of_segments[i]._p1->_x, *_storage_of_segments[i]._p1->_y, x, y);
-			min_j = i;
-		}
+	if (length(*_storage_of_segments[i]._p1->_x, *_storage_of_segments[i]._p1->_y, x, y) < min)
+	{
+	min = length(*_storage_of_segments[i]._p1->_x, *_storage_of_segments[i]._p1->_y, x, y);
+	min_j = i;
+	}
 	}
 	size = _storage_of_circles.size();
 	int min_k = -1;
 	for (unsigned i = 0; i < size; i++)
 	{
-		if (length(*_storage_of_circles[i]._o->_x, *_storage_of_circles[i]._o->_y, x, y) < min)
-		{
-			min = length(*_storage_of_circles[i]._o->_x, *_storage_of_circles[i]._o->_y, x, y);
-			min_k = i;
-		}
+	if (length(*_storage_of_circles[i]._o->_x, *_storage_of_circles[i]._o->_y, x, y) < min)
+	{
+	min = length(*_storage_of_circles[i]._o->_x, *_storage_of_circles[i]._o->_y, x, y);
+	min_k = i;
+	}
 	}
 	/*size = _storage_of_arcs.size();
 	int min_k = -1;
 	for (unsigned i = 0; i < size; i++)
 	{
-		if (length(_storage_of_arcs[i].o.x, _storage_of_arcs[i].o.y, x, y) < min)
-		{
-			min = length(_storage_of_arcs[i].o.x, _storage_of_arcs[i].o.y, x, y);
-			min_k = i;
-		}
+	if (length(_storage_of_arcs[i].o.x, _storage_of_arcs[i].o.y, x, y) < min)
+	{
+	min = length(_storage_of_arcs[i].o.x, _storage_of_arcs[i].o.y, x, y);
+	min_k = i;
+	}
 	}*/
 	/*if (min_k >= 0)
 	{
-		_storage_of_circles[min_k].changeVisible();
+	_storage_of_circles[min_k].changeVisible();
 	}
-	else 
+	else
 	{
-		if (min_j >= 0)
-		{
-			_storage_of_segments[min_j].changeVisible();
-		}
-		else
-		{
-			if (min_i >= 0)
-			{
-				_storage_of_points[min_i].changeVisible();
-			}
-			else return;
-		}
+	if (min_j >= 0)
+	{
+	_storage_of_segments[min_j].changeVisible();
+	}
+	else
+	{
+	if (min_i >= 0)
+	{
+	_storage_of_points[min_i].changeVisible();
+	}
+	else return;
+	}
 	}
 	return;*/
 }
@@ -492,27 +425,79 @@ void CORE::Select(double x, double y)
 			min_i = j;
 		}
 	}
+	if (min_i >= 0)
+	{
+		unsigned j = 0;
+		ListViewer<Point> i(_storage_of_points);
+		for (; j < min_i; i.moveNext())
+		{
+			j++;
+		}
+		i.getValue().changeSelect();
+		_selected_objects.add(&i.getValue());
+		Redraw();
+		return;
+	}
 	size = _storage_of_segments.size();
 	int min_j = -1;
 	j = 0;
+	double A = 0, B = 0, C = 0;
 	for (ListViewer<Segment> i(_storage_of_segments); i.canMoveNext(); i.moveNext(), j++)
 	{
-		if (length(*i.getValue()._p1->_x, *i.getValue()._p1->_y, x, y) < min)
+		A = *i.getValue()._p2->_y - *i.getValue()._p1->_y;
+		B = *i.getValue()._p1->_x - *i.getValue()._p2->_x;
+		C = *i.getValue()._p1->_y * *i.getValue()._p2->_x - *i.getValue()._p1->_x * *i.getValue()._p2->_y;
+		if ((abs(A*x + B*y + C) / sqrt(A*A + B*B) < min) &&
+			(length(*i.getValue()._p1->_x, *i.getValue()._p1->_y, x, y) <
+			((A*x + B*y + C)*(A*x + B*y + C) / (A*A + B*B) +
+			length(*i.getValue()._p1->_x, *i.getValue()._p1->_y, *i.getValue()._p2->_x, *i.getValue()._p2->_y)))
+			&& (length(*i.getValue()._p2->_x, *i.getValue()._p2->_y, x, y) <
+			((A*x + B*y + C)*(A*x + B*y + C) / (A*A + B*B) +
+			length(*i.getValue()._p1->_x, *i.getValue()._p1->_y, *i.getValue()._p2->_x, *i.getValue()._p2->_y))))
 		{
-			min = length(*i.getValue()._p1->_x, *i.getValue()._p1->_y, x, y);
+			min = abs(A*x + B*y + C) / sqrt(A*A + B*B);
 			min_j = j;
 		}
+	}
+	if (min_j >= 0)
+	{
+		unsigned j = 0;
+		ListViewer<Segment> i(_storage_of_segments);
+		for (; j < min_i; i.moveNext())
+		{
+			j++;
+		}
+		i.getValue().changeSelect();
+		_selected_objects.add(&i.getValue());
+		Redraw();
+		return;
 	}
 	size = _storage_of_circles.size();
 	int min_k = -1;
 	j = 0;
 	for (ListViewer<Circle> i(_storage_of_circles); i.canMoveNext(); i.moveNext(), j++)
 	{
-		if (length(*i.getValue()._o->_x, *i.getValue()._o->_y, x, y) < min)
+		if ((length(*i.getValue()._o->_x, *i.getValue()._o->_y, x, y) < (*i.getValue()._r + min)) &&
+			(length(*i.getValue()._o->_x, *i.getValue()._o->_y, x, y) > (*i.getValue()._r - min)))
 		{
-			min = length(*i.getValue()._o->_x, *i.getValue()._o->_y, x, y);
+			min = abs(length(*i.getValue()._o->_x, *i.getValue()._o->_y, x, y) - *i.getValue()._r);
 			min_k = j;
 		}
+	}
+	if (min_k >= 0)
+	{
+		unsigned j = 0;
+		ListViewer<Circle> i(_storage_of_circles);
+		for (; j < min_k; i.moveNext())
+		{
+			j++;
+		}
+		Redraw();
+		i.getValue().changeSelect();
+		Redraw();
+		_selected_objects.add(&i.getValue());
+		Redraw();
+		return;
 	}
 	/*size = _storage_of_arcs.size();
 	int min_k = -1;
@@ -524,47 +509,6 @@ void CORE::Select(double x, double y)
 	min_k = i;
 	}
 	}*/
-	if (min_i >= 0)
-	{
-		unsigned j = 0;
-		ListViewer<Point> i(_storage_of_points);
-		for (; j < min_i; i.moveNext())
-		{
-			j++;
-		}
-		i.getValue().changeSelect();
-		_selected_objects.add(&i.getValue());
-	}
-	else
-	{
-		if (min_j >= 0)
-		{
-			unsigned j = 0;
-			ListViewer<Segment> i(_storage_of_segments);
-			for (; j < min_i; i.moveNext())
-			{
-				j++;
-			}
-			i.getValue().changeSelect();
-			_selected_objects.add(&i.getValue());
-		}
-		else
-		{
-			if (min_k >= 0)
-			{
-				unsigned j = 0;
-				ListViewer<Circle> i(_storage_of_circles);
-				for (; j < min_i; i.moveNext())
-				{
-					j++;
-				}
-				i.getValue().changeSelect();
-				_selected_objects.add(&i.getValue());
-			}
-			else return;
-		}
-	}
-   Redraw();
 	return;
 }
 
@@ -582,7 +526,7 @@ bool isInArea(double x, double y, double x1, double y1, double x2, double y2)
 		y2 = y1;
 		y1 = temp;
 	}
-	if (x1 < x && x < x2 && y1 < y && y < y2)
+	if (x1 <= x && x <= x2 && y1 <= y && y <= y2)
 	{
 		return true;
 	}
@@ -595,21 +539,21 @@ void CORE::ChangeStatus(double x1, double y1, double x2, double y2, unsigned cha
 	/*unsigned size = _storage_of_points.size();
 	for (unsigned i = 0; i < size; i++)
 	{
-		if (isInArea(*_storage_of_points[i]._x, *_storage_of_points[i]._y, x1, y1, x2, y2))
-		{
-			//change status
-		}
+	if (isInArea(*_storage_of_points[i]._x, *_storage_of_points[i]._y, x1, y1, x2, y2))
+	{
+	//change status
+	}
 	}
 
 	// select segments
 	size = _storage_of_segments.size();
 	for (unsigned i = 0; i < size; i++)
 	{
-		if (isInArea(*_storage_of_segments[i]._p1->_x, *_storage_of_segments[i]._p1->_y, x1, y1, x2, y2) &&
-			 isInArea(*_storage_of_segments[i]._p2->_x, *_storage_of_segments[i]._p2->_y, x1, y1, x2, y2))
-		{
-			//change status
-		}
+	if (isInArea(*_storage_of_segments[i]._p1->_x, *_storage_of_segments[i]._p1->_y, x1, y1, x2, y2) &&
+	isInArea(*_storage_of_segments[i]._p2->_x, *_storage_of_segments[i]._p2->_y, x1, y1, x2, y2))
+	{
+	//change status
+	}
 	}
 	return;*/
 }
@@ -642,13 +586,15 @@ void CORE::Select(double x1, double y1, double x2, double y2)
 	size = _storage_of_circles.size();
 	for (ListViewer<Circle> i(_storage_of_circles); i.canMoveNext(); i.moveNext())
 	{
-		if (isInArea(*i.getValue()._o->_x, *i.getValue()._o->_y, x1, y1, x2, y2))
+		if ((isInArea(*i.getValue()._o->_x, *i.getValue()._o->_y, x1, y1, x2, y2)) && 
+			(*i.getValue()._o->_x + *i.getValue()._r)>=x1 && (*i.getValue()._o->_x + *i.getValue()._r)<=x2 &&
+			(*i.getValue()._o->_y + *i.getValue()._r)>=y1 && (*i.getValue()._o->_y + *i.getValue()._r)<=y2)
 		{
 			i.getValue().changeSelect();
 			_selected_objects.add(&i.getValue());
 		}
 	}
-   Redraw();
+	Redraw();
 	return;
 }
 
@@ -657,14 +603,14 @@ void CORE::ClearSelection()
 	for (ListViewer< ObjectSkin* > i(_selected_objects); i.canMoveNext(); i.moveNext())
 	{
 		i.getValue()->changeSelect(false);
-		i.getValue()->color.setColor(COLORDEF);
+		i.getValue()->background.setColor(COLORDEF);
 	}
 }
 
 bool CORE::OpenStream()
 {
 	if (_streamstate) return false;
-	
+
 	_streamstate = 1;
 	_pointstream = _storage_of_points.getStartingViewer();
 	_segmentstream = _storage_of_segments.getStartingViewer();
@@ -677,7 +623,7 @@ bool CORE::OpenStream()
 
 bool CORE::StreamIsOpened()
 {
-	return _streamstate?true:false;
+	return _streamstate ? true : false;
 }
 
 double CORE::GetFromStream()
@@ -687,86 +633,86 @@ double CORE::GetFromStream()
 		// stream of sizes
 	case 1:
 	{
-		_streamstate++;
-		return _storage_of_points.size();
+			  _streamstate++;
+			  return _storage_of_points.size();
 	}
 	case 2:
 	{
-		_streamstate++;
-		return _storage_of_segments.size();
+			  _streamstate++;
+			  return _storage_of_segments.size();
 	}
 	case 3:
 	{
-		_streamstate++;
-		return _storage_of_circles.size();
+			  _streamstate++;
+			  return _storage_of_circles.size();
 	}
 	case 4:
 	{
-		_streamstate++;
-		return _storage_of_constraints.size();
+			  _streamstate++;
+			  return _storage_of_constraints.size();
 	}
 		// stream of points
 	case 5:
 	{
-		_streamstate++;
-		return *_pointstream.getValue()._x;
+			  _streamstate++;
+			  return *_pointstream.getValue()._x;
 	}
 	case 6:
 	{
-		double ans = *_pointstream.getValue()._y;
-		_streamstate--;
-		if (_pointstream.canMoveNext()) _pointstream.moveNext();
-		else _streamstate += 2;
-		return ans;
+			  double ans = *_pointstream.getValue()._y;
+			  _streamstate--;
+			  if (_pointstream.canMoveNext()) _pointstream.moveNext();
+			  else _streamstate += 2;
+			  return ans;
 	}
 		// stream of segments
 	case 7:
-	{ 
-		_streamstate++;
-		return *_segmentstream.getValue()._p1->_x;
+	{
+			  _streamstate++;
+			  return *_segmentstream.getValue()._p1->_x;
 	}
 	case 8:
 	{
-		_streamstate++;
-		return *_segmentstream.getValue()._p1->_y;
+			  _streamstate++;
+			  return *_segmentstream.getValue()._p1->_y;
 	}
 	case 9:
 	{
-		_streamstate++;
-		return *_segmentstream.getValue()._p2->_x;
+			  _streamstate++;
+			  return *_segmentstream.getValue()._p2->_x;
 	}
 	case 10:
 	{
-		double ans = *_segmentstream.getValue()._p2->_y;
-		_streamstate -= 3;
-		if (_segmentstream.canMoveNext()) _segmentstream.moveNext();
-		else _streamstate += 4;
-		return ans;
+			   double ans = *_segmentstream.getValue()._p2->_y;
+			   _streamstate -= 3;
+			   if (_segmentstream.canMoveNext()) _segmentstream.moveNext();
+			   else _streamstate += 4;
+			   return ans;
 	}
 		// stream of circles
 	case 11:
 	{
-		_streamstate++;
-		return *_circlestream.getValue()._o->_x;
+			   _streamstate++;
+			   return *_circlestream.getValue()._o->_x;
 	}
 	case 12:
 	{
-		_streamstate++;
-		return *_circlestream.getValue()._o->_y;
+			   _streamstate++;
+			   return *_circlestream.getValue()._o->_y;
 	}
 	case 13:
 	{
-		double ans = *_circlestream.getValue()._r;
-		_streamstate -= 2;
-		if (_segmentstream.canMoveNext()) _segmentstream.moveNext();
-		else _streamstate += 3;
-		return ans;
+			   double ans = *_circlestream.getValue()._r;
+			   _streamstate -= 2;
+			   if (_segmentstream.canMoveNext()) _segmentstream.moveNext();
+			   else _streamstate += 3;
+			   return ans;
 	}
 		// stream of rules
 	case 14:
 	{
-		_streamstate++;
-		return _constrstream.getValue()->type();
+			   _streamstate++;
+			   return _constrstream.getValue()->type();
 	}
 	default:
 		throw std::logic_error("Stream is closed");
