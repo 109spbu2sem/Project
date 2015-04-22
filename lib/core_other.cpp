@@ -217,7 +217,9 @@ void CORE::Select(double x1, double y1, double x2, double y2)
 	size = _storage_of_circles.size();
 	for (ListViewer<Circle> i(_storage_of_circles); i.canMoveNext(); i.moveNext())
 	{
-		if (isInArea(*i.getValue()._o->_x, *i.getValue()._o->_y, x1, y1, x2, y2))
+		if ((isInArea(*i.getValue()._o->_x, *i.getValue()._o->_y, x1, y1, x2, y2)) &&
+			(*i.getValue()._o->_x + *i.getValue()._r) >= x1 && (*i.getValue()._o->_x + *i.getValue()._r) <= x2 &&
+			(*i.getValue()._o->_y + *i.getValue()._r) >= y1 && (*i.getValue()._o->_y + *i.getValue()._r) <= y2)
 		{
 			i.getValue().changeSelect();
 			_selected_objects.add(&i.getValue());
@@ -235,4 +237,14 @@ void CORE::ClearSelection()
 		i.getValue()->color.setColor(COLORDEF);
 	}
 	mygui->Redraw();
+}
+
+void CORE::IWantSave(std::string fileway)
+{
+
+}
+
+void CORE::IWantLoad(std::string fileway)
+{
+
 }

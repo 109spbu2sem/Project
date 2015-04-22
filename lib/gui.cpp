@@ -16,12 +16,14 @@ void help()
 {
 	std::cout << "'e' - exit, close program" << std::endl;
 	std::cout << "'a' - add to the canvas\n\t 'p' - point\n\t 's' - segment\n\t 'c' - circle" << std::endl;
-	std::cout << "'s' - select object in position" << std::endl;
+	std::cout << "'p' - pick object in position" << std::endl;
+	std::cout << "'s' - save all to file" << std::endl;
+	std::cout << "'l' - load from file" << std::endl;
 	std::cout << "'c' - clear selection" << std::endl;
 	std::cout << "'w' - work, calculate true position of objects on the canvas" << std::endl;
 	std::cout << "'r' - rule, add rule (constraint) to selected objects" << std::endl;
 	std::cout << "'b' - brush, clear screen" << std::endl;
-	std::cout << "'l' - list, show list of\n\t 'o' - objects (doesn't work)\n\t 's' - selected objects (doesn't work)" << std::endl;
+	std::cout << "'d' - draw list of objects" << std::endl;
 	std::cout << "'h' - help, show this text again" << std::endl;
 }
 
@@ -47,7 +49,7 @@ void GUI::show()
 			mycore->ClearSelection();
 			break;
 		}
-		case 's':
+		case 'p':
 		{
 			double x, y;
 			std::cout << "x: ";
@@ -55,6 +57,29 @@ void GUI::show()
 			std::cout << "y: ";
 			std::cin >> y;
 			mycore->Select(x, y);
+			break;
+		}
+		case 's':
+		{
+			std::string s;
+			std::cout << "filename: ";
+			std::cin >> s;
+			mycore->IWantSave(s);
+			break;
+		}
+		case 'l':
+		{
+			std::string s;
+			std::cout << "filename: ";
+			std::cin >> s;
+			try
+			{
+				mycore->IWantLoad(s);
+			}
+			catch (...)
+			{
+				std::cout << "Can't load file";
+			}
 			break;
 		}
 		case 'r':
@@ -172,8 +197,9 @@ void GUI::show()
 			mycore->Calculate();
 			break;
 		}
-		case 'l':
+		case 'd':
 		{
+			Redraw();
 			break;
 		}
 		default:
@@ -187,40 +213,34 @@ void GUI::show()
 	return;
 }
 
-void GUI::Draw(double point_x, double point_y, unsigned color)
-{
-   std::cout << "(P) ";
-	std::cout << point_x << "\t" << point_y;
-   if (color) std::cout << "\t(s)";
-   std::cout << std::endl;
-}
-
-void GUI::Draw(double point1_x, double point1_y, double point2_x, double point2_y, unsigned color)
-{
-   std::cout << "(S) ";
-	std::cout << point1_x << "\t" << point1_y << "\t" << point2_x << "\t" << point2_y << "\t";
-   if (color) std::cout << "\t(s)";
-   std::cout << std::endl;
-}
-
-void GUI::Draw(double point_x, double point_y, double radius, unsigned color)
-{
-   std::cout << "(C) ";
-	std::cout << point_x << "\t" << point_y << "\t" << radius;
-   if (color) std::cout << "\t(s)";
-   std::cout << std::endl;
-}
-
 bool GUI::Redraw()
 {
-	if (mycore->StreamIsOpened()) return false;
-	mycore->OpenStream();
+	if (mycore->OpenStream()) return false;
+	
 
-	for (unsigned i = 0; i < points_amount; i++)
+	while (mycore->StreamIsOpened())
+	{
+		CORE::Primitive p = mycore->GetFromStream();
+		std::cout << "[" << p.id << "]";
+	switch (p.type)
+	{
+	case PRIMITIVE_POINT:
 	{
 		std::cout << "(P) ";
-		std::cout << mycore->GetFromStream() << "\t" << mycore->GetFromStream();
-		if (mycore->GetFromStream()) std::cout << "\t(s)";
+		std::cout << p.p1_x << "\t" << p.p1_y;
+		break;
+	}
+	case PRIMITIVE_SEGMENT:
+	{
+		std::cout << "(S) ";
+		std::cout << p.p1_x << "\t" << p.p1_y << "\t" << p.p2_x << "\t" << p.p2_y;
+		break;
+	}
+	case PRIMITIVE_CIRCLE: std::cout << "(C) "; break;
+	default:
+		break;
+	}
+		if (p.color) std::cout << "\t(s)";
 		std::cout << std::endl;
 	}
 

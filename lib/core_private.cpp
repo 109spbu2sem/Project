@@ -4,7 +4,7 @@
 
 CORE::CORE()
 {
-	_streamstate = 0;
+	_streamstate = STREAMISCLOSE;
 }
 
 CORE::~CORE()
@@ -95,9 +95,4 @@ bool CORE::isInArea(double x, double y, double x1, double y1, double x2, double 
 		return true;
 	}
 	return false;
-}
-
-void CORE::IWantSave(std::string fileway)
-{
-
 }

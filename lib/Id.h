@@ -9,6 +9,7 @@ public:
 	ID()
 	{
 		//_myid = generateID();
+		_myid = 0;
 	}
 	ID(unsigned id)
 	{

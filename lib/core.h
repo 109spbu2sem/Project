@@ -82,6 +82,7 @@ public:
 	void ChangeProperty(unsigned property_key, ...);
 
 	void IWantSave(std::string fileway);
+	void IWantLoad(std::string fileway);
 
 	struct Primitive
 	{
