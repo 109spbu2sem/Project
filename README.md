@@ -19,37 +19,7 @@
 
 ## Структура
 ###### Неактуальные файлы отмечены тильдой (~)
-    main.cpp  
-    /include  
-      Structures.h  
-      ~ Storage.h  
-      Storage_Template.h  
-      ~ LinkedList.h  
-      LinkedList_Template.h   
-      TreeStorage.h  
-      /constraints  
-        IsPointOnSection.h  
-        ~ Point2SectionDistance.h  
-    /src  
-      DynArrayP.cpp  
-      DynArrayS.cpp  
-      LinkedList.cpp  
-      TreeStorage.cpp  
-    /qt
-      main.cpp  
-      GUI.cpp  
-      GUI.h  
-      Structure.h  
-      main.qml  
-      MainForm.ui.qml  
-      qml.qrc  
-      Paint.pro  
-      Paint.pro.user  
-      deployment.pri  
-      screenshot.png  
-    /test  
-      test.cpp  
-    ReadMe.md  
+    ??    
 
 ## Домашние задания
 
