@@ -21,26 +21,26 @@
 class GUI : public QObject
 {
     Q_OBJECT
-    Q_PROPERTY(QString statusBar READ statusBar WRITE setStatusBar NOTIFY statusBarChanged)
-    Q_PROPERTY(Point newPoint READ newPoint WRITE setNewPoint NOTIFY newPointChanged)
+    Q_PROPERTY(QVariant statusBar READ statusBar WRITE setStatusBar NOTIFY statusBarChanged)
 
 public:
-     GUI(){}
+     GUI(QObject *parent = 0){}
     ~GUI(){}
 
 public slots:
-    const QString statusBar();
-    void setStatusBar(const QString &String);
+    const QVariant statusBar();
+    void setStatusBar(const QVariant &String);
 
     const Point newPoint();
-    void setNewPoint(Point P);
+    void setNewPoint(double x, double y);
+    void addNewPoint(double x, double y);
 
     signals:
     void statusBarChanged();
-    void newPointChanged();
+    void newPointAdded(QVariant x, QVariant y);
 
 private:
-    QString _statusBar;
+    QVariant _statusBar;
     Point _newPoint;
 };
 

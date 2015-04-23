@@ -9,12 +9,12 @@
 #include "./include/gui/GUI.h"
 #include <QQmlApplicationEngine>
 
-const QString GUI::statusBar()
+const QVariant GUI::statusBar()
 {
     return _statusBar;
 }
 
-void GUI::setStatusBar(const QString &statusBarText)
+void GUI::setStatusBar(const QVariant &statusBarText)
 {
     if (statusBarText != _statusBar)
     {
@@ -28,9 +28,16 @@ const Point GUI::newPoint()
     return _newPoint;
 }
 
-void GUI::setNewPoint(Point P)
+void GUI::setNewPoint(double x, double y)
 {
+    Point P;
+    P.X = x;
+    P.Y = y;
     _newPoint = P;
+    std::cout << "x = " << P.X << std::endl << "y = " << P.Y << std::endl;
+}
 
-    emit newPointChanged();
+void GUI::addNewPoint(double x, double y)
+{
+    emit newPointAdded(x, y);
 }

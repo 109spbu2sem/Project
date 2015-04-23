@@ -11,6 +11,7 @@
 
 #include <stdexcept>
 #include <iostream>
+#include "./include/gui/GUI.h"
 
 template<typename Item> class LinkedList
 {

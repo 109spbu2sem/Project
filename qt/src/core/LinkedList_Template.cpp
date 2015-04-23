@@ -10,9 +10,10 @@
 #include <stdio.h>
 #include <stdexcept>
 #include "./include/core/Structures.h"
-#include "./include/core/LinkedList.h"
+#include "./include/core/LinkedList_Template.h"
+#include "./include/gui/GUI.h"
 
-void LinkedList::Add(const Point &P)
+template<typename Item> void LinkedList<Item>::Add(const Point &P)
 {
     if (_FirstCell == 0)
     {
@@ -34,7 +35,7 @@ void LinkedList::Add(const Point &P)
     ++_Size;
 };
 
-Point &LinkedList::operator[] (unsigned num)
+template<typename Item> Item &LinkedList<Item>::operator[] (unsigned num)
 {
     if (num >= _Size)
         throw std::invalid_argument("> Bad array index");

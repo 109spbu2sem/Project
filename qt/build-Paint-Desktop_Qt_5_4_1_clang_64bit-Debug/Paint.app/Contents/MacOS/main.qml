@@ -335,6 +335,7 @@ ApplicationWindow
                         ctx.moveTo(lastX, lastY)
                         ctx.fillRect(lastX, lastY, 4, 4)
                         ctx.stroke()
+
                     }
 
                     MouseArea
@@ -365,6 +366,8 @@ ApplicationWindow
                                 console.log('firstX = ' + firstX)
                                 console.log('firstY = ' + firstY)
                             }
+
+                            //statusBar.text = gui.setStatusBar(qsTr("Project changed"))
                         }
                         onPositionChanged:
                         {

@@ -1,11 +1,9 @@
 TEMPLATE = app
 
-QT += qml quick
+QT += qml quick \
+      core
 
 SOURCES += main.cpp \
-    src/core/DynArrayP.cpp \
-    src/core/DynArrayS.cpp \
-    src/core/LinkedList.cpp \
     src/core/TreeStorage.cpp \
     src/gui/GUI.cpp \
     src/saveload/SaveLoad.cpp
@@ -21,9 +19,7 @@ include(deployment.pri)
 HEADERS += \
     include/core/constraints/IsPointOnSection.h \
     include/core/constraints/Point2SectionDistance.h \
-    include/core/LinkedList.h \
     include/core/LinkedList_Template.h \
-    include/core/Storage.h \
     include/core/Storage_Template.h \
     include/core/Structures.h \
     include/core/TreeStorage.h \
