@@ -183,12 +183,12 @@ public:
 	{
 		_current = l._first;
 	}
-	Item& getValue() { if (_current) return _current->data; throw std::runtime_error("No such item"); };
-	void moveNext() { if (_current) _current = _current->next; };
+	Item& getValue() { if (_current) return _current->data; throw std::runtime_error("No such item"); }
+	void moveNext() { if (_current) _current = _current->next; }
 	bool canMoveNext()
 	{
 		if (_current) return true; return false;
-	};
+	}
 };
 
 #endif // STORAGE_LIST_H
