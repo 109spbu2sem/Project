@@ -1,6 +1,7 @@
 #ifndef OBJECTSKIN_H
 #define OBJECTSKIN_H
 #include "LineSkin.h"
+#include "Id.h"
 
 class ObjectSkin
 {
@@ -10,6 +11,7 @@ private:
 public:
 	LineSkin line;
 	Color color;
+	ID id;
 	//unsigned char visible; // 0 - invisible, 100 - full visible; // May be unused
 	ObjectSkin();
 	~ObjectSkin();

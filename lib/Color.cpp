@@ -1,8 +1,9 @@
-#include "Color.h"
+#include "global.h"
 
 
 Color::Color()
 {
+	_color = COLORDEF;
 }
 
 

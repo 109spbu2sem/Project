@@ -1,6 +1,6 @@
 #ifndef LINE_H
 #define LINE_H
-#include "Color.h"
+#include "global.h"
 
 class LineSkin
 {

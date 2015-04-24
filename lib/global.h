@@ -1,8 +1,8 @@
 #ifndef PI
 #define PI 3.1415926535897932384
 
-#define SELECTEDCOLOR 1
-#define COLORDEF 0
+#define SELECTEDCOLOR 0x003adb
+#define COLORDEF 0x000000
 
 double length(double, double, double, double);
 
@@ -19,6 +19,14 @@ enum CONSTR_TYPE
 	CONSTR_3PRATIO
 };
 
+enum PRIMITIVE_TYPE
+{
+	PRIMITIVE_NOTHING,
+	PRIMITIVE_POINT,
+	PRIMITIVE_SEGMENT,
+	PRIMITIVE_CIRCLE,
+};
+
 class IConstraint
 {
 public:
@@ -27,5 +35,16 @@ public:
 	virtual CONSTR_TYPE type() = 0;
 };
 
+class Color
+{
+private:
+	unsigned _color;
+public:
+	Color();
+	~Color();
+	void setColor(unsigned long);
+	void setColor(unsigned char, unsigned char, unsigned char);
+	unsigned getColor(char mode = 0) const;
+};
 
 #endif
