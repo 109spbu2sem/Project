@@ -1,13 +1,16 @@
 #include "core.h"
 #include "gui.h"
-#include "storages\storage_array.h"
-#include "storages\storage_list.h"
+//#include "storages\storage_array.h"
+//#include "storages\storage_list.h"
+#include <QApplication>
 
-int main()
+int main(int argc, char *argv[])
 {
+	QApplication app(argc, argv);
 	CORE testcore;
-	GUI testgui(&testcore);
-	testcore.ConnectGUI(&testgui);
+	GUI testgui;
+	testgui.ConnectCORE(&testcore);
+	testcore.Connect(&testgui, 0);
 	testgui.show();
-	return 0;
+	return app.exec();
 }

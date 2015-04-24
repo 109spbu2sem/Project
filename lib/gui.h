@@ -2,33 +2,72 @@
 #define GUI_H
 
 #include "core.h"
+#include <QMainWindow>
+#include <QGraphicsScene>
+#include "mycanvas.h"
 
 class CORE;
 
-class GUI
+namespace Ui
 {
-private:
-	CORE* mycore;
+	class MainWindow;
+}
 
+class MainWindow : public QMainWindow
+{
+	Q_OBJECT
+	
 public:
-	GUI(CORE* core)
+	explicit MainWindow(QWidget *parent = 0);
+	~MainWindow();
+	
+	void ConnectCORE(CORE* core);
+	
+	bool Redraw();
+	void WriteError(unsigned ErrorKey);
+	void WriteStatus(const char* ErrorKey);
+	
+private slots:	
+	void on_openAddingBTN_clicked();
+	
+	void on_addBTN_clicked();
+	
+	void on_typesOfObjects_currentIndexChanged(int index);
+	
+	void on_calculateBTN_clicked();
+	
+	void on_ruleBox_currentIndexChanged(int index);
+	
+	void on_pushButton_clicked();
+	
+	void on_pushButton_2_clicked();
+	
+private:
+	Ui::MainWindow *ui;
+	CORE* mycore;
+	QGraphicsScene* mainscene;
+};
+
+class GUI : public MainWindow
+{
+	Q_OBJECT
+public:
+	/*GUI(CORE* core)
 	{
 		mycore = core;
+		mainwindow = getUI();
 	}
-	GUI();
-	~GUI();
 	void ConnectCORE(CORE* core)
 	{
 		mycore = core;
 	}
-
-	void show();
-
-   void Draw(double point_x, double point_y, unsigned color = 0); // Point
-   void Draw(double point1_x, double point1_y, double point2_x, double point2_y, unsigned color = 0); // Segment
-   void Draw(double point_x, double point_y, double radius, unsigned color = 0); // Circle
-	// void Draw(double point_x, double point_y, double vector_x, double vector_y, double radius);//Arc
-	void WriteError(unsigned ErrorKey);
+	bool Redraw();
+	void WriteError(unsigned ErrorKey);*/
+	
+private:
+	/*CORE* mycore;
+	QGraphicsScene* mainscene;
+	Ui::MainWindow* mainwindow;*/
 };
 
 #endif // GUI_H
