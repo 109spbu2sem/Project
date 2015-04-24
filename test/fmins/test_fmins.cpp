@@ -25,7 +25,7 @@ void find_para(IConstraint *constr,double **para ,int num_par){
 	cout << "Starting error " << f_cur <<endl;
 	double f_prev = 0; 
 	double *dx = new double[num_par];
-
+	unsigned  nf_eval = 0;
 	do{		
 		f_prev = f_cur;
 		
@@ -39,11 +39,93 @@ void find_para(IConstraint *constr,double **para ,int num_par){
 		for (int k = 0;k<num_par;++k)
 			*para[k] += dx[k];
 		
+		nf_eval++;
 		f_cur = constr->error();
 		//cout << "Error reached = " << f_cur << endl;
 	}while(abs(f_prev - f_cur) > f_epsi);
 	delete[] dx;
 	cout << "Error reached = " << f_cur << endl;
+	cout << "nf_eval = " << nf_eval << endl;
+}
+
+void find_para_gold(IConstraint *constr,double **para ,int num_par){
+	const double f_epsi = 1e-12;
+	double f_cur = constr->error();
+	cout << "Starting error " << f_cur <<endl;
+	double f_prev = 0; 
+	double *grad = new double[num_par];
+	double *old_para = new double[num_par];
+	unsigned nf_eval = 0;
+	do{		
+		f_prev = f_cur;		
+		// Вычислим градиент ошибки
+		for (int k = 0;k < num_par;++k)
+			grad[k] = constr->diff(para[k]);
+
+		double alpha1 = 1;
+		// Запомним текущее значение вектора параметров
+		for (int k =0;k < num_par; ++k)
+			old_para[k] = *para[k];
+		// Двигаемся вдоль антиградиента
+		for (int k = 0;k<num_par;++k)
+			*para[k] -= alpha1*grad[k];
+		double f_alpha1 = constr->error();
+		nf_eval++;
+
+		while (f_alpha1 <= f_prev){
+			alpha1 *=2;
+			for (int k = 0;k<num_par;++k)
+				*para[k] = old_para[k] - alpha1*grad[k];
+			f_alpha1 = constr->error();
+			nf_eval++;
+		}
+		const double gold = 0.5+sqrt(5.0/4);
+		double alpha0 = 0;
+		double f_alpha0 = f_prev;
+		double alphal = alpha1 - (alpha1 - alpha0)/gold;
+		double alphar = alpha0 + (alpha1 - alpha0)/gold;
+		for (int k = 0;k<num_par;++k)
+			*para[k] = old_para[k] - alphal*grad[k];		
+		double f_alphal =constr->error();
+		nf_eval++;
+		for (int k = 0;k<num_par;++k)
+			*para[k] = old_para[k] - alphar*grad[k];
+		double f_alphar = constr->error();
+		nf_eval++;
+		unsigned gold_count = 0;
+		while (abs(f_alphal - f_alphar) > f_epsi ){
+			gold_count ++;
+			if (f_alphal < f_alphar){
+				alpha1 = alphar; f_alpha1 = f_alphar;
+				alphar = alphal; f_alphar = f_alphal;
+				alphal = alpha1 - (alpha1 - alpha0)/gold;
+				for (int k = 0;k<num_par;++k)
+					*para[k] = old_para[k] - alphal*grad[k];		
+				f_alphal =constr->error();
+				nf_eval++;
+			}
+			else{
+				alpha0 = alphal; f_alpha0 = f_alphal;
+				alphal = alphar; f_alphal = f_alphar;
+				alphar = alpha0 + (alpha1 - alpha0)/gold;
+				for (int k = 0;k<num_par;++k)
+					*para[k] = old_para[k] - alphar*grad[k];
+				f_alphar = constr->error();
+				nf_eval++;
+			}
+		}
+		cout << "gold_count  = " << gold_count  <<endl;
+		// Изменим значения параметров
+		for (int k = 0;k<num_par;++k)
+			*para[k] = old_para[k] - (alphar+alphal)/2*grad[k];
+		f_cur = constr->error();
+		nf_eval++;
+		//cout << "Error reached = " << f_cur << endl;
+	}while(abs(f_prev - f_cur) > f_epsi);
+	delete[] grad;
+	delete[] old_para;
+	cout << "Error reached = " << f_cur << endl;
+	cout << "nf_eval = " << nf_eval << endl;
 }
 
 
@@ -86,7 +168,8 @@ int main(){
 	std::cout << ccconstr2->error() <<endl;
 	std::cout << ccconstr3->error() <<endl;
 
-	find_para(&collector,paraddr,6);
+	//find_para(&collector,paraddr,6);
+	find_para_gold(&collector,paraddr,6);
 
 	cout << "After" << endl;
 	std::cout << '(' << center1.x<<','<<center1.y<<')'<<endl;
