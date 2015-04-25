@@ -4,13 +4,13 @@
 #include "core.h"
 using namespace std;
 
-class Save {
-	string _way;
-	fstream _save;
-	CORE*_action;
+class Load {
+	string*_way;
+	ifstream _load;
 	CORE::Primitive*_ans;
+	streamoff*_cur;
 public:
-	Save();
-	void save();
+	Load();
+	CORE::Primitive load();
 	string fileWay(string);
 };
