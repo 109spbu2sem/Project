@@ -328,5 +328,10 @@ void MainWindow::on_pushButton_2_clicked()
 
 void MainWindow::on_saveButton_clicked() {
 	Save action;
+	action.ConnectCORE(mycore);
 	action.save();
+}
+
+void MainWindow::on_saveAsButton_clicked() {
+
 }

@@ -8,11 +8,11 @@
 #include <string>
 
 class GUI;
-class Save;
 
 class CORE
 {
 private:
+	friend class Save;
 	GUI* mygui;
 	Save* mysave;
 
@@ -99,5 +99,7 @@ public:
 	Primitive GetFromStream(); // if stream is closed return std::logic_error
 	void CloseStream();
 };
+
+class Save;
 
 #endif // CORE_H

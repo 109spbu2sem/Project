@@ -11,9 +11,11 @@ class Save {
 	string _way;
 	fstream _save;
 	CORE*_action;
-	CORE::Primitive*_ans;
+	CORE::Primitive _ans;
 public:
 	Save();
+	~Save();
+	void ConnectCORE(CORE*);
 	void save();
 	string fileWay(string);
 };

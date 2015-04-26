@@ -1,5 +1,6 @@
 #include "core.h"
 #include "gui.h"
+#include "Save.h"
 //#include "storages\storage_array.h"
 //#include "storages\storage_list.h"
 #include <QApplication>
