@@ -54,6 +54,7 @@ void CORE::Calculate()
 void CORE::BuildFigureGoldMethod(IConstraint *constr, Storage_Array<double*>* parameters)
 {
 	const double f_epsi = 1e-12;
+	if (constr->error() < f_epsi) return;
 	double f_cur = constr->error();
 	double f_prev = 0;
 	double *grad = new double[parameters->size()];

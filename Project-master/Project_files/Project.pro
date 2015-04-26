@@ -27,7 +27,8 @@ SOURCES += \
     ../lib/ObjectSkin.cpp \
     ../lib/structures.cpp \
     ../lib/objectpropertieswindow.cpp \
-    ../lib/mycanvas.cpp
+    ../lib/mycanvas.cpp \
+    ../lib/Save.cpp
 
 HEADERS  += \
     ../lib/constraints/AngleSegment-Segment.h \
@@ -50,7 +51,8 @@ HEADERS  += \
     ../lib/ObjectSkin.h \
     ../lib/structures.h \
     ../lib/objectpropertieswindow.h \
-    ../lib/mycanvas.h
+    ../lib/mycanvas.h \
+    ../lib/Save.h
 
 FORMS += \
     ../lib/QTforms/gui.ui \

@@ -97,7 +97,7 @@
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
-      <AdditionalIncludeDirectories>C:\Users\admin\Desktop\Project-master %281%29\Project-master\lib;.;$(QTDIR)\include;$(QTDIR)\include\QtWidgets;$(QTDIR)\include\QtGui;$(QTDIR)\include\QtANGLE;$(QTDIR)\include\QtCore;debug;$(QTDIR)\mkspecs\win32-msvc2013;.\GeneratedFiles;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>.;$(QTDIR)\include;$(QTDIR)\include\QtWidgets;$(QTDIR)\include\QtGui;$(QTDIR)\include\QtANGLE;$(QTDIR)\include\QtCore;debug;.;$(QTDIR)\mkspecs\win32-msvc2013;.\GeneratedFiles;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <AdditionalOptions>-Zm200 -w34100 -w34189 %(AdditionalOptions)</AdditionalOptions>
       <AssemblerListingLocation>debug\</AssemblerListingLocation>
       <BrowseInformation>false</BrowseInformation>
@@ -151,10 +151,10 @@
     <ClCompile Include="..\lib\mycanvas.cpp" />
     <ClCompile Include="..\lib\objectpropertieswindow.cpp" />
     <ClCompile Include="..\lib\structures.cpp" />
+    <ClCompile Include="..\lib\Save.cpp" />
     <ClCompile Include="Release\moc_objectpropertieswindow.cpp">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
     </ClCompile>
-    <ClCompile Include="Save.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\lib\constraints\AngleSegment-Segment.h" />
@@ -170,9 +170,9 @@
     <ClInclude Include="..\lib\constraints\ThreePointsOnTheLine.h" />
     <ClInclude Include="..\lib\core.h" />
     <ClInclude Include="..\lib\global.h" />
+    <ClInclude Include="..\lib\Save.h" />
     <ClInclude Include="GeneratedFiles\ui_gui.h" />
     <ClInclude Include="GeneratedFiles\ui_objectpropertieswindow.h" />
-    <ClInclude Include="Save.h" />
     <CustomBuild Include="..\lib\gui.h">
       <Command Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">setlocal
 if errorlevel 1 goto VCEnd

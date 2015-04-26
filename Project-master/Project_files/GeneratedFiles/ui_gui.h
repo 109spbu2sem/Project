@@ -244,7 +244,7 @@ public:
         pushButton_2->setGeometry(QRect(845, 385, 101, 28));
         saveButton = new QPushButton(centralWidget);
         saveButton->setObjectName(QStringLiteral("saveButton"));
-        saveButton->setGeometry(QRect(1050, 20, 75, 23));
+        saveButton->setGeometry(QRect(1040, 20, 75, 23));
         saveAsButton = new QPushButton(centralWidget);
         saveAsButton->setObjectName(QStringLiteral("saveAsButton"));
         saveAsButton->setGeometry(QRect(1130, 20, 75, 23));
