@@ -75,6 +75,8 @@ public:
 	void Select(double x1, double y1, double x2, double y2);
 	void ClearSelection();
 
+	void DeleteSelected();
+
 	void ChangeProperty(unsigned property_key, ...);
 
 	void IWantSave(std::string fileway);

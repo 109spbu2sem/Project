@@ -60,9 +60,9 @@ CORE::Primitive CORE::GetFromStream()
 			ans.p2_x = *_segmentstream.getValue()._p2->_x;
 			ans.p2_y = *_segmentstream.getValue()._p2->_y;
 			ans.r = 0;
-			if (_circlestream.getValue().isSelected())
+			if (_segmentstream.getValue().isSelected())
 				ans.color.setColor(SELECTEDCOLOR);
-			else	ans.color = _circlestream.getValue().color;
+			else	ans.color = _segmentstream.getValue().color;
 			
 
 			if (_segmentstream.canMoveNext()) _segmentstream.moveNext();

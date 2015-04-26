@@ -5,6 +5,8 @@
 #include <QGraphicsSceneMouseEvent>
 #include <QDebug>
 #include "mycanvas.h"
+#include <QMessageBox>
+#include <QString>
 
 MainWindow::MainWindow(QWidget *parent) :
 	QMainWindow(parent),
@@ -35,6 +37,9 @@ MainWindow::~MainWindow()
 void MainWindow::WriteError(unsigned ErrorKey)
 {
 	ui->statusBar->showMessage("Error");
+	QMessageBox b;
+	b.setText(QString(ErrorKey + '0'));
+	b.exec();
 	return;
 }
 

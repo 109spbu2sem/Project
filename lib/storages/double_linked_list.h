@@ -3,27 +3,28 @@
 
 #include <cmath>
 
-template<typename Item> class ListViewer;
+template<typename Item> class DoubleViewer;
 
 //------------------------------------------------------------------------
 //----------------------------------LIST---------------------------------
 //------------------------------------------------------------------------
-template<typename Item> class Storage_List
+template<typename Item> class DoubleLiknedList
 {
 private:
 	struct Cell
 	{
 		Item data;
 		Cell *next;
+		Cell *prev;
 	};
 	Cell *_first;
 	Cell *_last;
 	Cell *_current;
 	unsigned _size;
 public:
-	friend class ListViewer < Item > ;
+	friend class DoubleViewer < Item >;
 	//constructor
-	Storage_List(void)
+	DoubleLiknedList(void)
 	{
 		_first = 0;
 		_last = 0;
@@ -32,7 +33,7 @@ public:
 		return;
 	}
 	//copying constructor
-	Storage_List(const Storage_List &storage)
+	DoubleLiknedList(const DoubleLiknedList &storage)
 	{
 		if (storage._first != 0)//if not empty
 		{
@@ -58,7 +59,7 @@ public:
 		return;
 	}
 	//destructor
-	~Storage_List(void)
+	~DoubleLiknedList(void)
 	{
 		if (_first)
 		{
@@ -82,10 +83,21 @@ public:
 		return;
 	}
 	//check
+	bool canMovePrev()
+	{
+		if (_current->prev) return false;
+		return true;
+	}
 	bool canMoveNext()
 	{
 		if (_current->next) return false;
 		return true;
+	}
+	void movePrev()
+	{
+		if (_current->prev)
+			_current = _current->prev;
+		return;
 	}
 	//move _current to next
 	void moveNext()
@@ -95,7 +107,7 @@ public:
 		return;
 	}
 	//removes _current item
-	void remove(ListViewer<Item>*);
+	void remove(DoubleViewer<Item>*);
 	void clear();
 	unsigned size() const
 	{
@@ -109,7 +121,7 @@ public:
 	};
 };
 
-template<typename Item> Item* Storage_List<Item>::add(const Item &item)
+template<typename Item> Item* DoubleLiknedList<Item>::add(const Item &item)
 {
 	if (_first)//add new item
 	{
@@ -133,32 +145,25 @@ template<typename Item> Item* Storage_List<Item>::add(const Item &item)
 	}
 }
 
-//removes next item
-template<typename Item> void Storage_List<Item>::remove(ListViewer<Item>* viewer)
+//removes item
+template<typename Item> void DoubleLiknedList<Item>::remove(DoubleViewer<Item>* viewer)
 {
-	Cell* _cur = _first;
-	if (_cur == viewer->_current)
+	if (viewer->_current)
 	{
-		viewer->_current = _cur->next;
-		delete _cur;
-		_size--;
-		return;
-	}
-	while (_cur && _cur->next != viewer->_current)
-	{
-		_cur = _cur->next;
-	}
-	if (_cur)
-	{
-		_cur->next = _cur->next->next;
+		Cell* prev;
+		Cell* next;
+		prev = viewer->_current->prev;
+		next = viewer->_current->next;
+		if (prev) prev->next = next;
+		if (next) next->prev = prev;
 		delete viewer->_current;
-		viewer->_current = _cur->next;
+		viewer->_current = next;
+		_size--;
 	}
-	_size--;
 	return;
 }
 //clears storage
-template<typename Item> void Storage_List<Item>::clear()
+template<typename Item> void DoubleLiknedList<Item>::clear()
 {
 	if (_first)
 	{
@@ -180,25 +185,44 @@ template<typename Item> void Storage_List<Item>::clear()
 //-----------------------------Viewer------------------------------------
 //-----------------------------------------------------------------------
 
-template<typename Item> class ListViewer
+template<typename Item> class DoubleViewer
 {
 private:
-	typename Storage_List<Item>::Cell *_current;
+	typename DoubleLiknedList<Item>::Cell *_current;
 public:
-	friend class Storage_List < Item > ;
-	ListViewer()
+	friend class DoubleLiknedList < Item > ;
+	DoubleViewer()
 	{
 		_current = 0;
 	}
-	ListViewer(Storage_List<Item>& l)
+	DoubleViewer(DoubleLiknedList<Item>& l)
 	{
 		_current = l._first;
 	}
 	Item& getValue() { if (_current) return _current->data; throw std::runtime_error("No such item"); }
 	void moveNext() { if (_current) _current = _current->next; }
+	void movePrev() { if (_current) _current = _current->prev; }
 	bool canMoveNext()
 	{
 		if (_current) return true; return false;
+	}
+	bool canMovePrev()
+	{
+		if (_current) return true; return false;
+	}
+	void remove()
+	{
+		if (_current)
+		{
+			typename DoubleLiknedList<Item>::Cell* prev;
+			typename DoubleLiknedList<Item>::Cell* next;
+			prev = _current->prev;
+			next = _current->next;
+			if (prev) prev->next = next;
+			if (next) next->prev = prev;
+			delete _current;
+			_current = next;
+		}
 	}
 };
 

@@ -11,7 +11,7 @@
     </ProjectConfiguration>
   </ItemGroup>
   <PropertyGroup Label="Globals">
-    <ProjectGuid>{D51896B2-371B-3AE4-804B-1661240899B1}</ProjectGuid>
+    <ProjectGuid>{02C511FA-6C3E-3745-86BD-E712D5B4D821}</ProjectGuid>
     <RootNamespace>Project</RootNamespace>
     <Keyword>Qt4VSv1.0</Keyword>
   </PropertyGroup>

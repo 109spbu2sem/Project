@@ -1,4 +1,5 @@
 #include "core.h"
+#include <string>
 
 
 void CORE::ChangeStatus(double x, double y, unsigned char status_key)
@@ -14,10 +15,13 @@ void CORE::Select(double x, double y)
 	unsigned j = 0;
 	for (ListViewer<Point> i(_storage_of_points); i.canMoveNext(); i.moveNext(), j++)
 	{
-		if (length(*i.getValue()._x, *i.getValue()._y, x, y) < min)
+		if (!i.getValue().isSelected())
 		{
-			min = length(*i.getValue()._x, *i.getValue()._y, x, y);
-			min_i = j;
+			if (length(*i.getValue()._x, *i.getValue()._y, x, y) < min)
+			{
+				min = length(*i.getValue()._x, *i.getValue()._y, x, y);
+				min_i = j;
+			}
 		}
 	}
 	if (min_i >= 0)
@@ -31,6 +35,7 @@ void CORE::Select(double x, double y)
 		i.getValue().changeSelect();
 		_selected_objects.add(&i.getValue());
 		mygui->Redraw();
+		mygui->WriteError(_selected_objects.size());
 		return;
 	}
 	size = _storage_of_segments.size();
@@ -39,32 +44,36 @@ void CORE::Select(double x, double y)
 	double A = 0, B = 0, C = 0;
 	for (ListViewer<Segment> i(_storage_of_segments); i.canMoveNext(); i.moveNext(), j++)
 	{
-		A = *i.getValue()._p2->_y - *i.getValue()._p1->_y;
-		B = *i.getValue()._p1->_x - *i.getValue()._p2->_x;
-		C = *i.getValue()._p1->_y * *i.getValue()._p2->_x - *i.getValue()._p1->_x * *i.getValue()._p2->_y;
-		if ((abs(A*x + B*y + C) / sqrt(A*A + B*B) < min) &&
-			(length(*i.getValue()._p1->_x, *i.getValue()._p1->_y, x, y) <
-			((A*x + B*y + C)*(A*x + B*y + C) / (A*A + B*B) +
-			length(*i.getValue()._p1->_x, *i.getValue()._p1->_y, *i.getValue()._p2->_x, *i.getValue()._p2->_y)))
-			&& (length(*i.getValue()._p2->_x, *i.getValue()._p2->_y, x, y) <
-			((A*x + B*y + C)*(A*x + B*y + C) / (A*A + B*B) +
-			length(*i.getValue()._p1->_x, *i.getValue()._p1->_y, *i.getValue()._p2->_x, *i.getValue()._p2->_y))))
+		if (!i.getValue().isSelected())
 		{
-			min = abs(A*x + B*y + C) / sqrt(A*A + B*B);
-			min_j = j;
+			A = *i.getValue()._p2->_y - *i.getValue()._p1->_y;
+			B = *i.getValue()._p1->_x - *i.getValue()._p2->_x;
+			C = *i.getValue()._p1->_y * *i.getValue()._p2->_x - *i.getValue()._p1->_x * *i.getValue()._p2->_y;
+			if ((abs(A*x + B*y + C) / sqrt(A*A + B*B) < min) &&
+				(length(*i.getValue()._p1->_x, *i.getValue()._p1->_y, x, y) <
+				((A*x + B*y + C)*(A*x + B*y + C) / (A*A + B*B) +
+				length(*i.getValue()._p1->_x, *i.getValue()._p1->_y, *i.getValue()._p2->_x, *i.getValue()._p2->_y)))
+				&& (length(*i.getValue()._p2->_x, *i.getValue()._p2->_y, x, y) <
+				((A*x + B*y + C)*(A*x + B*y + C) / (A*A + B*B) +
+				length(*i.getValue()._p1->_x, *i.getValue()._p1->_y, *i.getValue()._p2->_x, *i.getValue()._p2->_y))))
+			{
+				min = abs(A*x + B*y + C) / sqrt(A*A + B*B);
+				min_j = j;
+			}
 		}
 	}
 	if (min_j >= 0)
 	{
 		unsigned j = 0;
 		ListViewer<Segment> i(_storage_of_segments);
-		for (; j < min_i; i.moveNext())
+		for (; j < min_j; i.moveNext())
 		{
 			j++;
 		}
 		i.getValue().changeSelect();
 		_selected_objects.add(&i.getValue());
 		mygui->Redraw();
+		mygui->WriteError(_selected_objects.size());
 		return;
 	}
 	size = _storage_of_circles.size();
@@ -72,11 +81,14 @@ void CORE::Select(double x, double y)
 	j = 0;
 	for (ListViewer<Circle> i(_storage_of_circles); i.canMoveNext(); i.moveNext(), j++)
 	{
-		if ((length(*i.getValue()._o->_x, *i.getValue()._o->_y, x, y) < (*i.getValue()._r + min)) &&
-			(length(*i.getValue()._o->_x, *i.getValue()._o->_y, x, y) > (*i.getValue()._r - min)))
+		if (!i.getValue().isSelected())
 		{
-			min = abs(length(*i.getValue()._o->_x, *i.getValue()._o->_y, x, y) - *i.getValue()._r);
-			min_k = j;
+			if ((length(*i.getValue()._o->_x, *i.getValue()._o->_y, x, y) < (*i.getValue()._r + min)) &&
+				(length(*i.getValue()._o->_x, *i.getValue()._o->_y, x, y) > (*i.getValue()._r - min)))
+			{
+				min = abs(length(*i.getValue()._o->_x, *i.getValue()._o->_y, x, y) - *i.getValue()._r);
+				min_k = j;
+			}
 		}
 	}
 	if (min_k >= 0)
@@ -90,6 +102,7 @@ void CORE::Select(double x, double y)
 		i.getValue().changeSelect();
 		_selected_objects.add(&i.getValue());
 		mygui->Redraw();
+		mygui->WriteError(_selected_objects.size());
 		return;
 	}
 	return;
@@ -235,6 +248,17 @@ void CORE::ClearSelection()
 	{
 		i.getValue()->changeSelect(false);
 		i.getValue()->color.setColor(COLORDEF);
+		_selected_objects.remove(&i);
+	}
+	mygui->Redraw();
+	mygui->WriteError(_selected_objects.size());
+}
+
+void CORE::DeleteSelected()
+{
+	for (ListViewer<ObjectSkin*> i(_selected_objects); i.canMoveNext(); i.moveNext())
+	{
+
 	}
 	mygui->Redraw();
 }
