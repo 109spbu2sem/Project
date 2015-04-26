@@ -35,7 +35,6 @@ void CORE::Select(double x, double y)
 		i.getValue().changeSelect();
 		_selected_objects.add(&i.getValue());
 		mygui->Redraw();
-		mygui->WriteError(_selected_objects.size());
 		return;
 	}
 	size = _storage_of_segments.size();
@@ -73,7 +72,6 @@ void CORE::Select(double x, double y)
 		i.getValue().changeSelect();
 		_selected_objects.add(&i.getValue());
 		mygui->Redraw();
-		mygui->WriteError(_selected_objects.size());
 		return;
 	}
 	size = _storage_of_circles.size();
@@ -102,7 +100,6 @@ void CORE::Select(double x, double y)
 		i.getValue().changeSelect();
 		_selected_objects.add(&i.getValue());
 		mygui->Redraw();
-		mygui->WriteError(_selected_objects.size());
 		return;
 	}
 	return;
@@ -248,10 +245,9 @@ void CORE::ClearSelection()
 	{
 		i.getValue()->changeSelect(false);
 		i.getValue()->color.setColor(COLORDEF);
-		_selected_objects.remove(&i);
 	}
+	_selected_objects.clear();
 	mygui->Redraw();
-	mygui->WriteError(_selected_objects.size());
 }
 
 void CORE::DeleteSelected()
