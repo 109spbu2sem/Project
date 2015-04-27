@@ -1,6 +1,7 @@
 #include "Save.h"
 #include "global.h"
 #include "gui.h"
+using namespace std;
 
 Save::Save(){
 	_way = "test.txt";
@@ -13,8 +14,8 @@ void Save::ConnectCORE(CORE*core){
 	_action = core;
 }
 
-string Save::fileWay(string way) {
-	_way = way;
+string Save::fileWay(QString way) {
+	_way = way.toStdString();
 	return _way;
 }
 

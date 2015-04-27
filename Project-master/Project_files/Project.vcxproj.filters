@@ -187,18 +187,12 @@
     <ClInclude Include="..\lib\Save.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="GeneratedFiles\ui_way.h">
-      <Filter>Generated Files</Filter>
-    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <CustomBuild Include="..\lib\QTforms\gui.ui">
       <Filter>Form Files</Filter>
     </CustomBuild>
     <CustomBuild Include="..\lib\QTforms\objectpropertieswindow.ui">
-      <Filter>Form Files</Filter>
-    </CustomBuild>
-    <CustomBuild Include="..\lib\QTforms\way.ui">
       <Filter>Form Files</Filter>
     </CustomBuild>
   </ItemGroup>

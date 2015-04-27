@@ -5,6 +5,7 @@
 #include <fstream>
 #include "storages\storage_list.h"
 #include "core.h"
+#include <QFileDialog>
 using namespace std;
 
 class Save {
@@ -17,6 +18,6 @@ public:
 	~Save();
 	void ConnectCORE(CORE*);
 	void save();
-	string fileWay(string);
+	string fileWay(QString);
 };
-#endif
+#endif // SAVE_H 

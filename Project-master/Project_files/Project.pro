@@ -52,7 +52,8 @@ HEADERS  += \
     ../lib/structures.h \
     ../lib/objectpropertieswindow.h \
     ../lib/mycanvas.h \
-    ../lib/Save.h
+    ../lib/Save.h \
+    ../lib/QTforms/filedialog.h
 
 FORMS += \
     ../lib/QTforms/gui.ui \

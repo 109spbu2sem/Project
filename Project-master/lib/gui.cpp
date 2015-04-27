@@ -3,11 +3,13 @@
 #include "ui_gui.h"
 #include "objectpropertieswindow.h"
 #include <QGraphicsSceneMouseEvent>
+#include <QFileDialog>
 #include <QDebug>
 #include "mycanvas.h"
 #include <QMessageBox>
 #include <QString>
 #include "Save.h"
+using namespace std;
 
 MainWindow::MainWindow(QWidget *parent) :
 	QMainWindow(parent),
@@ -333,5 +335,12 @@ void MainWindow::on_saveButton_clicked() {
 }
 
 void MainWindow::on_saveAsButton_clicked() {
-
+	QString filename = QFileDialog::getSaveFileName(
+		this, tr("Open File"),
+		"C://",
+		"Text File (*.txt)");
+	Save action;
+	action.fileWay(filename);
+	action.ConnectCORE(mycore);
+	action.save();
 }
