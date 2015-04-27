@@ -64,6 +64,7 @@ public:
 	void AddObject(double point_x, double point_y, unsigned color = COLORDEF); // add point
 	void AddObject(double point_x1, double point_y1, double point_x2, double point_y2, unsigned color = COLORDEF); // add segment, automatical adds 2 points
 	void AddObject(double point_x, double point_y, double radius, unsigned color = COLORDEF); // add circle, automatical add center of circle
+	void ConcatenatePoints();
 
 	void AddRule(unsigned type, double value);
 	void AddRule(unsigned type);

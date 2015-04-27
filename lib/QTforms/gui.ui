@@ -441,7 +441,7 @@
      <string>Clear selection</string>
     </property>
    </widget>
-   <widget class="QWidget" name="">
+   <widget class="QWidget" name="layoutWidget">
     <property name="geometry">
      <rect>
       <x>10</x>
@@ -473,6 +473,9 @@
        <property name="text">
         <string>Segment</string>
        </property>
+       <property name="checkable">
+        <bool>false</bool>
+       </property>
       </widget>
      </item>
      <item>
@@ -480,9 +483,25 @@
        <property name="text">
         <string>Circle</string>
        </property>
+       <property name="checkable">
+        <bool>false</bool>
+       </property>
       </widget>
      </item>
     </layout>
+   </widget>
+   <widget class="QPushButton" name="concatinateBTN">
+    <property name="geometry">
+     <rect>
+      <x>955</x>
+      <y>385</y>
+      <width>121</width>
+      <height>28</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Concatinate points</string>
+    </property>
    </widget>
   </widget>
   <widget class="QMenuBar" name="menuBar">

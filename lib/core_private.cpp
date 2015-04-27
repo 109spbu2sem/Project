@@ -125,7 +125,8 @@ void CORE::BuildFigureGoldMethod(IConstraint *constr, Storage_Array<double*>* pa
 			*(*parameters)[k] = old_para[k] - (alphar + alphal) / 2 * grad[k];
 		f_cur = constr->error();
 		nf_eval++;
-	} while (abs(f_prev - f_cur) > f_epsi);
+	//} while (abs(f_prev - f_cur) > f_epsi);
+	} while (abs(f_cur) > f_epsi && f_cur < 1000);
 	delete[] grad;
 	delete[] old_para;
 }

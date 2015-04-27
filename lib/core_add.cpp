@@ -39,6 +39,24 @@ void CORE::AddObject(double point_x, double point_y, double radius, unsigned col
 	mygui->Redraw();
 }
 
+void CORE::ConcatenatePoints()
+{
+	if (_selected_objects.size() == 2)
+	{
+		ListViewer<ObjectSkin*> k(_selected_objects);
+		Point* obj = dynamic_cast<Point*>(k.getValue());
+		k.moveNext();
+		Point* obj1 = dynamic_cast<Point*>(k.getValue());
+		if (obj && obj1)
+		{
+			Segment s(obj, obj1);
+			s.color.setColor(COLORDEF);
+			_storage_of_segments.add(s);
+			mygui->Redraw();
+		}
+	}
+}
+
 void CORE::AddRule(unsigned type, double value)
 {
 	switch (type)

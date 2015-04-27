@@ -10,7 +10,7 @@ void CORE::Select(double x, double y)
 {
 	/*Try to search points in small radius*/
 	unsigned size = _storage_of_points.size();
-	double min = 10;
+	double min = 4;
 	int min_i = -1;
 	unsigned j = 0;
 	for (ListViewer<Point> i(_storage_of_points); i.canMoveNext(); i.moveNext(), j++)
