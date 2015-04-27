@@ -18,7 +18,6 @@ private:
 	};
 	Cell *_first;
 	Cell *_last;
-	Cell *_current;
 	unsigned _size;
 public:
 	friend class ListViewer < Item > ;
@@ -27,7 +26,6 @@ public:
 	{
 		_first = 0;
 		_last = 0;
-		_current = 0;
 		_size = 0;
 		return;
 	}
@@ -40,7 +38,7 @@ public:
 			_first = new Cell;
 			_first->data = storage._first->data;
 			_first->next = 0;
-			_current = _first;
+			Cell* _current = _first;
 			storage.rewind();
 			storage.move_next();
 			//copy others cells
@@ -62,7 +60,7 @@ public:
 	{
 		if (_first)
 		{
-			_current = _first;
+			Cell* _current = _first;
 			do
 			{
 				Cell *cc = _current->next;
@@ -72,28 +70,8 @@ public:
 		}
 		return;
 	}
-	Item get() { return _current->data; }
 	//add element to storage
 	Item* add(const Item&);
-	//set _current as _first
-	void rewind()
-	{
-		_current = _first;
-		return;
-	}
-	//check
-	bool canMoveNext()
-	{
-		if (_current->next) return false;
-		return true;
-	}
-	//move _current to next
-	void moveNext()
-	{
-		if (_current->next)
-			_current = _current->next;
-		return;
-	}
 	//removes _current item
 	void remove(ListViewer<Item>*);
 	void clear();
@@ -127,7 +105,6 @@ template<typename Item> Item* Storage_List<Item>::add(const Item &item)
 		_first->data = item;
 		_first->next = 0;
 		_last = _first;
-		_current = _first;
 		_size = 1;
 		return &(_last->data);
 	}
@@ -162,7 +139,7 @@ template<typename Item> void Storage_List<Item>::clear()
 {
 	if (_first)
 	{
-		_current = _first;
+		Cell* _current = _first;
 		do
 		{
 			Cell *cc = _current->next;

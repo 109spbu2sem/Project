@@ -49,8 +49,8 @@ void CORE::AddRule(unsigned type, double value)
 		{
 		case 1:
 		{
-			_selected_objects.rewind();
-			Segment* obj = dynamic_cast<Segment*>(_selected_objects.get());
+			ListViewer<ObjectSkin*> k(_selected_objects);
+			Segment* obj = dynamic_cast<Segment*>(k.getValue());
 			if (obj)
 			{
 				Point2Point* rule = new Point2Point(obj->_p1->_x, obj->_p1->_y, obj->_p2->_x, obj->_p2->_y, _storage_of_constants.add(value));
@@ -61,10 +61,10 @@ void CORE::AddRule(unsigned type, double value)
 		}
 		case 2:
 		{
-			_selected_objects.rewind();
-			Point* obj1 = dynamic_cast<Point*>(_selected_objects.get());
-			_selected_objects.moveNext();
-			Point* obj2 = dynamic_cast<Point*>(_selected_objects.get());
+			ListViewer<ObjectSkin*> k(_selected_objects);
+			Point* obj1 = dynamic_cast<Point*>(k.getValue());
+			k.moveNext();
+			Point* obj2 = dynamic_cast<Point*>(k.getValue());
 			if (obj1 && obj2)
 			{
 				Point2Point* rule = new Point2Point(obj1->_x, obj1->_y, obj2->_x, obj2->_y, _storage_of_constants.add(value));
@@ -86,12 +86,12 @@ void CORE::AddRule(unsigned type, double value)
 		{
 		case 2:
 		{
-			_selected_objects.rewind();
-			Point* obj1 = dynamic_cast<Point*>(_selected_objects.get());
+			ListViewer<ObjectSkin*> k(_selected_objects);
+			Point* obj1 = dynamic_cast<Point*>(k.getValue());
 			if (obj1)
 			{
-				_selected_objects.moveNext();
-				Segment* obj2 = dynamic_cast<Segment*>(_selected_objects.get());
+				k.moveNext();
+				Segment* obj2 = dynamic_cast<Segment*>(k.getValue());
 				if (obj2)
 				{
 					DistanceFromPointToSection* rule = new DistanceFromPointToSection(obj1->_x, obj1->_y, obj2->_p1->_x,
@@ -101,11 +101,11 @@ void CORE::AddRule(unsigned type, double value)
 					return;
 				}
 			}
-			Segment* ob2 = dynamic_cast<Segment*>(_selected_objects.get());
+			Segment* ob2 = dynamic_cast<Segment*>(k.getValue());
 			if (ob2)
 			{
-				_selected_objects.moveNext();
-				Point* ob1 = dynamic_cast<Point*>(_selected_objects.get());
+				k.moveNext();
+				Point* ob1 = dynamic_cast<Point*>(k.getValue());
 				if (ob1)
 				{
 					DistanceFromPointToSection* rule = new DistanceFromPointToSection(ob1->_x, ob1->_y, ob2->_p1->_x,
@@ -133,12 +133,12 @@ void CORE::AddRule(unsigned type, double value)
 		{
 		case 2:
 		{
-			_selected_objects.rewind();
-			Point* obj1 = dynamic_cast<Point*>(_selected_objects.get());
+			ListViewer<ObjectSkin*> k(_selected_objects);
+			Point* obj1 = dynamic_cast<Point*>(k.getValue());
 			if (obj1)
 			{
-				_selected_objects.moveNext();
-				Segment* obj2 = dynamic_cast<Segment*>(_selected_objects.get());
+				k.moveNext();
+				Segment* obj2 = dynamic_cast<Segment*>(k.getValue());
 				if (obj2)
 				{
 					DistanceToTheLine* rule = new DistanceToTheLine(obj1->_x, obj1->_y, obj2->_p1->_x,
@@ -148,11 +148,11 @@ void CORE::AddRule(unsigned type, double value)
 					return;
 				}
 			}
-			Segment* ob2 = dynamic_cast<Segment*>(_selected_objects.get());
+			Segment* ob2 = dynamic_cast<Segment*>(k.getValue());
 			if (ob2)
 			{
-				_selected_objects.moveNext();
-				Point* ob1 = dynamic_cast<Point*>(_selected_objects.get());
+				k.moveNext();
+				Point* ob1 = dynamic_cast<Point*>(k.getValue());
 				if (ob1)
 				{
 					DistanceToTheLine* rule = new DistanceToTheLine(ob1->_x, ob1->_y, ob2->_p1->_x,
@@ -180,10 +180,10 @@ void CORE::AddRule(unsigned type, double value)
 		{
 		case 2:
 		{
-			_selected_objects.rewind();
-			Segment* obj1 = dynamic_cast<Segment*>(_selected_objects.get());
-			_selected_objects.moveNext();
-			Segment* obj2 = dynamic_cast<Segment*>(_selected_objects.get());
+			ListViewer<ObjectSkin*> k(_selected_objects);
+			Segment* obj1 = dynamic_cast<Segment*>(k.getValue());
+			k.moveNext();
+			Segment* obj2 = dynamic_cast<Segment*>(k.getValue());
 			if (obj1 && obj2)
 			{
 				AngleSegmentSegment* rule = new AngleSegmentSegment(
@@ -201,14 +201,14 @@ void CORE::AddRule(unsigned type, double value)
 			return;
 		case 4:
 		{
-			_selected_objects.rewind();
-			Point* obj1 = dynamic_cast<Point*>(_selected_objects.get());
-			_selected_objects.moveNext();
-			Point* obj2 = dynamic_cast<Point*>(_selected_objects.get());
-			_selected_objects.moveNext();
-			Point* obj3 = dynamic_cast<Point*>(_selected_objects.get());
-			_selected_objects.moveNext();
-			Point* obj4 = dynamic_cast<Point*>(_selected_objects.get());
+			ListViewer<ObjectSkin*> k(_selected_objects);
+			Point* obj1 = dynamic_cast<Point*>(k.getValue());
+			k.moveNext();
+			Point* obj2 = dynamic_cast<Point*>(k.getValue());
+			k.moveNext();
+			Point* obj3 = dynamic_cast<Point*>(k.getValue());
+			k.moveNext();
+			Point* obj4 = dynamic_cast<Point*>(k.getValue());
 			if (obj1 && obj2 && obj3 && obj4)
 			{
 				AngleSegmentSegment* rule = new AngleSegmentSegment(
@@ -236,16 +236,16 @@ void CORE::AddRule(unsigned type, double value)
 		{
 		case 3:
 		{
-			_selected_objects.rewind();
-			Point* o1 = dynamic_cast<Point*>(_selected_objects.get());
+			ListViewer<ObjectSkin*> k(_selected_objects);
+			Point* o1 = dynamic_cast<Point*>(k.getValue());
 			if (o1)
 			{
-				_selected_objects.moveNext();
-				Point* o2 = dynamic_cast<Point*>(_selected_objects.get());
+				k.moveNext();
+				Point* o2 = dynamic_cast<Point*>(k.getValue());
 				if (o2)
 				{
-					_selected_objects.moveNext();
-					Point* o3 = dynamic_cast<Point*>(_selected_objects.get());
+					k.moveNext();
+					Point* o3 = dynamic_cast<Point*>(k.getValue());
 					if (o3)
 					{
 						AspectRatio* rule = new AspectRatio(o1->_x, o1->_y, o2->_x,
@@ -283,12 +283,12 @@ void CORE::AddRule(unsigned type)
 		{
 		case 2:
 		{
-			_selected_objects.rewind();
-			Point* obj1 = dynamic_cast<Point*>(_selected_objects.get());
+			ListViewer<ObjectSkin*> k(_selected_objects);
+			Point* obj1 = dynamic_cast<Point*>(k.getValue());
 			if (obj1)
 			{
-				_selected_objects.moveNext();
-				Segment* obj2 = dynamic_cast<Segment*>(_selected_objects.get());
+				k.moveNext();
+				Segment* obj2 = dynamic_cast<Segment*>(k.getValue());
 				if (obj2)
 				{
 					ThreePoints* rule = new ThreePoints(obj1->_x, obj1->_y, obj2->_p1->_x,
@@ -298,11 +298,11 @@ void CORE::AddRule(unsigned type)
 					return;
 				}
 			}
-			Segment* ob2 = dynamic_cast<Segment*>(_selected_objects.get());
+			Segment* ob2 = dynamic_cast<Segment*>(k.getValue());
 			if (ob2)
 			{
-				_selected_objects.moveNext();
-				Point* ob1 = dynamic_cast<Point*>(_selected_objects.get());
+				k.moveNext();
+				Point* ob1 = dynamic_cast<Point*>(k.getValue());
 				if (ob1)
 				{
 					ThreePoints* rule = new ThreePoints(ob1->_x, ob1->_y, ob2->_p1->_x,
@@ -316,16 +316,16 @@ void CORE::AddRule(unsigned type)
 		}
 		case 3:
 		{
-			_selected_objects.rewind();
-			Point* o1 = dynamic_cast<Point*>(_selected_objects.get());
+			ListViewer<ObjectSkin*> k(_selected_objects);
+			Point* o1 = dynamic_cast<Point*>(k.getValue());
 			if (o1)
 			{
-				_selected_objects.moveNext();
-				Point* o2 = dynamic_cast<Point*>(_selected_objects.get());
+				k.moveNext();
+				Point* o2 = dynamic_cast<Point*>(k.getValue());
 				if (o2)
 				{
-					_selected_objects.moveNext();
-					Point* o3 = dynamic_cast<Point*>(_selected_objects.get());
+					k.moveNext();
+					Point* o3 = dynamic_cast<Point*>(k.getValue());
 					if (o3)
 					{
 						ThreePoints* rule = new ThreePoints(o1->_x, o1->_y, o2->_x,

@@ -21,7 +21,7 @@ bool CORE::StreamIsOpened()
 
 CORE::Primitive CORE::GetFromStream()
 {
-	CORE::Primitive ans;
+	CORE::Primitive ans{ 0, PRIMITIVE_NOTHING, 0, 0, 0, 0, 0, Color(0), false };
 	switch (_streamstate)
 	{
 	case POINTCASE:
@@ -94,6 +94,7 @@ CORE::Primitive CORE::GetFromStream()
 		//return ans;
 		throw std::logic_error("Stream is closed");
 	}
+	return ans;
 }
 
 void CORE::CloseStream()

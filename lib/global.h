@@ -43,6 +43,7 @@ private:
 	unsigned _color;
 public:
 	Color();
+	Color(unsigned);
 	~Color();
 	void setColor(unsigned long);
 	void setColor(unsigned char, unsigned char, unsigned char);

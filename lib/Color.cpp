@@ -6,6 +6,10 @@ Color::Color()
 	_color = COLORDEF;
 }
 
+Color::Color(unsigned c)
+{
+	_color = c % 16777216;
+}
 
 Color::~Color()
 {
