@@ -8,6 +8,12 @@
 
 class CORE;
 
+enum GTool
+{
+	TOOL_Select,
+	TOOL_Point
+};
+
 namespace Ui
 {
 	class MainWindow;
@@ -41,6 +47,12 @@ private slots:
 	void on_pushButton_clicked();
 	
 	void on_pushButton_2_clicked();
+	
+	void on_concatinateBTN_clicked();
+	
+	void on_selectTool_clicked();
+	
+	void on_pointTool_clicked();
 	
 private:
 	Ui::MainWindow *ui;

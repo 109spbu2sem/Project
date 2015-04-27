@@ -8,7 +8,8 @@
 #include "gui.h"
 
 class CORE;
-class MainWindow;
+class GUI;
+enum GTool;
 
 class MyCanvas : public QGraphicsView
 {
@@ -26,12 +27,15 @@ public:
 	{
 		mycore = core;
 	}
+	
+	void setTool(GTool);
 
 public slots:
 	void mousePressEvent(QMouseEvent *event);
 private:
 	QGraphicsScene* mainscene;
 	CORE* mycore;
+	GTool _tool;
 };
 
 #endif // MYCANVAS_H

@@ -20,7 +20,11 @@ MainWindow::MainWindow(QWidget *parent) :
 	ui->labelX2->setVisible(false);
 	ui->labelY2->setVisible(false);
 	ui->graphicsView->connectCORECanvas(mycore);
-	ui->graphicsView->scale(3, 3);
+	ui->graphicsView->scale(2, 2);
+	QPen p;
+	p.setStyle(Qt::DotLine);
+	mainscene->addLine(0, -10000, 0, 10000, p);
+	mainscene->addLine(-10000, 0, 10000, 0, p);
 }
 
 void MainWindow::ConnectCORE(CORE* core)
@@ -54,6 +58,10 @@ bool MainWindow::Redraw()
 	if (!mycore->OpenStream()) return false;
 	
 	mainscene->clear();
+	QPen p;
+	p.setStyle(Qt::DotLine);
+	mainscene->addLine(0, -10000, 0, 10000, p);
+	mainscene->addLine(-10000, 0, 10000, 0, p);
 	while (mycore->StreamIsOpened())
 	{
 		CORE::Primitive p;
@@ -67,7 +75,7 @@ bool MainWindow::Redraw()
 			mycore->CloseStream();
 			return true;
 		}
-		if (p.select) p.color.setColor(COLORDEF);
+		if (p.select) p.color.setColor(SELECTEDCOLOR);
 		QPen pen(QColor(p.color.getColor(1), p.color.getColor(2), p.color.getColor(3)));
 		
 	switch (p.type)
@@ -96,45 +104,6 @@ bool MainWindow::Redraw()
 	mycore->CloseStream();
 	return true;
 }
-
-/*bool GUI::Redraw()
-{
-	if (mycore->OpenStream()) return false;
-	
-	mainwindow->graphicsView->setScene(0);
-	delete mainscene;
-	mainscene = new QGraphicsScene;
-	while (mycore->StreamIsOpened())
-	{
-		CORE::Primitive p = mycore->GetFromStream();
-		QPen pen;
-		pen.setColor(QColor(p.color.getColor(1), p.color.getColor(2), p.color.getColor(3)));
-	switch (p.type)
-	{
-	case PRIMITIVE_POINT:
-	{
-		//mainscene->addEllipse(p.p1_x, p.p1_y, 2.0, 2.0);
-		mainscene->addLine(p.p1_x, p.p1_y, p.p1_x, p.p1_y, pen);
-		break;
-	}
-	case PRIMITIVE_SEGMENT:
-	{
-		mainscene->addLine(p.p1_x, p.p1_y, p.p2_x, p.p2_y, pen);
-		break;
-	}
-	case PRIMITIVE_CIRCLE: 
-	{
-		mainscene->addEllipse(p.p1_x + p.r, p.p1_y - p.r, p.r * 2.0, p.r * 2.0, pen);
-		break;
-	}
-	default:
-		break;
-	}
-	}
-	mainwindow->graphicsView->setScene(mainscene);
-	mycore->CloseStream();
-	return true;
-}*/
 
 void MainWindow::on_openAddingBTN_clicked()
 {
@@ -311,7 +280,7 @@ void MainWindow::on_pushButton_clicked()
 	case 4:
 	{
 		if (!ui->ruleValueEdit->text().isEmpty())
-			mycore->AddRule(CONSTR_3PRATIO, ui->ruleValueEdit->text().toDouble());
+			mycore->AddRule(CONSTR_L2LANGLE, ui->ruleValueEdit->text().toDouble());
 		else
 			WriteStatus("Need value");
 		break;
@@ -323,4 +292,19 @@ void MainWindow::on_pushButton_clicked()
 void MainWindow::on_pushButton_2_clicked()
 {
     mycore->ClearSelection();
+}
+
+void MainWindow::on_concatinateBTN_clicked()
+{
+	mycore->ConcatenatePoints();
+}
+
+void MainWindow::on_selectTool_clicked()
+{
+    ui->graphicsView->setTool(TOOL_Select);
+}
+
+void MainWindow::on_pointTool_clicked()
+{
+    ui->graphicsView->setTool(TOOL_Point);
 }
