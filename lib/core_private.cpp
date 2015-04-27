@@ -48,6 +48,7 @@ void CORE::Calculate()
 	//BuildFigure(&collector, &parameters);
 	BuildFigureGoldMethod(&collector, &parameters);
 	mygui->Redraw();
+	mygui->WriteStatus("Done");
 	return;
 }
 

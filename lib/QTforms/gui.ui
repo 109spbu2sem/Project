@@ -85,9 +85,9 @@
     <property name="geometry">
      <rect>
       <x>10</x>
-      <y>10</y>
+      <y>30</y>
       <width>821</width>
-      <height>611</height>
+      <height>591</height>
      </rect>
     </property>
     <property name="cursor" stdset="0">
@@ -234,7 +234,7 @@
       </item>
      </layout>
     </widget>
-    <widget class="QWidget" name="">
+    <widget class="QWidget" name="layoutWidget">
      <property name="geometry">
       <rect>
        <x>15</x>
@@ -421,8 +421,8 @@
    <widget class="QListView" name="objectsList">
     <property name="geometry">
      <rect>
-      <x>845</x>
-      <y>430</y>
+      <x>840</x>
+      <y>425</y>
       <width>236</width>
       <height>192</height>
      </rect>
@@ -440,6 +440,49 @@
     <property name="text">
      <string>Clear selection</string>
     </property>
+   </widget>
+   <widget class="QWidget" name="">
+    <property name="geometry">
+     <rect>
+      <x>10</x>
+      <y>5</y>
+      <width>310</width>
+      <height>22</height>
+     </rect>
+    </property>
+    <layout class="QHBoxLayout" name="horizontalLayout_3">
+     <item>
+      <widget class="QRadioButton" name="selectTool">
+       <property name="text">
+        <string>Select</string>
+       </property>
+       <property name="checked">
+        <bool>true</bool>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QRadioButton" name="pointTool">
+       <property name="text">
+        <string>Point</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QRadioButton" name="segmentTool">
+       <property name="text">
+        <string>Segment</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QRadioButton" name="circleTool">
+       <property name="text">
+        <string>Circle</string>
+       </property>
+      </widget>
+     </item>
+    </layout>
    </widget>
   </widget>
   <widget class="QMenuBar" name="menuBar">

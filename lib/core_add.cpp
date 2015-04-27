@@ -5,6 +5,7 @@
 #include "constraints\ThreePointsOnTheLine.h"
 #include "constraints\AspectRatio.h"
 #include "constraints\Collector.h"
+#include "constraints\CircleContact.h"
 
 #include "core.h"
 

@@ -24,7 +24,7 @@ public:
 	void ConnectCORE(CORE* core);
 	
 	bool Redraw();
-	void WriteError(unsigned ErrorKey);
+	void WriteError(const char* ErrorText);
 	void WriteStatus(const char* ErrorKey);
 	
 private slots:	

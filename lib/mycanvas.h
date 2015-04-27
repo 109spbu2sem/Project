@@ -5,8 +5,10 @@
 #include <QMouseEvent>
 #include <QWidget>
 #include "core.h"
+#include "gui.h"
 
 class CORE;
+class MainWindow;
 
 class MyCanvas : public QGraphicsView
 {
@@ -24,6 +26,7 @@ public:
 	{
 		mycore = core;
 	}
+
 public slots:
 	void mousePressEvent(QMouseEvent *event);
 private:

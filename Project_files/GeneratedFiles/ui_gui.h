@@ -24,6 +24,7 @@
 #include <QtWidgets/QMainWindow>
 #include <QtWidgets/QMenuBar>
 #include <QtWidgets/QPushButton>
+#include <QtWidgets/QRadioButton>
 #include <QtWidgets/QStatusBar>
 #include <QtWidgets/QWidget>
 #include "mycanvas.h"
@@ -49,7 +50,7 @@ public:
     QLineEdit *editX2;
     QLabel *labelY2;
     QLineEdit *editY2;
-    QWidget *widget;
+    QWidget *layoutWidget1;
     QHBoxLayout *horizontalLayout_2;
     QLabel *labelR;
     QLineEdit *editR;
@@ -59,7 +60,7 @@ public:
     QLineEdit *editB;
     QGroupBox *groupBox_2;
     QComboBox *ruleBox;
-    QWidget *layoutWidget1;
+    QWidget *layoutWidget2;
     QHBoxLayout *horizontalLayout;
     QLabel *ruleValueLabel;
     QLineEdit *ruleValueEdit;
@@ -67,6 +68,12 @@ public:
     QPushButton *calculateBTN;
     QListView *objectsList;
     QPushButton *pushButton_2;
+    QWidget *widget;
+    QHBoxLayout *horizontalLayout_3;
+    QRadioButton *selectTool;
+    QRadioButton *pointTool;
+    QRadioButton *segmentTool;
+    QRadioButton *circleTool;
     QMenuBar *menuBar;
     QStatusBar *statusBar;
 
@@ -92,7 +99,7 @@ public:
         centralWidget->setObjectName(QStringLiteral("centralWidget"));
         graphicsView = new MyCanvas(centralWidget);
         graphicsView->setObjectName(QStringLiteral("graphicsView"));
-        graphicsView->setGeometry(QRect(10, 10, 821, 611));
+        graphicsView->setGeometry(QRect(10, 30, 821, 591));
         graphicsView->viewport()->setProperty("cursor", QVariant(QCursor(Qt::CrossCursor)));
         openAddingBTN = new QPushButton(centralWidget);
         openAddingBTN->setObjectName(QStringLiteral("openAddingBTN"));
@@ -157,46 +164,46 @@ public:
 
         formLayout->setWidget(3, QFormLayout::FieldRole, editY2);
 
-        widget = new QWidget(groupBox);
-        widget->setObjectName(QStringLiteral("widget"));
-        widget->setGeometry(QRect(15, 55, 166, 24));
-        horizontalLayout_2 = new QHBoxLayout(widget);
+        layoutWidget1 = new QWidget(groupBox);
+        layoutWidget1->setObjectName(QStringLiteral("layoutWidget1"));
+        layoutWidget1->setGeometry(QRect(15, 55, 166, 24));
+        horizontalLayout_2 = new QHBoxLayout(layoutWidget1);
         horizontalLayout_2->setSpacing(6);
         horizontalLayout_2->setContentsMargins(11, 11, 11, 11);
         horizontalLayout_2->setObjectName(QStringLiteral("horizontalLayout_2"));
         horizontalLayout_2->setSizeConstraint(QLayout::SetFixedSize);
         horizontalLayout_2->setContentsMargins(0, 0, 0, 0);
-        labelR = new QLabel(widget);
+        labelR = new QLabel(layoutWidget1);
         labelR->setObjectName(QStringLiteral("labelR"));
         labelR->setMaximumSize(QSize(13, 22));
 
         horizontalLayout_2->addWidget(labelR);
 
-        editR = new QLineEdit(widget);
+        editR = new QLineEdit(layoutWidget1);
         editR->setObjectName(QStringLiteral("editR"));
         editR->setMaximumSize(QSize(30, 22));
 
         horizontalLayout_2->addWidget(editR);
 
-        labelG = new QLabel(widget);
+        labelG = new QLabel(layoutWidget1);
         labelG->setObjectName(QStringLiteral("labelG"));
         labelG->setMaximumSize(QSize(13, 22));
 
         horizontalLayout_2->addWidget(labelG);
 
-        editG = new QLineEdit(widget);
+        editG = new QLineEdit(layoutWidget1);
         editG->setObjectName(QStringLiteral("editG"));
         editG->setMaximumSize(QSize(30, 22));
 
         horizontalLayout_2->addWidget(editG);
 
-        labelB = new QLabel(widget);
+        labelB = new QLabel(layoutWidget1);
         labelB->setObjectName(QStringLiteral("labelB"));
         labelB->setMaximumSize(QSize(12, 22));
 
         horizontalLayout_2->addWidget(labelB);
 
-        editB = new QLineEdit(widget);
+        editB = new QLineEdit(layoutWidget1);
         editB->setObjectName(QStringLiteral("editB"));
         editB->setMaximumSize(QSize(30, 22));
 
@@ -208,25 +215,25 @@ public:
         ruleBox = new QComboBox(groupBox_2);
         ruleBox->setObjectName(QStringLiteral("ruleBox"));
         ruleBox->setGeometry(QRect(10, 20, 206, 22));
-        layoutWidget1 = new QWidget(groupBox_2);
-        layoutWidget1->setObjectName(QStringLiteral("layoutWidget1"));
-        layoutWidget1->setGeometry(QRect(10, 50, 213, 30));
-        horizontalLayout = new QHBoxLayout(layoutWidget1);
+        layoutWidget2 = new QWidget(groupBox_2);
+        layoutWidget2->setObjectName(QStringLiteral("layoutWidget2"));
+        layoutWidget2->setGeometry(QRect(10, 50, 213, 30));
+        horizontalLayout = new QHBoxLayout(layoutWidget2);
         horizontalLayout->setSpacing(6);
         horizontalLayout->setContentsMargins(11, 11, 11, 11);
         horizontalLayout->setObjectName(QStringLiteral("horizontalLayout"));
         horizontalLayout->setContentsMargins(0, 0, 0, 0);
-        ruleValueLabel = new QLabel(layoutWidget1);
+        ruleValueLabel = new QLabel(layoutWidget2);
         ruleValueLabel->setObjectName(QStringLiteral("ruleValueLabel"));
 
         horizontalLayout->addWidget(ruleValueLabel);
 
-        ruleValueEdit = new QLineEdit(layoutWidget1);
+        ruleValueEdit = new QLineEdit(layoutWidget2);
         ruleValueEdit->setObjectName(QStringLiteral("ruleValueEdit"));
 
         horizontalLayout->addWidget(ruleValueEdit);
 
-        pushButton = new QPushButton(layoutWidget1);
+        pushButton = new QPushButton(layoutWidget2);
         pushButton->setObjectName(QStringLiteral("pushButton"));
 
         horizontalLayout->addWidget(pushButton);
@@ -236,10 +243,39 @@ public:
         calculateBTN->setGeometry(QRect(845, 345, 101, 28));
         objectsList = new QListView(centralWidget);
         objectsList->setObjectName(QStringLiteral("objectsList"));
-        objectsList->setGeometry(QRect(845, 430, 236, 192));
+        objectsList->setGeometry(QRect(840, 425, 236, 192));
         pushButton_2 = new QPushButton(centralWidget);
         pushButton_2->setObjectName(QStringLiteral("pushButton_2"));
         pushButton_2->setGeometry(QRect(845, 385, 101, 28));
+        widget = new QWidget(centralWidget);
+        widget->setObjectName(QStringLiteral("widget"));
+        widget->setGeometry(QRect(10, 5, 310, 22));
+        horizontalLayout_3 = new QHBoxLayout(widget);
+        horizontalLayout_3->setSpacing(6);
+        horizontalLayout_3->setContentsMargins(11, 11, 11, 11);
+        horizontalLayout_3->setObjectName(QStringLiteral("horizontalLayout_3"));
+        horizontalLayout_3->setContentsMargins(0, 0, 0, 0);
+        selectTool = new QRadioButton(widget);
+        selectTool->setObjectName(QStringLiteral("selectTool"));
+        selectTool->setChecked(true);
+
+        horizontalLayout_3->addWidget(selectTool);
+
+        pointTool = new QRadioButton(widget);
+        pointTool->setObjectName(QStringLiteral("pointTool"));
+
+        horizontalLayout_3->addWidget(pointTool);
+
+        segmentTool = new QRadioButton(widget);
+        segmentTool->setObjectName(QStringLiteral("segmentTool"));
+
+        horizontalLayout_3->addWidget(segmentTool);
+
+        circleTool = new QRadioButton(widget);
+        circleTool->setObjectName(QStringLiteral("circleTool"));
+
+        horizontalLayout_3->addWidget(circleTool);
+
         MainWindow->setCentralWidget(centralWidget);
         menuBar = new QMenuBar(MainWindow);
         menuBar->setObjectName(QStringLiteral("menuBar"));
@@ -293,6 +329,10 @@ public:
         pushButton->setText(QApplication::translate("MainWindow", "Add", 0));
         calculateBTN->setText(QApplication::translate("MainWindow", "Redraw", 0));
         pushButton_2->setText(QApplication::translate("MainWindow", "Clear selection", 0));
+        selectTool->setText(QApplication::translate("MainWindow", "Select", 0));
+        pointTool->setText(QApplication::translate("MainWindow", "Point", 0));
+        segmentTool->setText(QApplication::translate("MainWindow", "Segment", 0));
+        circleTool->setText(QApplication::translate("MainWindow", "Circle", 0));
     } // retranslateUi
 
 };

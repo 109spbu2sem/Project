@@ -154,6 +154,7 @@ void CORE::ClearSelection()
 	}
 	_selected_objects.clear();
 	mygui->Redraw();
+	mygui->WriteStatus("Done");
 }
 
 void CORE::DeleteSelected()

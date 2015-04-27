@@ -34,11 +34,11 @@ MainWindow::~MainWindow()
 	delete ui;
 }
 
-void MainWindow::WriteError(unsigned ErrorKey)
+void MainWindow::WriteError(const char* ErrorText)
 {
-	ui->statusBar->showMessage("Error");
+	ui->statusBar->showMessage("Error", 7000);
 	QMessageBox b;
-	b.setText(QString(ErrorKey + '0'));
+	b.setText(ErrorText);
 	b.exec();
 	return;
 }
@@ -139,8 +139,8 @@ bool MainWindow::Redraw()
 void MainWindow::on_openAddingBTN_clicked()
 {
     objectPropertiesWindow * ow = new objectPropertiesWindow(this);
-	//ow->setFocusPolicy(Qt::StrongFocus);
-	ow->show();
+	 ow->exec();
+	 WriteError("Test Error");
 }
 
 void MainWindow::on_addBTN_clicked()
