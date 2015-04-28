@@ -5,11 +5,14 @@
 #include <fstream>
 #include "storages\storage_list.h"
 #include "core.h"
-#include <QFileDialog>
+#include <QString>
+
 
 using namespace std;
+class CORE;
 
 class Save: public Interface{
+	//friend class CORE;
 	string _way;
 	fstream _save;
 	CORE*_action;

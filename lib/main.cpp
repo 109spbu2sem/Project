@@ -13,7 +13,7 @@ int main(int argc, char *argv[])
 	Save testsave;
 	testsave.ConnectCORE(&testcore);
 	testgui.ConnectCORE(&testcore);
-	testcore.Connect(&testgui, 0);
+	testcore.Connect(&testgui, &testsave);
 	testgui.show();
 	return app.exec();
 }

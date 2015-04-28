@@ -1,11 +1,13 @@
-#ifndef CORE_
+#ifndef CORE_H
 #define CORE_H
 #include "structures.h"
 #include "storages\storage_list.h"
 #include "storages\storage_array.h"
 #include "global.h"
 #include "gui.h"
+#include "Save.h"
 #include <string>
+#include <QString>
 
 class GUI;
 class Save;
@@ -13,6 +15,7 @@ class Save;
 class CORE
 {
 private:
+	//friend class Save;
 	GUI* mygui;
 	Save* mysave;
 
@@ -62,7 +65,7 @@ public:
 	void DeleteSelected();
 
 	void IWantSave();
-	void IWantSaveAs(std::string fileway);
+	void IWantSaveAs(QString fileway);
 	void IWantLoad(std::string fileway);
 };
 

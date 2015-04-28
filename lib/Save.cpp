@@ -1,6 +1,7 @@
 #include "Save.h"
 #include "global.h"
 #include "gui.h"
+
 using namespace std;
 
 Save::Save(){
@@ -33,8 +34,7 @@ bool Save::DrawPoint(unsigned id, double x, double y, Color c) {
 	_save << "		<x2>" << 0 << "</x2>\n";
 	_save << "		<y2>" << 0 << "</y2>\n";
 	_save << "		<radius>" << 0 << "</radius>\n";
-	Color color = c;
-	_save << "		<color>" << color.getColor() << "</color>\n";
+	_save << "		<color>" << c.getColor() << "</color>\n";
 	_save << "	</primitive>\n";
 	return true;
 }
