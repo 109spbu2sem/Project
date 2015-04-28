@@ -75,11 +75,8 @@ public:
     QRadioButton *segmentTool;
     QRadioButton *circleTool;
     QPushButton *concatinateBTN;
-<<<<<<< HEAD
     QPushButton *saveButton;
     QPushButton *saveAsButton;
-=======
->>>>>>> 79af7576e3d3fa9bc62d9f7596feabf8132844d9
     QMenuBar *menuBar;
     QStatusBar *statusBar;
 
@@ -287,15 +284,12 @@ public:
         concatinateBTN = new QPushButton(centralWidget);
         concatinateBTN->setObjectName(QStringLiteral("concatinateBTN"));
         concatinateBTN->setGeometry(QRect(955, 385, 121, 28));
-<<<<<<< HEAD
         saveButton = new QPushButton(centralWidget);
         saveButton->setObjectName(QStringLiteral("saveButton"));
         saveButton->setGeometry(QRect(1040, 20, 75, 23));
         saveAsButton = new QPushButton(centralWidget);
         saveAsButton->setObjectName(QStringLiteral("saveAsButton"));
         saveAsButton->setGeometry(QRect(1130, 20, 75, 23));
-=======
->>>>>>> 79af7576e3d3fa9bc62d9f7596feabf8132844d9
         MainWindow->setCentralWidget(centralWidget);
         menuBar = new QMenuBar(MainWindow);
         menuBar->setObjectName(QStringLiteral("menuBar"));
@@ -354,11 +348,8 @@ public:
         segmentTool->setText(QApplication::translate("MainWindow", "Segment", 0));
         circleTool->setText(QApplication::translate("MainWindow", "Circle", 0));
         concatinateBTN->setText(QApplication::translate("MainWindow", "Concatinate points", 0));
-<<<<<<< HEAD
         saveButton->setText(QApplication::translate("MainWindow", "Save", 0));
         saveAsButton->setText(QApplication::translate("MainWindow", "Save as...", 0));
-=======
->>>>>>> 79af7576e3d3fa9bc62d9f7596feabf8132844d9
     } // retranslateUi
 
 };
