@@ -149,6 +149,7 @@
     <ClCompile Include="..\lib\main.cpp" />
     <ClCompile Include="..\lib\mycanvas.cpp" />
     <ClCompile Include="..\lib\objectpropertieswindow.cpp" />
+    <ClCompile Include="..\lib\Save.cpp" />
     <ClCompile Include="..\lib\structures.cpp" />
     <ClCompile Include="Release\moc_objectpropertieswindow.cpp">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
@@ -168,6 +169,7 @@
     <ClInclude Include="..\lib\constraints\ThreePointsOnTheLine.h" />
     <ClInclude Include="..\lib\core.h" />
     <ClInclude Include="..\lib\global.h" />
+    <ClInclude Include="..\lib\Save.h" />
     <ClInclude Include="GeneratedFiles\ui_gui.h" />
     <ClInclude Include="GeneratedFiles\ui_objectpropertieswindow.h" />
     <CustomBuild Include="..\lib\gui.h">

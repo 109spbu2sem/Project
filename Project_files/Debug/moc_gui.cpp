@@ -19,8 +19,13 @@
 
 QT_BEGIN_MOC_NAMESPACE
 struct qt_meta_stringdata_MainWindow_t {
+<<<<<<< HEAD:Project_files/Debug/moc_gui.cpp
+    QByteArrayData data[15];
+    char stringdata[315];
+=======
     QByteArrayData data[13];
     char stringdata[269];
+>>>>>>> 79af7576e3d3fa9bc62d9f7596feabf8132844d9:Project_files/Debug/moc_gui.cpp
 };
 #define QT_MOC_LITERAL(idx, ofs, len) \
     Q_STATIC_BYTE_ARRAY_DATA_HEADER_INITIALIZER_WITH_OFFSET(len, \
@@ -41,7 +46,13 @@ QT_MOC_LITERAL(8, 154, 21), // "on_pushButton_clicked"
 QT_MOC_LITERAL(9, 176, 23), // "on_pushButton_2_clicked"
 QT_MOC_LITERAL(10, 200, 25), // "on_concatinateBTN_clicked"
 QT_MOC_LITERAL(11, 226, 21), // "on_selectTool_clicked"
+<<<<<<< HEAD:Project_files/Debug/moc_gui.cpp
+QT_MOC_LITERAL(12, 248, 20), // "on_pointTool_clicked"
+QT_MOC_LITERAL(13, 269, 21), // "on_saveButton_clicked"
+QT_MOC_LITERAL(14, 291, 23) // "on_saveAsButton_clicked"
+=======
 QT_MOC_LITERAL(12, 248, 20) // "on_pointTool_clicked"
+>>>>>>> 79af7576e3d3fa9bc62d9f7596feabf8132844d9:Project_files/Debug/moc_gui.cpp
 
     },
     "MainWindow\0on_openAddingBTN_clicked\0"
@@ -51,7 +62,12 @@ QT_MOC_LITERAL(12, 248, 20) // "on_pointTool_clicked"
     "on_ruleBox_currentIndexChanged\0"
     "on_pushButton_clicked\0on_pushButton_2_clicked\0"
     "on_concatinateBTN_clicked\0"
+<<<<<<< HEAD:Project_files/Debug/moc_gui.cpp
+    "on_selectTool_clicked\0on_pointTool_clicked\0"
+    "on_saveButton_clicked\0on_saveAsButton_clicked"
+=======
     "on_selectTool_clicked\0on_pointTool_clicked"
+>>>>>>> 79af7576e3d3fa9bc62d9f7596feabf8132844d9:Project_files/Debug/moc_gui.cpp
 };
 #undef QT_MOC_LITERAL
 
@@ -61,7 +77,11 @@ static const uint qt_meta_data_MainWindow[] = {
        7,       // revision
        0,       // classname
        0,    0, // classinfo
+<<<<<<< HEAD:Project_files/Debug/moc_gui.cpp
+      12,   14, // methods
+=======
       10,   14, // methods
+>>>>>>> 79af7576e3d3fa9bc62d9f7596feabf8132844d9:Project_files/Debug/moc_gui.cpp
        0,    0, // properties
        0,    0, // enums/sets
        0,    0, // constructors
@@ -69,6 +89,20 @@ static const uint qt_meta_data_MainWindow[] = {
        0,       // signalCount
 
  // slots: name, argc, parameters, tag, flags
+<<<<<<< HEAD:Project_files/Debug/moc_gui.cpp
+       1,    0,   74,    2, 0x08 /* Private */,
+       3,    0,   75,    2, 0x08 /* Private */,
+       4,    1,   76,    2, 0x08 /* Private */,
+       6,    0,   79,    2, 0x08 /* Private */,
+       7,    1,   80,    2, 0x08 /* Private */,
+       8,    0,   83,    2, 0x08 /* Private */,
+       9,    0,   84,    2, 0x08 /* Private */,
+      10,    0,   85,    2, 0x08 /* Private */,
+      11,    0,   86,    2, 0x08 /* Private */,
+      12,    0,   87,    2, 0x08 /* Private */,
+      13,    0,   88,    2, 0x08 /* Private */,
+      14,    0,   89,    2, 0x08 /* Private */,
+=======
        1,    0,   64,    2, 0x08 /* Private */,
        3,    0,   65,    2, 0x08 /* Private */,
        4,    1,   66,    2, 0x08 /* Private */,
@@ -79,6 +113,7 @@ static const uint qt_meta_data_MainWindow[] = {
       10,    0,   75,    2, 0x08 /* Private */,
       11,    0,   76,    2, 0x08 /* Private */,
       12,    0,   77,    2, 0x08 /* Private */,
+>>>>>>> 79af7576e3d3fa9bc62d9f7596feabf8132844d9:Project_files/Debug/moc_gui.cpp
 
  // slots: parameters
     QMetaType::Void,
@@ -91,6 +126,11 @@ static const uint qt_meta_data_MainWindow[] = {
     QMetaType::Void,
     QMetaType::Void,
     QMetaType::Void,
+<<<<<<< HEAD:Project_files/Debug/moc_gui.cpp
+    QMetaType::Void,
+    QMetaType::Void,
+=======
+>>>>>>> 79af7576e3d3fa9bc62d9f7596feabf8132844d9:Project_files/Debug/moc_gui.cpp
 
        0        // eod
 };
@@ -110,6 +150,11 @@ void MainWindow::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, 
         case 7: _t->on_concatinateBTN_clicked(); break;
         case 8: _t->on_selectTool_clicked(); break;
         case 9: _t->on_pointTool_clicked(); break;
+<<<<<<< HEAD:Project_files/Debug/moc_gui.cpp
+        case 10: _t->on_saveButton_clicked(); break;
+        case 11: _t->on_saveAsButton_clicked(); break;
+=======
+>>>>>>> 79af7576e3d3fa9bc62d9f7596feabf8132844d9:Project_files/Debug/moc_gui.cpp
         default: ;
         }
     }
@@ -142,6 +187,15 @@ int MainWindow::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
     if (_id < 0)
         return _id;
     if (_c == QMetaObject::InvokeMetaMethod) {
+<<<<<<< HEAD:Project_files/Debug/moc_gui.cpp
+        if (_id < 12)
+            qt_static_metacall(this, _c, _id, _a);
+        _id -= 12;
+    } else if (_c == QMetaObject::RegisterMethodArgumentMetaType) {
+        if (_id < 12)
+            *reinterpret_cast<int*>(_a[0]) = -1;
+        _id -= 12;
+=======
         if (_id < 10)
             qt_static_metacall(this, _c, _id, _a);
         _id -= 10;
@@ -149,6 +203,7 @@ int MainWindow::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
         if (_id < 10)
             *reinterpret_cast<int*>(_a[0]) = -1;
         _id -= 10;
+>>>>>>> 79af7576e3d3fa9bc62d9f7596feabf8132844d9:Project_files/Debug/moc_gui.cpp
     }
     return _id;
 }

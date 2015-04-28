@@ -107,6 +107,9 @@
     <ClCompile Include="Release\moc_objectpropertieswindow.cpp">
       <Filter>Generated Files\Release</Filter>
     </ClCompile>
+    <ClCompile Include="..\lib\Save.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\lib\constraints\AngleSegment-Segment.h">
@@ -177,6 +180,9 @@
     </ClInclude>
     <ClInclude Include="GeneratedFiles\ui_objectpropertieswindow.h">
       <Filter>Generated Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\lib\Save.h">
+      <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

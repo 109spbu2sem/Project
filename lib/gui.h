@@ -57,6 +57,10 @@ private slots:
 	void on_selectTool_clicked();
 	
 	void on_pointTool_clicked();
+
+	void on_saveButton_clicked();
+
+	void on_saveAsButton_clicked();
 	
 private:
 	Ui::MainWindow *ui;

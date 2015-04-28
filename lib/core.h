@@ -1,4 +1,4 @@
-#ifndef CORE_H
+#ifndef CORE_
 #define CORE_H
 #include "structures.h"
 #include "storages\storage_list.h"
@@ -61,7 +61,8 @@ public:
 
 	void DeleteSelected();
 
-	void IWantSave(std::string fileway);
+	void IWantSave();
+	void IWantSaveAs(std::string fileway);
 	void IWantLoad(std::string fileway);
 };
 

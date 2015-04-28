@@ -8,6 +8,11 @@
 #include <QMessageBox>
 #include <QString>
 #include <QTableWidgetItem>
+<<<<<<< HEAD
+#include <QFileDialog>
+
+=======
+>>>>>>> 79af7576e3d3fa9bc62d9f7596feabf8132844d9
 
 MainWindow::MainWindow(QWidget *parent) :
 	QMainWindow(parent),
@@ -292,4 +297,15 @@ void MainWindow::on_selectTool_clicked()
 void MainWindow::on_pointTool_clicked()
 {
     ui->graphicsView->setTool(TOOL_Point);
+}
+
+void MainWindow::on_saveButton_clicked() {
+
+}
+
+void MainWindow::on_saveAsButton_clicked() {
+	QString filename = QFileDialog::getSaveFileName(
+		this, tr("Open File"),
+		"C://",
+		"Text File (*.txt);; Xml File (*.xml)");
 }

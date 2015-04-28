@@ -162,8 +162,17 @@ void CORE::DeleteSelected()
 	Redraw();
 }
 
-void CORE::IWantSave(std::string fileway)
+void CORE::IWantSave()
 {
+	/*if (_storage_of_points.size()) {
+		ListViewer<Point> v(_storage_of_points);
+		while (v.canMoveNext()) {
+			mysave->DrowPoint()
+		}
+	}*/
+}
+
+void CORE::IWantSaveAs(std::string way) {
 
 }
 
