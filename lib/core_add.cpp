@@ -9,16 +9,22 @@
 
 #include "core.h"
 
-void CORE::AddObject(double point_x, double point_y, unsigned color)
+void CORE::AddObject(double point_x, double point_y, Color color, unsigned id)
 {
 	Point p(_storage_of_parameters.add(point_x), _storage_of_parameters.add(point_y));
 	p.color.setColor(color);
 	_storage_of_points.add(p);
 	mygui->WriteStatus("Point added");
+	writeToLog("< add > Point", 2);
+	writeToLog(point_x, 2);
+	writeToLog(point_y, 2);
+	writeToLog(color.getColor(), 2);
+	writeToLog(id, 2);
+	writeToLog("< /add >", 2);
 	Redraw();
 }
 
-void CORE::AddObject(double point_x1, double point_y1, double point_x2, double point_y2, unsigned color)
+void CORE::AddObject(double point_x1, double point_y1, double point_x2, double point_y2, Color color, unsigned id)
 {
 	Point p1(_storage_of_parameters.add(point_x1), _storage_of_parameters.add(point_y1));
 	Point p2(_storage_of_parameters.add(point_x2), _storage_of_parameters.add(point_y2));
@@ -26,16 +32,31 @@ void CORE::AddObject(double point_x1, double point_y1, double point_x2, double p
 	s.color.setColor(color);
 	_storage_of_segments.add(s);
 	mygui->WriteStatus("Segment added");
+	writeToLog("< add > Point", 2);
+	writeToLog(point_x1, 2);
+	writeToLog(point_y1, 2);
+	writeToLog(point_x2, 2);
+	writeToLog(point_y2, 2);
+	writeToLog(color.getColor(), 2);
+	writeToLog(id, 2);
+	writeToLog("< /add >", 2);
 	Redraw();
 }
 
-void CORE::AddObject(double point_x, double point_y, double radius, unsigned color)
+void CORE::AddObject(double point_x, double point_y, double radius, Color color, unsigned id)
 {
 	Point p(_storage_of_parameters.add(point_x), _storage_of_parameters.add(point_y));
 	Circle c(_storage_of_points.add(p), _storage_of_parameters.add(radius));
 	c.color.setColor(color);
 	_storage_of_circles.add(c);
 	mygui->WriteStatus("Circle added");
+	writeToLog("< add > Circle", 2);
+	writeToLog(point_x, 2);
+	writeToLog(point_y, 2);
+	writeToLog(radius, 2);
+	writeToLog(color.getColor(), 2);
+	writeToLog(id, 2);
+	writeToLog("< /add >", 2);
 	Redraw();
 }
 
@@ -52,6 +73,7 @@ void CORE::ConcatenatePoints()
 			Segment s(obj, obj1);
 			s.color.setColor(COLORDEF);
 			_storage_of_segments.add(s);
+			writeToLog("Concatenate points", 2);
 			Redraw();
 		}
 	}

@@ -34,3 +34,8 @@ unsigned Color::getColor(char mode) const
 	if (mode == 3) return _color & 0xFF;				// returns BLUE color
 	return 0;
 }
+
+void Color::setColor(const Color c)
+{
+	_color = c._color;
+}

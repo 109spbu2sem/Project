@@ -1,42 +1,91 @@
 #include "core.h"
 #include "gui.h"
 #include "constraints\Collector.h"
+#include <fstream>
+#include <string>
+#include <ctime>
 
 CORE::CORE()
 {
 	mygui = 0;
+	Settings::SettingsLoader::setupSettings(&mysettings);
+	if (mysettings.WritelogMode() >= 1)
+	{
+		_logfile.open("logfile.txt", std::ios_base::out | std::ios_base::app);
+		if (!_logfile.is_open())
+			_logfile.open("logfile.txt", std::ios_base::out | std::ios_base::trunc);
+	}
+	writeToLog("--------------------------------------\nOPEN at ");
+	writeToLog(static_cast<long long>(time(0)));
+	writeToLog("--------------------------------------");
+	writeToLog("Settings = ok", 2);
+	writeToLog("GUI was not connected to CORE", 2);
+}
+
+CORE::CORE(GUI* gui)
+{
+	mygui = gui;
+	Settings::SettingsLoader::setupSettings(&mysettings);
+	if (mysettings.WritelogMode() >= 1)
+	{
+		_logfile.open("logfile.txt", std::ios_base::out | std::ios_base::app);
+		if (!_logfile.is_open())
+			_logfile.open("logfile.txt", std::ios_base::out | std::ios_base::trunc);
+	}
+	writeToLog("--------------------------------------\nOPEN at ");
+	writeToLog(static_cast<int>(time(0)));
+	writeToLog("--------------------------------------");
+	writeToLog("Settings = ok", 2);
+	writeToLog("GUI connected to CORE", 2);
 }
 
 CORE::~CORE()
 {
-	
+	writeToLog("--------------------------------------\n CLOSE at ");
+	writeToLog(static_cast<long long>(time(0)));
+	writeToLog("--------------------------------------");
+	if (mysettings.WritelogMode() >= 1)
+		_logfile.close();
 }
 
 void CORE::Redraw()
 {
-	mygui->Clear();
-	for (ListViewer<Point> i(_storage_of_points); i.canMoveNext(); i.moveNext())
+	if (mygui)
 	{
-		if (i.getValue().isVisible())
-			mygui->DrawPoint(i.getValue().id.getID(), *i.getValue()._x, *i.getValue()._y, i.getValue().isSelected() ? COLORSELECTED : i.getValue().color);
+		writeToLog("Redrawing");
+		mygui->Clear();
+		for (ListViewer<Point> i(_storage_of_points); i.canMoveNext(); i.moveNext())
+		{
+			if (i.getValue().isVisible())
+				mygui->DrawPoint(i.getValue().id.getID(), *i.getValue()._x, *i.getValue()._y,
+				i.getValue().isSelected() ? COLORSELECTED : i.getValue().color);
+		}
+		for (ListViewer<Segment> i(_storage_of_segments); i.canMoveNext(); i.moveNext())
+		{
+			if (i.getValue().isVisible())
+				mygui->DrawSegment(i.getValue().id.getID(), *i.getValue()._p1->_x, *i.getValue()._p1->_y,
+				*i.getValue()._p2->_x, *i.getValue()._p2->_y, i.getValue().isSelected() ? COLORSELECTED : i.getValue().color);
+		}
+		for (ListViewer<Circle> i(_storage_of_circles); i.canMoveNext(); i.moveNext())
+		{
+			if (i.getValue().isVisible())
+				mygui->DrawCircle(i.getValue().id.getID(), *i.getValue()._o->_x, *i.getValue()._o->_y,
+				*i.getValue()._r, i.getValue().isSelected() ? COLORSELECTED : i.getValue().color);
+		}
 	}
-	for (ListViewer<Segment> i(_storage_of_segments); i.canMoveNext(); i.moveNext())
+	else
 	{
-      if (i.getValue().isVisible())
-			mygui->DrawSegment(i.getValue().id.getID(), *i.getValue()._p1->_x, *i.getValue()._p1->_y, *i.getValue()._p2->_x, *i.getValue()._p2->_y, i.getValue().isSelected() ? COLORSELECTED : i.getValue().color);
-	}
-	for (ListViewer<Circle> i(_storage_of_circles); i.canMoveNext(); i.moveNext())
-	{
-		if (i.getValue().isVisible())
-			mygui->DrawCircle(i.getValue().id.getID(), *i.getValue()._o->_x, *i.getValue()._o->_y, *i.getValue()._r, i.getValue().isSelected() ? COLORSELECTED : i.getValue().color);
+		writeToLog("GUI is not connected to CORE");
 	}
 	return;
 }
 
 void CORE::Calculate()
 {
+	writeToLog("Start calculating");
 	ConstraintCollector collector;
 	Storage_Array< double* > parameters;
+	writeToLog("Generating graphs");
 	for (ListViewer< IConstraint* > i(_storage_of_constraints); i.canMoveNext(); i.moveNext())
 	{
 		collector.addConstraint(i.getValue());
@@ -46,9 +95,12 @@ void CORE::Calculate()
 		parameters.add(&i.getValue());
 	}
 	//BuildFigure(&collector, &parameters);
+	writeToLog("Building new figure");
 	BuildFigureGoldMethod(&collector, &parameters);
+	writeToLog("Success build");
 	Redraw();
 	mygui->WriteStatus("Done");
+	writeToLog("Success calculate");
 	return;
 }
 
@@ -177,4 +229,45 @@ bool CORE::isInArea(double x, double y, double x1, double y1, double x2, double 
 		return true;
 	}
 	return false;
+}
+
+
+void CORE::writeToLog(std::string s, char mode)
+{
+	if (mysettings.WritelogMode() >= mode && _logfile.is_open())
+	{ 
+		_logfile << s << std::endl;
+	}
+}
+
+void CORE::writeToLog(int s, char mode)
+{
+	if (mysettings.WritelogMode() >= mode && _logfile.is_open())
+	{
+		_logfile << s << std::endl;
+	}
+}
+
+void CORE::writeToLog(double s, char mode)
+{
+	if (mysettings.WritelogMode() >= mode && _logfile.is_open())
+	{
+		_logfile << s << std::endl;
+	}
+}
+
+void CORE::writeToLog(unsigned s, char mode)
+{
+	if (mysettings.WritelogMode() >= mode && _logfile.is_open())
+	{
+		_logfile << s << std::endl;
+	}
+}
+
+void CORE::writeToLog(long long s, char mode)
+{
+	if (mysettings.WritelogMode() >= mode && _logfile.is_open())
+	{
+		_logfile << s << std::endl;
+	}
 }

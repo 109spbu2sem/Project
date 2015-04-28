@@ -1,4 +1,5 @@
 #include "core.h"
+#include <string>
 
 
 void CORE::ChangeStatus(unsigned char status_key)
@@ -8,6 +9,10 @@ void CORE::ChangeStatus(unsigned char status_key)
 void CORE::Select(double x, double y)
 {
 	/*Try to search points in small radius*/
+	writeToLog("< Selecting >", 2);
+	writeToLog(x, 2);
+	writeToLog(y, 2);
+	writeToLog("< /Selecting >", 2);
 	unsigned size = _storage_of_points.size();
 	double min = 4;
 	int min_i = -1;
@@ -152,6 +157,7 @@ void CORE::ClearSelection()
 		i.getValue()->changeSelect(false);
 	}
 	_selected_objects.clear();
+	writeToLog("Select was cleared", 2);
 	Redraw();
 	mygui->WriteStatus("Done");
 }

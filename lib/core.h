@@ -8,6 +8,9 @@
 #include "Save.h"
 #include <string>
 #include <QString>
+#include <fstream>
+#include "settings.h"
+#include <ctime>
 
 class GUI;
 class Save;
@@ -32,25 +35,33 @@ private:
 	void BuildFigureNewton(IConstraint*, Storage_Array<double*>*);
 	void BuildFigureGoldMethod(IConstraint*, Storage_Array < double* >*);
 	void Redraw();
+	
+	Settings mysettings;
+	std::fstream _logfile;
+
+	void writeToLog(std::string, char = 1);
+	void writeToLog(int, char = 1);
+	void writeToLog(double, char = 1);
+	void writeToLog(unsigned, char = 1);
+	void writeToLog(long long, char = 1);
 
 public:
 	CORE();
-	CORE(GUI* gui)
-	{
-		mygui = gui;
-	}
+	CORE(GUI* gui);
 	~CORE();
 	void Connect(GUI* gui, Save* save)
 	{
 		mygui = gui;
 		mysave = save;
+		writeToLog("GUI connected to CORE", 2);
+		writeToLog("SAVE connected to CORE", 2);
 	}
 
 	void Calculate();
 
-	void AddObject(double point_x, double point_y, unsigned color = COLORDEF); // add point
-	void AddObject(double point_x1, double point_y1, double point_x2, double point_y2, unsigned color = COLORDEF); // add segment, automatical adds 2 points
-	void AddObject(double point_x, double point_y, double radius, unsigned color = COLORDEF); // add circle, automatical add center of circle
+	void AddObject(double point_x, double point_y, Color color = COLORDEF, unsigned id = 0); // add point
+	void AddObject(double point_x1, double point_y1, double point_x2, double point_y2, Color color = COLORDEF, unsigned id = 0); // add segment, automatical adds 2 points
+	void AddObject(double point_x, double point_y, double radius, Color color = COLORDEF, unsigned id = 0); // add circle, automatical add center of circle
 	void ConcatenatePoints();
 
 	void AddRule(unsigned type, double value);

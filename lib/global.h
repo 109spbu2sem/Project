@@ -46,6 +46,7 @@ public:
 	Color(unsigned);
 	~Color();
 	void setColor(unsigned long);
+	void setColor(const Color);
 	void setColor(unsigned char, unsigned char, unsigned char);
 	unsigned getColor(char mode = 0) const;
 };

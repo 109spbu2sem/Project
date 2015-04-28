@@ -114,7 +114,7 @@ void MainWindow::on_addBTN_clicked()
 			Color c;
 			c.setColor(ui->editR->text().toUInt(), ui->editG->text().toUInt(), ui->editB->text().toUInt());
 			mycore->AddObject(ui->editX1->text().toDouble(),
-							  ui->editY1->text().toDouble(), c.getColor());
+							  ui->editY1->text().toDouble(), c);
 		}
 		break;
 	}
@@ -135,7 +135,7 @@ void MainWindow::on_addBTN_clicked()
 			mycore->AddObject(ui->editX1->text().toDouble(),
 							  ui->editY1->text().toDouble(),
 							  ui->editX2->text().toDouble(),
-							  ui->editY2->text().toDouble(), c.getColor());
+							  ui->editY2->text().toDouble(), c);
 		}
 		break;
 	}
@@ -153,7 +153,7 @@ void MainWindow::on_addBTN_clicked()
 			c.setColor(ui->editR->text().toUInt(), ui->editG->text().toUInt(), ui->editB->text().toUInt());
 			mycore->AddObject(ui->editX1->text().toDouble(),
 							  ui->editY1->text().toDouble(),
-							  ui->editX2->text().toDouble(), c.getColor());
+							  ui->editX2->text().toDouble(), c);
 		}
 		break;
 	}
