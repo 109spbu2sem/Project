@@ -41,3 +41,8 @@ void GUI::addNewPoint(double x, double y)
 {
     emit newPointAdded(x, y);
 }
+
+void GUI::addNewSection(double a_x, double a_y, double b_x, double b_y)
+{
+    emit newSectionAdded(a_x, a_y, b_x, b_y);
+}

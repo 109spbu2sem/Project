@@ -3,12 +3,12 @@ import QtQuick.Controls 1.2
 import QtQuick.Controls.Styles 1.2
 import QtQuick.Dialogs 1.2
 import QtQuick.Layouts 1.1
+import QtQuick.XmlListModel 2.0
 import gui.module 1.0
 
 ApplicationWindow
 {
     signal newPointAdded(double x, double y)
-    signal start()
 
     property double lastX
     property double lastY
@@ -18,6 +18,9 @@ ApplicationWindow
     property bool usingFirstCoords
 
     property int n
+    property int k
+
+    property string fileUrlLoad
 
     function draw(n)
     {
@@ -32,6 +35,8 @@ ApplicationWindow
                 //addNewSection()
             case 3:
                 //addNewArc()
+            default:
+                console.log("n is undefined")
         }
 
     }
@@ -41,8 +46,41 @@ ApplicationWindow
         console.log('adding new point:' + x + ' ' + y)
         lastX = x
         lastY = y
+        k = 1
         mainCanvas.requestPaint()
-        statusBar.text = qsTr('<font color = "green"> New point added <font>')
+        statusBar.text = qsTr("<font color = 'green'> New point added <font>")
+    }
+
+    function addNewSection(a_x, a_y, b_x, b_y)
+    {
+        console.log('adding new section:' + a_x + ' ' + a_y + ' to ' + b_x + ' ' + b_y)
+        firstX = a_x
+        firstY = a_y
+        lastX  = b_x
+        lastY  = b_y
+        k = 2
+        mainCanvas.requestPaint()
+        statusBar.text = qsTr("<font color = 'green'> New point added <font>")
+    }
+
+    function drawPoint(ctx, lastX, lastY)
+    {
+        ctx.fillStyle = "black"
+        ctx.lineWidth = 1.5
+        ctx.beginPath()
+        ctx.moveTo(lastX, lastY)
+        ctx.fillRect(lastX, lastY, 4, 4)
+        ctx.stroke()
+    }
+
+    function drawSection(ctx, firstX, firstY, lastX, lastY)
+    {
+        ctx.fillStyle = "black"
+        ctx.lineWidth = 1.5
+        ctx.moveTo(firstX, firstY)
+        ctx.beginPath()
+        ctx.lineTo(lastX, lastY)
+        ctx.stroke()
     }
 
     // -----------------------------------------------------------------------
@@ -158,7 +196,7 @@ ApplicationWindow
 
     FileDialog
     {
-        id: fileDialog
+        id: loadFileDialog
         title: qsTr("Select a file")
         selectMultiple: false
         selectFolder: false
@@ -167,6 +205,7 @@ ApplicationWindow
         onAccepted:
         {
             statusBar.text = fileUrl.toString()
+            fileUrlLoad = fileUrl.toString()
             console.log('File added')
         }
 
@@ -329,13 +368,17 @@ ApplicationWindow
                     onPaint:
                     {
                         var ctx = getContext('2d')
-                        ctx.fillStyle = "black"
-                        ctx.lineWidth = 1.5
-                        ctx.beginPath()
-                        ctx.moveTo(lastX, lastY)
-                        ctx.fillRect(lastX, lastY, 4, 4)
-                        ctx.stroke()
-
+                        switch (k)
+                        {
+                        case 1:
+                            drawPoint(ctx, lastX, lastY)
+                        case 2:
+                            drawSection(ctx, firstX, firstY, lastX, lastY)
+                        case 3:
+                            //  drawEllipse(ctx)
+                        default:
+                            console.log("k is undefined")
+                        }
                     }
 
                     MouseArea
@@ -346,8 +389,8 @@ ApplicationWindow
 
                         onPressed:
                         {
-                            lastX = mouseX
-                            lastY = mouseY
+                            lastX = mouseX - 4
+                            lastY = mouseY - 4
 
                             if(!((n == 1) || (n == 2) || (n == 3)))
                             {
@@ -359,15 +402,13 @@ ApplicationWindow
                                 draw(n);
                             else
                             {
-                                firstX = mouseX
-                                firstY = mouseY
+                                firstX = mouseX - 4
+                                firstY = mouseY - 4
                                 usingFirstCoords = true
                                 console.log(' ')
                                 console.log('firstX = ' + firstX)
                                 console.log('firstY = ' + firstY)
                             }
-
-                            //statusBar.text = gui.setStatusBar(qsTr("Project changed"))
                         }
                         onPositionChanged:
                         {
@@ -397,29 +438,70 @@ ApplicationWindow
                 {
                     id: table
                     anchors.fill: parent
+
+                    model:
+                        XmlListModel
+                        {
+                            id: projectModel
+                            source: fileUrlLoad
+                            query: "/list/primitive"
+                            XmlRole { name: "id"; query: "id/string()" }
+                            XmlRole { name: "type"; query: "type/string()" }
+                            XmlRole { name: "x1"; query: "x1/string()" }
+                            XmlRole { name: "y1"; query: "y1/string()" }
+                            XmlRole { name: "x2"; query: "x2/string()" }
+                            XmlRole { name: "y2"; query: "y2/string()" }
+                            XmlRole { name: "radius"; query: "radius/string()" }
+                            XmlRole { name: "color"; query: "color/string()" }
+                        }
+
                     TableViewColumn
                     {
-                        role: 'type'
+                        role: "id"
+                        title: "id"
+                        width: 25
+                    }
+                    TableViewColumn
+                    {
+                        role: "type"
                         title: "Type"
-                        width: 95
+                        width: 40
                     }
                     TableViewColumn
                     {
-                        role: 'name'
-                        title: "Name"
-                        width: 100
+                        role: "x1"
+                        title: "X1"
+                        width: 40
                     }
                     TableViewColumn
                     {
-                        role: 'x'
-                        title: "X"
-                        width: 50
+                        role: "y1"
+                        title: "Y1"
+                        width: 40
                     }
                     TableViewColumn
                     {
-                        role: 'y'
-                        title: "Y"
-                        width: 50
+                        role: "x2"
+                        title: "X2"
+                        width: 40
+                    }
+                    TableViewColumn
+                    {
+                        role: "y2"
+                        title: "Y2"
+                        width: 40
+                    }
+                    TableViewColumn
+                    {
+                        role: "radius"
+                        title: "Radius"
+                        width: 40
+                    }
+                    TableViewColumn
+                    {
+                        role: "color"
+                        title: "Color"
+                        width: 30
                     }
                 }
             }
@@ -490,7 +572,7 @@ ApplicationWindow
                         id: loadButton
 
                         activeFocusOnPress: true
-                        onClicked: {  fileDialog.open(); }
+                        onClicked: {  loadFileDialog.open(); }
 
                         width: 145
                         height: 42

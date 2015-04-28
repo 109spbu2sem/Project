@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<list>
+    <primitive>
+        <id>    X     </id>
+        <type>  Point </type>
+        <x1>    200   </x1>
+        <y1>    200   </y1>
+        <x2>          </x2>
+        <y2>          </y2>
+        <radius>      </radius>
+        <color> Black </color>
+    </primitive>    
+    <primitive>
+        <id>    Y     </id>
+        <type>  Point </type>
+        <x1>    400   </x1>
+        <y1>    400   </y1>
+        <x2>          </x2>
+        <y2>          </y2>
+        <radius>      </radius>
+        <color> Blue  </color>
+    </primitive>
+</list>
