@@ -4,7 +4,6 @@
 
 CORE::CORE()
 {
-	_streamstate = STREAMISCLOSE;
 	mygui = 0;
 }
 
@@ -13,23 +12,24 @@ CORE::~CORE()
 	
 }
 
-void Redraw()
+void CORE::Redraw()
 {
-	/*for (ListViewer<Point> i(_storage_of_points); i.canMoveNext(); i.moveNext())
+	mygui->Clear();
+	for (ListViewer<Point> i(_storage_of_points); i.canMoveNext(); i.moveNext())
 	{
 		if (i.getValue().isVisible())
-			mygui->Draw(*i.getValue()._x, *i.getValue()._y, i.getValue().isSelected() ? SELECTEDCOLOR : i.getValue().color.getColor());
+			mygui->DrawPoint(i.getValue().id.getID(), *i.getValue()._x, *i.getValue()._y, i.getValue().isSelected() ? COLORSELECTED : i.getValue().color);
 	}
 	for (ListViewer<Segment> i(_storage_of_segments); i.canMoveNext(); i.moveNext())
 	{
       if (i.getValue().isVisible())
-			mygui->Draw(*i.getValue()._p1->_x, *i.getValue()._p1->_y, *i.getValue()._p2->_x, *i.getValue()._p2->_y, i.getValue().isSelected() ? SELECTEDCOLOR : i.getValue().color.getColor());
+			mygui->DrawSegment(i.getValue().id.getID(), *i.getValue()._p1->_x, *i.getValue()._p1->_y, *i.getValue()._p2->_x, *i.getValue()._p2->_y, i.getValue().isSelected() ? COLORSELECTED : i.getValue().color);
 	}
 	for (ListViewer<Circle> i(_storage_of_circles); i.canMoveNext(); i.moveNext())
 	{
 		if (i.getValue().isVisible())
-			mygui->Draw(*i.getValue()._o->_x, *i.getValue()._o->_y, *i.getValue()._r, i.getValue().isSelected() ? SELECTEDCOLOR : i.getValue().color.getColor());
-	}*/
+			mygui->DrawCircle(i.getValue().id.getID(), *i.getValue()._o->_x, *i.getValue()._o->_y, *i.getValue()._r, i.getValue().isSelected() ? COLORSELECTED : i.getValue().color);
+	}
 	return;
 }
 
@@ -47,7 +47,7 @@ void CORE::Calculate()
 	}
 	//BuildFigure(&collector, &parameters);
 	BuildFigureGoldMethod(&collector, &parameters);
-	mygui->Redraw();
+	Redraw();
 	mygui->WriteStatus("Done");
 	return;
 }
@@ -126,7 +126,7 @@ void CORE::BuildFigureGoldMethod(IConstraint *constr, Storage_Array<double*>* pa
 		f_cur = constr->error();
 		nf_eval++;
 	//} while (abs(f_prev - f_cur) > f_epsi);
-	} while (abs(f_cur) > f_epsi && f_cur < 1000);
+	} while (abs(f_prev - f_cur) > f_epsi);
 	delete[] grad;
 	delete[] old_para;
 }

@@ -418,7 +418,7 @@
      <string>Redraw</string>
     </property>
    </widget>
-   <widget class="QListView" name="objectsList">
+   <widget class="QTableWidget" name="objectsList">
     <property name="geometry">
      <rect>
       <x>840</x>

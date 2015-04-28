@@ -15,7 +15,7 @@ void CORE::AddObject(double point_x, double point_y, unsigned color)
 	p.color.setColor(color);
 	_storage_of_points.add(p);
 	mygui->WriteStatus("Point added");
-	mygui->Redraw();
+	Redraw();
 }
 
 void CORE::AddObject(double point_x1, double point_y1, double point_x2, double point_y2, unsigned color)
@@ -26,7 +26,7 @@ void CORE::AddObject(double point_x1, double point_y1, double point_x2, double p
 	s.color.setColor(color);
 	_storage_of_segments.add(s);
 	mygui->WriteStatus("Segment added");
-	mygui->Redraw();
+	Redraw();
 }
 
 void CORE::AddObject(double point_x, double point_y, double radius, unsigned color)
@@ -36,7 +36,7 @@ void CORE::AddObject(double point_x, double point_y, double radius, unsigned col
 	c.color.setColor(color);
 	_storage_of_circles.add(c);
 	mygui->WriteStatus("Circle added");
-	mygui->Redraw();
+	Redraw();
 }
 
 void CORE::ConcatenatePoints()
@@ -52,7 +52,7 @@ void CORE::ConcatenatePoints()
 			Segment s(obj, obj1);
 			s.color.setColor(COLORDEF);
 			_storage_of_segments.add(s);
-			mygui->Redraw();
+			Redraw();
 		}
 	}
 }
@@ -74,6 +74,7 @@ void CORE::AddRule(unsigned type, double value)
 				Point2Point* rule = new Point2Point(obj->_p1->_x, obj->_p1->_y, obj->_p2->_x, obj->_p2->_y, _storage_of_constants.add(value));
 				_storage_of_constraints.add(rule);
 				mygui->WriteStatus("Rule added");
+				Redraw();
 			}
 			return;
 		}
@@ -88,6 +89,7 @@ void CORE::AddRule(unsigned type, double value)
 				Point2Point* rule = new Point2Point(obj1->_x, obj1->_y, obj2->_x, obj2->_y, _storage_of_constants.add(value));
 				_storage_of_constraints.add(rule);
 				mygui->WriteStatus("Rule added");
+				Redraw();
 			}
 			return;
 		}
@@ -116,6 +118,7 @@ void CORE::AddRule(unsigned type, double value)
 						obj2->_p1->_y, obj2->_p2->_x, obj2->_p2->_y, _storage_of_constants.add(value));
 					_storage_of_constraints.add(rule);
 					mygui->WriteStatus("Rule added");
+					Redraw();
 					return;
 				}
 			}
@@ -130,6 +133,7 @@ void CORE::AddRule(unsigned type, double value)
 						ob2->_p1->_y, ob2->_p2->_x, ob2->_p2->_y, _storage_of_constants.add(value));
 					_storage_of_constraints.add(rule);
 					mygui->WriteStatus("Rule added");
+					Redraw();
 					return;
 				}
 			}
@@ -163,6 +167,7 @@ void CORE::AddRule(unsigned type, double value)
 						obj2->_p1->_y, obj2->_p2->_x, obj2->_p2->_y, _storage_of_constants.add(value));
 					_storage_of_constraints.add(rule);
 					mygui->WriteStatus("Rule added");
+					Redraw();
 					return;
 				}
 			}
@@ -177,6 +182,7 @@ void CORE::AddRule(unsigned type, double value)
 						ob2->_p1->_y, ob2->_p2->_x, ob2->_p2->_y, _storage_of_constants.add(value));
 					_storage_of_constraints.add(rule);
 					mygui->WriteStatus("Rule added");
+					Redraw();
 					return;
 				}
 			}
@@ -212,32 +218,8 @@ void CORE::AddRule(unsigned type, double value)
 					_storage_of_constants.add(value));
 				_storage_of_constraints.add(rule);
 				mygui->WriteStatus("Rule added");
+				Redraw();
 			}
-			return;
-		}
-		case 3:
-			return;
-		case 4:
-		{
-			ListViewer<ObjectSkin*> k(_selected_objects);
-			Point* obj1 = dynamic_cast<Point*>(k.getValue());
-			k.moveNext();
-			Point* obj2 = dynamic_cast<Point*>(k.getValue());
-			k.moveNext();
-			Point* obj3 = dynamic_cast<Point*>(k.getValue());
-			k.moveNext();
-			Point* obj4 = dynamic_cast<Point*>(k.getValue());
-			if (obj1 && obj2 && obj3 && obj4)
-			{
-				AngleSegmentSegment* rule = new AngleSegmentSegment(
-					obj1->_x, obj1->_y,
-					obj2->_x, obj2->_y,
-					obj3->_x, obj3->_y,
-					obj4->_x, obj4->_y,
-					_storage_of_parameters.add(value));
-				_storage_of_constraints.add(rule);
-				mygui->WriteStatus("Rule added");
-			} else mygui->WriteStatus("Wrong select.");
 			return;
 		}
 		default:
@@ -270,6 +252,7 @@ void CORE::AddRule(unsigned type, double value)
 							o2->_y, o3->_x, o3->_y, _storage_of_constants.add(value));
 						_storage_of_constraints.add(rule);
 						mygui->WriteStatus("Rule added");
+						Redraw();
 						return;
 					}
 				}
@@ -313,6 +296,7 @@ void CORE::AddRule(unsigned type)
 						obj2->_p1->_y, obj2->_p2->_x, obj2->_p2->_y);
 					_storage_of_constraints.add(rule);
 					mygui->WriteStatus("Rule added");
+					Redraw();
 					return;
 				}
 			}
@@ -327,6 +311,7 @@ void CORE::AddRule(unsigned type)
 						ob2->_p1->_y, ob2->_p2->_x, ob2->_p2->_y);
 					_storage_of_constraints.add(rule);
 					mygui->WriteStatus("Rule added");
+					Redraw();
 					return;
 				}
 			}
@@ -350,6 +335,7 @@ void CORE::AddRule(unsigned type)
 							o2->_y, o3->_x, o3->_y);
 						_storage_of_constraints.add(rule);
 						mygui->WriteStatus("Rule added");
+						Redraw();
 						return;
 					}
 				}

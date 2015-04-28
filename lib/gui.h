@@ -19,7 +19,7 @@ namespace Ui
 	class MainWindow;
 }
 
-class MainWindow : public QMainWindow
+class MainWindow : public QMainWindow, public Interface
 {
 	Q_OBJECT
 	
@@ -29,7 +29,11 @@ public:
 	
 	void ConnectCORE(CORE* core);
 	
-	bool Redraw();
+	bool DrawPoint(unsigned, double, double, Color = 0); // point (id, x, y, color)
+	bool DrawSegment(unsigned, double, double, double, double, Color = 0); // segment (id, x1, y1, x2, y2, color)
+	bool DrawCircle(unsigned, double, double, double, Color = 0); // circle (id, x, y, r, color)
+	bool Clear();
+
 	void WriteError(const char* ErrorText);
 	void WriteStatus(const char* ErrorKey);
 	

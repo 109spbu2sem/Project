@@ -7,6 +7,7 @@
 #include "mycanvas.h"
 #include <QMessageBox>
 #include <QString>
+#include <QTableWidgetItem>
 
 MainWindow::MainWindow(QWidget *parent) :
 	QMainWindow(parent),
@@ -21,10 +22,9 @@ MainWindow::MainWindow(QWidget *parent) :
 	ui->labelY2->setVisible(false);
 	ui->graphicsView->connectCORECanvas(mycore);
 	ui->graphicsView->scale(2, 2);
-	QPen p;
-	p.setStyle(Qt::DotLine);
-	mainscene->addLine(0, -10000, 0, 10000, p);
-	mainscene->addLine(-10000, 0, 10000, 0, p);
+	//ui->objectsList->setColumnCount(6);
+	mainscene->addLine(0, -10000, 0, 10000, QPen(Qt::DotLine));
+	mainscene->addLine(-10000, 0, 10000, 0, QPen(Qt::DotLine));
 }
 
 void MainWindow::ConnectCORE(CORE* core)
@@ -53,55 +53,40 @@ void MainWindow::WriteStatus(const char* ErrorKey)
 	return;
 }
 
-bool MainWindow::Redraw()
+bool MainWindow::DrawPoint(unsigned id, double x, double y, Color c)
 {
-	if (!mycore->OpenStream()) return false;
-	
+	mainscene->addEllipse(x - 1, -y - 1, 2.0, 2.0,
+		QPen(QColor(c.getColor(1), c.getColor(2), c.getColor(3))),
+		QBrush(QColor(c.getColor(1), c.getColor(2), c.getColor(3))));
+	/*for (unsigned i = 0; i < 10000; i++)
+	{
+	ui->objectsList->setRowCount(ui->objectsList->rowCount());
+	QTableWidgetItem* item = new QTableWidgetItem;//(tr("%1").arg((ui->objectsList->rowCount()+1)*(0+1)));
+	item->setText("Point");
+	ui->objectsList->setItem(ui->objectsList->rowCount() - 1, 0, item);
+	//ui->objectsList->setItem();
+	}*/
+	return true;
+}
+
+bool MainWindow::DrawSegment(unsigned id, double x1, double y1, double x2, double y2, Color c)
+{
+	mainscene->addLine(x1, -y1, x2, -y2, QPen(QColor(c.getColor(1), c.getColor(2), c.getColor(3))));
+	return true;
+}
+
+bool MainWindow::DrawCircle(unsigned id, double x, double y, double r, Color c)
+{
+	mainscene->addEllipse(x - r, -y - r, r * 2, r * 2, QPen(QColor(c.getColor(1), c.getColor(2), c.getColor(3))));
+	return true;
+}
+
+bool MainWindow::Clear()
+{	
 	mainscene->clear();
-	QPen p;
-	p.setStyle(Qt::DotLine);
-	mainscene->addLine(0, -10000, 0, 10000, p);
-	mainscene->addLine(-10000, 0, 10000, 0, p);
-	while (mycore->StreamIsOpened())
-	{
-		CORE::Primitive p;
-		p.type = PRIMITIVE_NOTHING;
-		try
-		{
-			p = mycore->GetFromStream();
-		}
-		catch (std::logic_error a)
-		{
-			mycore->CloseStream();
-			return true;
-		}
-		if (p.select) p.color.setColor(SELECTEDCOLOR);
-		QPen pen(QColor(p.color.getColor(1), p.color.getColor(2), p.color.getColor(3)));
-		
-	switch (p.type)
-	{
-	case PRIMITIVE_POINT:
-	{
-		QBrush brush(QColor(p.color.getColor(1), p.color.getColor(2), p.color.getColor(3)));
-		mainscene->addEllipse(p.p1_x - 1, p.p1_y - 1, 2.0, 2.0, pen, brush);
-		//mainscene->addLine(p.p1_x, p.p1_y, p.p1_x, p.p1_y, pen);
-		break;
-	}
-	case PRIMITIVE_SEGMENT:
-	{
-		mainscene->addLine(p.p1_x, p.p1_y, p.p2_x, p.p2_y, pen);
-		break;
-	}
-	case PRIMITIVE_CIRCLE: 
-	{
-		mainscene->addEllipse(p.p1_x - p.r, p.p1_y - p.r, p.r * 2, p.r * 2, pen);
-		break;
-	}
-	default:
-		break;
-	}
-	}
-	mycore->CloseStream();
+	mainscene->addLine(0, -10000, 0, 10000, QPen(Qt::DotLine));
+	mainscene->addLine(-10000, 0, 10000, 0, QPen(Qt::DotLine));
+	ui->objectsList->clear();
 	return true;
 }
 

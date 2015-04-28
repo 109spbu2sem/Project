@@ -36,12 +36,12 @@
       <Extensions>cpp;c;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
     </Filter>
     <Filter Include="Generated Files\Debug">
-      <UniqueIdentifier>{efd298a1-ad24-43cf-92d3-f57282051b4d}</UniqueIdentifier>
+      <UniqueIdentifier>{a8df3404-4a28-4dc2-b039-b94b856a2a67}</UniqueIdentifier>
       <Extensions>cpp;moc</Extensions>
       <SourceControlFiles>False</SourceControlFiles>
     </Filter>
     <Filter Include="Generated Files\Release">
-      <UniqueIdentifier>{977e911b-c6db-45b9-b6f4-635da6879ca8}</UniqueIdentifier>
+      <UniqueIdentifier>{9f9e7059-081e-4088-8f82-64e05d2c85ea}</UniqueIdentifier>
       <Extensions>cpp;moc</Extensions>
       <SourceControlFiles>False</SourceControlFiles>
     </Filter>
@@ -69,9 +69,6 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="..\lib\core_private.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="..\lib\core_stream.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="..\lib\global.cpp">

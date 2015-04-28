@@ -20,12 +20,12 @@
 #include <QtWidgets/QHeaderView>
 #include <QtWidgets/QLabel>
 #include <QtWidgets/QLineEdit>
-#include <QtWidgets/QListView>
 #include <QtWidgets/QMainWindow>
 #include <QtWidgets/QMenuBar>
 #include <QtWidgets/QPushButton>
 #include <QtWidgets/QRadioButton>
 #include <QtWidgets/QStatusBar>
+#include <QtWidgets/QTableWidget>
 #include <QtWidgets/QWidget>
 #include "mycanvas.h"
 
@@ -66,14 +66,15 @@ public:
     QLineEdit *ruleValueEdit;
     QPushButton *pushButton;
     QPushButton *calculateBTN;
-    QListView *objectsList;
+    QTableWidget *objectsList;
     QPushButton *pushButton_2;
-    QWidget *widget;
+    QWidget *layoutWidget3;
     QHBoxLayout *horizontalLayout_3;
     QRadioButton *selectTool;
     QRadioButton *pointTool;
     QRadioButton *segmentTool;
     QRadioButton *circleTool;
+    QPushButton *concatinateBTN;
     QMenuBar *menuBar;
     QStatusBar *statusBar;
 
@@ -241,41 +242,46 @@ public:
         calculateBTN = new QPushButton(centralWidget);
         calculateBTN->setObjectName(QStringLiteral("calculateBTN"));
         calculateBTN->setGeometry(QRect(845, 345, 101, 28));
-        objectsList = new QListView(centralWidget);
+        objectsList = new QTableWidget(centralWidget);
         objectsList->setObjectName(QStringLiteral("objectsList"));
         objectsList->setGeometry(QRect(840, 425, 236, 192));
         pushButton_2 = new QPushButton(centralWidget);
         pushButton_2->setObjectName(QStringLiteral("pushButton_2"));
         pushButton_2->setGeometry(QRect(845, 385, 101, 28));
-        widget = new QWidget(centralWidget);
-        widget->setObjectName(QStringLiteral("widget"));
-        widget->setGeometry(QRect(10, 5, 310, 22));
-        horizontalLayout_3 = new QHBoxLayout(widget);
+        layoutWidget3 = new QWidget(centralWidget);
+        layoutWidget3->setObjectName(QStringLiteral("layoutWidget3"));
+        layoutWidget3->setGeometry(QRect(10, 5, 310, 22));
+        horizontalLayout_3 = new QHBoxLayout(layoutWidget3);
         horizontalLayout_3->setSpacing(6);
         horizontalLayout_3->setContentsMargins(11, 11, 11, 11);
         horizontalLayout_3->setObjectName(QStringLiteral("horizontalLayout_3"));
         horizontalLayout_3->setContentsMargins(0, 0, 0, 0);
-        selectTool = new QRadioButton(widget);
+        selectTool = new QRadioButton(layoutWidget3);
         selectTool->setObjectName(QStringLiteral("selectTool"));
         selectTool->setChecked(true);
 
         horizontalLayout_3->addWidget(selectTool);
 
-        pointTool = new QRadioButton(widget);
+        pointTool = new QRadioButton(layoutWidget3);
         pointTool->setObjectName(QStringLiteral("pointTool"));
 
         horizontalLayout_3->addWidget(pointTool);
 
-        segmentTool = new QRadioButton(widget);
+        segmentTool = new QRadioButton(layoutWidget3);
         segmentTool->setObjectName(QStringLiteral("segmentTool"));
+        segmentTool->setCheckable(false);
 
         horizontalLayout_3->addWidget(segmentTool);
 
-        circleTool = new QRadioButton(widget);
+        circleTool = new QRadioButton(layoutWidget3);
         circleTool->setObjectName(QStringLiteral("circleTool"));
+        circleTool->setCheckable(false);
 
         horizontalLayout_3->addWidget(circleTool);
 
+        concatinateBTN = new QPushButton(centralWidget);
+        concatinateBTN->setObjectName(QStringLiteral("concatinateBTN"));
+        concatinateBTN->setGeometry(QRect(955, 385, 121, 28));
         MainWindow->setCentralWidget(centralWidget);
         menuBar = new QMenuBar(MainWindow);
         menuBar->setObjectName(QStringLiteral("menuBar"));
@@ -333,6 +339,7 @@ public:
         pointTool->setText(QApplication::translate("MainWindow", "Point", 0));
         segmentTool->setText(QApplication::translate("MainWindow", "Segment", 0));
         circleTool->setText(QApplication::translate("MainWindow", "Circle", 0));
+        concatinateBTN->setText(QApplication::translate("MainWindow", "Concatinate points", 0));
     } // retranslateUi
 
 };

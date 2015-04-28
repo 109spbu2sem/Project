@@ -1,7 +1,7 @@
 #ifndef PI
 #define PI 3.1415926535897932384
 
-#define SELECTEDCOLOR 0x003adb
+#define COLORSELECTED 0x3560d6
 #define COLORDEF 0x000000
 
 double length(double, double, double, double);
@@ -48,6 +48,15 @@ public:
 	void setColor(unsigned long);
 	void setColor(unsigned char, unsigned char, unsigned char);
 	unsigned getColor(char mode = 0) const;
+};
+
+class Interface
+{
+public:
+	virtual bool DrawPoint(unsigned, double, double, Color = 0) = 0; // point (id, x, y, color)
+	virtual bool DrawSegment(unsigned, double, double, double, double, Color = 0) = 0; // segment (id, x1, y1, x2, y2, color)
+	virtual bool DrawCircle(unsigned, double, double, double, Color = 0) = 0; // circle (id, x, y, r, color)
+	virtual bool Clear() = 0;
 };
 
 #endif

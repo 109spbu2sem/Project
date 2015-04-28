@@ -21,12 +21,12 @@ void MyCanvas::mousePressEvent(QMouseEvent *event)
 	{
 	case TOOL_Select:
 	{
-		mycore->Select(pt.x(), pt.y());
+		mycore->Select(pt.x(), -pt.y());
 		break;
 	}
 	case TOOL_Point:
 	{
-		mycore->AddObject(pt.x(), pt.y());
+		mycore->AddObject(pt.x(), -pt.y());
 	}
 	}
 }

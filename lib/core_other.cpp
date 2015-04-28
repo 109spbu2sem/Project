@@ -34,7 +34,7 @@ void CORE::Select(double x, double y)
 		}
 		i.getValue().changeSelect();
 		_selected_objects.add(&i.getValue());
-		mygui->Redraw();
+		Redraw();
 		return;
 	}
 	size = _storage_of_segments.size();
@@ -71,7 +71,7 @@ void CORE::Select(double x, double y)
 		}
 		i.getValue().changeSelect();
 		_selected_objects.add(&i.getValue());
-		mygui->Redraw();
+		Redraw();
 		return;
 	}
 	size = _storage_of_circles.size();
@@ -99,7 +99,7 @@ void CORE::Select(double x, double y)
 		}
 		i.getValue().changeSelect();
 		_selected_objects.add(&i.getValue());
-		mygui->Redraw();
+		Redraw();
 		return;
 	}
 	return;
@@ -142,7 +142,7 @@ void CORE::Select(double x1, double y1, double x2, double y2)
 			_selected_objects.add(&i.getValue());
 		}
 	}
-	mygui->Redraw();
+	Redraw();
 	return;
 }
 
@@ -153,13 +153,13 @@ void CORE::ClearSelection()
 		i.getValue()->changeSelect(false);
 	}
 	_selected_objects.clear();
-	mygui->Redraw();
+	Redraw();
 	mygui->WriteStatus("Done");
 }
 
 void CORE::DeleteSelected()
 {
-	mygui->Redraw();
+	Redraw();
 }
 
 void CORE::IWantSave(std::string fileway)

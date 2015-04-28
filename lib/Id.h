@@ -14,7 +14,7 @@ public:
 	{
 		_myid = id;
 	}
-	unsigned getID()
+	unsigned getID() const
 	{
 		return _myid;
 	}
