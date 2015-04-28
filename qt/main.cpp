@@ -51,7 +51,6 @@ int main(int argc, char *argv[])
     window -> show();
 
     //------------------
-
     Point P;
     P.X = 200;
     P.Y = 200;

@@ -69,7 +69,7 @@ ApplicationWindow
         ctx.lineWidth = 1.5
         ctx.beginPath()
         ctx.moveTo(lastX, lastY)
-        ctx.fillRect(lastX, lastY, 4, 4)
+        ctx.fillRect(lastX, lastY, 3, 3)
         ctx.stroke()
     }
 
@@ -196,7 +196,7 @@ ApplicationWindow
 
     FileDialog
     {
-        id: fileDialog
+        id: loadFileDialog
         title: qsTr("Select a file")
         selectMultiple: false
         selectFolder: false
@@ -387,10 +387,12 @@ ApplicationWindow
 
                         anchors.fill: parent
 
+                        hoverEnabled: true
+
                         onPressed:
                         {
-                            lastX = mouseX - 4
-                            lastY = mouseY - 4
+                            lastX = parseInt(mouseX, 10)
+                            lastY = parseInt(mouseY, 10)
 
                             if(!((n == 1) || (n == 2) || (n == 3)))
                             {
@@ -402,19 +404,31 @@ ApplicationWindow
                                 draw(n);
                             else
                             {
-                                firstX = mouseX - 4
-                                firstY = mouseY - 4
+                                firstX = parseInt(mouseX, 10)
+                                firstY = parseInt(mouseY, 10)
                                 usingFirstCoords = true
-                                console.log(' ')
                                 console.log('firstX = ' + firstX)
                                 console.log('firstY = ' + firstY)
                             }
                         }
+
                         onPositionChanged:
                         {
-                            if (n == 2)
+                            positionInfo.text = "x: " + parseInt(mouseX, 10) + "\n" + "y: " + parseInt(mouseY, 10)
+
+                            if (n == 2 && usingFirstCoords)
                                 draw(n);
                         }
+                    }
+
+                    Text
+                    {
+                        id: positionInfo
+
+                        anchors.bottom: parent.bottom
+                        anchors.right:  parent.right
+
+                        text: "x: 0\ny: 0"
                     }
                 }
             }
@@ -444,7 +458,7 @@ ApplicationWindow
                         {
                             id: projectModel
                             source: fileUrlLoad
-                            query: "/primitive"
+                            query: "/list/primitive"
                             XmlRole { name: "id"; query: "id/string()" }
                             XmlRole { name: "type"; query: "type/string()" }
                             XmlRole { name: "x1"; query: "x1/string()" }
@@ -459,49 +473,49 @@ ApplicationWindow
                     {
                         role: "id"
                         title: "id"
-                        width: 95
+                        width: 50
                     }
                     TableViewColumn
                     {
                         role: "type"
                         title: "Type"
-                        width: 100
+                        width: 75
                     }
                     TableViewColumn
                     {
                         role: "x1"
                         title: "X1"
-                        width: 50
+                        width: 60
                     }
                     TableViewColumn
                     {
                         role: "y1"
                         title: "Y1"
-                        width: 50
+                        width: 60
                     }
                     TableViewColumn
                     {
                         role: "x2"
                         title: "X2"
-                        width: 50
+                        width: 60
                     }
                     TableViewColumn
                     {
                         role: "y2"
                         title: "Y2"
-                        width: 50
+                        width: 60
                     }
                     TableViewColumn
                     {
                         role: "radius"
                         title: "Radius"
-                        width: 50
+                        width: 75
                     }
                     TableViewColumn
                     {
                         role: "color"
                         title: "Color"
-                        width: 50
+                        width: 60
                     }
                 }
             }
@@ -530,7 +544,7 @@ ApplicationWindow
                         id: addObjectButton
 
                         activeFocusOnPress: true
-                        onClicked: addObjectDialog.open()
+                        enabled: false
 
                         width: 145
                         height: 42
@@ -572,7 +586,7 @@ ApplicationWindow
                         id: loadButton
 
                         activeFocusOnPress: true
-                        onClicked: {  fileDialog.open(); }
+                        onClicked: {  loadFileDialog.open(); }
 
                         width: 145
                         height: 42
