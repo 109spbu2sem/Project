@@ -172,6 +172,8 @@
     <ClInclude Include="..\lib\global.h" />
     <ClInclude Include="..\lib\Save.h" />
     <ClInclude Include="..\lib\settings.h" />
+    <ClInclude Include="..\lib\storageofobjects.h" />
+    <ClInclude Include="..\lib\storages\queue.h" />
     <ClInclude Include="GeneratedFiles\ui_gui.h" />
     <ClInclude Include="GeneratedFiles\ui_objectpropertieswindow.h" />
     <CustomBuild Include="..\lib\gui.h">
