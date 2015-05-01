@@ -19,14 +19,11 @@ void CORE::Select(double x, double y)
 	unsigned j = 0;
 	for (ListViewer<Point> i(_storage_of_points); i.canMoveNext(); i.moveNext(), j++)
 	{
-		if (!i.getValue().isSelected())
-		{
 			if (length(*i.getValue()._x, *i.getValue()._y, x, y) < min)
 			{
 				min = length(*i.getValue()._x, *i.getValue()._y, x, y);
 				min_i = j;
 			}
-		}
 	}
 	if (min_i >= 0)
 	{
@@ -37,7 +34,19 @@ void CORE::Select(double x, double y)
 			j++;
 		}
 		i.getValue().changeSelect();
-		_selected_objects.add(&i.getValue());
+		if (i.getValue().isSelected())
+			_selected_objects.add(&i.getValue());
+		else
+		{
+			for (ListViewer<ObjectSkin*> j(_selected_objects); j.canMoveNext(); j.moveNext())
+			{
+				if (dynamic_cast<Point*>(j.getValue()) == &i.getValue())
+				{
+					_selected_objects.remove(&j);
+					break;
+				}
+			}
+		}
 		Redraw();
 		return;
 	}
@@ -47,22 +56,19 @@ void CORE::Select(double x, double y)
 	double A = 0, B = 0, C = 0;
 	for (ListViewer<Segment> i(_storage_of_segments); i.canMoveNext(); i.moveNext(), j++)
 	{
-		if (!i.getValue().isSelected())
+		A = *i.getValue()._p2->_y - *i.getValue()._p1->_y;
+		B = *i.getValue()._p1->_x - *i.getValue()._p2->_x;
+		C = *i.getValue()._p1->_y * *i.getValue()._p2->_x - *i.getValue()._p1->_x * *i.getValue()._p2->_y;
+		if ((abs(A*x + B*y + C) / sqrt(A*A + B*B) < min) &&
+			(length(*i.getValue()._p1->_x, *i.getValue()._p1->_y, x, y) <
+			((A*x + B*y + C)*(A*x + B*y + C) / (A*A + B*B) +
+			length(*i.getValue()._p1->_x, *i.getValue()._p1->_y, *i.getValue()._p2->_x, *i.getValue()._p2->_y)))
+			&& (length(*i.getValue()._p2->_x, *i.getValue()._p2->_y, x, y) <
+			((A*x + B*y + C)*(A*x + B*y + C) / (A*A + B*B) +
+			length(*i.getValue()._p1->_x, *i.getValue()._p1->_y, *i.getValue()._p2->_x, *i.getValue()._p2->_y))))
 		{
-			A = *i.getValue()._p2->_y - *i.getValue()._p1->_y;
-			B = *i.getValue()._p1->_x - *i.getValue()._p2->_x;
-			C = *i.getValue()._p1->_y * *i.getValue()._p2->_x - *i.getValue()._p1->_x * *i.getValue()._p2->_y;
-			if ((abs(A*x + B*y + C) / sqrt(A*A + B*B) < min) &&
-				(length(*i.getValue()._p1->_x, *i.getValue()._p1->_y, x, y) <
-				((A*x + B*y + C)*(A*x + B*y + C) / (A*A + B*B) +
-				length(*i.getValue()._p1->_x, *i.getValue()._p1->_y, *i.getValue()._p2->_x, *i.getValue()._p2->_y)))
-				&& (length(*i.getValue()._p2->_x, *i.getValue()._p2->_y, x, y) <
-				((A*x + B*y + C)*(A*x + B*y + C) / (A*A + B*B) +
-				length(*i.getValue()._p1->_x, *i.getValue()._p1->_y, *i.getValue()._p2->_x, *i.getValue()._p2->_y))))
-			{
-				min = abs(A*x + B*y + C) / sqrt(A*A + B*B);
-				min_j = j;
-			}
+			min = abs(A*x + B*y + C) / sqrt(A*A + B*B);
+			min_j = j;
 		}
 	}
 	if (min_j >= 0)
@@ -74,7 +80,19 @@ void CORE::Select(double x, double y)
 			j++;
 		}
 		i.getValue().changeSelect();
-		_selected_objects.add(&i.getValue());
+		if (i.getValue().isSelected())
+			_selected_objects.add(&i.getValue());
+		else
+		{
+			for (ListViewer<ObjectSkin*> j(_selected_objects); j.canMoveNext(); j.moveNext())
+			{
+				if (dynamic_cast<Segment*>(j.getValue()) == &i.getValue())
+				{
+					_selected_objects.remove(&j);
+					break;
+				}
+			}
+		}
 		Redraw();
 		return;
 	}
@@ -83,14 +101,11 @@ void CORE::Select(double x, double y)
 	j = 0;
 	for (ListViewer<Circle> i(_storage_of_circles); i.canMoveNext(); i.moveNext(), j++)
 	{
-		if (!i.getValue().isSelected())
+		if ((length(*i.getValue()._o->_x, *i.getValue()._o->_y, x, y) < (*i.getValue()._r + min)) &&
+			(length(*i.getValue()._o->_x, *i.getValue()._o->_y, x, y) > (*i.getValue()._r - min)))
 		{
-			if ((length(*i.getValue()._o->_x, *i.getValue()._o->_y, x, y) < (*i.getValue()._r + min)) &&
-				(length(*i.getValue()._o->_x, *i.getValue()._o->_y, x, y) > (*i.getValue()._r - min)))
-			{
-				min = abs(length(*i.getValue()._o->_x, *i.getValue()._o->_y, x, y) - *i.getValue()._r);
-				min_k = j;
-			}
+			min = abs(length(*i.getValue()._o->_x, *i.getValue()._o->_y, x, y) - *i.getValue()._r);
+			min_k = j;
 		}
 	}
 	if (min_k >= 0)
@@ -102,7 +117,19 @@ void CORE::Select(double x, double y)
 			j++;
 		}
 		i.getValue().changeSelect();
-		_selected_objects.add(&i.getValue());
+		if (i.getValue().isSelected())
+			_selected_objects.add(&i.getValue());
+		else
+		{
+			for (ListViewer<ObjectSkin*> j(_selected_objects); j.canMoveNext(); j.moveNext())
+			{
+				if (dynamic_cast<Circle*>(j.getValue()) == &i.getValue())
+				{
+					_selected_objects.remove(&j);
+					break;
+				}
+			}
+		}
 		Redraw();
 		return;
 	}
@@ -118,7 +145,7 @@ void CORE::Select(double x1, double y1, double x2, double y2)
 	{
 		if (isInArea(*i.getValue()._x, *i.getValue()._y, x1, y1, x2, y2))
 		{
-			i.getValue().changeSelect();
+			i.getValue().changeSelect(true);
 			_selected_objects.add(&i.getValue());
 		}
 	}
@@ -130,7 +157,7 @@ void CORE::Select(double x1, double y1, double x2, double y2)
 		if (isInArea(*i.getValue()._p1->_x, *i.getValue()._p1->_y, x1, y1, x2, y2) &&
 			isInArea(*i.getValue()._p2->_x, *i.getValue()._p2->_y, x1, y1, x2, y2))
 		{
-			i.getValue().changeSelect();
+			i.getValue().changeSelect(true);
 			_selected_objects.add(&i.getValue());
 		}
 	}
@@ -142,7 +169,7 @@ void CORE::Select(double x1, double y1, double x2, double y2)
 			(*i.getValue()._o->_x + *i.getValue()._r) >= x1 && (*i.getValue()._o->_x + *i.getValue()._r) <= x2 &&
 			(*i.getValue()._o->_y + *i.getValue()._r) >= y1 && (*i.getValue()._o->_y + *i.getValue()._r) <= y2)
 		{
-			i.getValue().changeSelect();
+			i.getValue().changeSelect(true);
 			_selected_objects.add(&i.getValue());
 		}
 	}
@@ -164,6 +191,7 @@ void CORE::ClearSelection()
 
 void CORE::DeleteSelected()
 {
+	
 	Redraw();
 }
 
