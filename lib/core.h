@@ -11,6 +11,7 @@
 #include <fstream>
 #include "settings.h"
 #include <ctime>
+#include "storages\heshtable.h"
 
 class GUI;
 class Save;
@@ -28,6 +29,7 @@ private:
 	Storage_List<Segment> _storage_of_segments;
 	Storage_List<Circle> _storage_of_circles;
 	Storage_List<IConstraint*> _storage_of_constraints;
+	HashTable<IConstraint*, double*> _storage_of_constraint;
 	Storage_List<ObjectSkin*> _selected_objects;
 
 	bool isInArea(double x, double y, double x1, double y1, double x2, double y2);

@@ -87,19 +87,6 @@ void CORE::AddRule(unsigned type, double value)
 	{ // may add multiselect for points and segments
 		switch (_selected_objects.size())
 		{
-		case 1:
-		{
-			ListViewer<ObjectSkin*> k(_selected_objects);
-			Segment* obj = dynamic_cast<Segment*>(k.getValue());
-			if (obj)
-			{
-				Point2Point* rule = new Point2Point(obj->_p1->_x, obj->_p1->_y, obj->_p2->_x, obj->_p2->_y, _storage_of_constants.add(value));
-				_storage_of_constraints.add(rule);
-				mygui->WriteStatus("Rule added");
-				Redraw();
-			}
-			return;
-		}
 		case 2:
 		{
 			ListViewer<ObjectSkin*> k(_selected_objects);
@@ -108,10 +95,13 @@ void CORE::AddRule(unsigned type, double value)
 			Point* obj2 = dynamic_cast<Point*>(k.getValue());
 			if (obj1 && obj2)
 			{
-				Point2Point* rule = new Point2Point(obj1->_x, obj1->_y, obj2->_x, obj2->_y, _storage_of_constants.add(value));
+				double* val = _storage_of_constants.add(value);
+				Point2Point* rule = new Point2Point(obj1->_x, obj1->_y, obj2->_x, obj2->_y, val );
 				_storage_of_constraints.add(rule);
+				double *param[5] = { obj1->_x, obj1->_y, obj2->_x, obj2->_y, val };
+				_storage_of_constraint.add(rule, *param);
 				mygui->WriteStatus("Rule added");
-				Redraw();
+				Calculate();
 			}
 			return;
 		}
@@ -136,11 +126,15 @@ void CORE::AddRule(unsigned type, double value)
 				Segment* obj2 = dynamic_cast<Segment*>(k.getValue());
 				if (obj2)
 				{
-					DistanceFromPointToSection* rule = new DistanceFromPointToSection(obj1->_x, obj1->_y, obj2->_p1->_x,
-						obj2->_p1->_y, obj2->_p2->_x, obj2->_p2->_y, _storage_of_constants.add(value));
+					double* val = _storage_of_constants.add(value);
+					DistanceFromPointToSection* rule = new DistanceFromPointToSection(
+						obj1->_x, obj1->_y, obj2->_p1->_x, obj2->_p1->_y, obj2->_p2->_x, obj2->_p2->_y, val);
 					_storage_of_constraints.add(rule);
+					double *(param[7]) = { obj1->_x, obj1->_y, obj2->_p1->_x,
+						obj2->_p1->_y, obj2->_p2->_x, obj2->_p2->_y, val };
+					_storage_of_constraint.add(rule, *param);
 					mygui->WriteStatus("Rule added");
-					Redraw();
+					Calculate();
 					return;
 				}
 			}
@@ -151,11 +145,15 @@ void CORE::AddRule(unsigned type, double value)
 				Point* ob1 = dynamic_cast<Point*>(k.getValue());
 				if (ob1)
 				{
+					double* val = _storage_of_constants.add(value);
 					DistanceFromPointToSection* rule = new DistanceFromPointToSection(ob1->_x, ob1->_y, ob2->_p1->_x,
-						ob2->_p1->_y, ob2->_p2->_x, ob2->_p2->_y, _storage_of_constants.add(value));
+						ob2->_p1->_y, ob2->_p2->_x, ob2->_p2->_y, val);
 					_storage_of_constraints.add(rule);
+					double *param[7] = { ob1->_x, ob1->_y, ob2->_p1->_x,
+						ob2->_p1->_y, ob2->_p2->_x, ob2->_p2->_y, val };
+					_storage_of_constraint.add(rule, *param);
 					mygui->WriteStatus("Rule added");
-					Redraw();
+					Calculate();
 					return;
 				}
 			}
@@ -185,11 +183,15 @@ void CORE::AddRule(unsigned type, double value)
 				Segment* obj2 = dynamic_cast<Segment*>(k.getValue());
 				if (obj2)
 				{
+					double* val = _storage_of_constants.add(value);
 					DistanceToTheLine* rule = new DistanceToTheLine(obj1->_x, obj1->_y, obj2->_p1->_x,
-						obj2->_p1->_y, obj2->_p2->_x, obj2->_p2->_y, _storage_of_constants.add(value));
+						obj2->_p1->_y, obj2->_p2->_x, obj2->_p2->_y, val);
 					_storage_of_constraints.add(rule);
+					double *param[7] = { obj1->_x, obj1->_y, obj2->_p1->_x,
+						obj2->_p1->_y, obj2->_p2->_x, obj2->_p2->_y, val };
+					_storage_of_constraint.add(rule, *param);
 					mygui->WriteStatus("Rule added");
-					Redraw();
+					Calculate();
 					return;
 				}
 			}
@@ -200,11 +202,15 @@ void CORE::AddRule(unsigned type, double value)
 				Point* ob1 = dynamic_cast<Point*>(k.getValue());
 				if (ob1)
 				{
+					double* val = _storage_of_constants.add(value);
 					DistanceToTheLine* rule = new DistanceToTheLine(ob1->_x, ob1->_y, ob2->_p1->_x,
-						ob2->_p1->_y, ob2->_p2->_x, ob2->_p2->_y, _storage_of_constants.add(value));
+						ob2->_p1->_y, ob2->_p2->_x, ob2->_p2->_y, val);
 					_storage_of_constraints.add(rule);
+					double *param[7] = { ob1->_x, ob1->_y, ob2->_p1->_x,
+						ob2->_p1->_y, ob2->_p2->_x, ob2->_p2->_y, val };
+					_storage_of_constraint.add(rule, *param);
 					mygui->WriteStatus("Rule added");
-					Redraw();
+					Calculate();
 					return;
 				}
 			}
@@ -232,15 +238,23 @@ void CORE::AddRule(unsigned type, double value)
 			Segment* obj2 = dynamic_cast<Segment*>(k.getValue());
 			if (obj1 && obj2)
 			{
+				double* val = _storage_of_constants.add(value);
 				AngleSegmentSegment* rule = new AngleSegmentSegment(
 					obj1->_p1->_x, obj1->_p1->_y,
 					obj1->_p2->_x, obj1->_p2->_y,
 					obj2->_p1->_x, obj2->_p1->_y,
 					obj2->_p2->_x, obj2->_p2->_y,
-					_storage_of_constants.add(value));
+					val);
 				_storage_of_constraints.add(rule);
+				double* param[9] = {
+					obj1->_p1->_x, obj1->_p1->_y,
+					obj1->_p2->_x, obj1->_p2->_y,
+					obj2->_p1->_x, obj2->_p1->_y,
+					obj2->_p2->_x, obj2->_p2->_y,
+					val };
+				_storage_of_constraint.add(rule, *param);
 				mygui->WriteStatus("Rule added");
-				Redraw();
+				Calculate();
 			}
 			return;
 		}
@@ -270,11 +284,15 @@ void CORE::AddRule(unsigned type, double value)
 					Point* o3 = dynamic_cast<Point*>(k.getValue());
 					if (o3)
 					{
+						double* val = _storage_of_constants.add(value);
 						AspectRatio* rule = new AspectRatio(o1->_x, o1->_y, o2->_x,
-							o2->_y, o3->_x, o3->_y, _storage_of_constants.add(value));
+							o2->_y, o3->_x, o3->_y, val);
 						_storage_of_constraints.add(rule);
+						double* param[7] = { o1->_x, o1->_y, o2->_x,
+							o2->_y, o3->_x, o3->_y, val };
+						_storage_of_constraint.add(rule, *param);
 						mygui->WriteStatus("Rule added");
-						Redraw();
+						Calculate();
 						return;
 					}
 				}
@@ -317,8 +335,11 @@ void CORE::AddRule(unsigned type)
 					ThreePoints* rule = new ThreePoints(obj1->_x, obj1->_y, obj2->_p1->_x,
 						obj2->_p1->_y, obj2->_p2->_x, obj2->_p2->_y);
 					_storage_of_constraints.add(rule);
+					double* param[6] = { obj1->_x, obj1->_y, obj2->_p1->_x,
+						obj2->_p1->_y, obj2->_p2->_x, obj2->_p2->_y };
+					_storage_of_constraint.add(rule, *param);
 					mygui->WriteStatus("Rule added");
-					Redraw();
+					Calculate();
 					return;
 				}
 			}
@@ -332,8 +353,11 @@ void CORE::AddRule(unsigned type)
 					ThreePoints* rule = new ThreePoints(ob1->_x, ob1->_y, ob2->_p1->_x,
 						ob2->_p1->_y, ob2->_p2->_x, ob2->_p2->_y);
 					_storage_of_constraints.add(rule);
+					double* param[6] = { ob1->_x, ob1->_y, ob2->_p1->_x,
+						ob2->_p1->_y, ob2->_p2->_x, ob2->_p2->_y };
+					_storage_of_constraint.add(rule, *param);
 					mygui->WriteStatus("Rule added");
-					Redraw();
+					Calculate();
 					return;
 				}
 			}
@@ -356,8 +380,11 @@ void CORE::AddRule(unsigned type)
 						ThreePoints* rule = new ThreePoints(o1->_x, o1->_y, o2->_x,
 							o2->_y, o3->_x, o3->_y);
 						_storage_of_constraints.add(rule);
+						double* param[6] = { o1->_x, o1->_y, o2->_x,
+							o2->_y, o3->_x, o3->_y };
+						_storage_of_constraint.add(rule, *param);
 						mygui->WriteStatus("Rule added");
-						Redraw();
+						Calculate();
 						return;
 					}
 				}
@@ -370,6 +397,37 @@ void CORE::AddRule(unsigned type)
 			return;
 		}
 		}
+	}
+	case CONSTR_EXCONTACT:
+	{
+		if (_selected_objects.size() == 2)
+		{
+			ListViewer<ObjectSkin*> k(_selected_objects);
+			Point* o1 = dynamic_cast<Point*>(k.getValue());
+			if (o1)
+			{
+				k.moveNext();
+				Point* o2 = dynamic_cast<Point*>(k.getValue());
+				if (o2)
+				{
+					k.moveNext();
+					Point* o3 = dynamic_cast<Point*>(k.getValue());
+					if (o3)
+					{
+						ThreePoints* rule = new ThreePoints(o1->_x, o1->_y, o2->_x,
+							o2->_y, o3->_x, o3->_y);
+						_storage_of_constraints.add(rule);
+						double* param[6] = { o1->_x, o1->_y, o2->_x,
+							o2->_y, o3->_x, o3->_y };
+						_storage_of_constraint.add(rule, *param);
+						mygui->WriteStatus("Rule added");
+						Calculate();
+						return;
+					}
+				}
+			}
+		}
+		return;
 	}
 	default:
 	{

@@ -86,9 +86,17 @@ void CORE::Calculate()
 	ConstraintCollector collector;
 	Storage_Array< double* > parameters;
 	writeToLog("Generating graphs");
-	for (ListViewer< IConstraint* > i(_storage_of_constraints); i.canMoveNext(); i.moveNext())
+	/*for (ListViewer< IConstraint* > i(_storage_of_constraints); i.canMoveNext(); i.moveNext())
 	{
 		collector.addConstraint(i.getValue());
+	}*/
+	for (HashViewer<IConstraint*, double*> i(_storage_of_constraint); i.canMoveNext(); i.moveNext())
+	{
+		try
+		{
+			collector.addConstraint(i.getFirst());
+		}
+		catch (...) {}
 	}
 	for (ListViewer< double > i(_storage_of_parameters); i.canMoveNext(); i.moveNext())
 	{
