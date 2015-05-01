@@ -35,7 +35,7 @@ unsigned Color::getColor(char mode) const
 	return 0;
 }
 
-void Color::setColor(const Color c)
+void Color::setColor(const Color& c)
 {
 	_color = c._color;
 }

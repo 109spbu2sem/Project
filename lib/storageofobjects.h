@@ -24,7 +24,9 @@ public:
 	{
 	private:
 	public:
-
+		ObjectSkin* value();
+		void moveNext();
+		bool canMoveNext();
 	};
 
 };

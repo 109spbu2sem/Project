@@ -96,7 +96,6 @@ void MainWindow::on_openAddingBTN_clicked()
 {
     objectPropertiesWindow * ow = new objectPropertiesWindow(this);
 	 ow->exec();
-	 WriteError("Test Error");
 }
 
 void MainWindow::on_addBTN_clicked()

@@ -16,7 +16,11 @@ public:
 	ObjectSkin();
 	~ObjectSkin();
 	void changeVisible();
-	void changeSelect(bool b = 1);
+	void changeSelect(bool b);
+	void changeSelect()
+	{
+		_select = !_select;
+	}
    bool isSelected();
    bool isVisible();
 	virtual unsigned objectType() = 0;
