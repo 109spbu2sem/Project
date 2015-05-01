@@ -26,7 +26,7 @@ public:
 	unsigned operator()(const hashtype &h)
 	{
 		unsigned i = sizeof(h);
-		const char * str = static_cast<const char*>&h;
+		const char * str = reinterpret_cast<const char*>(&h);
 		static const unsigned b = 378551;
 		unsigned a = 63689;
 		unsigned hash = 0;
@@ -42,9 +42,9 @@ public:
 	}
 };
 
-template <typename FirstType, typename SecondType> class HeshViewer;
+template <typename FirstType, typename SecondType> class HashViewer;
 
-template <typename FirstType, typename SecondType, typename HeshType = HashRs<FirstType>> class HeshTable
+template <typename FirstType, typename SecondType, typename HashType = HashRs<FirstType>> class HashTable
 {
 private:
 	struct ABstruct
@@ -52,83 +52,164 @@ private:
 		FirstType first;
 		SecondType second;
 	};
-	Storage_Array<Storage_List<ABstruct>> _table;
-	HeshType _heshtable;
+	//Storage_Array<Storage_List<ABstruct>> _table;
+	Storage_List<ABstruct>* _table;
+	HashType _hashfun;
 	unsigned _size;
+	static const unsigned _TABLERATIO = 1021;
 public:
-	friend class HeshViewer < FirstType, SecondType > ;
-	HeshTable()
+	friend class HashViewer < FirstType, SecondType > ;
+	HashTable()
 	{
 		_size = 0;
+		_table = new Storage_List<ABstruct>[_TABLERATIO];
 	}
-	~HeshTable()
+	~HashTable()
 	{
-
+		Storage_List<ABstruct>* temp = _table;
+		for (unsigned i = 0; i < _TABLERATIO; i++)
+		{
+			temp->clear();
+			temp++;
+		}
+		delete[] _table;
 	}
 	void add(const FirstType &a, const SecondType &b)
 	{
-		_heshtable(a);
+		ABstruct c = { a, b };
+		_table[_hashfun(a) % _TABLERATIO].add(c);	
 		_size++;
 	}
 	bool find(const FirstType &a, const SecondType &b)
 	{
+		for (ListViewer<ABstruct> i(_table[_hashfun(a) % _TABLERATIO]);
+			i.canMoveNext(); i.moveNext())
+		{
+			if (i.getValue().second == b && i.getValue().first == a)
+				return true;
+		}
 		return false;
 	}
-	unsigned size()
+
+	bool remove(const FirstType &a, const SecondType &b)
+	{
+		unsigned f = _hashfun(a);
+		for (ListViewer<ABstruct> i(_table[f % _TABLERATIO]);
+			i.canMoveNext(); i.moveNext())
+		{
+			if (i.getValue().second == b && i.getValue().first == a)
+			{
+				_table[f % _TABLERATIO].remove(&i);
+				_size--;
+				return true;
+			}
+		}
+		return false;
+	}
+
+	bool remove(HashViewer<FirstType, SecondType>* viewer)
+	{
+		if (viewer)
+		{
+			viewer->_topViewer->remove(&viewer->_bottomViewer);
+			_size--;
+			return true;
+		}
+		return false;
+	}
+
+	void clear()
+	{
+		if (_table)
+		{
+			Storage_List<ABstruct>* temp = _table;
+			for (unsigned i = 0; i < _TABLERATIO; i++, temp++)
+			{
+				temp->clear();
+			}
+			_size = 0;
+		}
+	}
+
+	unsigned size() const
 	{
 		return _size;
 	}
-	HeshViewer<FirstType, SecondType> getStartingViewer()
+	HashViewer<FirstType, SecondType> getStartingViewer()
 	{
-		HeshViewer<FirstType, SecondType> v(*this);
+		HashViewer<FirstType, SecondType> v(*this);
 		return v;
 	}
 };
 
-template <typename FirstType, typename SecondType> class HeshViewer
+template <typename FirstType, typename SecondType> class HashViewer
 {
 private:
-	ArrayViewer < Storage_List < typename HeshTable<FirstType, SecondType>::ABstruct >> _topViewer;
-	ListViewer < typename HeshTable<FirstType, SecondType>::ABstruct > _bottomViewer;
+	Storage_List < typename HashTable<FirstType, SecondType>::ABstruct >* _topViewer;
+	Storage_List < typename HashTable<FirstType, SecondType>::ABstruct >* _end;
+	ListViewer < typename HashTable<FirstType, SecondType>::ABstruct > _bottomViewer;
 public:
-	HeshViewer();
-	HeshViewer(HeshTable<typename FirstType, typename SecondType>& table)
+	friend class HashTable < FirstType, SecondType > ;
+	HashViewer();
+	HashViewer(HashTable<typename FirstType, typename SecondType>& table)
 	{
-		_topViewer = table._table.getStartingViewer();
-		_bottomViewer = _topViewer.getValue().getStartingViewer();
-		while (_topViewer.canMoveNext() && _bottomViewer.canMoveNext())
+		_topViewer = table._table;
+		_end = &(_topViewer[HashTable<FirstType, SecondType>::_TABLERATIO - 1]);
+		_bottomViewer = _topViewer->getStartingViewer();
+		while (!_bottomViewer.canMoveNext() && _topViewer != _end )
 		{
-			_topViewer.moveNext();
-			_bottomViewer = _topViewer.getValue().getStartingViewer();
+			_topViewer++;
+			_bottomViewer = _topViewer->getStartingViewer();
 		}
 	}
 	FirstType& getFirst()
 	{
-		return _bottomViewer.getValue().first;
+		try
+		{
+			return _bottomViewer.getValue().first;
+		}
+		catch (std::out_of_range a)
+		{
+			throw a;
+		}
 	}
 	SecondType& getSecond()
 	{
-		return _bottomViewer.getValue().second;
+		try
+		{
+			return _bottomViewer.getValue().second;
+		}
+		catch (std::out_of_range a)
+		{
+			throw a;
+		}
 	}
 	bool canMoveNext()
 	{
-		if (_bottomViewer.canMoveNext() && _topViewer.canMoveNext()) return true;
+		if (_topViewer != _end) return true;
+		else if (_bottomViewer.canMoveNext()) return true;
 		return false;
 	}
 	void moveNext()
 	{
 		if (_bottomViewer.canMoveNext())
 			_bottomViewer.moveNext();
-		else if (_topViewer.canMoveNext())
-				_topViewer.moveNext();
-	}
-	void moveNextCell()
-	{
-		if (_topViewer.canMoveNext())
+		else while (_topViewer != _end)
 		{
-			_topViewer.moveNext();
+			_topViewer++;
+			_bottomViewer = _topViewer->getStartingViewer();
+			if (_bottomViewer.canMoveNext()) break;
+		}
+	}
+	void moveNextHash()
+	{
+		while (_topViewer != _end)
+		{
+			_topViewer++;
+			_bottomViewer = _topViewer->getStartingViewer();
+			if (_bottomViewer.canMoveNext()) break;
 		}
 	}
 };
 
-#endif // HESHTABLE_H
+#endif // HASHTABLE_H

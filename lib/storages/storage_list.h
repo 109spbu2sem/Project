@@ -79,6 +79,7 @@ public:
 	{
 		return _size;
 	}
+	//void delete(Storage_Array<Item>* s);
 	// get pointer to first cell of list
 	ListViewer<Item> getStartingViewer()
 	{
@@ -86,6 +87,8 @@ public:
 		return v;
 	};
 };
+
+//template<typename Item> void Storage_List<Item>::delete(Storage_Array<Item>* s) {}
 
 template<typename Item> Item* Storage_List<Item>::add(const Item &item)
 {
@@ -117,6 +120,7 @@ template<typename Item> void Storage_List<Item>::remove(ListViewer<Item>* viewer
 	if (_cur == viewer->_current)
 	{
 		viewer->_current = _cur->next;
+		_first = _cur->next;
 		delete _cur;
 		_size--;
 		return;
@@ -127,9 +131,12 @@ template<typename Item> void Storage_List<Item>::remove(ListViewer<Item>* viewer
 	}
 	if (_cur)
 	{
-		_cur->next = _cur->next->next;
-		delete viewer->_current;
-		viewer->_current = _cur->next;
+		if (_cur->next)
+		{
+			_cur->next = _cur->next->next;
+			delete viewer->_current;
+			viewer->_current = _cur->next;
+		}
 	}
 	_size--;
 	return;
@@ -171,7 +178,7 @@ public:
 	{
 		_current = l._first;
 	}
-	Item& getValue() { if (_current) return _current->data; throw std::runtime_error("No such item"); }
+	Item& getValue() { if (_current) return _current->data; throw std::out_of_range("No such item"); }
 	void moveNext() { if (_current) _current = _current->next; }
 	bool canMoveNext()
 	{
