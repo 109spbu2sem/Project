@@ -1,5 +1,6 @@
 #include "mycanvas.h"
 #include "gui.h"
+#include "objectpropertieswindow.h"
 #include <QPointF>
 
 MyCanvas::MyCanvas(QWidget *parent) : QGraphicsView(parent)
@@ -27,7 +28,24 @@ void MyCanvas::mousePressEvent(QMouseEvent *event)
 	case TOOL_Point:
 	{
 		mycore->AddObject(pt.x(), -pt.y());
+		break;
 	}
+	}
+}
+
+void MyCanvas::mouseDoubleClickEvent(QMouseEvent *event)
+{	
+	switch (_tool)
+	{
+	case TOOL_Select:
+	{
+		QPointF pt = mapToScene(event->pos());
+		objectPropertiesWindow ob(this);
+		ob.exec();
+		return;
+	}
+	default:
+		return;
 	}
 }
 

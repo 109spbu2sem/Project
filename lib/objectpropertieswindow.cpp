@@ -6,10 +6,6 @@ objectPropertiesWindow::objectPropertiesWindow(QWidget *parent) :
 	ui(new Ui::objectPropertiesWindow)
 {
 	ui->setupUi(this);	
-	ui->textX2->setVisible(false);
-	ui->textY2->setVisible(false);
-	ui->label_3->setVisible(false);
-	ui->label_4->setVisible(false);
 }
 
 objectPropertiesWindow::~objectPropertiesWindow()
@@ -17,67 +13,58 @@ objectPropertiesWindow::~objectPropertiesWindow()
 	delete ui;
 }
 
-void objectPropertiesWindow::on_objectTypeBox_currentIndexChanged(int index)
-{
-	switch(index)
-	{
-	case 0:
-	{
-		ui->label->setText("X:");
-		ui->label_2->setText("Y:");
-		ui->textX2->setVisible(false);
-		ui->textY2->setVisible(false);
-		ui->label_4->setVisible(false);
-		ui->label_3->setVisible(false);
-		ui->textX2->clear();
-		ui->textY2->clear();
-		break;
-	}
-	case 1:
-	{
-		ui->label->setText("X1:");
-		ui->label_2->setText("Y1:");
-		ui->label_3->setText("X2:");
-		ui->textX2->setVisible(true);
-		ui->textY2->setVisible(true);
-		ui->label_4->setVisible(true);
-		ui->label_3->setVisible(true);
-		ui->textX2->setPlaceholderText("X");
-		break;
-	}
-	case 2:
-	{
-		ui->textX2->setPlaceholderText("R");
-		ui->label_3->setText("Radius:");
-		ui->label->setText("X:");
-		ui->label_2->setText("Y:");
-		ui->label_3->setVisible(true);
-		ui->textX2->setVisible(true);
-		ui->textY2->setVisible(false);
-		ui->label_4->setVisible(false);
-		ui->textY2->clear();
-		break;
-	}
-	}
-}
-
 void objectPropertiesWindow::on_buttonBox_accepted()
 {
-	switch (ui->objectTypeBox->count())
-	{
-	//ADD POINT
-	case 0:
-	{
-		break;
-	}
-	//ADD SEGMENT
-	case 1:
-	{
-		break;
-	}
-	case 2:
-	{
-		break;
-	}
-	}
+	this->close();
+}
+
+void objectPropertiesWindow::on_buttonBox_rejected()
+{
+	this->close();
+}
+
+void objectPropertiesWindow::setupPointProperties(unsigned id, double x, double y, QColor& c)
+{
+	ui->textX2->setVisible(false);
+	ui->textY2->setVisible(false);
+	ui->label_3->setVisible(false);
+	ui->label_4->setVisible(false);
+	QString str;
+	ui->idLabel->setText(str.setNum(id));
+	ui->typeLabel->setText("Point");
+	ui->editR->setText(str.setNum(c.red()));
+	ui->editG->setText(str.setNum(c.green()));
+	ui->editB->setText(str.setNum(c.blue()));
+	ui->textX1->setText(str.setNum(x));
+	ui->textY1->setText(str.setNum(y));
+}
+
+void objectPropertiesWindow::setupSegmentProperties(unsigned id, double x, double y, double x2, double y2, QColor& c)
+{
+	QString str;
+	ui->idLabel->setText(str.setNum(id));
+	ui->typeLabel->setText("Segment");
+	ui->editR->setText(str.setNum(c.red()));
+	ui->editG->setText(str.setNum(c.green()));
+	ui->editB->setText(str.setNum(c.blue()));
+	ui->textX1->setText(str.setNum(x));
+	ui->textY1->setText(str.setNum(y));
+	ui->textX2->setText(str.setNum(x2));
+	ui->textY2->setText(str.setNum(y2));
+}
+
+void objectPropertiesWindow::setupCircleProperties(unsigned id, double x, double y, double r, QColor& c)
+{
+	ui->textY2->setVisible(false);
+	ui->label_3->setText("R");
+	ui->label_4->setVisible(false);
+	QString str;
+	ui->idLabel->setText(str.setNum(id));
+	ui->typeLabel->setText("Circle");
+	ui->editR->setText(str.setNum(c.red()));
+	ui->editG->setText(str.setNum(c.green()));
+	ui->editB->setText(str.setNum(c.blue()));
+	ui->textX1->setText(str.setNum(x));
+	ui->textY1->setText(str.setNum(y));
+	ui->textX2->setText(str.setNum(r));
 }

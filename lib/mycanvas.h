@@ -32,6 +32,7 @@ public:
 
 public slots:
 	void mousePressEvent(QMouseEvent *event);
+	void mouseDoubleClickEvent(QMouseEvent *event);
 private:
 	QGraphicsScene* mainscene;
 	CORE* mycore;
