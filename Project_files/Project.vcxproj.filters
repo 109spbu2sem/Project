@@ -113,6 +113,9 @@
     <ClCompile Include="..\lib\settings.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="..\lib\storageofobjects.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\lib\constraints\AngleSegment-Segment.h">
@@ -194,6 +197,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="..\lib\storages\queue.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\lib\constraints\CircleContact.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

@@ -19,8 +19,8 @@
 
 QT_BEGIN_MOC_NAMESPACE
 struct qt_meta_stringdata_objectPropertiesWindow_t {
-    QByteArrayData data[5];
-    char stringdata[89];
+    QByteArrayData data[4];
+    char stringdata[68];
 };
 #define QT_MOC_LITERAL(idx, ofs, len) \
     Q_STATIC_BYTE_ARRAY_DATA_HEADER_INITIALIZER_WITH_OFFSET(len, \
@@ -30,15 +30,13 @@ struct qt_meta_stringdata_objectPropertiesWindow_t {
 static const qt_meta_stringdata_objectPropertiesWindow_t qt_meta_stringdata_objectPropertiesWindow = {
     {
 QT_MOC_LITERAL(0, 0, 22), // "objectPropertiesWindow"
-QT_MOC_LITERAL(1, 23, 36), // "on_objectTypeBox_currentIndex..."
-QT_MOC_LITERAL(2, 60, 0), // ""
-QT_MOC_LITERAL(3, 61, 5), // "index"
-QT_MOC_LITERAL(4, 67, 21) // "on_buttonBox_accepted"
+QT_MOC_LITERAL(1, 23, 21), // "on_buttonBox_rejected"
+QT_MOC_LITERAL(2, 45, 0), // ""
+QT_MOC_LITERAL(3, 46, 21) // "on_buttonBox_accepted"
 
     },
-    "objectPropertiesWindow\0"
-    "on_objectTypeBox_currentIndexChanged\0"
-    "\0index\0on_buttonBox_accepted"
+    "objectPropertiesWindow\0on_buttonBox_rejected\0"
+    "\0on_buttonBox_accepted"
 };
 #undef QT_MOC_LITERAL
 
@@ -56,11 +54,11 @@ static const uint qt_meta_data_objectPropertiesWindow[] = {
        0,       // signalCount
 
  // slots: name, argc, parameters, tag, flags
-       1,    1,   24,    2, 0x08 /* Private */,
-       4,    0,   27,    2, 0x08 /* Private */,
+       1,    0,   24,    2, 0x08 /* Private */,
+       3,    0,   25,    2, 0x08 /* Private */,
 
  // slots: parameters
-    QMetaType::Void, QMetaType::Int,    3,
+    QMetaType::Void,
     QMetaType::Void,
 
        0        // eod
@@ -71,11 +69,12 @@ void objectPropertiesWindow::qt_static_metacall(QObject *_o, QMetaObject::Call _
     if (_c == QMetaObject::InvokeMetaMethod) {
         objectPropertiesWindow *_t = static_cast<objectPropertiesWindow *>(_o);
         switch (_id) {
-        case 0: _t->on_objectTypeBox_currentIndexChanged((*reinterpret_cast< int(*)>(_a[1]))); break;
+        case 0: _t->on_buttonBox_rejected(); break;
         case 1: _t->on_buttonBox_accepted(); break;
         default: ;
         }
     }
+    Q_UNUSED(_a);
 }
 
 const QMetaObject objectPropertiesWindow::staticMetaObject = {

@@ -26,6 +26,7 @@
 #include <QtWidgets/QRadioButton>
 #include <QtWidgets/QStatusBar>
 #include <QtWidgets/QTableWidget>
+#include <QtWidgets/QVBoxLayout>
 #include <QtWidgets/QWidget>
 #include "mycanvas.h"
 
@@ -69,7 +70,7 @@ public:
     QTableWidget *objectsList;
     QPushButton *pushButton_2;
     QWidget *layoutWidget3;
-    QHBoxLayout *horizontalLayout_3;
+    QVBoxLayout *verticalLayout;
     QRadioButton *selectTool;
     QRadioButton *pointTool;
     QRadioButton *segmentTool;
@@ -84,7 +85,9 @@ public:
     {
         if (MainWindow->objectName().isEmpty())
             MainWindow->setObjectName(QStringLiteral("MainWindow"));
-        MainWindow->resize(1220, 687);
+        MainWindow->resize(1726, 771);
+        MainWindow->setMinimumSize(QSize(1726, 771));
+        MainWindow->setMaximumSize(QSize(1727, 792));
         QPalette palette;
         QBrush brush(QColor(255, 255, 255, 255));
         brush.setStyle(Qt::SolidPattern);
@@ -102,14 +105,14 @@ public:
         centralWidget->setObjectName(QStringLiteral("centralWidget"));
         graphicsView = new MyCanvas(centralWidget);
         graphicsView->setObjectName(QStringLiteral("graphicsView"));
-        graphicsView->setGeometry(QRect(10, 30, 821, 591));
+        graphicsView->setGeometry(QRect(350, 5, 1371, 731));
         graphicsView->viewport()->setProperty("cursor", QVariant(QCursor(Qt::CrossCursor)));
         openAddingBTN = new QPushButton(centralWidget);
         openAddingBTN->setObjectName(QStringLiteral("openAddingBTN"));
-        openAddingBTN->setGeometry(QRect(1142, 590, 61, 28));
+        openAddingBTN->setGeometry(QRect(5, 510, 61, 28));
         groupBox = new QGroupBox(centralWidget);
         groupBox->setObjectName(QStringLiteral("groupBox"));
-        groupBox->setGeometry(QRect(840, 15, 196, 221));
+        groupBox->setGeometry(QRect(10, 40, 196, 221));
         typesOfObjects = new QComboBox(groupBox);
         typesOfObjects->setObjectName(QStringLiteral("typesOfObjects"));
         typesOfObjects->setGeometry(QRect(15, 20, 86, 26));
@@ -214,7 +217,7 @@ public:
 
         groupBox_2 = new QGroupBox(centralWidget);
         groupBox_2->setObjectName(QStringLiteral("groupBox_2"));
-        groupBox_2->setGeometry(QRect(845, 255, 226, 86));
+        groupBox_2->setGeometry(QRect(10, 270, 226, 86));
         ruleBox = new QComboBox(groupBox_2);
         ruleBox->setObjectName(QStringLiteral("ruleBox"));
         ruleBox->setGeometry(QRect(10, 20, 206, 22));
@@ -243,57 +246,61 @@ public:
 
         calculateBTN = new QPushButton(centralWidget);
         calculateBTN->setObjectName(QStringLiteral("calculateBTN"));
-        calculateBTN->setGeometry(QRect(845, 345, 101, 28));
+        calculateBTN->setGeometry(QRect(70, 510, 101, 28));
         objectsList = new QTableWidget(centralWidget);
         objectsList->setObjectName(QStringLiteral("objectsList"));
-        objectsList->setGeometry(QRect(840, 425, 236, 192));
+        objectsList->setGeometry(QRect(5, 540, 236, 192));
         pushButton_2 = new QPushButton(centralWidget);
         pushButton_2->setObjectName(QStringLiteral("pushButton_2"));
-        pushButton_2->setGeometry(QRect(845, 385, 101, 28));
+        pushButton_2->setGeometry(QRect(245, 115, 101, 28));
         layoutWidget3 = new QWidget(centralWidget);
         layoutWidget3->setObjectName(QStringLiteral("layoutWidget3"));
-        layoutWidget3->setGeometry(QRect(10, 5, 310, 22));
-        horizontalLayout_3 = new QHBoxLayout(layoutWidget3);
-        horizontalLayout_3->setSpacing(6);
-        horizontalLayout_3->setContentsMargins(11, 11, 11, 11);
-        horizontalLayout_3->setObjectName(QStringLiteral("horizontalLayout_3"));
-        horizontalLayout_3->setContentsMargins(0, 0, 0, 0);
+        layoutWidget3->setGeometry(QRect(265, 5, 80, 103));
+        verticalLayout = new QVBoxLayout(layoutWidget3);
+        verticalLayout->setSpacing(6);
+        verticalLayout->setContentsMargins(11, 11, 11, 11);
+        verticalLayout->setObjectName(QStringLiteral("verticalLayout"));
+        verticalLayout->setContentsMargins(0, 0, 0, 0);
         selectTool = new QRadioButton(layoutWidget3);
         selectTool->setObjectName(QStringLiteral("selectTool"));
+        selectTool->setLayoutDirection(Qt::RightToLeft);
         selectTool->setChecked(true);
 
-        horizontalLayout_3->addWidget(selectTool);
+        verticalLayout->addWidget(selectTool);
 
         pointTool = new QRadioButton(layoutWidget3);
         pointTool->setObjectName(QStringLiteral("pointTool"));
+        pointTool->setLayoutDirection(Qt::RightToLeft);
 
-        horizontalLayout_3->addWidget(pointTool);
+        verticalLayout->addWidget(pointTool);
 
         segmentTool = new QRadioButton(layoutWidget3);
         segmentTool->setObjectName(QStringLiteral("segmentTool"));
+        segmentTool->setLayoutDirection(Qt::RightToLeft);
         segmentTool->setCheckable(false);
 
-        horizontalLayout_3->addWidget(segmentTool);
+        verticalLayout->addWidget(segmentTool);
 
         circleTool = new QRadioButton(layoutWidget3);
         circleTool->setObjectName(QStringLiteral("circleTool"));
+        circleTool->setLayoutDirection(Qt::RightToLeft);
         circleTool->setCheckable(false);
 
-        horizontalLayout_3->addWidget(circleTool);
+        verticalLayout->addWidget(circleTool);
 
         concatinateBTN = new QPushButton(centralWidget);
         concatinateBTN->setObjectName(QStringLiteral("concatinateBTN"));
-        concatinateBTN->setGeometry(QRect(955, 385, 121, 28));
+        concatinateBTN->setGeometry(QRect(225, 150, 121, 28));
         saveButton = new QPushButton(centralWidget);
         saveButton->setObjectName(QStringLiteral("saveButton"));
-        saveButton->setGeometry(QRect(1040, 20, 75, 23));
+        saveButton->setGeometry(QRect(5, 10, 75, 23));
         saveAsButton = new QPushButton(centralWidget);
         saveAsButton->setObjectName(QStringLiteral("saveAsButton"));
-        saveAsButton->setGeometry(QRect(1130, 20, 75, 23));
+        saveAsButton->setGeometry(QRect(85, 10, 75, 23));
         MainWindow->setCentralWidget(centralWidget);
         menuBar = new QMenuBar(MainWindow);
         menuBar->setObjectName(QStringLiteral("menuBar"));
-        menuBar->setGeometry(QRect(0, 0, 1220, 21));
+        menuBar->setGeometry(QRect(0, 0, 1726, 26));
         MainWindow->setMenuBar(menuBar);
         statusBar = new QStatusBar(MainWindow);
         statusBar->setObjectName(QStringLiteral("statusBar"));

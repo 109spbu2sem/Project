@@ -151,6 +151,7 @@
     <ClCompile Include="..\lib\objectpropertieswindow.cpp" />
     <ClCompile Include="..\lib\Save.cpp" />
     <ClCompile Include="..\lib\settings.cpp" />
+    <ClCompile Include="..\lib\storageofobjects.cpp" />
     <ClCompile Include="..\lib\structures.cpp" />
     <ClCompile Include="Release\moc_objectpropertieswindow.cpp">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
@@ -159,6 +160,7 @@
   <ItemGroup>
     <ClInclude Include="..\lib\constraints\AngleSegment-Segment.h" />
     <ClInclude Include="..\lib\constraints\AspectRatio.h" />
+    <ClInclude Include="..\lib\constraints\CircleContact.h" />
     <ClInclude Include="..\lib\constraints\Collector.h" />
     <ClInclude Include="..\lib\Color.h" />
     <ClInclude Include="..\lib\constraints\DistancePoint-Point.h" />
