@@ -212,8 +212,6 @@ void MainWindow::on_ruleBox_currentIndexChanged(int index)
 {
     switch (index)
 	{
-	case 5:
-	case 6:
 	case 2:
 	{
 		ui->ruleValueEdit->setEnabled(false);
@@ -231,54 +229,47 @@ void MainWindow::on_ruleBox_currentIndexChanged(int index)
 
 void MainWindow::on_pushButton_clicked()
 {
-	switch (ui->ruleBox->currentIndex())
+    switch (ui->ruleBox->currentIndex())
 	{
 	case 0:
 	{
-					if (!ui->ruleValueEdit->text().isEmpty())
-						mycore->AddRule(CONSTR_P2PDIST, ui->ruleValueEdit->text().toDouble());
-					else
-						WriteStatus("Need value");
-					break;
+		if (!ui->ruleValueEdit->text().isEmpty())
+			mycore->AddRule(CONSTR_P2PDIST, ui->ruleValueEdit->text().toDouble());
+		else
+			WriteStatus("Need value");
+		break;
 	}
 	case 1:
 	{
-					if (!ui->ruleValueEdit->text().isEmpty())
-						mycore->AddRule(CONSTR_P2LINEDIST, ui->ruleValueEdit->text().toDouble());
-					else
-						WriteStatus("Need value");
-					break;
+		if (!ui->ruleValueEdit->text().isEmpty())
+			mycore->AddRule(CONSTR_P2LINEDIST, ui->ruleValueEdit->text().toDouble());
+		else
+			WriteStatus("Need value");
+		break;
 	}
 	case 2:
 	{
-					mycore->AddRule(CONSTR_3PONLINE);
-					break;
+		if (!ui->ruleValueEdit->text().isEmpty())
+			mycore->AddRule(CONSTR_3PONLINE);
+		else
+			WriteStatus("Need value");
+		break;
 	}
 	case 3:
 	{
-					if (!ui->ruleValueEdit->text().isEmpty())
-						mycore->AddRule(CONSTR_3PRATIO, ui->ruleValueEdit->text().toDouble());
-					else
-						WriteStatus("Need value");
-					break;
+		if (!ui->ruleValueEdit->text().isEmpty())
+			mycore->AddRule(CONSTR_3PRATIO, ui->ruleValueEdit->text().toDouble());
+		else
+			WriteStatus("Need value");
+		break;
 	}
 	case 4:
 	{
-					if (!ui->ruleValueEdit->text().isEmpty())
-						mycore->AddRule(CONSTR_L2LANGLE, ui->ruleValueEdit->text().toDouble());
-					else
-						WriteStatus("Need value");
-					break;
-	}
-	case 5:
-	{
-					mycore->AddRule(CONSTR_EXCONTACT);
-					break;
-	}
-	case 6:
-	{
-					mycore->AddRule(CONSTR_INCONTACT);
-					break;
+		if (!ui->ruleValueEdit->text().isEmpty())
+			mycore->AddRule(CONSTR_L2LANGLE, ui->ruleValueEdit->text().toDouble());
+		else
+			WriteStatus("Need value");
+		break;
 	}
 	}
 	ui->ruleValueEdit->clear();
@@ -314,4 +305,12 @@ void MainWindow::on_saveAsButton_clicked() {
 		"C://",
 		"Text File (*.txt);; Xml File (*.xml)");
 	mycore->IWantSaveAs(filename);
+}
+
+void MainWindow::on_loadButton_clicked() {
+	QString filename = QFileDialog::getOpenFileName(
+		this, tr("Open File"),
+		"C://",
+		"Text File (*.txt);; Xml File (*.xml)");
+	mycore->IWantLoad(filename);
 }

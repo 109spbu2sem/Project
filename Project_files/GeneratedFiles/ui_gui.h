@@ -78,6 +78,7 @@ public:
     QPushButton *concatinateBTN;
     QPushButton *saveButton;
     QPushButton *saveAsButton;
+    QPushButton *loadButton;
     QMenuBar *menuBar;
     QStatusBar *statusBar;
 
@@ -86,6 +87,7 @@ public:
         if (MainWindow->objectName().isEmpty())
             MainWindow->setObjectName(QStringLiteral("MainWindow"));
         MainWindow->resize(1726, 771);
+        MainWindow->setMinimumSize(QSize(1726, 771));
         MainWindow->setMaximumSize(QSize(1727, 792));
         QPalette palette;
         QBrush brush(QColor(255, 255, 255, 255));
@@ -296,6 +298,9 @@ public:
         saveAsButton = new QPushButton(centralWidget);
         saveAsButton->setObjectName(QStringLiteral("saveAsButton"));
         saveAsButton->setGeometry(QRect(85, 10, 75, 23));
+        loadButton = new QPushButton(centralWidget);
+        loadButton->setObjectName(QStringLiteral("loadButton"));
+        loadButton->setGeometry(QRect(170, 10, 75, 23));
         MainWindow->setCentralWidget(centralWidget);
         menuBar = new QMenuBar(MainWindow);
         menuBar->setObjectName(QStringLiteral("menuBar"));
@@ -344,8 +349,6 @@ public:
          << QApplication::translate("MainWindow", "Three points on line", 0)
          << QApplication::translate("MainWindow", "Ratio between three points", 0)
          << QApplication::translate("MainWindow", "Angle", 0)
-         << QApplication::translate("MainWindow", "External Circle Contact", 0)
-         << QApplication::translate("MainWindow", "Internal Circle Contact", 0)
         );
         ruleValueLabel->setText(QApplication::translate("MainWindow", "Value: ", 0));
         pushButton->setText(QApplication::translate("MainWindow", "Add", 0));
@@ -358,6 +361,7 @@ public:
         concatinateBTN->setText(QApplication::translate("MainWindow", "Concatinate points", 0));
         saveButton->setText(QApplication::translate("MainWindow", "Save", 0));
         saveAsButton->setText(QApplication::translate("MainWindow", "Save as...", 0));
+        loadButton->setText(QApplication::translate("MainWindow", "Load", 0));
     } // retranslateUi
 
 };

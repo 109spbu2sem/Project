@@ -6,6 +6,7 @@
 #include "global.h"
 #include "gui.h"
 #include "Save.h"
+#include "Load.h"
 #include <string>
 #include <QString>
 #include <fstream>
@@ -15,6 +16,7 @@
 
 class GUI;
 class Save;
+class Load;
 
 class CORE
 {
@@ -22,6 +24,7 @@ private:
 	//friend class Save;
 	GUI* mygui;
 	Save* mysave;
+	Load* myload;
 
 	Storage_List<double> _storage_of_parameters;
 	Storage_List<double> _storage_of_constants;
@@ -51,10 +54,11 @@ public:
 	CORE();
 	CORE(GUI* gui);
 	~CORE();
-	void Connect(GUI* gui, Save* save)
+	void Connect(GUI* gui, Save* save, Load* load)
 	{
 		mygui = gui;
 		mysave = save;
+		myload = load;
 		writeToLog("GUI connected to CORE", 2);
 		writeToLog("SAVE connected to CORE", 2);
 	}
@@ -79,7 +83,7 @@ public:
 
 	void IWantSave();
 	void IWantSaveAs(QString fileway);
-	void IWantLoad(std::string fileway);
+	void IWantLoad(QString fileway);
 };
 
 #endif // CORE_H

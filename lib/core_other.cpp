@@ -201,7 +201,6 @@ void CORE::IWantSave()
 	if (_storage_of_points.size() != 0) {
 		ListViewer<Point> v(_storage_of_points);
 		while (v.canMoveNext()) {
-			Color c;
 			mysave->DrawPoint(v.getValue().id.getID(), *v.getValue()._x, *v.getValue()._y, v.getValue().color.getColor());
 			v.moveNext();
 		}
@@ -209,7 +208,6 @@ void CORE::IWantSave()
 	if (_storage_of_segments.size() != 0) {
 		ListViewer<Segment> v(_storage_of_segments);
 		while (v.canMoveNext()) {
-			Color c;
 			mysave->DrawSegment(v.getValue().id.getID(), *v.getValue()._p1->_x, *v.getValue()._p1->_y,
 				*v.getValue()._p2->_x, *v.getValue()._p2->_y, v.getValue().color.getColor());
 			v.moveNext();
@@ -218,7 +216,6 @@ void CORE::IWantSave()
 	if (_storage_of_circles.size() != 0) {
 		ListViewer<Circle> v(_storage_of_circles);
 		while (v.canMoveNext()) {
-			Color c;
 			mysave->DrawCircle(v.getValue().id.getID(), *v.getValue()._o->_x, *v.getValue()._o->_y,
 				*v.getValue()._r, v.getValue().color.getColor());
 			v.moveNext();
@@ -232,7 +229,8 @@ void CORE::IWantSaveAs(QString way) {
 	IWantSave();
 }
 
-void CORE::IWantLoad(std::string fileway)
+void CORE::IWantLoad(QString way)
 {
-
+	myload->fileWay(way);
+	myload->begin();
 }

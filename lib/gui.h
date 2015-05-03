@@ -61,6 +61,8 @@ private slots:
 	void on_saveButton_clicked();
 
 	void on_saveAsButton_clicked();
+
+	void on_loadButton_clicked();
 	
 private:
 	Ui::MainWindow *ui;
