@@ -10,12 +10,6 @@
     <height>771</height>
    </rect>
   </property>
-  <property name="minimumSize">
-   <size>
-    <width>1726</width>
-    <height>771</height>
-   </size>
-  </property>
   <property name="maximumSize">
    <size>
     <width>1727</width>
@@ -386,6 +380,16 @@
        <string>Angle</string>
       </property>
      </item>
+     <item>
+      <property name="text">
+       <string>External Circle Contact</string>
+      </property>
+     </item>
+     <item>
+      <property name="text">
+       <string>Internal Circle Contact</string>
+      </property>
+     </item>
     </widget>
     <widget class="QWidget" name="layoutWidget">
      <property name="geometry">
@@ -560,7 +564,7 @@
      <x>0</x>
      <y>0</y>
      <width>1726</width>
-     <height>26</height>
+     <height>21</height>
     </rect>
    </property>
   </widget>

@@ -86,7 +86,6 @@ public:
         if (MainWindow->objectName().isEmpty())
             MainWindow->setObjectName(QStringLiteral("MainWindow"));
         MainWindow->resize(1726, 771);
-        MainWindow->setMinimumSize(QSize(1726, 771));
         MainWindow->setMaximumSize(QSize(1727, 792));
         QPalette palette;
         QBrush brush(QColor(255, 255, 255, 255));
@@ -300,7 +299,7 @@ public:
         MainWindow->setCentralWidget(centralWidget);
         menuBar = new QMenuBar(MainWindow);
         menuBar->setObjectName(QStringLiteral("menuBar"));
-        menuBar->setGeometry(QRect(0, 0, 1726, 26));
+        menuBar->setGeometry(QRect(0, 0, 1726, 21));
         MainWindow->setMenuBar(menuBar);
         statusBar = new QStatusBar(MainWindow);
         statusBar->setObjectName(QStringLiteral("statusBar"));
@@ -345,6 +344,8 @@ public:
          << QApplication::translate("MainWindow", "Three points on line", 0)
          << QApplication::translate("MainWindow", "Ratio between three points", 0)
          << QApplication::translate("MainWindow", "Angle", 0)
+         << QApplication::translate("MainWindow", "External Circle Contact", 0)
+         << QApplication::translate("MainWindow", "Internal Circle Contact", 0)
         );
         ruleValueLabel->setText(QApplication::translate("MainWindow", "Value: ", 0));
         pushButton->setText(QApplication::translate("MainWindow", "Add", 0));

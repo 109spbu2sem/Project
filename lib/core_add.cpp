@@ -46,7 +46,7 @@ void CORE::AddObject(double point_x1, double point_y1, double point_x2, double p
 void CORE::AddObject(double point_x, double point_y, double radius, Color color, unsigned id)
 {
 	Point p(_storage_of_parameters.add(point_x), _storage_of_parameters.add(point_y));
-	Circle c(_storage_of_points.add(p), _storage_of_parameters.add(radius));
+	Circle c(_storage_of_points.add(p), _storage_of_constants.add(radius));
 	c.color.setColor(color);
 	_storage_of_circles.add(c);
 	mygui->WriteStatus("Circle added");
@@ -403,36 +403,60 @@ void CORE::AddRule(unsigned type)
 		if (_selected_objects.size() == 2)
 		{
 			ListViewer<ObjectSkin*> k(_selected_objects);
-			Point* o1 = dynamic_cast<Point*>(k.getValue());
+			Circle* o1 = dynamic_cast<Circle*>(k.getValue());
 			if (o1)
 			{
 				k.moveNext();
-				Point* o2 = dynamic_cast<Point*>(k.getValue());
+				Circle* o2 = dynamic_cast<Circle*>(k.getValue());
 				if (o2)
 				{
-					k.moveNext();
-					Point* o3 = dynamic_cast<Point*>(k.getValue());
-					if (o3)
-					{
-						ThreePoints* rule = new ThreePoints(o1->_x, o1->_y, o2->_x,
-							o2->_y, o3->_x, o3->_y);
-						_storage_of_constraints.add(rule);
-						double* param[6] = { o1->_x, o1->_y, o2->_x,
-							o2->_y, o3->_x, o3->_y };
-						_storage_of_constraint.add(rule, *param);
-						mygui->WriteStatus("Rule added");
-						Calculate();
-						return;
-					}
+
+					ExternalContactCircle* rule = new ExternalContactCircle(o1->_o->_x, o1->_o->_y, o2->_o->_x,
+						o2->_o->_y, o1->_r, o2->_r);
+					_storage_of_constraints.add(rule);
+					double* param[6] = { o1->_o->_x, o1->_o->_y, o2->_o->_x,
+						o2->_o->_y, o1->_r, o2->_r };
+					_storage_of_constraint.add(rule, *param);
+					mygui->WriteStatus("Rule added");
+					Calculate();
+					return;
+
 				}
 			}
 		}
 		return;
+	}
+	case CONSTR_INCONTACT:
+	{
+							 if (_selected_objects.size() == 2)
+							 {
+								 ListViewer<ObjectSkin*> k(_selected_objects);
+								 Circle* o1 = dynamic_cast<Circle*>(k.getValue());
+								 if (o1)
+								 {
+									 k.moveNext();
+									 Circle* o2 = dynamic_cast<Circle*>(k.getValue());
+									 if (o2)
+									 {
+										 InternalContactCircle* rule = new InternalContactCircle(o1->_o->_x, o1->_o->_y, o2->_o->_x,
+											 o2->_o->_y, o1->_r, o2->_r);
+										 _storage_of_constraints.add(rule);
+										 double* param[6] = { o1->_o->_x, o1->_o->_y, o2->_o->_x,
+											 o2->_o->_y, o1->_r, o2->_r };
+										 _storage_of_constraint.add(rule, *param);
+										 mygui->WriteStatus("Rule added");
+										 Calculate();
+										 return;
+									 }
+								 }
+							 }
+							 return;
 	}
 	default:
 	{
 		mygui->WriteStatus("Wrong type of rule.");
 		return;
 	}
+
 	}
 }
