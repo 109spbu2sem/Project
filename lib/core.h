@@ -13,6 +13,8 @@
 #include "settings.h"
 #include <ctime>
 #include "storages\heshtable.h"
+#include "storages\AVL_tree.h"
+#include "storageofobjects.h"
 
 class GUI;
 class Save;
@@ -21,7 +23,6 @@ class Load;
 class CORE
 {
 private:
-	//friend class Save;
 	GUI* mygui;
 	Save* mysave;
 	Load* myload;
@@ -34,6 +35,7 @@ private:
 	Storage_List<IConstraint*> _storage_of_constraints;
 	HashTable<IConstraint*, double*> _storage_of_constraint;
 	Storage_List<ObjectSkin*> _selected_objects;
+	StorageOfObjects _storage_of_objects;
 
 	bool isInArea(double x, double y, double x1, double y1, double x2, double y2);
 	void BuildFigure(IConstraint*, Storage_Array<double*>*);
@@ -44,11 +46,7 @@ private:
 	Settings mysettings;
 	std::fstream _logfile;
 
-	void writeToLog(std::string, char = 1);
-	void writeToLog(int, char = 1);
-	void writeToLog(double, char = 1);
-	void writeToLog(unsigned, char = 1);
-	void writeToLog(long long, char = 1);
+	std::string GenerateTimeString(char*, char*);
 
 public:
 	CORE();
@@ -61,11 +59,23 @@ public:
 		myload = load;
 		writeToLog("GUI connected to CORE", 2);
 		writeToLog("SAVE connected to CORE", 2);
+		writeToLog("LOAD connected to CORE", 2);
 	}
+
+	void writeToLog(std::string, char = 1);
+	void writeToLog(int, char = 1);
+	void writeToLog(double, char = 1);
+	void writeToLog(unsigned, char = 1);
+	void writeToLog(long long, char = 1);
+	void writeToLog(int, std::string, char = 1);
+	void writeToLog(unsigned, std::string, char = 1);
+	void writeToLog(double, std::string, char = 1);
 
 	void Calculate();
 
-	void AddObject(double point_x, double point_y, Color color = COLORDEF, unsigned id = 0); // add point
+	unsigned AddObject(double point_x, double point_y, Color color = COLORDEF, unsigned id = 0, bool wait = false); // add point
+	unsigned AddObject(unsigned point1_id, unsigned point2_id, Color color = COLORDEF, unsigned id = 0, bool wait = false); // add segment for 2 points
+	unsigned AddObject(unsigned point_id, double radius, Color color = COLORDEF, unsigned id = 0, bool wait = false);
 	void AddObject(double point_x1, double point_y1, double point_x2, double point_y2, Color color = COLORDEF, unsigned id = 0); // add segment, automatical adds 2 points
 	void AddObject(double point_x, double point_y, double radius, Color color = COLORDEF, unsigned id = 0); // add circle, automatical add center of circle
 	void ConcatenatePoints();
@@ -80,6 +90,7 @@ public:
 	void ClearSelection();
 
 	void DeleteSelected();
+	void DeleteAll();
 
 	void IWantSave();
 	void IWantSaveAs(QString fileway);

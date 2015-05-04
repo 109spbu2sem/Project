@@ -4,6 +4,8 @@
 #include <fstream>
 #include <string>
 #include <ctime>
+#include <string>
+#include <direct.h>
 
 CORE::CORE()
 {
@@ -11,12 +13,12 @@ CORE::CORE()
 	Settings::SettingsLoader::setupSettings(&mysettings);
 	if (mysettings.WritelogMode() >= 1)
 	{
-		_logfile.open("logfile.txt", std::ios_base::out | std::ios_base::app);
-		if (!_logfile.is_open())
-			_logfile.open("logfile.txt", std::ios_base::out | std::ios_base::trunc);
+		_mkdir("logfiles");
+		_logfile.open(GenerateTimeString("logfiles/logfile", ".log").c_str(), std::ios_base::out | std::ios_base::trunc);
+		if (!_logfile.is_open()) mysettings.setWritelogMode(0);
 	}
 	writeToLog("--------------------------------------\nOPEN at ");
-	writeToLog(static_cast<long long>(time(0)));
+	writeToLog(GenerateTimeString("", "").c_str());
 	writeToLog("--------------------------------------");
 	writeToLog("Settings = ok", 2);
 	writeToLog("GUI was not connected to CORE", 2);
@@ -42,7 +44,7 @@ CORE::CORE(GUI* gui)
 CORE::~CORE()
 {
 	writeToLog("--------------------------------------\n CLOSE at ");
-	writeToLog(static_cast<long long>(time(0)));
+	writeToLog(GenerateTimeString("", "").c_str());
 	writeToLog("--------------------------------------");
 	if (mysettings.WritelogMode() >= 1)
 		_logfile.close();
@@ -52,9 +54,10 @@ void CORE::Redraw()
 {
 	if (mygui)
 	{
-		writeToLog("Redrawing");
+		writeToLog("*******Redrawing*******");
 		mygui->Clear();
-		for (ListViewer<Point> i(_storage_of_points); i.canMoveNext(); i.moveNext())
+		// old method for lists of objects
+		/*for (ListViewer<Point> i(_storage_of_points); i.canMoveNext(); i.moveNext())
 		{
 			if (i.getValue().isVisible())
 				mygui->DrawPoint(i.getValue().id.getID(), *i.getValue()._x, *i.getValue()._y,
@@ -71,7 +74,58 @@ void CORE::Redraw()
 			if (i.getValue().isVisible())
 				mygui->DrawCircle(i.getValue().id.getID(), *i.getValue()._o->_x, *i.getValue()._o->_y,
 				*i.getValue()._r, i.getValue().isSelected() ? COLORSELECTED : i.getValue().color);
+		}*/
+		// new method for tree
+		for (StorageOfObjects::viewer i(_storage_of_objects); i.canMoveNext(); i.moveNext())
+		{
+			if (i.key().getID() == 0) continue;
+			switch (i.value()->objectType())
+			{
+			case PRIMITIVE_POINT:
+			{
+				Point* p = dynamic_cast<Point*>(i.value());
+				writeToLog("<point>", 2);
+				writeToLog(*p->_x, "x= ", 2);
+				writeToLog(*p->_y, "y= ", 2);
+				writeToLog(p->color.getColor(), "color= ", 2);
+				writeToLog(p->id.getID(), "id= ", 2);
+				writeToLog("</point>", 2);
+				mygui->DrawPoint(p->id.getID(), *p->_x, *p->_y,
+									  p->isSelected() ? COLORSELECTED : p->color);
+				break;
+			}
+			case PRIMITIVE_SEGMENT:
+			{
+				Segment* s = dynamic_cast<Segment*>(i.value());
+				writeToLog("<segment>", 2);
+				writeToLog(*s->_p1->_x, "x1= ", 2);
+				writeToLog(*s->_p1->_y, "y1= ", 2);
+				writeToLog(*s->_p2->_x, "x2= ", 2);
+				writeToLog(*s->_p2->_y, "y2= ", 2);
+				writeToLog(s->color.getColor(), "color= ", 2);
+				writeToLog(s->id.getID(), "id= ", 2);
+				writeToLog("</segment>", 2);
+				mygui->DrawSegment(s->id.getID(), *s->_p1->_x, *s->_p1->_y,
+										 *s->_p2->_x, *s->_p2->_y, s->isSelected() ? COLORSELECTED : s->color);
+				break;
+			}
+			case PRIMITIVE_CIRCLE:
+			{
+				Circle* c = dynamic_cast<Circle*>(i.value());
+				writeToLog("<circle>", 3);
+				writeToLog(*c->_o->_x, "x= ", 3);
+				writeToLog(*c->_o->_y, "y= ", 3);
+				writeToLog(*c->_r, "r= ", 3);
+				writeToLog(c->color.getColor(), "color= ", 3);
+				writeToLog(c->id.getID(), "id= ", 3);
+				writeToLog("</circle>", 3);
+				mygui->DrawCircle(c->id.getID(), *c->_o->_x, *c->_o->_y,
+										*c->_r, c->isSelected() ? COLORSELECTED : c->color);
+				break;
+			}
+			}
 		}
+		writeToLog("*******Redrawed*******", 3);
 	}
 	else
 	{
@@ -82,7 +136,7 @@ void CORE::Redraw()
 
 void CORE::Calculate()
 {
-	writeToLog("Start calculating");
+	writeToLog("**********************Start calculating******************");
 	ConstraintCollector collector;
 	Storage_Array< double* > parameters;
 	writeToLog("Generating graphs");
@@ -103,27 +157,37 @@ void CORE::Calculate()
 		parameters.add(&i.getValue());
 	}
 	//BuildFigure(&collector, &parameters);
-	writeToLog("Building new figure");
+	writeToLog("---------------------Building new figure-----------------");
 	BuildFigureGoldMethod(&collector, &parameters);
-	writeToLog("Success build");
+	writeToLog("---------------------Success build-----------------------");
 	Redraw();
 	mygui->WriteStatus("Done");
-	writeToLog("Success calculate");
+	writeToLog("**********************Success calculate******************");
 	return;
 }
 
 void CORE::BuildFigureGoldMethod(IConstraint *constr, Storage_Array<double*>* parameters)
 {
-	const double f_epsi = 1e-12;
+	// small value
+	const double f_epsi = 1e-6;
+	// great value
+	const double f_Epsi = 1e+6;
+	// amount of iterations
+	unsigned f_count = 0;
 	if (constr->error() < f_epsi) return;
-	double f_cur = constr->error();
+	// current value of function
+	double f_current = constr->error();
+	// value of function on previous iteration
 	double f_prev = 0;
+	// gradient of function
 	double *grad = new double[parameters->size()];
+	// value of parameters on previous iteration
 	double *old_para = new double[parameters->size()];
 	unsigned nf_eval = 0;
 	do
 	{
-		f_prev = f_cur;
+		f_count++;
+		f_prev = f_current;
 		for (unsigned k = 0; k < parameters->size(); ++k)
 			grad[k] = constr->diff((*parameters)[k]);
 
@@ -143,6 +207,7 @@ void CORE::BuildFigureGoldMethod(IConstraint *constr, Storage_Array<double*>* pa
 			f_alpha1 = constr->error();
 			nf_eval++;
 		}
+		// ratio of the golden section
 		const double gold = 0.5 + sqrt(5.0 / 4);
 		double alpha0 = 0;
 		double f_alpha0 = f_prev;
@@ -156,8 +221,9 @@ void CORE::BuildFigureGoldMethod(IConstraint *constr, Storage_Array<double*>* pa
 			*(*parameters)[k] = old_para[k] - alphar*grad[k];
 		double f_alphar = constr->error();
 		nf_eval++;
+		// amount of interations of the golden section
 		unsigned gold_count = 0;
-		while (abs(f_alphal - f_alphar) > f_epsi)
+		while (abs(f_alphal - f_alphar) > f_epsi && gold_count < f_Epsi)
 		{
 			gold_count++;
 			if (f_alphal < f_alphar)
@@ -181,12 +247,16 @@ void CORE::BuildFigureGoldMethod(IConstraint *constr, Storage_Array<double*>* pa
 				nf_eval++;
 			}
 		}
+		writeToLog(gold_count, "golden iterations= ", 2);
 		for (unsigned k = 0; k < parameters->size(); ++k)
 			*(*parameters)[k] = old_para[k] - (alphar + alphal) / 2 * grad[k];
-		f_cur = constr->error();
+		f_current = constr->error();
 		nf_eval++;
-	//} while (abs(f_prev - f_cur) > f_epsi);
-	} while (abs(f_prev - f_cur) > f_epsi);
+		writeToLog(f_current, "f = ", 2);
+		writeToLog(abs(f_prev - f_current) /*/ abs(f_prev)*/, "delta f= ", 2);
+	//} while (abs(f_prev - f_current) > f_epsi);
+	} while (abs(f_prev - f_current) /*/ abs(f_prev)*/ > f_epsi && f_count < f_Epsi);
+	writeToLog(f_count, "iterations= ", 2);
 	delete[] grad;
 	delete[] old_para;
 }
@@ -238,8 +308,8 @@ bool CORE::isInArea(double x, double y, double x1, double y1, double x2, double 
 	}
 	return false;
 }
-
-
+// Description:
+// write to log file std::string if current 'logmode' >= mode
 void CORE::writeToLog(std::string s, char mode)
 {
 	if (mysettings.WritelogMode() >= mode && _logfile.is_open())
@@ -247,35 +317,80 @@ void CORE::writeToLog(std::string s, char mode)
 		_logfile << s << std::endl;
 	}
 }
-
-void CORE::writeToLog(int s, char mode)
+// Description:
+// write to log file int value if current 'logmode' >= mode
+void CORE::writeToLog(int value, char mode)
 {
 	if (mysettings.WritelogMode() >= mode && _logfile.is_open())
 	{
-		_logfile << s << std::endl;
+		_logfile << value << std::endl;
 	}
 }
-
-void CORE::writeToLog(double s, char mode)
+// Description:
+// write to log file double value if current 'logmode' >= mode
+void CORE::writeToLog(double value, char mode)
 {
 	if (mysettings.WritelogMode() >= mode && _logfile.is_open())
 	{
-		_logfile << s << std::endl;
+		_logfile << value << std::endl;
 	}
 }
-
-void CORE::writeToLog(unsigned s, char mode)
+// Description:
+// write to log file uint if current 'logmode' >= mode
+void CORE::writeToLog(unsigned value, char mode)
 {
 	if (mysettings.WritelogMode() >= mode && _logfile.is_open())
 	{
-		_logfile << s << std::endl;
+		_logfile << value << std::endl;
 	}
 }
-
-void CORE::writeToLog(long long s, char mode)
+// Description:
+// write to log file long long int if current 'logmode' >= mode
+void CORE::writeToLog(long long value, char mode)
 {
 	if (mysettings.WritelogMode() >= mode && _logfile.is_open())
 	{
-		_logfile << s << std::endl;
+		_logfile << value << std::endl;
 	}
+}
+// Description:
+// write to log file int after string if current 'logmode' >= mode
+void CORE::writeToLog(int value, std::string s, char mode)
+{
+	if (mysettings.WritelogMode() >= mode && _logfile.is_open())
+	{
+		_logfile << s << value << std::endl;
+	}
+}
+// Description:
+// write to log file uint after string if current 'logmode' >= mode
+void CORE::writeToLog(unsigned value, std::string s, char mode)
+{
+	if (mysettings.WritelogMode() >= mode && _logfile.is_open())
+	{
+		_logfile << s << value << std::endl;
+	}
+}
+// Description:
+// write to log file double after string if current 'logmode' >= mode
+void CORE::writeToLog(double value, std::string s, char mode)
+{
+	if (mysettings.WritelogMode() >= mode && _logfile.is_open())
+	{
+		_logfile << s << value << std::endl;
+	}
+}
+// Description:
+// add current time in format (1996-03-15)[23_59_59] between 2 strings
+std::string CORE::GenerateTimeString(char* first_str, char* last_str)
+{
+	std::string output_str(first_str);
+	time_t current_time = time(0);
+	struct tm * timeinfo = localtime(&current_time);
+	char timetext[80];
+	// (1996-03-15)[23_59_59]
+	strftime(timetext, 80, "(%Y-%m-%d)[%H_%M_%S]", timeinfo);
+	output_str.append(timetext);
+	output_str.append(last_str);
+	return output_str;
 }
