@@ -8,14 +8,93 @@ void CORE::ChangeStatus(unsigned char status_key)
 
 void CORE::Select(double x, double y)
 {
-	/*Try to search points in small radius*/
-	writeToLog("< Selecting >", 2);
-	writeToLog(x, 2);
-	writeToLog(y, 2);
-	writeToLog("< /Selecting >", 2);
-	unsigned size = _storage_of_points.size();
+	
+	//Try to search points in small radius
+	writeToLog("< clicking >", 3);
+	writeToLog(x, "x= ", 3);
+	writeToLog(y, "y= ", 3);
+	writeToLog("< /clicking >", 3);
 	double min = 4;
-	int min_i = -1;
+	unsigned min_id = 0;
+	for (StorageOfObjects::viewer i(_storage_of_objects); i.canMoveNext(); i.moveNext())
+	{
+		if (i.key().getID())
+		{
+			switch (i.value()->objectType())
+			{
+			case PRIMITIVE_POINT:
+			{
+				Point* p = dynamic_cast<Point*>(i.value());
+				if (length(*p->_x, *p->_y, x, y) < min)
+				{
+					min = length(*p->_x, *p->_y, x, y);
+					min_id = p->id.getID();
+				}
+				break;
+			}
+			case PRIMITIVE_SEGMENT:
+			{
+				Segment* s = dynamic_cast<Segment*>(i.value());
+				double A = *s->_p2->_y - *s->_p1->_y;
+				double B = *s->_p1->_x - *s->_p2->_x;
+				double C = *s->_p1->_y * *s->_p2->_x - *s->_p1->_x * *s->_p2->_y;
+				if ((abs(A*x + B*y + C) / sqrt(A*A + B*B) < min) &&
+					 (length(*s->_p1->_x, *s->_p1->_y, x, y) <
+					 ((A*x + B*y + C)*(A*x + B*y + C) / (A*A + B*B) +
+					 length(*s->_p1->_x, *s->_p1->_y, *s->_p2->_x, *s->_p2->_y)))
+					 && (length(*s->_p2->_x, *s->_p2->_y, x, y) <
+					 ((A*x + B*y + C)*(A*x + B*y + C) / (A*A + B*B) +
+					 length(*s->_p1->_x, *s->_p1->_y, *s->_p2->_x, *s->_p2->_y))))
+				{
+					min = abs(A*x + B*y + C) / sqrt(A*A + B*B);
+					min_id = s->id.getID();
+				}
+				break;
+			}
+			case PRIMITIVE_CIRCLE:
+			{
+				Circle* c = dynamic_cast<Circle*>(i.value());
+				if ((length(*c->_o->_x, *c->_o->_y, x, y) < (*c->_r + min)) &&
+					 (length(*c->_o->_x, *c->_o->_y, x, y) > (*c->_r - min)))
+				{
+					min = abs(length(*c->_o->_x, *c->_o->_y, x, y) - *c->_r);
+					min_id = c->id.getID();
+				}
+				break;
+			}
+			}
+		}
+	}
+	if (min_id)
+	{
+		try
+		{
+			ObjectSkin* object = _storage_of_objects.get(min_id);
+			object->changeSelect();
+			if (object->isSelected())
+			{
+				_selected_objects.add(object);
+			}
+			else
+			{
+				for (ListViewer<ObjectSkin*> j(_selected_objects); j.canMoveNext(); j.moveNext())
+				{
+					if (object == j.getValue())
+					{
+						_selected_objects.remove(&j);
+						break;
+					}
+				}
+			}
+			writeToLog(min_id, "selection was changed for ", 2);
+			Redraw();
+		}
+		catch (...)
+		{
+		}
+	}
+	return;
+	/*int min_i = -1;
 	unsigned j = 0;
 	for (ListViewer<Point> i(_storage_of_points); i.canMoveNext(); i.moveNext(), j++)
 	{
@@ -50,7 +129,6 @@ void CORE::Select(double x, double y)
 		Redraw();
 		return;
 	}
-	size = _storage_of_segments.size();
 	int min_j = -1;
 	j = 0;
 	double A = 0, B = 0, C = 0;
@@ -96,7 +174,6 @@ void CORE::Select(double x, double y)
 		Redraw();
 		return;
 	}
-	size = _storage_of_circles.size();
 	int min_k = -1;
 	j = 0;
 	for (ListViewer<Circle> i(_storage_of_circles); i.canMoveNext(); i.moveNext(), j++)
@@ -133,7 +210,7 @@ void CORE::Select(double x, double y)
 		Redraw();
 		return;
 	}
-	return;
+	return;*/
 }
 
 
@@ -189,9 +266,47 @@ void CORE::ClearSelection()
 	mygui->WriteStatus("Done");
 }
 
+void CORE::DeleteAll()
+{
+	_storage_of_constraint.clear();
+	writeToLog("All rules were deleted");
+	_storage_of_objects.clear();
+	writeToLog("All objects were deleted");
+	_storage_of_constants.clear();
+	writeToLog("All constants were deleted");
+	_storage_of_parameters.clear();
+	writeToLog("All parameters were deleted");
+	writeToLog("All clear");
+	Redraw();
+}
+
 void CORE::DeleteSelected()
 {
-	
+	for (ListViewer< ObjectSkin* > i(_selected_objects); i.canMoveNext(); i.moveNext())
+	{
+		switch (i.getValue()->objectType())
+		{
+		case PRIMITIVE_POINT:
+		{
+			Point* p = dynamic_cast<Point*>(i.getValue());
+			// delete from parameters
+			// delete this
+			break;
+		}
+		case PRIMITIVE_SEGMENT:
+		{
+			Segment* s = dynamic_cast<Segment*>(i.getValue());
+			break;
+		}
+		case PRIMITIVE_CIRCLE:
+		{
+			Circle* c = dynamic_cast<Circle*>(i.getValue());
+			break;
+		}
+		}
+		_storage_of_objects.remove(i.getValue()->id);
+	}
+	_selected_objects.clear();
 	Redraw();
 }
 

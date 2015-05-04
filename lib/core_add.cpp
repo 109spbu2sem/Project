@@ -9,53 +9,109 @@
 
 #include "core.h"
 
-void CORE::AddObject(double point_x, double point_y, Color color, unsigned id)
+unsigned CORE::AddObject(double point_x, double point_y, Color color, unsigned id, bool wait)
 {
-	Point p(_storage_of_parameters.add(point_x), _storage_of_parameters.add(point_y));
-	p.color.setColor(color);
-	_storage_of_points.add(p);
+	Point* p = new Point(_storage_of_parameters.add(point_x), _storage_of_parameters.add(point_y));
+	p->color.setColor(color);
+	_storage_of_points.add(*p);
+	ID newid = _storage_of_objects.add(p, id);
 	mygui->WriteStatus("Point added");
 	writeToLog("< add > Point", 2);
-	writeToLog(point_x, 2);
-	writeToLog(point_y, 2);
-	writeToLog(color.getColor(), 2);
-	writeToLog(id, 2);
+	writeToLog(point_x, "x= ", 2);
+	writeToLog(point_y, "y= ", 2);
+	writeToLog(color.getColor(), "color= ", 2);
+	writeToLog(newid.getID(), "id= ", 2);
 	writeToLog("< /add >", 2);
-	Redraw();
+	if (!wait) Redraw();
+	return newid.getID();
 }
-
+// add segment with current point's ids
+unsigned CORE::AddObject(unsigned id1, unsigned id2, Color color, unsigned id, bool wait)
+{
+	Segment* s = new Segment(dynamic_cast<Point*>(_storage_of_objects.get(id1)), dynamic_cast<Point*>(_storage_of_objects.get(id2)));
+	if (s->_p1 && s->_p2)
+	{
+		s->color.setColor(color);
+		ID newid = _storage_of_objects.add(s, id);
+		mygui->WriteStatus("Segment added");
+		writeToLog("< add > Segment", 2);
+		writeToLog(id1, "point 1 id= ", 2);
+		writeToLog(id2, "point 2 id= ", 2);
+		writeToLog(color.getColor(), "color= ", 2);
+		writeToLog(newid.getID(), "id= ", 2);
+		writeToLog("< /add >", 2);
+		if (!wait) Redraw();
+		return newid.getID();
+	}
+	writeToLog("Can't add segment with point's ids:", 2);
+	writeToLog(id1, "point 1 id= ", 2);
+	writeToLog(id2, "point 2 id= ", 2);
+	writeToLog("return id= 0", 2);
+	return 0;
+}
+// add circle with current point's id and radius
+unsigned CORE::AddObject(unsigned pointid, double radius, Color color, unsigned id, bool wait)
+{
+	Circle* c = new Circle(dynamic_cast<Point*>(_storage_of_objects.get(pointid)), _storage_of_parameters.add(radius));
+	if (c->_o)
+	{
+		c->color.setColor(color);
+		ID newid = _storage_of_objects.add(c, id);
+		mygui->WriteStatus("Circle added");
+		writeToLog("< add > Circle", 2);
+		writeToLog(pointid, "point id= ", 2);
+		writeToLog(radius, "radius= ", 2);
+		writeToLog(color.getColor(), "color= ", 2);
+		writeToLog(newid.getID(), "id= ", 2);
+		writeToLog("< /add >", 2);
+		if (!wait) Redraw();
+		return newid.getID();
+	}
+	writeToLog("Can't add circle with point's id:", 2);
+	writeToLog(pointid, "point id= ", 2);
+	writeToLog("return id= 0", 2);
+	return 0;
+}
 void CORE::AddObject(double point_x1, double point_y1, double point_x2, double point_y2, Color color, unsigned id)
 {
-	Point p1(_storage_of_parameters.add(point_x1), _storage_of_parameters.add(point_y1));
-	Point p2(_storage_of_parameters.add(point_x2), _storage_of_parameters.add(point_y2));
-	Segment s(_storage_of_points.add(p1), _storage_of_points.add(p2));
-	s.color.setColor(color);
-	_storage_of_segments.add(s);
+	Point* p1 = new Point(_storage_of_parameters.add(point_x1), _storage_of_parameters.add(point_y1));
+	Point* p2 = new Point(_storage_of_parameters.add(point_x2), _storage_of_parameters.add(point_y2));
+	Segment* s = new Segment(p1, p2);
+	s->color.setColor(color);
+	_storage_of_points.add(*p1);
+	_storage_of_points.add(*p2);
+	_storage_of_segments.add(*s);
+	_storage_of_objects.add(p1);
+	_storage_of_objects.add(p2);
+	_storage_of_objects.add(s);
 	mygui->WriteStatus("Segment added");
 	writeToLog("< add > Point", 2);
-	writeToLog(point_x1, 2);
-	writeToLog(point_y1, 2);
-	writeToLog(point_x2, 2);
-	writeToLog(point_y2, 2);
-	writeToLog(color.getColor(), 2);
-	writeToLog(id, 2);
+	writeToLog(point_x1, "x1= ", 2);
+	writeToLog(point_y1, "y1= ", 2);
+	writeToLog(point_x2, "x2= ", 2);
+	writeToLog(point_y2, "y2= ", 2);
+	writeToLog(color.getColor(), "color= ", 2);
+	writeToLog(id, "id= ", 2);
 	writeToLog("< /add >", 2);
 	Redraw();
 }
 
 void CORE::AddObject(double point_x, double point_y, double radius, Color color, unsigned id)
 {
-	Point p(_storage_of_parameters.add(point_x), _storage_of_parameters.add(point_y));
-	Circle c(_storage_of_points.add(p), _storage_of_parameters.add(radius));
-	c.color.setColor(color);
-	_storage_of_circles.add(c);
+	Point* p = new Point(_storage_of_parameters.add(point_x), _storage_of_parameters.add(point_y));
+	Circle* c = new Circle(p, _storage_of_parameters.add(radius));
+	c->color.setColor(color);
+	_storage_of_points.add(*p);
+	_storage_of_circles.add(*c);
+	_storage_of_objects.add(p);
+	_storage_of_objects.add(c);
 	mygui->WriteStatus("Circle added");
 	writeToLog("< add > Circle", 2);
-	writeToLog(point_x, 2);
-	writeToLog(point_y, 2);
-	writeToLog(radius, 2);
-	writeToLog(color.getColor(), 2);
-	writeToLog(id, 2);
+	writeToLog(point_x, "x= ", 2);
+	writeToLog(point_y, "y= ", 2);
+	writeToLog(radius, "r= ", 2);
+	writeToLog(color.getColor(), "color= ", 2);
+	writeToLog(id, "id= ", 2);
 	writeToLog("< /add >", 2);
 	Redraw();
 }
@@ -70,11 +126,11 @@ void CORE::ConcatenatePoints()
 		Point* obj1 = dynamic_cast<Point*>(k.getValue());
 		if (obj && obj1)
 		{
-			Segment s(obj, obj1);
-			s.color.setColor(COLORDEF);
-			_storage_of_segments.add(s);
+			Segment* s = new Segment(obj, obj1);
+			s->color.setColor(COLORDEF);
+			_storage_of_objects.add(s);
 			writeToLog("Concatenate points", 2);
-			Redraw();
+			ClearSelection();
 		}
 	}
 }
@@ -96,7 +152,7 @@ void CORE::AddRule(unsigned type, double value)
 			if (obj1 && obj2)
 			{
 				double* val = _storage_of_constants.add(value);
-				Point2Point* rule = new Point2Point(obj1->_x, obj1->_y, obj2->_x, obj2->_y, val );
+				Point2Point* rule = new Point2Point(obj1->_x, obj1->_y, obj2->_x, obj2->_y, val);
 				_storage_of_constraints.add(rule);
 				double *param[5] = { obj1->_x, obj1->_y, obj2->_x, obj2->_y, val };
 				_storage_of_constraint.add(rule, *param);
