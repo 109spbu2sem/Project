@@ -30,6 +30,15 @@ void MyCanvas::mousePressEvent(QMouseEvent *event)
 		mycore->AddObject(pt.x(), -pt.y());
 		break;
 	}
+	case TOOL_ZoomPlus:
+	{
+		scale(2, 2);
+		break;
+	}
+	case TOOL_ZoomMinus:
+	{
+		scale(0.5, 0.5);
+	}
 	}
 }
 
@@ -47,6 +56,16 @@ void MyCanvas::mouseDoubleClickEvent(QMouseEvent *event)
 	default:
 		return;
 	}
+}
+
+void MyCanvas::wheelEvent(QWheelEvent *event)
+{
+	if (event->delta() > 0)
+	{
+		scale(1.2, 1.2);
+	}
+	else
+		scale(1/1.2, 1/1.2);
 }
 
 void MyCanvas::setTool(GTool t)

@@ -11,7 +11,9 @@ class CORE;
 enum GTool
 {
 	TOOL_Select,
-	TOOL_Point
+	TOOL_Point,
+	TOOL_ZoomPlus,
+	TOOL_ZoomMinus
 };
 
 namespace Ui
@@ -58,11 +60,13 @@ private slots:
 	
 	void on_pointTool_clicked();
 
+	void on_zoomPlusTool_clicked();
+
+	void on_zoomMinusTool_clicked();
+
 	void on_saveButton_clicked();
 
 	void on_saveAsButton_clicked();
-
-	void on_loadButton_clicked();
 	
 private:
 	Ui::MainWindow *ui;

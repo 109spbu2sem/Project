@@ -57,7 +57,7 @@ void MainWindow::WriteStatus(const char* ErrorKey)
 
 bool MainWindow::DrawPoint(unsigned id, double x, double y, Color c)
 {
-	mainscene->addEllipse(x - 1, -y - 1, 2.0, 2.0,
+	mainscene->addEllipse(x - 1.2, -y - 1.2, 2.4, 2.4,
 		QPen(QColor(c.getColor(1), c.getColor(2), c.getColor(3))),
 		QBrush(QColor(c.getColor(1), c.getColor(2), c.getColor(3))));
 	/*for (unsigned i = 0; i < 10000; i++)
@@ -131,10 +131,9 @@ void MainWindow::on_addBTN_clicked()
 		{
 			Color c;
 			c.setColor(ui->editR->text().toUInt(), ui->editG->text().toUInt(), ui->editB->text().toUInt());
-			mycore->AddObject(ui->editX1->text().toDouble(),
-							  ui->editY1->text().toDouble(),
-							  ui->editX2->text().toDouble(),
-							  ui->editY2->text().toDouble(), c);
+			unsigned id1 = mycore->AddObject(ui->editX1->text().toDouble(), ui->editY1->text().toDouble(), c, 0, true);
+			unsigned id2 = mycore->AddObject(ui->editX2->text().toDouble(), ui->editY2->text().toDouble(), c, 0, true);
+			mycore->AddObject(id1, id2, c, 0);
 		}
 		break;
 	}
@@ -150,9 +149,11 @@ void MainWindow::on_addBTN_clicked()
 		{
 			Color c;
 			c.setColor(ui->editR->text().toUInt(), ui->editG->text().toUInt(), ui->editB->text().toUInt());
-			mycore->AddObject(ui->editX1->text().toDouble(),
+			/*mycore->AddObject(ui->editX1->text().toDouble(),
 							  ui->editY1->text().toDouble(),
-							  ui->editX2->text().toDouble(), c);
+							  ui->editX2->text().toDouble(), c);*/
+			unsigned id = mycore->AddObject(ui->editX1->text().toDouble(), ui->editY1->text().toDouble(), c, 0, true);
+			mycore->AddObject(id, ui->editX2->text().toDouble(), c, 0);
 		}
 		break;
 	}
@@ -249,10 +250,7 @@ void MainWindow::on_pushButton_clicked()
 	}
 	case 2:
 	{
-		if (!ui->ruleValueEdit->text().isEmpty())
-			mycore->AddRule(CONSTR_3PONLINE);
-		else
-			WriteStatus("Need value");
+		mycore->AddRule(CONSTR_3PONLINE);
 		break;
 	}
 	case 3:
@@ -290,6 +288,16 @@ void MainWindow::on_selectTool_clicked()
     ui->graphicsView->setTool(TOOL_Select);
 }
 
+void MainWindow::on_zoomPlusTool_clicked()
+{
+	ui->graphicsView->setTool(TOOL_ZoomPlus);
+}
+
+void MainWindow::on_zoomMinusTool_clicked()
+{
+	ui->graphicsView->setTool(TOOL_ZoomMinus);
+}
+
 void MainWindow::on_pointTool_clicked()
 {
     ui->graphicsView->setTool(TOOL_Point);
@@ -305,12 +313,4 @@ void MainWindow::on_saveAsButton_clicked() {
 		"C://",
 		"Text File (*.txt);; Xml File (*.xml)");
 	mycore->IWantSaveAs(filename);
-}
-
-void MainWindow::on_loadButton_clicked() {
-	QString filename = QFileDialog::getOpenFileName(
-		this, tr("Open File"),
-		"C://",
-		"Text File (*.txt);; Xml File (*.xml)");
-	mycore->IWantLoad(filename);
 }
