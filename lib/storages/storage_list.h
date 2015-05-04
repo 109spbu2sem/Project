@@ -81,7 +81,7 @@ public:
 	}
 	//void delete(Storage_Array<Item>* s);
 	// get pointer to first cell of list
-	ListViewer<Item> getStartingViewer()
+	ListViewer<Item> getIterator()
 	{
 		ListViewer<Item> v(*this);
 		return v;

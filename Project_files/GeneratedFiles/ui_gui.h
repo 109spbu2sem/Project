@@ -75,6 +75,8 @@ public:
     QRadioButton *pointTool;
     QRadioButton *segmentTool;
     QRadioButton *circleTool;
+    QRadioButton *zoomPlusTool;
+    QRadioButton *zoomMinusTool;
     QPushButton *concatinateBTN;
     QPushButton *saveButton;
     QPushButton *saveAsButton;
@@ -86,9 +88,9 @@ public:
     {
         if (MainWindow->objectName().isEmpty())
             MainWindow->setObjectName(QStringLiteral("MainWindow"));
-        MainWindow->resize(1726, 771);
-        MainWindow->setMinimumSize(QSize(1726, 771));
-        MainWindow->setMaximumSize(QSize(1727, 792));
+        MainWindow->resize(1084, 617);
+        MainWindow->setMinimumSize(QSize(1084, 617));
+        MainWindow->setMaximumSize(QSize(1084, 617));
         QPalette palette;
         QBrush brush(QColor(255, 255, 255, 255));
         brush.setStyle(Qt::SolidPattern);
@@ -106,11 +108,11 @@ public:
         centralWidget->setObjectName(QStringLiteral("centralWidget"));
         graphicsView = new MyCanvas(centralWidget);
         graphicsView->setObjectName(QStringLiteral("graphicsView"));
-        graphicsView->setGeometry(QRect(350, 5, 1371, 731));
+        graphicsView->setGeometry(QRect(350, 5, 731, 591));
         graphicsView->viewport()->setProperty("cursor", QVariant(QCursor(Qt::CrossCursor)));
         openAddingBTN = new QPushButton(centralWidget);
         openAddingBTN->setObjectName(QStringLiteral("openAddingBTN"));
-        openAddingBTN->setGeometry(QRect(5, 510, 61, 28));
+        openAddingBTN->setGeometry(QRect(5, 370, 61, 28));
         groupBox = new QGroupBox(centralWidget);
         groupBox->setObjectName(QStringLiteral("groupBox"));
         groupBox->setGeometry(QRect(10, 40, 196, 221));
@@ -247,16 +249,16 @@ public:
 
         calculateBTN = new QPushButton(centralWidget);
         calculateBTN->setObjectName(QStringLiteral("calculateBTN"));
-        calculateBTN->setGeometry(QRect(70, 510, 101, 28));
+        calculateBTN->setGeometry(QRect(70, 370, 101, 28));
         objectsList = new QTableWidget(centralWidget);
         objectsList->setObjectName(QStringLiteral("objectsList"));
-        objectsList->setGeometry(QRect(5, 540, 236, 192));
+        objectsList->setGeometry(QRect(5, 400, 236, 192));
         pushButton_2 = new QPushButton(centralWidget);
         pushButton_2->setObjectName(QStringLiteral("pushButton_2"));
-        pushButton_2->setGeometry(QRect(245, 115, 101, 28));
+        pushButton_2->setGeometry(QRect(245, 165, 101, 28));
         layoutWidget3 = new QWidget(centralWidget);
         layoutWidget3->setObjectName(QStringLiteral("layoutWidget3"));
-        layoutWidget3->setGeometry(QRect(265, 5, 80, 103));
+        layoutWidget3->setGeometry(QRect(265, 5, 81, 157));
         verticalLayout = new QVBoxLayout(layoutWidget3);
         verticalLayout->setSpacing(6);
         verticalLayout->setContentsMargins(11, 11, 11, 11);
@@ -289,9 +291,21 @@ public:
 
         verticalLayout->addWidget(circleTool);
 
+        zoomPlusTool = new QRadioButton(layoutWidget3);
+        zoomPlusTool->setObjectName(QStringLiteral("zoomPlusTool"));
+        zoomPlusTool->setLayoutDirection(Qt::RightToLeft);
+
+        verticalLayout->addWidget(zoomPlusTool);
+
+        zoomMinusTool = new QRadioButton(layoutWidget3);
+        zoomMinusTool->setObjectName(QStringLiteral("zoomMinusTool"));
+        zoomMinusTool->setLayoutDirection(Qt::RightToLeft);
+
+        verticalLayout->addWidget(zoomMinusTool);
+
         concatinateBTN = new QPushButton(centralWidget);
         concatinateBTN->setObjectName(QStringLiteral("concatinateBTN"));
-        concatinateBTN->setGeometry(QRect(225, 150, 121, 28));
+        concatinateBTN->setGeometry(QRect(225, 200, 121, 28));
         saveButton = new QPushButton(centralWidget);
         saveButton->setObjectName(QStringLiteral("saveButton"));
         saveButton->setGeometry(QRect(5, 10, 75, 23));
@@ -304,7 +318,7 @@ public:
         MainWindow->setCentralWidget(centralWidget);
         menuBar = new QMenuBar(MainWindow);
         menuBar->setObjectName(QStringLiteral("menuBar"));
-        menuBar->setGeometry(QRect(0, 0, 1726, 21));
+        menuBar->setGeometry(QRect(0, 0, 1084, 26));
         MainWindow->setMenuBar(menuBar);
         statusBar = new QStatusBar(MainWindow);
         statusBar->setObjectName(QStringLiteral("statusBar"));
@@ -358,7 +372,9 @@ public:
         pointTool->setText(QApplication::translate("MainWindow", "Point", 0));
         segmentTool->setText(QApplication::translate("MainWindow", "Segment", 0));
         circleTool->setText(QApplication::translate("MainWindow", "Circle", 0));
-        concatinateBTN->setText(QApplication::translate("MainWindow", "Concatinate points", 0));
+        zoomPlusTool->setText(QApplication::translate("MainWindow", "Zoom+", 0));
+        zoomMinusTool->setText(QApplication::translate("MainWindow", "Zoom-", 0));
+        concatinateBTN->setText(QApplication::translate("MainWindow", "Concatenate points", 0));
         saveButton->setText(QApplication::translate("MainWindow", "Save", 0));
         saveAsButton->setText(QApplication::translate("MainWindow", "Save as...", 0));
         loadButton->setText(QApplication::translate("MainWindow", "Load", 0));

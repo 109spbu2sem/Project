@@ -63,16 +63,16 @@ Vector Vector::unit_vector()
 }
 //---------------------------------------------------------------------
 
-double Angle::grads()
+/*double Angle::grads()
 {
 	return *angle / PI * 180;
-}
+}*/
 
 //----------------------------------------------------------------------
 //-------------------------------ARC-----------------------------------
 //---------------------------------------------------------------------
 
-double Arc::area()
+/*double Arc::area()
 {
 	return *_angle.angle * _d.length() * _d.length() / 2;
 }
@@ -80,7 +80,7 @@ double Arc::area()
 double Arc::length()
 {
 	return _d.length() * *_angle.angle;
-}
+}*/
 
 /*Segment Arc::chord()
 {

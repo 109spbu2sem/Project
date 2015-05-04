@@ -18,22 +18,9 @@ public:
 	{
 		return _myid;
 	}
-};
-
-
-class IDgenerator
-{
-private:
-	unsigned _last;
-public:
-	IDgenerator()
+	void setID(unsigned id)
 	{
-		_last = 0;
-	}
-	ID generateID()
-	{
-		_last++;
-		return ID(_last);
+		_myid = id;
 	}
 };
 

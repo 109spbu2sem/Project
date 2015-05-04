@@ -2,6 +2,7 @@
 #define OBJECTSKIN_H
 #include "LineSkin.h"
 #include "Id.h"
+#include "global.h"
 
 class ObjectSkin
 {
@@ -23,7 +24,7 @@ public:
 	}
    bool isSelected();
    bool isVisible();
-	virtual unsigned objectType() = 0;
+	virtual PRIMITIVE_TYPE objectType() = 0;
 };
 
 #endif // OBJECTSKIN_H 

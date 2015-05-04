@@ -135,7 +135,7 @@ public:
 	{
 		return _size;
 	}
-	HashViewer<FirstType, SecondType> getStartingViewer()
+	HashViewer<FirstType, SecondType>& getStartingViewer()
 	{
 		HashViewer<FirstType, SecondType> v(*this);
 		return v;
@@ -155,11 +155,11 @@ public:
 	{
 		_topViewer = table._table;
 		_end = &(_topViewer[HashTable<FirstType, SecondType>::_TABLERATIO - 1]);
-		_bottomViewer = _topViewer->getStartingViewer();
+		_bottomViewer = _topViewer->getIterator();
 		while (!_bottomViewer.canMoveNext() && _topViewer != _end )
 		{
 			_topViewer++;
-			_bottomViewer = _topViewer->getStartingViewer();
+			_bottomViewer = _topViewer->getIterator();
 		}
 	}
 	FirstType& getFirst()
@@ -197,7 +197,7 @@ public:
 		else while (_topViewer != _end)
 		{
 			_topViewer++;
-			_bottomViewer = _topViewer->getStartingViewer();
+			_bottomViewer = _topViewer->getIterator();
 			if (_bottomViewer.canMoveNext()) break;
 		}
 	}
@@ -206,7 +206,7 @@ public:
 		while (_topViewer != _end)
 		{
 			_topViewer++;
-			_bottomViewer = _topViewer->getStartingViewer();
+			_bottomViewer = _topViewer->getIterator();
 			if (_bottomViewer.canMoveNext()) break;
 		}
 	}

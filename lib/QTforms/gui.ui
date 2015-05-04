@@ -6,20 +6,20 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1726</width>
-    <height>771</height>
+    <width>1084</width>
+    <height>617</height>
    </rect>
   </property>
   <property name="minimumSize">
    <size>
-    <width>1726</width>
-    <height>771</height>
+    <width>1084</width>
+    <height>617</height>
    </size>
   </property>
   <property name="maximumSize">
    <size>
-    <width>1727</width>
-    <height>792</height>
+    <width>1084</width>
+    <height>617</height>
    </size>
   </property>
   <property name="palette">
@@ -98,8 +98,8 @@
      <rect>
       <x>350</x>
       <y>5</y>
-      <width>1371</width>
-      <height>731</height>
+      <width>731</width>
+      <height>591</height>
      </rect>
     </property>
     <property name="cursor" stdset="0">
@@ -110,7 +110,7 @@
     <property name="geometry">
      <rect>
       <x>5</x>
-      <y>510</y>
+      <y>370</y>
       <width>61</width>
       <height>28</height>
      </rect>
@@ -421,7 +421,7 @@
     <property name="geometry">
      <rect>
       <x>70</x>
-      <y>510</y>
+      <y>370</y>
       <width>101</width>
       <height>28</height>
      </rect>
@@ -434,7 +434,7 @@
     <property name="geometry">
      <rect>
       <x>5</x>
-      <y>540</y>
+      <y>400</y>
       <width>236</width>
       <height>192</height>
      </rect>
@@ -444,7 +444,7 @@
     <property name="geometry">
      <rect>
       <x>245</x>
-      <y>115</y>
+      <y>165</y>
       <width>101</width>
       <height>28</height>
      </rect>
@@ -458,8 +458,8 @@
      <rect>
       <x>265</x>
       <y>5</y>
-      <width>80</width>
-      <height>103</height>
+      <width>81</width>
+      <height>157</height>
      </rect>
     </property>
     <layout class="QVBoxLayout" name="verticalLayout">
@@ -512,19 +512,39 @@
        </property>
       </widget>
      </item>
+     <item>
+      <widget class="QRadioButton" name="zoomPlusTool">
+       <property name="layoutDirection">
+        <enum>Qt::RightToLeft</enum>
+       </property>
+       <property name="text">
+        <string>Zoom+</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QRadioButton" name="zoomMinusTool">
+       <property name="layoutDirection">
+        <enum>Qt::RightToLeft</enum>
+       </property>
+       <property name="text">
+        <string>Zoom-</string>
+       </property>
+      </widget>
+     </item>
     </layout>
    </widget>
    <widget class="QPushButton" name="concatinateBTN">
     <property name="geometry">
      <rect>
       <x>225</x>
-      <y>150</y>
+      <y>200</y>
       <width>121</width>
       <height>28</height>
      </rect>
     </property>
     <property name="text">
-     <string>Concatinate points</string>
+     <string>Concatenate points</string>
     </property>
    </widget>
    <widget class="QPushButton" name="saveButton">
@@ -572,8 +592,8 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>1726</width>
-     <height>21</height>
+     <width>1084</width>
+     <height>26</height>
     </rect>
    </property>
   </widget>

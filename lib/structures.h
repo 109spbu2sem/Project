@@ -6,7 +6,9 @@
 class Point: public ObjectSkin //<Point>
 {
 public:
+	// pointer to 'x' coordinate of point
 	double *_x;
+	// pointer to 'y' coordinate of point
 	double *_y;
 
 	Point(double *xx = 0, double *yy = 0)
@@ -17,14 +19,10 @@ public:
 	~Point() 
 	{
 	}
-	virtual unsigned objectType()
+	virtual PRIMITIVE_TYPE objectType()
 	{
-		return 1;
+		return PRIMITIVE_POINT;
 	}
-	/*virtual Point& getLink()
-	{
-		return *this;
-	}*/
 };
 
 class Segment : public ObjectSkin //<Segment>
@@ -45,13 +43,9 @@ public:
 		_p2 = point2;
 	}
 	~Segment() {}
-	virtual unsigned objectType()
+	virtual PRIMITIVE_TYPE objectType()
 	{
-		return 2;
-	}
-	virtual Segment& getLink()
-	{
-		return *this;
+		return PRIMITIVE_SEGMENT;
 	}
 };
 
@@ -89,7 +83,7 @@ public:
 	Vector unit_vector();// returns unit vector
 };
 
-class Angle : public ObjectSkin //<Angle>
+/*class Angle : public ObjectSkin //<Angle>
 {
 public:
 	double *angle;
@@ -101,11 +95,7 @@ public:
 	{
 		return 3;
 	}
-	/*virtual Angle& getLink()
-	{
-		return *this;
-	}*/
-};
+};*/
 
 class Circle : public ObjectSkin //<Circle>
 {
@@ -125,17 +115,13 @@ public:
 		_o = p;
 		_r = r;
 	}
-	virtual unsigned objectType()
+	virtual PRIMITIVE_TYPE objectType()
 	{
-		return 4;
+		return PRIMITIVE_CIRCLE;
 	}
-	/*virtual Circle& getLink()
-	{
-		return *this;
-	}*/
 };
 
-class Arc : public ObjectSkin //<Arc>
+/*class Arc : public ObjectSkin //<Arc>
 {
 public:
 	//----structure
@@ -162,10 +148,6 @@ public:
 	{
 		return 4;
 	}
-	/*virtual Arc& getLink()
-	{
-		return *this;
-	}*/
-};
+};*/
 
 #endif
