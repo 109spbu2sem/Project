@@ -1,0 +1,50 @@
+#include <iostream>
+#include <valarray>
+using namespace std;
+
+template <typename T>ostream&  operator <<(
+	ostream& ost, 
+	valarray<T>& v)
+{
+	for(size_t k = 0;k < v.size(); ++k)
+		ost << v[k] << ' ';
+	return ost;
+}
+
+template<typename T> void gauss(
+	valarray<T>&v,
+	size_t s,
+	size_t c)
+{
+	slice k(0,c,s);
+	valarray<double> val=v[k];
+	cout << val << endl;
+	for (int i=0;i<s-1;i++)
+		{
+			slice k(i,c,s);			
+			valarray<double> val=v[k];
+			for (int j=i+1;j<s;j++)
+			{
+				slice k1(j,c,s);
+				valarray<double> val1=v[k1];
+				val1=val1 - val * (val1[i]/val[i]);
+				v[k1]=val1;
+				if (j==i+1)
+					cout << val1 << endl;				
+			}
+		}
+
+}
+
+int main()
+{
+	valarray <double> val(16);
+	for(size_t k = 0; k < val.size(); ++k)
+	{
+		val[k] = rand()%100;
+	}
+	cout << val << endl;
+	cout << "------------------" << endl;
+	gauss(val,4,4);
+		return 0;
+}
