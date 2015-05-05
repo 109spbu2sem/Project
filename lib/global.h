@@ -54,9 +54,12 @@ public:
 class Interface
 {
 public:
-	virtual bool DrawPoint(unsigned, double, double, Color = 0) = 0; // point (id, x, y, color)
-	virtual bool DrawSegment(unsigned, double, double, double, double, Color = 0) = 0; // segment (id, x1, y1, x2, y2, color)
-	virtual bool DrawCircle(unsigned, double, double, double, Color = 0) = 0; // circle (id, x, y, r, color)
+	// id, x, y, color, write mode
+	virtual bool DrawPoint(unsigned, double, double, Color = 0, unsigned = 0) = 0;
+	// id, x1, y1, x2, y2, color, write mode
+	virtual bool DrawSegment(unsigned, double, double, double, double, Color = 0, unsigned = 0) = 0;
+	// id, x, y, r, color, write mode
+	virtual bool DrawCircle(unsigned, double, double, double, Color = 0, unsigned = 0) = 0;
 	virtual bool Clear() = 0;
 };
 

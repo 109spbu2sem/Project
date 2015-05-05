@@ -74,6 +74,27 @@ void CORE::Select(double x, double y)
 			if (object->isSelected())
 			{
 				_selected_objects.add(object);
+				switch (object->objectType())
+				{
+				case PRIMITIVE_POINT:
+				{
+					Point* p = dynamic_cast<Point*>(object);
+					mygui->DrawPoint(p->id.getID(), *p->_x, *p->_y, p->color, 1);
+					break;
+				}
+				case PRIMITIVE_SEGMENT:
+				{
+					Segment* s = dynamic_cast<Segment*>(object);
+					mygui->DrawSegment(s->id.getID(), *s->_p1->_x, *s->_p1->_y, *s->_p2->_x, *s->_p2->_y, s->color, 1);
+					break;
+				}
+				case PRIMITIVE_CIRCLE:
+				{
+					Circle* p = dynamic_cast<Circle*>(object);
+					mygui->DrawCircle(p->id.getID(), *p->_o->_x, *p->_o->_y,*p->_r, p->color, 1);
+					break;
+				}
+				}
 			}
 			else
 			{

@@ -31,13 +31,15 @@ public:
 	
 	void ConnectCORE(CORE* core);
 	
-	bool DrawPoint(unsigned, double, double, Color = 0); // point (id, x, y, color)
-	bool DrawSegment(unsigned, double, double, double, double, Color = 0); // segment (id, x1, y1, x2, y2, color)
-	bool DrawCircle(unsigned, double, double, double, Color = 0); // circle (id, x, y, r, color)
+	bool DrawPoint(unsigned, double, double, Color = 0, unsigned = 0); // point (id, x, y, color)
+	bool DrawSegment(unsigned, double, double, double, double, Color = 0, unsigned = 0); // segment (id, x1, y1, x2, y2, color)
+	bool DrawCircle(unsigned, double, double, double, Color = 0, unsigned = 0); // circle (id, x, y, r, color)
 	bool Clear();
 
 	void WriteError(const char* ErrorText);
 	void WriteStatus(const char* ErrorKey);
+
+	//void setupObjectParameters(PRIMITIVE_TYPE, unsigned, double, double, double, double, Color);
 	
 private slots:	
 	void on_openAddingBTN_clicked();

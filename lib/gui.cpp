@@ -25,8 +25,8 @@ MainWindow::MainWindow(QWidget *parent) :
 	ui->graphicsView->connectCORECanvas(mycore);
 	ui->graphicsView->scale(2, 2);
 	//ui->objectsList->setColumnCount(6);
-	mainscene->addLine(0, -10000, 0, 10000, QPen(Qt::DotLine));
-	mainscene->addLine(-10000, 0, 10000, 0, QPen(Qt::DotLine));
+	mainscene->addLine(0, -5000, 0, 5000, QPen(Qt::DotLine));
+	mainscene->addLine(-5000, 0, 5000, 0, QPen(Qt::DotLine));
 }
 
 void MainWindow::ConnectCORE(CORE* core)
@@ -55,11 +55,25 @@ void MainWindow::WriteStatus(const char* ErrorKey)
 	return;
 }
 
-bool MainWindow::DrawPoint(unsigned id, double x, double y, Color c)
+bool MainWindow::DrawPoint(unsigned id, double x, double y, Color c, unsigned mode)
 {
-	mainscene->addEllipse(x - 1.2, -y - 1.2, 2.4, 2.4,
-		QPen(QColor(c.getColor(1), c.getColor(2), c.getColor(3))),
-		QBrush(QColor(c.getColor(1), c.getColor(2), c.getColor(3))));
+	if (mode)
+	{
+		ui->typesOfObjects->setCurrentIndex(0);
+		QString s;
+		ui->editID->setText(s.setNum(id));
+		ui->editX1->setText(s.setNum(x));
+		ui->editY1->setText(s.setNum(y));
+		ui->editR->setText(s.setNum(c.getColor(1)));
+		ui->editG->setText(s.setNum(c.getColor(2)));
+		ui->editB->setText(s.setNum(c.getColor(3)));
+	}
+	else
+	{
+		mainscene->addEllipse(x - 1.2, -y - 1.2, 2.4, 2.4,
+									 QPen(QColor(c.getColor(1), c.getColor(2), c.getColor(3))),
+									 QBrush(QColor(c.getColor(1), c.getColor(2), c.getColor(3))));
+	}
 	/*for (unsigned i = 0; i < 10000; i++)
 	{
 	ui->objectsList->setRowCount(ui->objectsList->rowCount());
@@ -71,23 +85,54 @@ bool MainWindow::DrawPoint(unsigned id, double x, double y, Color c)
 	return true;
 }
 
-bool MainWindow::DrawSegment(unsigned id, double x1, double y1, double x2, double y2, Color c)
+bool MainWindow::DrawSegment(unsigned id, double x1, double y1, double x2, double y2, Color c, unsigned mode)
 {
-	mainscene->addLine(x1, -y1, x2, -y2, QPen(QColor(c.getColor(1), c.getColor(2), c.getColor(3))));
+	if (mode)
+	{
+		ui->typesOfObjects->setCurrentIndex(1);
+		QString s;
+		ui->editID->setText(s.setNum(id));
+		ui->editX1->setText(s.setNum(x1));
+		ui->editY1->setText(s.setNum(y1));
+		ui->editX2->setText(s.setNum(x2));
+		ui->editY2->setText(s.setNum(y2));
+		ui->editR->setText(s.setNum(c.getColor(1)));
+		ui->editG->setText(s.setNum(c.getColor(2)));
+		ui->editB->setText(s.setNum(c.getColor(3)));
+	}
+	else
+	{
+		mainscene->addLine(x1, -y1, x2, -y2, QPen(QColor(c.getColor(1), c.getColor(2), c.getColor(3))));
+	}
 	return true;
 }
 
-bool MainWindow::DrawCircle(unsigned id, double x, double y, double r, Color c)
+bool MainWindow::DrawCircle(unsigned id, double x, double y, double r, Color c, unsigned mode)
 {
-	mainscene->addEllipse(x - r, -y - r, r * 2, r * 2, QPen(QColor(c.getColor(1), c.getColor(2), c.getColor(3))));
+	if (mode)
+	{
+		ui->typesOfObjects->setCurrentIndex(2);
+		QString s;
+		ui->editID->setText(s.setNum(id));
+		ui->editX1->setText(s.setNum(x));
+		ui->editY1->setText(s.setNum(y));
+		ui->editX2->setText(s.setNum(r));
+		ui->editR->setText(s.setNum(c.getColor(1)));
+		ui->editG->setText(s.setNum(c.getColor(2)));
+		ui->editB->setText(s.setNum(c.getColor(3)));
+	}
+	else
+	{
+		mainscene->addEllipse(x - r, -y - r, r * 2, r * 2, QPen(QColor(c.getColor(1), c.getColor(2), c.getColor(3))));
+	}
 	return true;
 }
 
 bool MainWindow::Clear()
 {	
 	mainscene->clear();
-	mainscene->addLine(0, -10000, 0, 10000, QPen(Qt::DotLine));
-	mainscene->addLine(-10000, 0, 10000, 0, QPen(Qt::DotLine));
+	mainscene->addLine(0, -5000, 0, 5000, QPen(Qt::DotLine));
+	mainscene->addLine(-5000, 0, 5000, 0, QPen(Qt::DotLine));
 	ui->objectsList->clear();
 	return true;
 }

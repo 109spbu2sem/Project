@@ -59,6 +59,8 @@ public:
     QLineEdit *editG;
     QLabel *labelB;
     QLineEdit *editB;
+    QLineEdit *editID;
+    QLabel *label;
     QGroupBox *groupBox_2;
     QComboBox *ruleBox;
     QWidget *layoutWidget2;
@@ -116,13 +118,13 @@ public:
         openAddingBTN->setGeometry(QRect(5, 370, 61, 28));
         groupBox = new QGroupBox(centralWidget);
         groupBox->setObjectName(QStringLiteral("groupBox"));
-        groupBox->setGeometry(QRect(10, 40, 196, 221));
+        groupBox->setGeometry(QRect(10, 40, 196, 236));
         typesOfObjects = new QComboBox(groupBox);
         typesOfObjects->setObjectName(QStringLiteral("typesOfObjects"));
         typesOfObjects->setGeometry(QRect(15, 20, 86, 26));
         addBTN = new QPushButton(groupBox);
         addBTN->setObjectName(QStringLiteral("addBTN"));
-        addBTN->setGeometry(QRect(110, 20, 76, 28));
+        addBTN->setGeometry(QRect(105, 205, 76, 28));
         layoutWidget = new QWidget(groupBox);
         layoutWidget->setObjectName(QStringLiteral("layoutWidget"));
         layoutWidget->setGeometry(QRect(15, 90, 166, 111));
@@ -219,9 +221,15 @@ public:
 
         horizontalLayout_2->addWidget(editB);
 
+        editID = new QLineEdit(groupBox);
+        editID->setObjectName(QStringLiteral("editID"));
+        editID->setGeometry(QRect(135, 25, 46, 22));
+        label = new QLabel(groupBox);
+        label->setObjectName(QStringLiteral("label"));
+        label->setGeometry(QRect(110, 25, 26, 16));
         groupBox_2 = new QGroupBox(centralWidget);
         groupBox_2->setObjectName(QStringLiteral("groupBox_2"));
-        groupBox_2->setGeometry(QRect(10, 270, 226, 86));
+        groupBox_2->setGeometry(QRect(10, 280, 226, 86));
         ruleBox = new QComboBox(groupBox_2);
         ruleBox->setObjectName(QStringLiteral("ruleBox"));
         ruleBox->setGeometry(QRect(10, 20, 206, 22));
@@ -359,6 +367,8 @@ public:
         editG->setPlaceholderText(QApplication::translate("MainWindow", "G", 0));
         labelB->setText(QApplication::translate("MainWindow", "B:", 0));
         editB->setPlaceholderText(QApplication::translate("MainWindow", "B", 0));
+        editID->setPlaceholderText(QApplication::translate("MainWindow", "ID", 0));
+        label->setText(QApplication::translate("MainWindow", "ID:", 0));
         groupBox_2->setTitle(QApplication::translate("MainWindow", "Add Rule", 0));
         ruleBox->clear();
         ruleBox->insertItems(0, QStringList()
