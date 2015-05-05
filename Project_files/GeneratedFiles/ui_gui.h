@@ -81,6 +81,7 @@ public:
     QPushButton *saveButton;
     QPushButton *saveAsButton;
     QPushButton *loadButton;
+    QPushButton *deleteAllBTN;
     QMenuBar *menuBar;
     QStatusBar *statusBar;
 
@@ -315,6 +316,9 @@ public:
         loadButton = new QPushButton(centralWidget);
         loadButton->setObjectName(QStringLiteral("loadButton"));
         loadButton->setGeometry(QRect(170, 10, 75, 23));
+        deleteAllBTN = new QPushButton(centralWidget);
+        deleteAllBTN->setObjectName(QStringLiteral("deleteAllBTN"));
+        deleteAllBTN->setGeometry(QRect(175, 370, 93, 28));
         MainWindow->setCentralWidget(centralWidget);
         menuBar = new QMenuBar(MainWindow);
         menuBar->setObjectName(QStringLiteral("menuBar"));
@@ -378,6 +382,7 @@ public:
         saveButton->setText(QApplication::translate("MainWindow", "Save", 0));
         saveAsButton->setText(QApplication::translate("MainWindow", "Save as...", 0));
         loadButton->setText(QApplication::translate("MainWindow", "Load", 0));
+        deleteAllBTN->setText(QApplication::translate("MainWindow", "Delete All", 0));
     } // retranslateUi
 
 };

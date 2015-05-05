@@ -76,8 +76,8 @@ public:
 	unsigned AddObject(double point_x, double point_y, Color color = COLORDEF, unsigned id = 0, bool wait = false); // add point
 	unsigned AddObject(unsigned point1_id, unsigned point2_id, Color color = COLORDEF, unsigned id = 0, bool wait = false); // add segment for 2 points
 	unsigned AddObject(unsigned point_id, double radius, Color color = COLORDEF, unsigned id = 0, bool wait = false);
-	void AddObject(double point_x1, double point_y1, double point_x2, double point_y2, Color color = COLORDEF, unsigned id = 0); // add segment, automatical adds 2 points
-	void AddObject(double point_x, double point_y, double radius, Color color = COLORDEF, unsigned id = 0); // add circle, automatical add center of circle
+	/*void AddObject(double point_x1, double point_y1, double point_x2, double point_y2, Color color = COLORDEF, unsigned id = 0); // add segment, automatical adds 2 points
+	void AddObject(double point_x, double point_y, double radius, Color color = COLORDEF, unsigned id = 0); // add circle, automatical add center of circle*/
 	void ConcatenatePoints();
 
 	void AddRule(unsigned type, double value);

@@ -277,7 +277,8 @@ void CORE::DeleteAll()
 	_storage_of_parameters.clear();
 	writeToLog("All parameters were deleted");
 	writeToLog("All clear");
-	Redraw();
+	mygui->WriteStatus("All clear");
+	mygui->Clear();
 }
 
 void CORE::DeleteSelected()

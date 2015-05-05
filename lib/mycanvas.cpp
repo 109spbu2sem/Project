@@ -1,6 +1,7 @@
 #include "mycanvas.h"
 #include "gui.h"
 #include "objectpropertieswindow.h"
+#include "ui_gui.h"
 #include <QPointF>
 
 MyCanvas::MyCanvas(QWidget *parent) : QGraphicsView(parent)
@@ -42,9 +43,38 @@ void MyCanvas::mousePressEvent(QMouseEvent *event)
 	}
 }
 
+void MyCanvas::keyPressEvent(QKeyEvent *event)
+{
+	switch (event->key())
+	{
+	case Qt::Key_1:
+	{
+		setTool(TOOL_Select);
+		break;
+	}
+	case Qt::Key_2:
+	{
+		setTool(TOOL_Point);
+		break;
+	}
+	case Qt::Key_5:
+	{
+		setTool(TOOL_ZoomPlus);
+		break;
+	}
+	case Qt::Key_6:
+	{
+		setTool(TOOL_ZoomMinus);
+		break;
+	}
+	default:
+		break;
+	}
+}
+
 void MyCanvas::mouseDoubleClickEvent(QMouseEvent *event)
 {	
-	switch (_tool)
+	/*switch (_tool)
 	{
 	case TOOL_Select:
 	{
@@ -55,7 +85,7 @@ void MyCanvas::mouseDoubleClickEvent(QMouseEvent *event)
 	}
 	default:
 		return;
-	}
+	}*/
 }
 
 void MyCanvas::wheelEvent(QWheelEvent *event)

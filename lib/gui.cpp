@@ -314,3 +314,8 @@ void MainWindow::on_saveAsButton_clicked() {
 		"Text File (*.txt);; Xml File (*.xml)");
 	mycore->IWantSaveAs(filename);
 }
+
+void MainWindow::on_deleteAllBTN_clicked()
+{
+	mycore->DeleteAll();
+}

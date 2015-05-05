@@ -43,6 +43,8 @@ unsigned CORE::AddObject(unsigned id1, unsigned id2, Color color, unsigned id, b
 		if (!wait) Redraw();
 		return newid.getID();
 	}
+	else
+		delete s;
 	writeToLog("Can't add segment with point's ids:", 2);
 	writeToLog(id1, "point 1 id= ", 2);
 	writeToLog(id2, "point 2 id= ", 2);
@@ -67,12 +69,14 @@ unsigned CORE::AddObject(unsigned pointid, double radius, Color color, unsigned 
 		if (!wait) Redraw();
 		return newid.getID();
 	}
+	else
+		delete c;
 	writeToLog("Can't add circle with point's id:", 2);
 	writeToLog(pointid, "point id= ", 2);
 	writeToLog("return id= 0", 2);
 	return 0;
 }
-void CORE::AddObject(double point_x1, double point_y1, double point_x2, double point_y2, Color color, unsigned id)
+/*void CORE::AddObject(double point_x1, double point_y1, double point_x2, double point_y2, Color color, unsigned id)
 {
 	Point* p1 = new Point(_storage_of_parameters.add(point_x1), _storage_of_parameters.add(point_y1));
 	Point* p2 = new Point(_storage_of_parameters.add(point_x2), _storage_of_parameters.add(point_y2));
@@ -114,7 +118,7 @@ void CORE::AddObject(double point_x, double point_y, double radius, Color color,
 	writeToLog(id, "id= ", 2);
 	writeToLog("< /add >", 2);
 	Redraw();
-}
+}*/
 
 void CORE::ConcatenatePoints()
 {
