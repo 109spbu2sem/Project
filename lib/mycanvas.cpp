@@ -7,7 +7,7 @@
 MyCanvas::MyCanvas(QWidget *parent) : QGraphicsView(parent)
 {
 	mainscene = new QGraphicsScene();
-	this->setScene(mainscene);
+	setScene(mainscene);
 	_tool = TOOL_Select;
 }
 
@@ -23,22 +23,25 @@ void MyCanvas::mousePressEvent(QMouseEvent *event)
 	{
 	case TOOL_Select:
 	{
-		mycore->Select(pt.x(), -pt.y());
+		if (event->button() == Qt::RightButton)
+			mycore->ClearSelection();
+		else
+			mycore->Select(pt.x(), -pt.y());
 		break;
 	}
 	case TOOL_Point:
 	{
-		mycore->AddObject(pt.x(), -pt.y());
+		if (event->button() == Qt::LeftButton)
+			mycore->AddObject(pt.x(), -pt.y());
 		break;
 	}
-	case TOOL_ZoomPlus:
+	case TOOL_Zoom:
 	{
-		scale(2, 2);
+		if (event->button() == Qt::RightButton)
+			scale(0.5, 0.5);
+		else
+			scale(2, 2);
 		break;
-	}
-	case TOOL_ZoomMinus:
-	{
-		scale(0.5, 0.5);
 	}
 	}
 }
@@ -59,12 +62,12 @@ void MyCanvas::keyPressEvent(QKeyEvent *event)
 	}
 	case Qt::Key_5:
 	{
-		setTool(TOOL_ZoomPlus);
+		setTool(TOOL_Zoom);
 		break;
 	}
 	case Qt::Key_6:
 	{
-		setTool(TOOL_ZoomMinus);
+		setTool(TOOL_Zoom);
 		break;
 	}
 	default:

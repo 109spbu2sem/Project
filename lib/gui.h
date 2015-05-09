@@ -5,6 +5,7 @@
 #include <QMainWindow>
 #include <QGraphicsScene>
 #include "mycanvas.h"
+#include <QButtonGroup>
 
 class CORE;
 
@@ -12,8 +13,7 @@ enum GTool
 {
 	TOOL_Select,
 	TOOL_Point,
-	TOOL_ZoomPlus,
-	TOOL_ZoomMinus
+	TOOL_Zoom
 };
 
 namespace Ui
@@ -36,8 +36,9 @@ public:
 	bool DrawCircle(unsigned, double, double, double, Color = 0, unsigned = 0); // circle (id, x, y, r, color)
 	bool Clear();
 
-	void WriteError(const char* ErrorText);
-	void WriteStatus(const char* ErrorKey);
+	void WriteError(const char* Text);
+	void WriteStatus(const char* Text);
+	void WriteMessage(const char* Text);
 
 	//void setupObjectParameters(PRIMITIVE_TYPE, unsigned, double, double, double, double, Color);
 	
@@ -57,14 +58,6 @@ private slots:
 	void on_pushButton_2_clicked();
 	
 	void on_concatinateBTN_clicked();
-	
-	void on_selectTool_clicked();
-	
-	void on_pointTool_clicked();
-
-	void on_zoomPlusTool_clicked();
-
-	void on_zoomMinusTool_clicked();
 
 	void on_saveButton_clicked();
 
@@ -72,10 +65,17 @@ private slots:
 
 	void on_deleteAllBTN_clicked();
 	
+	void on_selectBTNTool_clicked();
+	
+	void on_pointBTNTool_clicked();
+	
+	void on_ZoomBTNTool_clicked();
+	
 private:
 	Ui::MainWindow *ui;
 	CORE* mycore;
 	QGraphicsScene* mainscene;
+	QButtonGroup* toolsbuttons;
 };
 
 class GUI : public MainWindow

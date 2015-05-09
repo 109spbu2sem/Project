@@ -27,6 +27,13 @@ MainWindow::MainWindow(QWidget *parent) :
 	//ui->objectsList->setColumnCount(6);
 	mainscene->addLine(0, -5000, 0, 5000, QPen(Qt::DotLine));
 	mainscene->addLine(-5000, 0, 5000, 0, QPen(Qt::DotLine));
+	/*QPixmap pixpam1("icons/pointbtn.png");
+	ui->pointBTNTool->setIcon(pixpam1);
+	ui->pointBTNTool->setIconSize(pixpam1.rect().size());*/
+	toolsbuttons = new QButtonGroup;
+	toolsbuttons->addButton(ui->selectBTNTool);
+	toolsbuttons->addButton(ui->pointBTNTool);
+	toolsbuttons->addButton(ui->ZoomBTNTool);
 }
 
 void MainWindow::ConnectCORE(CORE* core)
@@ -37,21 +44,28 @@ void MainWindow::ConnectCORE(CORE* core)
 
 MainWindow::~MainWindow()
 {
+	delete toolsbuttons;
 	delete ui;
 }
 
-void MainWindow::WriteError(const char* ErrorText)
+void MainWindow::WriteError(const char* Text)
 {
-	ui->statusBar->showMessage("Error", 7000);
+	ui->statusBar->setText("Error");
 	QMessageBox b;
-	b.setText(ErrorText);
+	b.setText(Text);
 	b.exec();
 	return;
 }
 
-void MainWindow::WriteStatus(const char* ErrorKey)
+void MainWindow::WriteStatus(const char* Text)
 {
-	ui->statusBar->showMessage(ErrorKey);
+	ui->statusBar->setText(Text);
+	return;
+}
+
+void MainWindow::WriteMessage(const char* Text)
+{
+	ui->messageBar->setText(Text);
 	return;
 }
 
@@ -133,14 +147,14 @@ bool MainWindow::Clear()
 	mainscene->clear();
 	mainscene->addLine(0, -5000, 0, 5000, QPen(Qt::DotLine));
 	mainscene->addLine(-5000, 0, 5000, 0, QPen(Qt::DotLine));
-	ui->objectsList->clear();
+	//ui->objectsList->clear();
 	return true;
 }
 
 void MainWindow::on_openAddingBTN_clicked()
 {
-    objectPropertiesWindow * ow = new objectPropertiesWindow(this);
-	 ow->exec();
+    objectPropertiesWindow ow = objectPropertiesWindow(this);
+	 ow.exec();
 }
 
 void MainWindow::on_addBTN_clicked()
@@ -328,26 +342,6 @@ void MainWindow::on_concatinateBTN_clicked()
 	mycore->ConcatenatePoints();
 }
 
-void MainWindow::on_selectTool_clicked()
-{
-    ui->graphicsView->setTool(TOOL_Select);
-}
-
-void MainWindow::on_zoomPlusTool_clicked()
-{
-	ui->graphicsView->setTool(TOOL_ZoomPlus);
-}
-
-void MainWindow::on_zoomMinusTool_clicked()
-{
-	ui->graphicsView->setTool(TOOL_ZoomMinus);
-}
-
-void MainWindow::on_pointTool_clicked()
-{
-    ui->graphicsView->setTool(TOOL_Point);
-}
-
 void MainWindow::on_saveButton_clicked() {
 	mycore->IWantSave();
 }
@@ -363,4 +357,19 @@ void MainWindow::on_saveAsButton_clicked() {
 void MainWindow::on_deleteAllBTN_clicked()
 {
 	mycore->DeleteAll();
+}
+
+void MainWindow::on_selectBTNTool_clicked()
+{
+    ui->graphicsView->setTool(TOOL_Select);
+}
+
+void MainWindow::on_pointBTNTool_clicked()
+{
+    ui->graphicsView->setTool(TOOL_Point);
+}
+
+void MainWindow::on_ZoomBTNTool_clicked()
+{
+    ui->graphicsView->setTool(TOOL_Zoom);
 }
