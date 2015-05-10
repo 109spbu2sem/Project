@@ -7,14 +7,14 @@ class Point: public ObjectSkin //<Point>
 {
 public:
 	// pointer to 'x' coordinate of point
-	double *_x;
+	double *x;
 	// pointer to 'y' coordinate of point
-	double *_y;
+	double *y;
 
 	Point(double *xx = 0, double *yy = 0)
 	{
-		_x = xx;
-		_y = yy;
+		x = xx;
+		y = yy;
 	}
 	~Point() 
 	{
@@ -28,19 +28,19 @@ public:
 class Segment : public ObjectSkin //<Segment>
 {
 public:
-	Point *_p1; // begin
-	Point *_p2; // end
+	Point *p1; // begin
+	Point *p2; // end
 
 	Segment()
 	{
-		_p1 = 0;
-		_p2 = 0;
+		p1 = 0;
+		p2 = 0;
 	}
 
 	Segment(Point *point1, Point *point2)
 	{
-		_p1 = point1;
-		_p2 = point2;
+		p1 = point1;
+		p2 = point2;
 	}
 	~Segment() {}
 	virtual PRIMITIVE_TYPE objectType()
@@ -68,8 +68,8 @@ public:
 	};
 	Vector(Segment *seg)
 	{
-		x = seg->_p1->_x - seg->_p2->_x;
-		y = seg->_p1->_y - seg->_p2->_y;
+		x = seg->p1->x - seg->p2->x;
+		y = seg->p1->y - seg->p2->y;
 	};
 	Vector operator+ (const Vector &v);
 	void operator+= (const Vector &v);
@@ -101,19 +101,19 @@ class Circle : public ObjectSkin //<Circle>
 {
 public:
 	//----structure
-	Point* _o;
-	double* _r;
+	Point* p;
+	double* r;
 
 	//----functions
 	Circle()
 	{
-		_o = 0;
-		_r = 0;
+		p = 0;
+		r = 0;
 	}
-	Circle(Point *p, double *r)
+	Circle(Point *point, double *radius)
 	{
-		_o = p;
-		_r = r;
+		p = point;
+		r = radius;
 	}
 	virtual PRIMITIVE_TYPE objectType()
 	{

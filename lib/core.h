@@ -27,12 +27,14 @@ private:
 	Save* mysave;
 	Load* myload;
 
-	Storage_List<double> _storage_of_parameters;
-	Storage_List<double> _storage_of_constants;
-	Storage_List<Point> _storage_of_points;
-	Storage_List<Segment> _storage_of_segments;
-	Storage_List<Circle> _storage_of_circles;
-	Storage_List<IConstraint*> _storage_of_constraints;
+	//Storage_List<double> _storage_of_parameters;
+	Storage_AVL<double*, bool> _parameters;
+	//Storage_List<double*> _constants;
+	//Storage_List<double> _storage_of_constants;
+	//Storage_List<Point> _storage_of_points;
+	//Storage_List<Segment> _storage_of_segments;
+	//Storage_List<Circle> _storage_of_circles;
+	//Storage_List<IConstraint*> _storage_of_constraints;
 	HashTable<IConstraint*, double*> _storage_of_constraint;
 	Storage_List<ObjectSkin*> _selected_objects;
 	StorageOfObjects _storage_of_objects;
@@ -47,6 +49,14 @@ private:
 	std::fstream _logfile;
 
 	std::string GenerateTimeString(char*, char*);
+
+	bool addc_p2pdist(double);
+	bool addc_p2sdist(double);
+	bool addc_p2ldist(double);
+	bool addc_l2langle(double);
+	bool addc_3pratio(double);
+	bool addc_3ponline();
+	bool addc_excontact();
 
 public:
 	CORE();
@@ -80,8 +90,8 @@ public:
 	void AddObject(double point_x, double point_y, double radius, Color color = COLORDEF, unsigned id = 0); // add circle, automatical add center of circle*/
 	void ConcatenatePoints();
 
-	void AddRule(unsigned type, double value);
-	void AddRule(unsigned type);
+	void AddRule(unsigned type, double value = 0);
+	void AddRule(unsigned type, unsigned id1, unsigned id2, unsigned id3 = 0, double value = 0);
 
 	void ChangeStatus(unsigned char status_key); // need refine
 

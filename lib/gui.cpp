@@ -289,12 +289,15 @@ void MainWindow::on_ruleBox_currentIndexChanged(int index)
 
 void MainWindow::on_pushButton_clicked()
 {
-    switch (ui->ruleBox->currentIndex())
+	switch (ui->ruleBox->currentIndex())
 	{
 	case 0:
 	{
 		if (!ui->ruleValueEdit->text().isEmpty())
+		{
 			mycore->AddRule(CONSTR_P2PDIST, ui->ruleValueEdit->text().toDouble());
+			mycore->Calculate();
+		}
 		else
 			WriteStatus("Need value");
 		break;
@@ -302,7 +305,10 @@ void MainWindow::on_pushButton_clicked()
 	case 1:
 	{
 		if (!ui->ruleValueEdit->text().isEmpty())
+		{
 			mycore->AddRule(CONSTR_P2LINEDIST, ui->ruleValueEdit->text().toDouble());
+			mycore->Calculate();
+		}
 		else
 			WriteStatus("Need value");
 		break;
@@ -310,12 +316,16 @@ void MainWindow::on_pushButton_clicked()
 	case 2:
 	{
 		mycore->AddRule(CONSTR_3PONLINE);
+		mycore->Calculate();
 		break;
 	}
 	case 3:
 	{
 		if (!ui->ruleValueEdit->text().isEmpty())
+		{
 			mycore->AddRule(CONSTR_3PRATIO, ui->ruleValueEdit->text().toDouble());
+			mycore->Calculate();
+		}
 		else
 			WriteStatus("Need value");
 		break;
@@ -323,7 +333,10 @@ void MainWindow::on_pushButton_clicked()
 	case 4:
 	{
 		if (!ui->ruleValueEdit->text().isEmpty())
+		{
 			mycore->AddRule(CONSTR_L2LANGLE, ui->ruleValueEdit->text().toDouble());
+			mycore->Calculate();
+		}
 		else
 			WriteStatus("Need value");
 		break;

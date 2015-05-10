@@ -56,25 +56,6 @@ void CORE::Redraw()
 	{
 		writeToLog("*******Redrawing*******");
 		mygui->Clear();
-		// old method for lists of objects
-		/*for (ListViewer<Point> i(_storage_of_points); i.canMoveNext(); i.moveNext())
-		{
-			if (i.getValue().isVisible())
-				mygui->DrawPoint(i.getValue().id.getID(), *i.getValue()._x, *i.getValue()._y,
-				i.getValue().isSelected() ? COLORSELECTED : i.getValue().color);
-		}
-		for (ListViewer<Segment> i(_storage_of_segments); i.canMoveNext(); i.moveNext())
-		{
-			if (i.getValue().isVisible())
-				mygui->DrawSegment(i.getValue().id.getID(), *i.getValue()._p1->_x, *i.getValue()._p1->_y,
-				*i.getValue()._p2->_x, *i.getValue()._p2->_y, i.getValue().isSelected() ? COLORSELECTED : i.getValue().color);
-		}
-		for (ListViewer<Circle> i(_storage_of_circles); i.canMoveNext(); i.moveNext())
-		{
-			if (i.getValue().isVisible())
-				mygui->DrawCircle(i.getValue().id.getID(), *i.getValue()._o->_x, *i.getValue()._o->_y,
-				*i.getValue()._r, i.getValue().isSelected() ? COLORSELECTED : i.getValue().color);
-		}*/
 		// new method for tree
 		for (StorageOfObjects::viewer i(_storage_of_objects); i.canMoveNext(); i.moveNext())
 		{
@@ -85,12 +66,12 @@ void CORE::Redraw()
 			{
 				Point* p = dynamic_cast<Point*>(i.value());
 				writeToLog("<point>", 2);
-				writeToLog(*p->_x, "x= ", 2);
-				writeToLog(*p->_y, "y= ", 2);
+				writeToLog(*p->x, "x= ", 2);
+				writeToLog(*p->y, "y= ", 2);
 				writeToLog(p->color.getColor(), "color= ", 2);
 				writeToLog(p->id.getID(), "id= ", 2);
 				writeToLog("</point>", 2);
-				mygui->DrawPoint(p->id.getID(), *p->_x, *p->_y,
+				mygui->DrawPoint(p->id.getID(), *p->x, *p->y,
 									  p->isSelected() ? COLORSELECTED : p->color);
 				break;
 			}
@@ -98,29 +79,29 @@ void CORE::Redraw()
 			{
 				Segment* s = dynamic_cast<Segment*>(i.value());
 				writeToLog("<segment>", 2);
-				writeToLog(*s->_p1->_x, "x1= ", 2);
-				writeToLog(*s->_p1->_y, "y1= ", 2);
-				writeToLog(*s->_p2->_x, "x2= ", 2);
-				writeToLog(*s->_p2->_y, "y2= ", 2);
+				writeToLog(*s->p1->x, "x1= ", 2);
+				writeToLog(*s->p1->y, "y1= ", 2);
+				writeToLog(*s->p2->x, "x2= ", 2);
+				writeToLog(*s->p2->y, "y2= ", 2);
 				writeToLog(s->color.getColor(), "color= ", 2);
 				writeToLog(s->id.getID(), "id= ", 2);
 				writeToLog("</segment>", 2);
-				mygui->DrawSegment(s->id.getID(), *s->_p1->_x, *s->_p1->_y,
-										 *s->_p2->_x, *s->_p2->_y, s->isSelected() ? COLORSELECTED : s->color);
+				mygui->DrawSegment(s->id.getID(), *s->p1->x, *s->p1->y,
+										 *s->p2->x, *s->p2->y, s->isSelected() ? COLORSELECTED : s->color);
 				break;
 			}
 			case PRIMITIVE_CIRCLE:
 			{
 				Circle* c = dynamic_cast<Circle*>(i.value());
 				writeToLog("<circle>", 3);
-				writeToLog(*c->_o->_x, "x= ", 3);
-				writeToLog(*c->_o->_y, "y= ", 3);
-				writeToLog(*c->_r, "r= ", 3);
+				writeToLog(*c->p->x, "x= ", 3);
+				writeToLog(*c->p->y, "y= ", 3);
+				writeToLog(*c->r, "r= ", 3);
 				writeToLog(c->color.getColor(), "color= ", 3);
 				writeToLog(c->id.getID(), "id= ", 3);
 				writeToLog("</circle>", 3);
-				mygui->DrawCircle(c->id.getID(), *c->_o->_x, *c->_o->_y,
-										*c->_r, c->isSelected() ? COLORSELECTED : c->color);
+				mygui->DrawCircle(c->id.getID(), *c->p->x, *c->p->y,
+										*c->r, c->isSelected() ? COLORSELECTED : c->color);
 				break;
 			}
 			}
@@ -152,9 +133,9 @@ void CORE::Calculate()
 		}
 		catch (...) {}
 	}
-	for (ListViewer< double > i(_storage_of_parameters); i.canMoveNext(); i.moveNext())
+	for (AVLVeiwer< double*, bool > i(_parameters); i.canMoveNext(); i.moveNext())
 	{
-		parameters.add(&i.getValue());
+		parameters.add(i.getValue().key);
 	}
 	//BuildFigure(&collector, &parameters);
 	writeToLog("---------------------Building new figure-----------------");

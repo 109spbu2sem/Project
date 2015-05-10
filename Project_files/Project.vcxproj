@@ -176,6 +176,7 @@
     <ClInclude Include="..\lib\Save.h" />
     <ClInclude Include="..\lib\settings.h" />
     <ClInclude Include="..\lib\storageofobjects.h" />
+    <ClInclude Include="..\lib\storages\AVL_tree.h" />
     <ClInclude Include="..\lib\storages\queue.h" />
     <ClInclude Include="..\lib\Load.h" />
     <ClInclude Include="GeneratedFiles\ui_gui.h" />

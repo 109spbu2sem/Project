@@ -25,9 +25,9 @@ void CORE::Select(double x, double y)
 			case PRIMITIVE_POINT:
 			{
 				Point* p = dynamic_cast<Point*>(i.value());
-				if (length(*p->_x, *p->_y, x, y) < min)
+				if (length(*p->x, *p->y, x, y) < min)
 				{
-					min = length(*p->_x, *p->_y, x, y);
+					min = length(*p->x, *p->y, x, y);
 					min_id = p->id.getID();
 				}
 				break;
@@ -35,16 +35,16 @@ void CORE::Select(double x, double y)
 			case PRIMITIVE_SEGMENT:
 			{
 				Segment* s = dynamic_cast<Segment*>(i.value());
-				double A = *s->_p2->_y - *s->_p1->_y;
-				double B = *s->_p1->_x - *s->_p2->_x;
-				double C = *s->_p1->_y * *s->_p2->_x - *s->_p1->_x * *s->_p2->_y;
+				double A = *s->p2->y - *s->p1->y;
+				double B = *s->p1->x - *s->p2->x;
+				double C = *s->p1->y * *s->p2->x - *s->p1->x * *s->p2->y;
 				if ((abs(A*x + B*y + C) / sqrt(A*A + B*B) < min) &&
-					 (length(*s->_p1->_x, *s->_p1->_y, x, y) <
+					 (length(*s->p1->x, *s->p1->y, x, y) <
 					 ((A*x + B*y + C)*(A*x + B*y + C) / (A*A + B*B) +
-					 length(*s->_p1->_x, *s->_p1->_y, *s->_p2->_x, *s->_p2->_y)))
-					 && (length(*s->_p2->_x, *s->_p2->_y, x, y) <
+					 length(*s->p1->x, *s->p1->y, *s->p2->x, *s->p2->y)))
+					 && (length(*s->p2->x, *s->p2->y, x, y) <
 					 ((A*x + B*y + C)*(A*x + B*y + C) / (A*A + B*B) +
-					 length(*s->_p1->_x, *s->_p1->_y, *s->_p2->_x, *s->_p2->_y))))
+					 length(*s->p1->x, *s->p1->y, *s->p2->x, *s->p2->y))))
 				{
 					min = abs(A*x + B*y + C) / sqrt(A*A + B*B);
 					min_id = s->id.getID();
@@ -54,10 +54,10 @@ void CORE::Select(double x, double y)
 			case PRIMITIVE_CIRCLE:
 			{
 				Circle* c = dynamic_cast<Circle*>(i.value());
-				if ((length(*c->_o->_x, *c->_o->_y, x, y) < (*c->_r + min)) &&
-					 (length(*c->_o->_x, *c->_o->_y, x, y) > (*c->_r - min)))
+				if ((length(*c->p->x, *c->p->y, x, y) < (*c->r + min)) &&
+					 (length(*c->p->x, *c->p->y, x, y) > (*c->r - min)))
 				{
-					min = abs(length(*c->_o->_x, *c->_o->_y, x, y) - *c->_r);
+					min = abs(length(*c->p->x, *c->p->y, x, y) - *c->r);
 					min_id = c->id.getID();
 				}
 				break;
@@ -79,19 +79,19 @@ void CORE::Select(double x, double y)
 				case PRIMITIVE_POINT:
 				{
 					Point* p = dynamic_cast<Point*>(object);
-					mygui->DrawPoint(p->id.getID(), *p->_x, *p->_y, p->color, 1);
+					mygui->DrawPoint(p->id.getID(), *p->x, *p->y, p->color, 1);
 					break;
 				}
 				case PRIMITIVE_SEGMENT:
 				{
 					Segment* s = dynamic_cast<Segment*>(object);
-					mygui->DrawSegment(s->id.getID(), *s->_p1->_x, *s->_p1->_y, *s->_p2->_x, *s->_p2->_y, s->color, 1);
+					mygui->DrawSegment(s->id.getID(), *s->p1->x, *s->p1->y, *s->p2->x, *s->p2->y, s->color, 1);
 					break;
 				}
 				case PRIMITIVE_CIRCLE:
 				{
 					Circle* p = dynamic_cast<Circle*>(object);
-					mygui->DrawCircle(p->id.getID(), *p->_o->_x, *p->_o->_y,*p->_r, p->color, 1);
+					mygui->DrawCircle(p->id.getID(), *p->p->x, *p->p->y,*p->r, p->color, 1);
 					break;
 				}
 				}
@@ -115,133 +115,16 @@ void CORE::Select(double x, double y)
 		}
 	}
 	return;
-	/*int min_i = -1;
-	unsigned j = 0;
-	for (ListViewer<Point> i(_storage_of_points); i.canMoveNext(); i.moveNext(), j++)
-	{
-			if (length(*i.getValue()._x, *i.getValue()._y, x, y) < min)
-			{
-				min = length(*i.getValue()._x, *i.getValue()._y, x, y);
-				min_i = j;
-			}
-	}
-	if (min_i >= 0)
-	{
-		unsigned j = 0;
-		ListViewer<Point> i(_storage_of_points);
-		for (; j < min_i; i.moveNext())
-		{
-			j++;
-		}
-		i.getValue().changeSelect();
-		if (i.getValue().isSelected())
-			_selected_objects.add(&i.getValue());
-		else
-		{
-			for (ListViewer<ObjectSkin*> j(_selected_objects); j.canMoveNext(); j.moveNext())
-			{
-				if (dynamic_cast<Point*>(j.getValue()) == &i.getValue())
-				{
-					_selected_objects.remove(&j);
-					break;
-				}
-			}
-		}
-		Redraw();
-		return;
-	}
-	int min_j = -1;
-	j = 0;
-	double A = 0, B = 0, C = 0;
-	for (ListViewer<Segment> i(_storage_of_segments); i.canMoveNext(); i.moveNext(), j++)
-	{
-		A = *i.getValue()._p2->_y - *i.getValue()._p1->_y;
-		B = *i.getValue()._p1->_x - *i.getValue()._p2->_x;
-		C = *i.getValue()._p1->_y * *i.getValue()._p2->_x - *i.getValue()._p1->_x * *i.getValue()._p2->_y;
-		if ((abs(A*x + B*y + C) / sqrt(A*A + B*B) < min) &&
-			(length(*i.getValue()._p1->_x, *i.getValue()._p1->_y, x, y) <
-			((A*x + B*y + C)*(A*x + B*y + C) / (A*A + B*B) +
-			length(*i.getValue()._p1->_x, *i.getValue()._p1->_y, *i.getValue()._p2->_x, *i.getValue()._p2->_y)))
-			&& (length(*i.getValue()._p2->_x, *i.getValue()._p2->_y, x, y) <
-			((A*x + B*y + C)*(A*x + B*y + C) / (A*A + B*B) +
-			length(*i.getValue()._p1->_x, *i.getValue()._p1->_y, *i.getValue()._p2->_x, *i.getValue()._p2->_y))))
-		{
-			min = abs(A*x + B*y + C) / sqrt(A*A + B*B);
-			min_j = j;
-		}
-	}
-	if (min_j >= 0)
-	{
-		unsigned j = 0;
-		ListViewer<Segment> i(_storage_of_segments);
-		for (; j < min_j; i.moveNext())
-		{
-			j++;
-		}
-		i.getValue().changeSelect();
-		if (i.getValue().isSelected())
-			_selected_objects.add(&i.getValue());
-		else
-		{
-			for (ListViewer<ObjectSkin*> j(_selected_objects); j.canMoveNext(); j.moveNext())
-			{
-				if (dynamic_cast<Segment*>(j.getValue()) == &i.getValue())
-				{
-					_selected_objects.remove(&j);
-					break;
-				}
-			}
-		}
-		Redraw();
-		return;
-	}
-	int min_k = -1;
-	j = 0;
-	for (ListViewer<Circle> i(_storage_of_circles); i.canMoveNext(); i.moveNext(), j++)
-	{
-		if ((length(*i.getValue()._o->_x, *i.getValue()._o->_y, x, y) < (*i.getValue()._r + min)) &&
-			(length(*i.getValue()._o->_x, *i.getValue()._o->_y, x, y) > (*i.getValue()._r - min)))
-		{
-			min = abs(length(*i.getValue()._o->_x, *i.getValue()._o->_y, x, y) - *i.getValue()._r);
-			min_k = j;
-		}
-	}
-	if (min_k >= 0)
-	{
-		unsigned j = 0;
-		ListViewer<Circle> i(_storage_of_circles);
-		for (; j < min_k; i.moveNext())
-		{
-			j++;
-		}
-		i.getValue().changeSelect();
-		if (i.getValue().isSelected())
-			_selected_objects.add(&i.getValue());
-		else
-		{
-			for (ListViewer<ObjectSkin*> j(_selected_objects); j.canMoveNext(); j.moveNext())
-			{
-				if (dynamic_cast<Circle*>(j.getValue()) == &i.getValue())
-				{
-					_selected_objects.remove(&j);
-					break;
-				}
-			}
-		}
-		Redraw();
-		return;
-	}
-	return;*/
 }
 
 
 void CORE::Select(double x1, double y1, double x2, double y2)
 {
-	// select points
+	/*// select points
 	unsigned size = _storage_of_points.size();
 	for (ListViewer<Point> i(_storage_of_points); i.canMoveNext(); i.moveNext())
 	{
-		if (isInArea(*i.getValue()._x, *i.getValue()._y, x1, y1, x2, y2))
+		if (isInArea(*i.getValue().x, *i.getValue().y, x1, y1, x2, y2))
 		{
 			i.getValue().changeSelect(true);
 			_selected_objects.add(&i.getValue());
@@ -252,8 +135,8 @@ void CORE::Select(double x1, double y1, double x2, double y2)
 	size = _storage_of_segments.size();
 	for (ListViewer<Segment> i(_storage_of_segments); i.canMoveNext(); i.moveNext())
 	{
-		if (isInArea(*i.getValue()._p1->_x, *i.getValue()._p1->_y, x1, y1, x2, y2) &&
-			isInArea(*i.getValue()._p2->_x, *i.getValue()._p2->_y, x1, y1, x2, y2))
+		if (isInArea(*i.getValue().p1->x, *i.getValue().p1->y, x1, y1, x2, y2) &&
+			isInArea(*i.getValue().p2->x, *i.getValue().p2->y, x1, y1, x2, y2))
 		{
 			i.getValue().changeSelect(true);
 			_selected_objects.add(&i.getValue());
@@ -263,16 +146,16 @@ void CORE::Select(double x1, double y1, double x2, double y2)
 	size = _storage_of_circles.size();
 	for (ListViewer<Circle> i(_storage_of_circles); i.canMoveNext(); i.moveNext())
 	{
-		if ((isInArea(*i.getValue()._o->_x, *i.getValue()._o->_y, x1, y1, x2, y2)) &&
-			(*i.getValue()._o->_x + *i.getValue()._r) >= x1 && (*i.getValue()._o->_x + *i.getValue()._r) <= x2 &&
-			(*i.getValue()._o->_y + *i.getValue()._r) >= y1 && (*i.getValue()._o->_y + *i.getValue()._r) <= y2)
+		if ((isInArea(*i.getValue().p->x, *i.getValue().p->y, x1, y1, x2, y2)) &&
+			(*i.getValue().p->x + *i.getValue().r) >= x1 && (*i.getValue().p->x + *i.getValue().r) <= x2 &&
+			(*i.getValue().p->y + *i.getValue().r) >= y1 && (*i.getValue().p->y + *i.getValue().r) <= y2)
 		{
 			i.getValue().changeSelect(true);
 			_selected_objects.add(&i.getValue());
 		}
 	}
 	Redraw();
-	return;
+	return;*/
 }
 
 void CORE::ClearSelection()
@@ -289,17 +172,21 @@ void CORE::ClearSelection()
 
 void CORE::DeleteAll()
 {
+	mygui->WriteStatus("Cleaning...");
+	mygui->WriteMessage("");
 	_storage_of_constraint.clear();
+	mygui->WriteMessage("All rules were deleted");
 	writeToLog("All rules were deleted");
 	_storage_of_objects.clear();
+	mygui->WriteMessage("All objects were deleted");
 	writeToLog("All objects were deleted");
-	_storage_of_constants.clear();
-	writeToLog("All constants were deleted");
-	_storage_of_parameters.clear();
+	_parameters.clear();
+	mygui->WriteMessage("All parameters were deleted");
 	writeToLog("All parameters were deleted");
 	writeToLog("All clear");
-	mygui->WriteStatus("All clear");
 	mygui->Clear();
+	mygui->WriteStatus("Done");
+	mygui->WriteMessage("All clear");
 }
 
 void CORE::DeleteSelected()
@@ -311,18 +198,25 @@ void CORE::DeleteSelected()
 		case PRIMITIVE_POINT:
 		{
 			Point* p = dynamic_cast<Point*>(i.getValue());
-			// delete from parameters
-			// delete this
+			try
+			{
+				_parameters.remove(p->x);
+				_parameters.remove(p->y);
+				delete p->x;
+				delete p->y;
+				delete p;
+			}
+			catch (...) { }
 			break;
 		}
 		case PRIMITIVE_SEGMENT:
 		{
-			Segment* s = dynamic_cast<Segment*>(i.getValue());
+			//Segment* s = dynamic_cast<Segment*>(i.getValue());
 			break;
 		}
 		case PRIMITIVE_CIRCLE:
 		{
-			Circle* c = dynamic_cast<Circle*>(i.getValue());
+			//Circle* c = dynamic_cast<Circle*>(i.getValue());
 			break;
 		}
 		}
@@ -334,31 +228,31 @@ void CORE::DeleteSelected()
 
 void CORE::IWantSave()
 {
-	mysave->begin();
+	/*mysave->begin();
 	if (_storage_of_points.size() != 0) {
 		ListViewer<Point> v(_storage_of_points);
 		while (v.canMoveNext()) {
-			mysave->DrawPoint(v.getValue().id.getID(), *v.getValue()._x, *v.getValue()._y, v.getValue().color.getColor());
+			mysave->DrawPoint(v.getValue().id.getID(), *v.getValue().x, *v.getValue().y, v.getValue().color.getColor());
 			v.moveNext();
 		}
 	}
 	if (_storage_of_segments.size() != 0) {
 		ListViewer<Segment> v(_storage_of_segments);
 		while (v.canMoveNext()) {
-			mysave->DrawSegment(v.getValue().id.getID(), *v.getValue()._p1->_x, *v.getValue()._p1->_y,
-				*v.getValue()._p2->_x, *v.getValue()._p2->_y, v.getValue().color.getColor());
+			mysave->DrawSegment(v.getValue().id.getID(), *v.getValue().p1->x, *v.getValue().p1->y,
+				*v.getValue().p2->x, *v.getValue().p2->y, v.getValue().color.getColor());
 			v.moveNext();
 		}
 	}
 	if (_storage_of_circles.size() != 0) {
 		ListViewer<Circle> v(_storage_of_circles);
 		while (v.canMoveNext()) {
-			mysave->DrawCircle(v.getValue().id.getID(), *v.getValue()._o->_x, *v.getValue()._o->_y,
-				*v.getValue()._r, v.getValue().color.getColor());
+			mysave->DrawCircle(v.getValue().id.getID(), *v.getValue().p->x, *v.getValue().p->y,
+				*v.getValue().r, v.getValue().color.getColor());
 			v.moveNext();
 		}
 	}
-	mysave->end();
+	mysave->end();*/
 }
 
 void CORE::IWantSaveAs(QString way) {

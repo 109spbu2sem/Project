@@ -208,6 +208,9 @@
     <ClInclude Include="..\lib\Load.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="..\lib\storages\AVL_tree.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <CustomBuild Include="..\lib\QTforms\gui.ui">
