@@ -228,31 +228,40 @@ void CORE::DeleteSelected()
 
 void CORE::IWantSave()
 {
-	/*mysave->begin();
-	if (_storage_of_points.size() != 0) {
-		ListViewer<Point> v(_storage_of_points);
-		while (v.canMoveNext()) {
-			mysave->DrawPoint(v.getValue().id.getID(), *v.getValue().x, *v.getValue().y, v.getValue().color.getColor());
-			v.moveNext();
+	mysave->begin();
+	StorageOfObjects::viewer i(_storage_of_objects);
+	while (i.canMoveNext())
+	{
+		if (i.key().getID() == 0)
+		{
+			i.moveNext();
+			continue;
+		}
+		if (i.value()->objectType() == PRIMITIVE_POINT)
+		{
+			Point* v = dynamic_cast<Point*>(i.value());
+			mysave->DrawPoint(v->id.getID(), *v->x, *v->y, v->color.getColor(), 0);
+			i.moveNext();
+			continue;
+		}
+		if (i.value()->objectType() == PRIMITIVE_SEGMENT)
+		{
+			Segment* v = dynamic_cast<Segment*>(i.value());
+			mysave->DrawSegment(v->id.getID(), *v->p1->x, *v->p1->y, *v->p2->x, *v->p2->y, v->color.getColor(), 0);
+			i.moveNext();
+			continue;
+
+		}
+		if (i.value()->objectType() == PRIMITIVE_CIRCLE)
+		{
+			Circle* v = dynamic_cast<Circle*>(i.value());
+			mysave->DrawCircle(v->id.getID(), *v->p->x, *v->p->y, *v->r, v->color.getColor(), 0);
+			i.moveNext();
+			continue;
 		}
 	}
-	if (_storage_of_segments.size() != 0) {
-		ListViewer<Segment> v(_storage_of_segments);
-		while (v.canMoveNext()) {
-			mysave->DrawSegment(v.getValue().id.getID(), *v.getValue().p1->x, *v.getValue().p1->y,
-				*v.getValue().p2->x, *v.getValue().p2->y, v.getValue().color.getColor());
-			v.moveNext();
-		}
-	}
-	if (_storage_of_circles.size() != 0) {
-		ListViewer<Circle> v(_storage_of_circles);
-		while (v.canMoveNext()) {
-			mysave->DrawCircle(v.getValue().id.getID(), *v.getValue().p->x, *v.getValue().p->y,
-				*v.getValue().r, v.getValue().color.getColor());
-			v.moveNext();
-		}
-	}
-	mysave->end();*/
+
+	mysave->end();
 }
 
 void CORE::IWantSaveAs(QString way) {
