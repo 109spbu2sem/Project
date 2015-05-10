@@ -305,7 +305,7 @@
    <widget class="QGroupBox" name="groupBox_2">
     <property name="geometry">
      <rect>
-      <x>170</x>
+      <x>0</x>
       <y>280</y>
       <width>226</width>
       <height>86</height>
@@ -418,9 +418,9 @@
    <widget class="QPushButton" name="concatinateBTN">
     <property name="geometry">
      <rect>
-      <x>225</x>
+      <x>245</x>
       <y>520</y>
-      <width>121</width>
+      <width>101</width>
       <height>28</height>
      </rect>
     </property>
@@ -470,7 +470,7 @@
    <widget class="QPushButton" name="deleteAllBTN">
     <property name="geometry">
      <rect>
-      <x>175</x>
+      <x>140</x>
       <y>370</y>
       <width>93</width>
       <height>28</height>
@@ -534,8 +534,8 @@
    <widget class="QWidget" name="layoutWidget">
     <property name="geometry">
      <rect>
-      <x>225</x>
-      <y>70</y>
+      <x>210</x>
+      <y>50</y>
       <width>31</width>
       <height>101</height>
      </rect>
@@ -623,7 +623,7 @@
      <x>0</x>
      <y>0</y>
      <width>1084</width>
-     <height>26</height>
+     <height>21</height>
     </rect>
    </property>
    <widget class="QMenu" name="menuFile">

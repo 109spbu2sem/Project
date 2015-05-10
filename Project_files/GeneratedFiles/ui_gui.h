@@ -245,7 +245,7 @@ public:
         label->setGeometry(QRect(110, 25, 26, 16));
         groupBox_2 = new QGroupBox(centralWidget);
         groupBox_2->setObjectName(QStringLiteral("groupBox_2"));
-        groupBox_2->setGeometry(QRect(170, 280, 226, 86));
+        groupBox_2->setGeometry(QRect(0, 280, 226, 86));
         ruleBox = new QComboBox(groupBox_2);
         ruleBox->setObjectName(QStringLiteral("ruleBox"));
         ruleBox->setGeometry(QRect(10, 20, 206, 22));
@@ -283,7 +283,7 @@ public:
         pushButton_2->setGeometry(QRect(245, 485, 101, 28));
         concatinateBTN = new QPushButton(centralWidget);
         concatinateBTN->setObjectName(QStringLiteral("concatinateBTN"));
-        concatinateBTN->setGeometry(QRect(225, 520, 121, 28));
+        concatinateBTN->setGeometry(QRect(245, 520, 101, 28));
         saveButton = new QPushButton(centralWidget);
         saveButton->setObjectName(QStringLiteral("saveButton"));
         saveButton->setGeometry(QRect(5, 10, 75, 23));
@@ -295,7 +295,7 @@ public:
         loadButton->setGeometry(QRect(170, 10, 75, 23));
         deleteAllBTN = new QPushButton(centralWidget);
         deleteAllBTN->setObjectName(QStringLiteral("deleteAllBTN"));
-        deleteAllBTN->setGeometry(QRect(175, 370, 93, 28));
+        deleteAllBTN->setGeometry(QRect(140, 370, 93, 28));
         layoutWidget3 = new QWidget(centralWidget);
         layoutWidget3->setObjectName(QStringLiteral("layoutWidget3"));
         layoutWidget3->setGeometry(QRect(5, 600, 409, 23));
@@ -323,7 +323,7 @@ public:
 
         layoutWidget4 = new QWidget(centralWidget);
         layoutWidget4->setObjectName(QStringLiteral("layoutWidget4"));
-        layoutWidget4->setGeometry(QRect(225, 70, 31, 101));
+        layoutWidget4->setGeometry(QRect(210, 50, 31, 101));
         verticalLayout_2 = new QVBoxLayout(layoutWidget4);
         verticalLayout_2->setSpacing(6);
         verticalLayout_2->setContentsMargins(11, 11, 11, 11);
@@ -357,7 +357,7 @@ public:
         MainWindow->setCentralWidget(centralWidget);
         menuBar = new QMenuBar(MainWindow);
         menuBar->setObjectName(QStringLiteral("menuBar"));
-        menuBar->setGeometry(QRect(0, 0, 1084, 26));
+        menuBar->setGeometry(QRect(0, 0, 1084, 21));
         menuFile = new QMenu(menuBar);
         menuFile->setObjectName(QStringLiteral("menuFile"));
         menuOptions = new QMenu(menuBar);
