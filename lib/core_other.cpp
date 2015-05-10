@@ -76,24 +76,24 @@ void CORE::Select(double x, double y)
 				_selected_objects.add(object);
 				switch (object->objectType())
 				{
-				case PRIMITIVE_POINT:
-				{
-					Point* p = dynamic_cast<Point*>(object);
-					mygui->DrawPoint(p->id.getID(), *p->x, *p->y, p->color, 1);
-					break;
-				}
-				case PRIMITIVE_SEGMENT:
-				{
-					Segment* s = dynamic_cast<Segment*>(object);
-					mygui->DrawSegment(s->id.getID(), *s->p1->x, *s->p1->y, *s->p2->x, *s->p2->y, s->color, 1);
-					break;
-				}
-				case PRIMITIVE_CIRCLE:
-				{
-					Circle* p = dynamic_cast<Circle*>(object);
-					mygui->DrawCircle(p->id.getID(), *p->p->x, *p->p->y,*p->r, p->color, 1);
-					break;
-				}
+					case PRIMITIVE_POINT:
+					{
+						Point* p = dynamic_cast<Point*>(object);
+						mygui->DrawPoint(p->id.getID(), *p->x, *p->y, p->color, 1);
+						break;
+					}
+					case PRIMITIVE_SEGMENT:
+					{
+						Segment* s = dynamic_cast<Segment*>(object);
+						mygui->DrawSegment(s->id.getID(), *s->p1->x, *s->p1->y, *s->p2->x, *s->p2->y, s->color, 1);
+						break;
+					}
+					case PRIMITIVE_CIRCLE:
+					{
+						Circle* p = dynamic_cast<Circle*>(object);
+						mygui->DrawCircle(p->id.getID(), *p->p->x, *p->p->y, *p->r, p->color, 1);
+						break;
+					}
 				}
 			}
 			else
@@ -114,6 +114,8 @@ void CORE::Select(double x, double y)
 		{
 		}
 	}
+	else
+		ClearSelection();
 	return;
 }
 

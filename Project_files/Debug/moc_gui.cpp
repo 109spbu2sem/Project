@@ -19,8 +19,8 @@
 
 QT_BEGIN_MOC_NAMESPACE
 struct qt_meta_stringdata_MainWindow_t {
-    QByteArrayData data[17];
-    char stringdata[368];
+    QByteArrayData data[16];
+    char stringdata[353];
 };
 #define QT_MOC_LITERAL(idx, ofs, len) \
     Q_STATIC_BYTE_ARRAY_DATA_HEADER_INITIALIZER_WITH_OFFSET(len, \
@@ -32,33 +32,32 @@ static const qt_meta_stringdata_MainWindow_t qt_meta_stringdata_MainWindow = {
 QT_MOC_LITERAL(0, 0, 10), // "MainWindow"
 QT_MOC_LITERAL(1, 11, 24), // "on_openAddingBTN_clicked"
 QT_MOC_LITERAL(2, 36, 0), // ""
-QT_MOC_LITERAL(3, 37, 17), // "on_addBTN_clicked"
-QT_MOC_LITERAL(4, 55, 37), // "on_typesOfObjects_currentInde..."
-QT_MOC_LITERAL(5, 93, 5), // "index"
-QT_MOC_LITERAL(6, 99, 23), // "on_calculateBTN_clicked"
-QT_MOC_LITERAL(7, 123, 30), // "on_ruleBox_currentIndexChanged"
-QT_MOC_LITERAL(8, 154, 21), // "on_pushButton_clicked"
-QT_MOC_LITERAL(9, 176, 23), // "on_pushButton_2_clicked"
-QT_MOC_LITERAL(10, 200, 25), // "on_concatinateBTN_clicked"
-QT_MOC_LITERAL(11, 226, 21), // "on_saveButton_clicked"
-QT_MOC_LITERAL(12, 248, 23), // "on_saveAsButton_clicked"
-QT_MOC_LITERAL(13, 272, 23), // "on_deleteAllBTN_clicked"
-QT_MOC_LITERAL(14, 296, 24), // "on_selectBTNTool_clicked"
-QT_MOC_LITERAL(15, 321, 23), // "on_pointBTNTool_clicked"
-QT_MOC_LITERAL(16, 345, 22) // "on_ZoomBTNTool_clicked"
+QT_MOC_LITERAL(3, 37, 30), // "on_ruleBox_currentIndexChanged"
+QT_MOC_LITERAL(4, 68, 5), // "index"
+QT_MOC_LITERAL(5, 74, 21), // "on_pushButton_clicked"
+QT_MOC_LITERAL(6, 96, 25), // "on_concatinateBTN_clicked"
+QT_MOC_LITERAL(7, 122, 24), // "on_selectBTNTool_clicked"
+QT_MOC_LITERAL(8, 147, 23), // "on_pointBTNTool_clicked"
+QT_MOC_LITERAL(9, 171, 22), // "on_ZoomBTNTool_clicked"
+QT_MOC_LITERAL(10, 194, 29), // "on_actionRedraw_all_triggered"
+QT_MOC_LITERAL(11, 224, 24), // "on_actionClose_triggered"
+QT_MOC_LITERAL(12, 249, 23), // "on_actionSave_triggered"
+QT_MOC_LITERAL(13, 273, 26), // "on_actionSave_As_triggered"
+QT_MOC_LITERAL(14, 300, 28), // "on_actionClear_all_triggered"
+QT_MOC_LITERAL(15, 329, 23) // "on_actionLoad_triggered"
 
     },
     "MainWindow\0on_openAddingBTN_clicked\0"
-    "\0on_addBTN_clicked\0"
-    "on_typesOfObjects_currentIndexChanged\0"
-    "index\0on_calculateBTN_clicked\0"
-    "on_ruleBox_currentIndexChanged\0"
-    "on_pushButton_clicked\0on_pushButton_2_clicked\0"
-    "on_concatinateBTN_clicked\0"
-    "on_saveButton_clicked\0on_saveAsButton_clicked\0"
-    "on_deleteAllBTN_clicked\0"
+    "\0on_ruleBox_currentIndexChanged\0index\0"
+    "on_pushButton_clicked\0on_concatinateBTN_clicked\0"
     "on_selectBTNTool_clicked\0"
-    "on_pointBTNTool_clicked\0on_ZoomBTNTool_clicked"
+    "on_pointBTNTool_clicked\0on_ZoomBTNTool_clicked\0"
+    "on_actionRedraw_all_triggered\0"
+    "on_actionClose_triggered\0"
+    "on_actionSave_triggered\0"
+    "on_actionSave_As_triggered\0"
+    "on_actionClear_all_triggered\0"
+    "on_actionLoad_triggered"
 };
 #undef QT_MOC_LITERAL
 
@@ -68,7 +67,7 @@ static const uint qt_meta_data_MainWindow[] = {
        7,       // revision
        0,       // classname
        0,    0, // classinfo
-      14,   14, // methods
+      13,   14, // methods
        0,    0, // properties
        0,    0, // enums/sets
        0,    0, // constructors
@@ -76,27 +75,25 @@ static const uint qt_meta_data_MainWindow[] = {
        0,       // signalCount
 
  // slots: name, argc, parameters, tag, flags
-       1,    0,   84,    2, 0x08 /* Private */,
-       3,    0,   85,    2, 0x08 /* Private */,
-       4,    1,   86,    2, 0x08 /* Private */,
-       6,    0,   89,    2, 0x08 /* Private */,
-       7,    1,   90,    2, 0x08 /* Private */,
-       8,    0,   93,    2, 0x08 /* Private */,
-       9,    0,   94,    2, 0x08 /* Private */,
-      10,    0,   95,    2, 0x08 /* Private */,
-      11,    0,   96,    2, 0x08 /* Private */,
-      12,    0,   97,    2, 0x08 /* Private */,
-      13,    0,   98,    2, 0x08 /* Private */,
-      14,    0,   99,    2, 0x08 /* Private */,
-      15,    0,  100,    2, 0x08 /* Private */,
-      16,    0,  101,    2, 0x08 /* Private */,
+       1,    0,   79,    2, 0x08 /* Private */,
+       3,    1,   80,    2, 0x08 /* Private */,
+       5,    0,   83,    2, 0x08 /* Private */,
+       6,    0,   84,    2, 0x08 /* Private */,
+       7,    0,   85,    2, 0x08 /* Private */,
+       8,    0,   86,    2, 0x08 /* Private */,
+       9,    0,   87,    2, 0x08 /* Private */,
+      10,    0,   88,    2, 0x08 /* Private */,
+      11,    0,   89,    2, 0x08 /* Private */,
+      12,    0,   90,    2, 0x08 /* Private */,
+      13,    0,   91,    2, 0x08 /* Private */,
+      14,    0,   92,    2, 0x08 /* Private */,
+      15,    0,   93,    2, 0x08 /* Private */,
 
  // slots: parameters
     QMetaType::Void,
+    QMetaType::Void, QMetaType::Int,    4,
     QMetaType::Void,
-    QMetaType::Void, QMetaType::Int,    5,
     QMetaType::Void,
-    QMetaType::Void, QMetaType::Int,    5,
     QMetaType::Void,
     QMetaType::Void,
     QMetaType::Void,
@@ -116,19 +113,18 @@ void MainWindow::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, 
         MainWindow *_t = static_cast<MainWindow *>(_o);
         switch (_id) {
         case 0: _t->on_openAddingBTN_clicked(); break;
-        case 1: _t->on_addBTN_clicked(); break;
-        case 2: _t->on_typesOfObjects_currentIndexChanged((*reinterpret_cast< int(*)>(_a[1]))); break;
-        case 3: _t->on_calculateBTN_clicked(); break;
-        case 4: _t->on_ruleBox_currentIndexChanged((*reinterpret_cast< int(*)>(_a[1]))); break;
-        case 5: _t->on_pushButton_clicked(); break;
-        case 6: _t->on_pushButton_2_clicked(); break;
-        case 7: _t->on_concatinateBTN_clicked(); break;
-        case 8: _t->on_saveButton_clicked(); break;
-        case 9: _t->on_saveAsButton_clicked(); break;
-        case 10: _t->on_deleteAllBTN_clicked(); break;
-        case 11: _t->on_selectBTNTool_clicked(); break;
-        case 12: _t->on_pointBTNTool_clicked(); break;
-        case 13: _t->on_ZoomBTNTool_clicked(); break;
+        case 1: _t->on_ruleBox_currentIndexChanged((*reinterpret_cast< int(*)>(_a[1]))); break;
+        case 2: _t->on_pushButton_clicked(); break;
+        case 3: _t->on_concatinateBTN_clicked(); break;
+        case 4: _t->on_selectBTNTool_clicked(); break;
+        case 5: _t->on_pointBTNTool_clicked(); break;
+        case 6: _t->on_ZoomBTNTool_clicked(); break;
+        case 7: _t->on_actionRedraw_all_triggered(); break;
+        case 8: _t->on_actionClose_triggered(); break;
+        case 9: _t->on_actionSave_triggered(); break;
+        case 10: _t->on_actionSave_As_triggered(); break;
+        case 11: _t->on_actionClear_all_triggered(); break;
+        case 12: _t->on_actionLoad_triggered(); break;
         default: ;
         }
     }
@@ -161,13 +157,13 @@ int MainWindow::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
     if (_id < 0)
         return _id;
     if (_c == QMetaObject::InvokeMetaMethod) {
-        if (_id < 14)
+        if (_id < 13)
             qt_static_metacall(this, _c, _id, _a);
-        _id -= 14;
+        _id -= 13;
     } else if (_c == QMetaObject::RegisterMethodArgumentMetaType) {
-        if (_id < 14)
+        if (_id < 13)
             *reinterpret_cast<int*>(_a[0]) = -1;
-        _id -= 14;
+        _id -= 13;
     }
     return _id;
 }

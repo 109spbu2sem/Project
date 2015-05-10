@@ -6,6 +6,7 @@
 #include <QGraphicsScene>
 #include "mycanvas.h"
 #include <QButtonGroup>
+#include <QAction>
 
 class CORE;
 
@@ -41,41 +42,41 @@ public:
 	void WriteMessage(const char* Text);
 
 	//void setupObjectParameters(PRIMITIVE_TYPE, unsigned, double, double, double, double, Color);
-	
-private slots:	
+
+private slots:
 	void on_openAddingBTN_clicked();
-	
-	void on_addBTN_clicked();
-	
-	void on_typesOfObjects_currentIndexChanged(int index);
-	
-	void on_calculateBTN_clicked();
 	
 	void on_ruleBox_currentIndexChanged(int index);
 	
 	void on_pushButton_clicked();
 	
-	void on_pushButton_2_clicked();
-	
 	void on_concatinateBTN_clicked();
-
-	void on_saveButton_clicked();
-
-	void on_saveAsButton_clicked();
-
-	void on_deleteAllBTN_clicked();
 	
 	void on_selectBTNTool_clicked();
 	
 	void on_pointBTNTool_clicked();
 	
 	void on_ZoomBTNTool_clicked();
+
+	void on_actionRedraw_all_triggered();
+
+	void on_actionClose_triggered();
+
+	void on_actionSave_triggered();
+
+	void on_actionSave_As_triggered();
+
+	void on_actionClear_all_triggered();
+
+	void on_actionLoad_triggered();
 	
 private:
 	Ui::MainWindow *ui;
 	CORE* mycore;
 	QGraphicsScene* mainscene;
 	QButtonGroup* toolsbuttons;
+	
+
 };
 
 class GUI : public MainWindow

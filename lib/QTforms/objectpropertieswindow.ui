@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>208</width>
-    <height>221</height>
+    <width>183</width>
+    <height>227</height>
    </rect>
   </property>
   <property name="sizePolicy">
@@ -18,19 +18,25 @@
   </property>
   <property name="minimumSize">
    <size>
-    <width>208</width>
-    <height>198</height>
+    <width>183</width>
+    <height>227</height>
+   </size>
+  </property>
+  <property name="maximumSize">
+   <size>
+    <width>183</width>
+    <height>227</height>
    </size>
   </property>
   <property name="windowTitle">
-   <string>Properties</string>
+   <string>Add</string>
   </property>
   <widget class="QDialogButtonBox" name="buttonBox">
    <property name="geometry">
     <rect>
-     <x>-1</x>
-     <y>185</y>
-     <width>201</width>
+     <x>10</x>
+     <y>190</y>
+     <width>161</width>
      <height>32</height>
     </rect>
    </property>
@@ -44,140 +50,21 @@
     <bool>false</bool>
    </property>
   </widget>
-  <widget class="QLabel" name="label">
+  <widget class="QWidget" name="layoutWidget_3">
    <property name="geometry">
     <rect>
      <x>10</x>
-     <y>70</y>
-     <width>41</width>
-     <height>16</height>
-    </rect>
-   </property>
-   <property name="text">
-    <string>X:</string>
-   </property>
-  </widget>
-  <widget class="QLabel" name="label_2">
-   <property name="geometry">
-    <rect>
-     <x>10</x>
-     <y>100</y>
-     <width>41</width>
-     <height>16</height>
-    </rect>
-   </property>
-   <property name="text">
-    <string>Y:</string>
-   </property>
-  </widget>
-  <widget class="QLabel" name="label_4">
-   <property name="geometry">
-    <rect>
-     <x>10</x>
-     <y>155</y>
-     <width>41</width>
-     <height>16</height>
-    </rect>
-   </property>
-   <property name="text">
-    <string>Y2:</string>
-   </property>
-  </widget>
-  <widget class="QLabel" name="label_3">
-   <property name="geometry">
-    <rect>
-     <x>9</x>
-     <y>125</y>
-     <width>51</width>
-     <height>16</height>
-    </rect>
-   </property>
-   <property name="text">
-    <string>X2:</string>
-   </property>
-  </widget>
-  <widget class="QLineEdit" name="textY1">
-   <property name="geometry">
-    <rect>
-     <x>65</x>
-     <y>97</y>
-     <width>131</width>
-     <height>22</height>
-    </rect>
-   </property>
-   <property name="placeholderText">
-    <string>Y</string>
-   </property>
-  </widget>
-  <widget class="QLineEdit" name="textX2">
-   <property name="enabled">
-    <bool>true</bool>
-   </property>
-   <property name="geometry">
-    <rect>
-     <x>65</x>
-     <y>126</y>
-     <width>131</width>
-     <height>22</height>
-    </rect>
-   </property>
-   <property name="placeholderText">
-    <string>X</string>
-   </property>
-   <property name="clearButtonEnabled">
-    <bool>false</bool>
-   </property>
-  </widget>
-  <widget class="QLineEdit" name="textX1">
-   <property name="enabled">
-    <bool>true</bool>
-   </property>
-   <property name="geometry">
-    <rect>
-     <x>65</x>
-     <y>68</y>
-     <width>131</width>
-     <height>22</height>
-    </rect>
-   </property>
-   <property name="text">
-    <string/>
-   </property>
-   <property name="placeholderText">
-    <string>X</string>
-   </property>
-  </widget>
-  <widget class="QLineEdit" name="textY2">
-   <property name="enabled">
-    <bool>true</bool>
-   </property>
-   <property name="geometry">
-    <rect>
-     <x>65</x>
-     <y>155</y>
-     <width>131</width>
-     <height>22</height>
-    </rect>
-   </property>
-   <property name="placeholderText">
-    <string>Y</string>
-   </property>
-  </widget>
-  <widget class="QWidget" name="layoutWidget">
-   <property name="geometry">
-    <rect>
-     <x>5</x>
-     <y>35</y>
+     <y>40</y>
      <width>166</width>
      <height>24</height>
     </rect>
    </property>
-   <layout class="QHBoxLayout" name="horizontalLayout_2">
+   <layout class="QHBoxLayout" name="horizontalLayout_3">
     <property name="sizeConstraint">
      <enum>QLayout::SetFixedSize</enum>
     </property>
     <item>
-     <widget class="QLabel" name="labelR">
+     <widget class="QLabel" name="labelR_2">
       <property name="maximumSize">
        <size>
         <width>13</width>
@@ -197,13 +84,16 @@
         <height>22</height>
        </size>
       </property>
+      <property name="inputMethodHints">
+       <set>Qt::ImhDigitsOnly|Qt::ImhFormattedNumbersOnly</set>
+      </property>
       <property name="placeholderText">
        <string>R</string>
       </property>
      </widget>
     </item>
     <item>
-     <widget class="QLabel" name="labelG">
+     <widget class="QLabel" name="labelG_2">
       <property name="maximumSize">
        <size>
         <width>13</width>
@@ -223,13 +113,16 @@
         <height>22</height>
        </size>
       </property>
+      <property name="inputMethodHints">
+       <set>Qt::ImhDigitsOnly|Qt::ImhFormattedNumbersOnly</set>
+      </property>
       <property name="placeholderText">
        <string>G</string>
       </property>
      </widget>
     </item>
     <item>
-     <widget class="QLabel" name="labelB">
+     <widget class="QLabel" name="labelB_2">
       <property name="maximumSize">
        <size>
         <width>12</width>
@@ -249,6 +142,9 @@
         <height>22</height>
        </size>
       </property>
+      <property name="inputMethodHints">
+       <set>Qt::ImhDigitsOnly|Qt::ImhFormattedNumbersOnly</set>
+      </property>
       <property name="placeholderText">
        <string>B</string>
       </property>
@@ -256,51 +152,152 @@
     </item>
    </layout>
   </widget>
-  <widget class="QLabel" name="typeLabel">
+  <widget class="QComboBox" name="typesOfObjects">
+   <property name="geometry">
+    <rect>
+     <x>10</x>
+     <y>5</y>
+     <width>86</width>
+     <height>26</height>
+    </rect>
+   </property>
+   <item>
+    <property name="text">
+     <string>Point</string>
+    </property>
+   </item>
+   <item>
+    <property name="text">
+     <string>Segment</string>
+    </property>
+   </item>
+   <item>
+    <property name="text">
+     <string>Circle</string>
+    </property>
+   </item>
+  </widget>
+  <widget class="QLineEdit" name="editID">
+   <property name="geometry">
+    <rect>
+     <x>130</x>
+     <y>10</y>
+     <width>46</width>
+     <height>22</height>
+    </rect>
+   </property>
+   <property name="inputMethodHints">
+    <set>Qt::ImhDigitsOnly|Qt::ImhFormattedNumbersOnly</set>
+   </property>
+   <property name="placeholderText">
+    <string>ID</string>
+   </property>
+  </widget>
+  <widget class="QLabel" name="label_5">
    <property name="geometry">
     <rect>
      <x>105</x>
      <y>10</y>
-     <width>91</width>
+     <width>26</width>
      <height>16</height>
     </rect>
    </property>
    <property name="text">
-    <string>TYPE</string>
+    <string>ID:</string>
    </property>
   </widget>
-  <widget class="QLabel" name="idLabel">
+  <widget class="QWidget" name="layoutWidget_2">
    <property name="geometry">
     <rect>
      <x>10</x>
-     <y>10</y>
-     <width>86</width>
-     <height>16</height>
+     <y>75</y>
+     <width>166</width>
+     <height>111</height>
     </rect>
    </property>
-   <property name="text">
-    <string>ID</string>
-   </property>
+   <layout class="QFormLayout" name="formLayout">
+    <item row="0" column="0">
+     <widget class="QLabel" name="labelX1">
+      <property name="layoutDirection">
+       <enum>Qt::RightToLeft</enum>
+      </property>
+      <property name="text">
+       <string>X:</string>
+      </property>
+     </widget>
+    </item>
+    <item row="0" column="1">
+     <widget class="QLineEdit" name="editX1">
+      <property name="inputMethodHints">
+       <set>Qt::ImhDigitsOnly|Qt::ImhFormattedNumbersOnly</set>
+      </property>
+      <property name="placeholderText">
+       <string>X:</string>
+      </property>
+     </widget>
+    </item>
+    <item row="1" column="0">
+     <widget class="QLabel" name="labelY1">
+      <property name="layoutDirection">
+       <enum>Qt::RightToLeft</enum>
+      </property>
+      <property name="text">
+       <string>Y:</string>
+      </property>
+     </widget>
+    </item>
+    <item row="1" column="1">
+     <widget class="QLineEdit" name="editY1">
+      <property name="inputMethodHints">
+       <set>Qt::ImhDigitsOnly|Qt::ImhFormattedNumbersOnly</set>
+      </property>
+      <property name="placeholderText">
+       <string>Y:</string>
+      </property>
+     </widget>
+    </item>
+    <item row="2" column="0">
+     <widget class="QLabel" name="labelX2">
+      <property name="layoutDirection">
+       <enum>Qt::RightToLeft</enum>
+      </property>
+      <property name="text">
+       <string>X2:</string>
+      </property>
+     </widget>
+    </item>
+    <item row="2" column="1">
+     <widget class="QLineEdit" name="editX2">
+      <property name="inputMethodHints">
+       <set>Qt::ImhDigitsOnly|Qt::ImhFormattedNumbersOnly</set>
+      </property>
+      <property name="placeholderText">
+       <string>X:</string>
+      </property>
+     </widget>
+    </item>
+    <item row="3" column="0">
+     <widget class="QLabel" name="labelY2">
+      <property name="text">
+       <string>Y2:</string>
+      </property>
+     </widget>
+    </item>
+    <item row="3" column="1">
+     <widget class="QLineEdit" name="editY2">
+      <property name="inputMethodHints">
+       <set>Qt::ImhDigitsOnly|Qt::ImhFormattedNumbersOnly</set>
+      </property>
+      <property name="placeholderText">
+       <string>Y:</string>
+      </property>
+     </widget>
+    </item>
+   </layout>
   </widget>
  </widget>
  <resources/>
  <connections>
-  <connection>
-   <sender>buttonBox</sender>
-   <signal>accepted()</signal>
-   <receiver>objectPropertiesWindow</receiver>
-   <slot>accept()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>248</x>
-     <y>254</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>157</x>
-     <y>274</y>
-    </hint>
-   </hints>
-  </connection>
   <connection>
    <sender>buttonBox</sender>
    <signal>rejected()</signal>
@@ -313,6 +310,22 @@
     </hint>
     <hint type="destinationlabel">
      <x>286</x>
+     <y>274</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>buttonBox</sender>
+   <signal>accepted()</signal>
+   <receiver>objectPropertiesWindow</receiver>
+   <slot>accept()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>248</x>
+     <y>254</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>157</x>
      <y>274</y>
     </hint>
    </hints>

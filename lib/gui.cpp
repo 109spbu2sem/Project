@@ -18,18 +18,11 @@ MainWindow::MainWindow(QWidget *parent) :
 	ui->setupUi(this);
 	mycore = 0;
 	mainscene = ui->graphicsView->getScene();
-	ui->editX2->setVisible(false);
-	ui->editY2->setVisible(false);
-	ui->labelX2->setVisible(false);
-	ui->labelY2->setVisible(false);
 	ui->graphicsView->connectCORECanvas(mycore);
 	ui->graphicsView->scale(2, 2);
 	//ui->objectsList->setColumnCount(6);
 	mainscene->addLine(0, -5000, 0, 5000, QPen(Qt::DotLine));
 	mainscene->addLine(-5000, 0, 5000, 0, QPen(Qt::DotLine));
-	/*QPixmap pixpam1("icons/pointbtn.png");
-	ui->pointBTNTool->setIcon(pixpam1);
-	ui->pointBTNTool->setIconSize(pixpam1.rect().size());*/
 	toolsbuttons = new QButtonGroup;
 	toolsbuttons->addButton(ui->selectBTNTool);
 	toolsbuttons->addButton(ui->pointBTNTool);
@@ -73,14 +66,14 @@ bool MainWindow::DrawPoint(unsigned id, double x, double y, Color c, unsigned mo
 {
 	if (mode)
 	{
-		ui->typesOfObjects->setCurrentIndex(0);
+		/*ui->typesOfObjects->setCurrentIndex(0);
 		QString s;
 		ui->editID->setText(s.setNum(id));
 		ui->editX1->setText(s.setNum(x));
 		ui->editY1->setText(s.setNum(y));
 		ui->editR->setText(s.setNum(c.getColor(1)));
 		ui->editG->setText(s.setNum(c.getColor(2)));
-		ui->editB->setText(s.setNum(c.getColor(3)));
+		ui->editB->setText(s.setNum(c.getColor(3)));*/
 	}
 	else
 	{
@@ -103,7 +96,7 @@ bool MainWindow::DrawSegment(unsigned id, double x1, double y1, double x2, doubl
 {
 	if (mode)
 	{
-		ui->typesOfObjects->setCurrentIndex(1);
+		/*ui->typesOfObjects->setCurrentIndex(1);
 		QString s;
 		ui->editID->setText(s.setNum(id));
 		ui->editX1->setText(s.setNum(x1));
@@ -112,7 +105,7 @@ bool MainWindow::DrawSegment(unsigned id, double x1, double y1, double x2, doubl
 		ui->editY2->setText(s.setNum(y2));
 		ui->editR->setText(s.setNum(c.getColor(1)));
 		ui->editG->setText(s.setNum(c.getColor(2)));
-		ui->editB->setText(s.setNum(c.getColor(3)));
+		ui->editB->setText(s.setNum(c.getColor(3)));*/
 	}
 	else
 	{
@@ -125,7 +118,7 @@ bool MainWindow::DrawCircle(unsigned id, double x, double y, double r, Color c, 
 {
 	if (mode)
 	{
-		ui->typesOfObjects->setCurrentIndex(2);
+		/*ui->typesOfObjects->setCurrentIndex(2);
 		QString s;
 		ui->editID->setText(s.setNum(id));
 		ui->editX1->setText(s.setNum(x));
@@ -133,7 +126,7 @@ bool MainWindow::DrawCircle(unsigned id, double x, double y, double r, Color c, 
 		ui->editX2->setText(s.setNum(r));
 		ui->editR->setText(s.setNum(c.getColor(1)));
 		ui->editG->setText(s.setNum(c.getColor(2)));
-		ui->editB->setText(s.setNum(c.getColor(3)));
+		ui->editB->setText(s.setNum(c.getColor(3)));*/
 	}
 	else
 	{
@@ -154,118 +147,10 @@ bool MainWindow::Clear()
 void MainWindow::on_openAddingBTN_clicked()
 {
     objectPropertiesWindow ow = objectPropertiesWindow(this);
+	 ow.connectCORE(mycore);
+	 WriteStatus("Add object");
 	 ow.exec();
-}
-
-void MainWindow::on_addBTN_clicked()
-{
-	switch (ui->typesOfObjects->currentIndex())
-	{
-		// add point
-	case 0:
-	{
-		if (!ui->editX1->text().isEmpty() &&
-				!ui->editY1->text().isEmpty() /*&&
-				ui->editX1->text().toDouble() &&
-				ui->editY1->text().toDouble()*/)
-		{
-			Color c;
-			c.setColor(ui->editR->text().toUInt(), ui->editG->text().toUInt(), ui->editB->text().toUInt());
-			mycore->AddObject(ui->editX1->text().toDouble(),
-							  ui->editY1->text().toDouble(), c);
-		}
-		break;
-	}
-		// add segment
-	case 1:
-	{
-		if (!ui->editX1->text().isEmpty() &&
-				!ui->editY1->text().isEmpty() &&
-				!ui->editX2->text().isEmpty() &&
-				!ui->editY2->text().isEmpty() /*&&
-				ui->editX1->text().toDouble() &&
-				ui->editY1->text().toDouble() &&
-				ui->editX2->text().toDouble() &&
-				ui->editY2->text().toDouble()*/)
-		{
-			Color c;
-			c.setColor(ui->editR->text().toUInt(), ui->editG->text().toUInt(), ui->editB->text().toUInt());
-			unsigned id1 = mycore->AddObject(ui->editX1->text().toDouble(), ui->editY1->text().toDouble(), c, 0, true);
-			unsigned id2 = mycore->AddObject(ui->editX2->text().toDouble(), ui->editY2->text().toDouble(), c, 0, true);
-			mycore->AddObject(id1, id2, c, 0);
-		}
-		break;
-	}
-		// add circle
-	case 2:
-	{
-		if (!ui->editX1->text().isEmpty() &&
-				!ui->editY1->text().isEmpty() &&
-				!ui->editX2->text().isEmpty() /*&&
-				ui->editX1->text().toDouble() &&
-				ui->editY1->text().toDouble() &&
-				ui->editX2->text().toDouble()*/)
-		{
-			Color c;
-			c.setColor(ui->editR->text().toUInt(), ui->editG->text().toUInt(), ui->editB->text().toUInt());
-			/*mycore->AddObject(ui->editX1->text().toDouble(),
-							  ui->editY1->text().toDouble(),
-							  ui->editX2->text().toDouble(), c);*/
-			unsigned id = mycore->AddObject(ui->editX1->text().toDouble(), ui->editY1->text().toDouble(), c, 0, true);
-			mycore->AddObject(id, ui->editX2->text().toDouble(), c, 0);
-		}
-		break;
-	}
-	}
-}
-
-void MainWindow::on_typesOfObjects_currentIndexChanged(int index)
-{
-	switch(index)
-	{
-	case 0:
-	{
-		ui->labelX1->setText("X:");
-		ui->labelY1->setText("Y:");
-		ui->editX2->setVisible(false);
-		ui->editY2->setVisible(false);
-		ui->labelX2->setVisible(false);
-		ui->labelY2->setVisible(false);
-		ui->editX2->clear();
-		ui->editY2->clear();
-		break;
-	}
-	case 1:
-	{
-		ui->labelX1->setText("X1:");
-		ui->labelY1->setText("Y1:");
-		ui->labelX2->setText("X2:");
-		ui->editX2->setVisible(true);
-		ui->editY2->setVisible(true);
-		ui->labelY2->setVisible(true);
-		ui->labelX2->setVisible(true);
-		ui->editX2->setPlaceholderText("X");
-		break;
-	}
-	case 2:
-	{
-		ui->editX2->setPlaceholderText("R");
-		ui->labelX2->setText("Radius:");
-		ui->labelX1->setText("X:");
-		ui->labelY1->setText("Y:");
-		ui->labelX2->setVisible(true);
-		ui->editX2->setVisible(true);
-		ui->editY2->setVisible(false);
-		ui->labelY2->setVisible(false);
-		ui->editY2->clear();
-		break;
-	}
-	}
-}
-
-void MainWindow::on_calculateBTN_clicked()
-{
-    mycore->Calculate();
+	 WriteStatus("Done");
 }
 
 void MainWindow::on_ruleBox_currentIndexChanged(int index)
@@ -345,31 +230,9 @@ void MainWindow::on_pushButton_clicked()
 	ui->ruleValueEdit->clear();
 }
 
-void MainWindow::on_pushButton_2_clicked()
-{
-    mycore->ClearSelection();
-}
-
 void MainWindow::on_concatinateBTN_clicked()
 {
 	mycore->ConcatenatePoints();
-}
-
-void MainWindow::on_saveButton_clicked() {
-	mycore->IWantSave();
-}
-
-void MainWindow::on_saveAsButton_clicked() {
-	QString filename = QFileDialog::getSaveFileName(
-		this, tr("Open File"),
-		"C://",
-		"Text File (*.txt);; Xml File (*.xml)");
-	mycore->IWantSaveAs(filename);
-}
-
-void MainWindow::on_deleteAllBTN_clicked()
-{
-	mycore->DeleteAll();
 }
 
 void MainWindow::on_selectBTNTool_clicked()
@@ -385,4 +248,40 @@ void MainWindow::on_pointBTNTool_clicked()
 void MainWindow::on_ZoomBTNTool_clicked()
 {
     ui->graphicsView->setTool(TOOL_Zoom);
+}
+
+void MainWindow::on_actionClose_triggered()
+{
+	// need add dialog if had changes
+	close();
+}
+
+void MainWindow::on_actionRedraw_all_triggered()
+{
+	mycore->Calculate();
+}
+
+void MainWindow::on_actionSave_triggered()
+{
+	// need add save as if 1st time
+	mycore->IWantSave();
+}
+
+void MainWindow::on_actionSave_As_triggered()
+{
+	QString filename = QFileDialog::getSaveFileName(
+		this, tr("Open File"),
+		"C://",
+		"Text File (*.txt);; Xml File (*.xml)");
+	mycore->IWantSaveAs(filename);
+}
+
+void MainWindow::on_actionClear_all_triggered()
+{
+	mycore->DeleteAll();
+}
+
+void MainWindow::on_actionLoad_triggered()
+{
+	// here load function
 }
