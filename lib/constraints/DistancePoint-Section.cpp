@@ -7,14 +7,12 @@ double DistanceFromPointToSection::GetX(double x, double y, double x1, double y1
 	X = (y1*Y + x*x2 - y*y1) / x2;
 	return X;
 }
-
 double DistanceFromPointToSection::GetY(double x, double y, double x1, double y1, double x2, double y2)
 {
 	double Y;
 	Y = (-x*x2*y2 + y*y1*y2 + x*x2*y1 - y*y1*y1 + x1*x2*y2 - x2*x2*y1) / (y1*y2 - y1*y1 + x1*x2 - x2*x2);
 	return Y;
 }
-
 double DistanceFromPointToSection::DistPointSection(double x, double y, double x1, double y1, double x2, double y2)
 {
 	double X = GetX(x, y, x1, y1, x2, y2);

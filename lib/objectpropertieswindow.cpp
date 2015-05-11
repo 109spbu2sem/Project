@@ -65,8 +65,8 @@ void objectPropertiesWindow::on_buttonBox_accepted()
 			{
 				Color c;
 				c.setColor(ui->editR->text().toUInt(), ui->editG->text().toUInt(), ui->editB->text().toUInt());
-				unsigned id1 = mycore->AddObject(ui->editX1->text().toDouble(), ui->editY1->text().toDouble(), c, 0, true);
-				unsigned id2 = mycore->AddObject(ui->editX2->text().toDouble(), ui->editY2->text().toDouble(), c, 0, true);
+				unsigned id1 = mycore->AddObject(ui->editX1->text().toDouble(), ui->editY1->text().toDouble(), c, 0);
+				unsigned id2 = mycore->AddObject(ui->editX2->text().toDouble(), ui->editY2->text().toDouble(), c, 0);
 				mycore->AddObject(id1, id2, c, 0);
 			}
 			break;
@@ -83,10 +83,7 @@ void objectPropertiesWindow::on_buttonBox_accepted()
 			{
 				Color c;
 				c.setColor(ui->editR->text().toUInt(), ui->editG->text().toUInt(), ui->editB->text().toUInt());
-				/*mycore->AddObject(ui->editX1->text().toDouble(),
-				ui->editY1->text().toDouble(),
-				ui->editX2->text().toDouble(), c);*/
-				unsigned id = mycore->AddObject(ui->editX1->text().toDouble(), ui->editY1->text().toDouble(), c, 0, true);
+				unsigned id = mycore->AddObject(ui->editX1->text().toDouble(), ui->editY1->text().toDouble(), c, 0);
 				mycore->AddObject(id, ui->editX2->text().toDouble(), c, 0);
 			}
 			break;

@@ -132,7 +132,7 @@ void CORE::Calculate()
 	}
 	for (AVLVeiwer< double*, bool > i(_parameters); i.canMoveNext(); i.moveNext())
 	{
-		if (i.getValue().value)
+		if (!i.getValue().value)
 		{
 			parameters.add(i.getValue().key);
 		}

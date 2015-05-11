@@ -75,6 +75,8 @@ private slots:
 
 	void on_actionLoad_triggered();
 	
+	void on_objectsList_clicked(const QModelIndex &index);
+	
 private:
 	Ui::MainWindow *ui;
 	CORE* mycore;

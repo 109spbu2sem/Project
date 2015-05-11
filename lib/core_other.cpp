@@ -100,6 +100,33 @@ void CORE::Select(double x, double y)
 	return;
 }
 
+bool CORE::Select(unsigned id)
+{
+	ObjectSkin* object = _storage_of_objects.get(id); 
+	if (object)
+	{
+		object->changeSelect();
+		if (object->isSelected())
+		{
+			_selected_objects.add(object);
+		}
+		else
+		{
+			for (ListViewer<ObjectSkin*> j(_selected_objects); j.canMoveNext(); j.moveNext())
+			{
+				if (object == j.getValue())
+				{
+					_selected_objects.remove(&j);
+					break;
+				}
+			}
+		}
+		writeToLog(id, "selection was changed for (ID) ", 2);
+		Redraw();
+		return object->isSelected();
+	}
+	return false;
+}
 
 void CORE::Select(double x1, double y1, double x2, double y2)
 {
