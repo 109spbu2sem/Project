@@ -27,6 +27,8 @@ MainWindow::MainWindow(QWidget *parent) :
 	toolsbuttons->addButton(ui->selectBTNTool);
 	toolsbuttons->addButton(ui->pointBTNTool);
 	toolsbuttons->addButton(ui->ZoomBTNTool);
+
+	showMaximized();
 }
 
 void MainWindow::ConnectCORE(CORE* core)

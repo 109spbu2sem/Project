@@ -14,6 +14,7 @@
 #include <QtWidgets/QApplication>
 #include <QtWidgets/QButtonGroup>
 #include <QtWidgets/QComboBox>
+#include <QtWidgets/QFrame>
 #include <QtWidgets/QGroupBox>
 #include <QtWidgets/QHBoxLayout>
 #include <QtWidgets/QHeaderView>
@@ -24,6 +25,8 @@
 #include <QtWidgets/QMenu>
 #include <QtWidgets/QMenuBar>
 #include <QtWidgets/QPushButton>
+#include <QtWidgets/QSpacerItem>
+#include <QtWidgets/QSplitter>
 #include <QtWidgets/QVBoxLayout>
 #include <QtWidgets/QWidget>
 #include "mycanvas.h"
@@ -40,8 +43,11 @@ public:
     QAction *actionRedraw_all;
     QAction *actionClear_all;
     QWidget *centralWidget;
-    MyCanvas *graphicsView;
+    QVBoxLayout *verticalLayout_3;
+    QHBoxLayout *horizontalLayout_2;
+    QVBoxLayout *verticalLayout;
     QPushButton *openAddingBTN;
+    QPushButton *concatinateBTN;
     QGroupBox *groupBox_2;
     QComboBox *ruleBox;
     QWidget *layoutWidget;
@@ -49,17 +55,20 @@ public:
     QLabel *ruleValueLabel;
     QLineEdit *ruleValueEdit;
     QPushButton *pushButton;
-    QListWidget *objectsList;
-    QPushButton *concatinateBTN;
-    QWidget *layoutWidget1;
-    QHBoxLayout *horizontalLayout_3;
-    QLabel *statusBar;
-    QLabel *messageBar;
-    QWidget *layoutWidget2;
+    QSpacerItem *horizontalSpacer;
+    QFrame *frame;
+    QHBoxLayout *horizontalLayout_4;
     QVBoxLayout *verticalLayout_2;
     QPushButton *selectBTNTool;
     QPushButton *pointBTNTool;
     QPushButton *ZoomBTNTool;
+    QSpacerItem *verticalSpacer;
+    QSplitter *splitter;
+    MyCanvas *graphicsView;
+    QListWidget *objectsList;
+    QHBoxLayout *horizontalLayout_3;
+    QLabel *statusBar;
+    QLabel *messageBar;
     QMenuBar *menuBar;
     QMenu *menuFile;
     QMenu *menuOptions;
@@ -68,9 +77,12 @@ public:
     {
         if (MainWindow->objectName().isEmpty())
             MainWindow->setObjectName(QStringLiteral("MainWindow"));
-        MainWindow->resize(1084, 655);
-        MainWindow->setMinimumSize(QSize(1084, 628));
-        MainWindow->setMaximumSize(QSize(1084, 655));
+        MainWindow->resize(953, 768);
+        QSizePolicy sizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
+        sizePolicy.setHorizontalStretch(0);
+        sizePolicy.setVerticalStretch(0);
+        sizePolicy.setHeightForWidth(MainWindow->sizePolicy().hasHeightForWidth());
+        MainWindow->setSizePolicy(sizePolicy);
         MainWindow->setStyleSheet(QStringLiteral(""));
         actionLoad = new QAction(MainWindow);
         actionLoad->setObjectName(QStringLiteral("actionLoad"));
@@ -86,16 +98,46 @@ public:
         actionClear_all->setObjectName(QStringLiteral("actionClear_all"));
         centralWidget = new QWidget(MainWindow);
         centralWidget->setObjectName(QStringLiteral("centralWidget"));
-        graphicsView = new MyCanvas(centralWidget);
-        graphicsView->setObjectName(QStringLiteral("graphicsView"));
-        graphicsView->setGeometry(QRect(40, 60, 1041, 536));
-        graphicsView->viewport()->setProperty("cursor", QVariant(QCursor(Qt::CrossCursor)));
+        verticalLayout_3 = new QVBoxLayout(centralWidget);
+        verticalLayout_3->setSpacing(6);
+        verticalLayout_3->setContentsMargins(11, 11, 11, 11);
+        verticalLayout_3->setObjectName(QStringLiteral("verticalLayout_3"));
+        verticalLayout_3->setContentsMargins(5, 1, 1, 1);
+        horizontalLayout_2 = new QHBoxLayout();
+        horizontalLayout_2->setSpacing(6);
+        horizontalLayout_2->setObjectName(QStringLiteral("horizontalLayout_2"));
+        verticalLayout = new QVBoxLayout();
+        verticalLayout->setSpacing(1);
+        verticalLayout->setObjectName(QStringLiteral("verticalLayout"));
         openAddingBTN = new QPushButton(centralWidget);
         openAddingBTN->setObjectName(QStringLiteral("openAddingBTN"));
-        openAddingBTN->setGeometry(QRect(5, 0, 101, 26));
+        QSizePolicy sizePolicy1(QSizePolicy::Fixed, QSizePolicy::Fixed);
+        sizePolicy1.setHorizontalStretch(0);
+        sizePolicy1.setVerticalStretch(0);
+        sizePolicy1.setHeightForWidth(openAddingBTN->sizePolicy().hasHeightForWidth());
+        openAddingBTN->setSizePolicy(sizePolicy1);
+        openAddingBTN->setMinimumSize(QSize(100, 28));
+        openAddingBTN->setMaximumSize(QSize(100, 28));
+
+        verticalLayout->addWidget(openAddingBTN);
+
+        concatinateBTN = new QPushButton(centralWidget);
+        concatinateBTN->setObjectName(QStringLiteral("concatinateBTN"));
+        sizePolicy1.setHeightForWidth(concatinateBTN->sizePolicy().hasHeightForWidth());
+        concatinateBTN->setSizePolicy(sizePolicy1);
+        concatinateBTN->setMinimumSize(QSize(100, 28));
+        concatinateBTN->setMaximumSize(QSize(100, 28));
+
+        verticalLayout->addWidget(concatinateBTN);
+
+
+        horizontalLayout_2->addLayout(verticalLayout);
+
         groupBox_2 = new QGroupBox(centralWidget);
         groupBox_2->setObjectName(QStringLiteral("groupBox_2"));
-        groupBox_2->setGeometry(QRect(110, 5, 411, 51));
+        sizePolicy1.setHeightForWidth(groupBox_2->sizePolicy().hasHeightForWidth());
+        groupBox_2->setSizePolicy(sizePolicy1);
+        groupBox_2->setMinimumSize(QSize(420, 50));
         ruleBox = new QComboBox(groupBox_2);
         ruleBox->setObjectName(QStringLiteral("ruleBox"));
         ruleBox->setGeometry(QRect(10, 20, 206, 22));
@@ -123,55 +165,46 @@ public:
 
         horizontalLayout->addWidget(pushButton);
 
-        objectsList = new QListWidget(centralWidget);
-        objectsList->setObjectName(QStringLiteral("objectsList"));
-        objectsList->setGeometry(QRect(1030, 10, 46, 46));
-        concatinateBTN = new QPushButton(centralWidget);
-        concatinateBTN->setObjectName(QStringLiteral("concatinateBTN"));
-        concatinateBTN->setGeometry(QRect(5, 30, 101, 26));
-        layoutWidget1 = new QWidget(centralWidget);
-        layoutWidget1->setObjectName(QStringLiteral("layoutWidget1"));
-        layoutWidget1->setGeometry(QRect(5, 600, 409, 23));
-        horizontalLayout_3 = new QHBoxLayout(layoutWidget1);
-        horizontalLayout_3->setSpacing(6);
-        horizontalLayout_3->setContentsMargins(11, 11, 11, 11);
-        horizontalLayout_3->setObjectName(QStringLiteral("horizontalLayout_3"));
-        horizontalLayout_3->setSizeConstraint(QLayout::SetMaximumSize);
-        horizontalLayout_3->setContentsMargins(0, 0, 0, 0);
-        statusBar = new QLabel(layoutWidget1);
-        statusBar->setObjectName(QStringLiteral("statusBar"));
-        statusBar->setMinimumSize(QSize(100, 0));
-        QFont font;
-        font.setPointSize(10);
-        statusBar->setFont(font);
 
-        horizontalLayout_3->addWidget(statusBar, 0, Qt::AlignLeft);
+        horizontalLayout_2->addWidget(groupBox_2);
 
-        messageBar = new QLabel(layoutWidget1);
-        messageBar->setObjectName(QStringLiteral("messageBar"));
-        messageBar->setMinimumSize(QSize(300, 0));
-        messageBar->setFont(font);
+        horizontalSpacer = new QSpacerItem(40, 20, QSizePolicy::Expanding, QSizePolicy::Minimum);
 
-        horizontalLayout_3->addWidget(messageBar);
+        horizontalLayout_2->addItem(horizontalSpacer);
 
-        layoutWidget2 = new QWidget(centralWidget);
-        layoutWidget2->setObjectName(QStringLiteral("layoutWidget2"));
-        layoutWidget2->setGeometry(QRect(5, 65, 31, 101));
-        verticalLayout_2 = new QVBoxLayout(layoutWidget2);
-        verticalLayout_2->setSpacing(6);
-        verticalLayout_2->setContentsMargins(11, 11, 11, 11);
+
+        verticalLayout_3->addLayout(horizontalLayout_2);
+
+        frame = new QFrame(centralWidget);
+        frame->setObjectName(QStringLiteral("frame"));
+        frame->setFrameShape(QFrame::StyledPanel);
+        frame->setFrameShadow(QFrame::Raised);
+        horizontalLayout_4 = new QHBoxLayout(frame);
+        horizontalLayout_4->setSpacing(6);
+        horizontalLayout_4->setContentsMargins(11, 11, 11, 11);
+        horizontalLayout_4->setObjectName(QStringLiteral("horizontalLayout_4"));
+        horizontalLayout_4->setContentsMargins(1, 1, 1, 1);
+        verticalLayout_2 = new QVBoxLayout();
+        verticalLayout_2->setSpacing(1);
         verticalLayout_2->setObjectName(QStringLiteral("verticalLayout_2"));
-        verticalLayout_2->setContentsMargins(0, 0, 0, 0);
-        selectBTNTool = new QPushButton(layoutWidget2);
+        verticalLayout_2->setSizeConstraint(QLayout::SetFixedSize);
+        verticalLayout_2->setContentsMargins(0, -1, -1, -1);
+        selectBTNTool = new QPushButton(frame);
         selectBTNTool->setObjectName(QStringLiteral("selectBTNTool"));
-        selectBTNTool->setMaximumSize(QSize(29, 28));
+        sizePolicy1.setHeightForWidth(selectBTNTool->sizePolicy().hasHeightForWidth());
+        selectBTNTool->setSizePolicy(sizePolicy1);
+        selectBTNTool->setMinimumSize(QSize(29, 28));
+        selectBTNTool->setMaximumSize(QSize(29, 29));
         selectBTNTool->setCheckable(true);
         selectBTNTool->setChecked(true);
 
         verticalLayout_2->addWidget(selectBTNTool);
 
-        pointBTNTool = new QPushButton(layoutWidget2);
+        pointBTNTool = new QPushButton(frame);
         pointBTNTool->setObjectName(QStringLiteral("pointBTNTool"));
+        sizePolicy1.setHeightForWidth(pointBTNTool->sizePolicy().hasHeightForWidth());
+        pointBTNTool->setSizePolicy(sizePolicy1);
+        pointBTNTool->setMinimumSize(QSize(29, 29));
         pointBTNTool->setMaximumSize(QSize(29, 29));
         QIcon icon;
         icon.addFile(QStringLiteral("icons/pointbtn.png"), QSize(), QIcon::Normal, QIcon::Off);
@@ -180,17 +213,74 @@ public:
 
         verticalLayout_2->addWidget(pointBTNTool);
 
-        ZoomBTNTool = new QPushButton(layoutWidget2);
+        ZoomBTNTool = new QPushButton(frame);
         ZoomBTNTool->setObjectName(QStringLiteral("ZoomBTNTool"));
-        ZoomBTNTool->setMaximumSize(QSize(29, 28));
+        sizePolicy1.setHeightForWidth(ZoomBTNTool->sizePolicy().hasHeightForWidth());
+        ZoomBTNTool->setSizePolicy(sizePolicy1);
+        ZoomBTNTool->setMinimumSize(QSize(29, 28));
+        ZoomBTNTool->setMaximumSize(QSize(29, 29));
         ZoomBTNTool->setCheckable(true);
 
         verticalLayout_2->addWidget(ZoomBTNTool);
 
+        verticalSpacer = new QSpacerItem(20, 40, QSizePolicy::Minimum, QSizePolicy::Expanding);
+
+        verticalLayout_2->addItem(verticalSpacer);
+
+
+        horizontalLayout_4->addLayout(verticalLayout_2);
+
+        splitter = new QSplitter(frame);
+        splitter->setObjectName(QStringLiteral("splitter"));
+        splitter->setOrientation(Qt::Horizontal);
+        graphicsView = new MyCanvas(splitter);
+        graphicsView->setObjectName(QStringLiteral("graphicsView"));
+        graphicsView->viewport()->setProperty("cursor", QVariant(QCursor(Qt::CrossCursor)));
+        splitter->addWidget(graphicsView);
+        objectsList = new QListWidget(splitter);
+        objectsList->setObjectName(QStringLiteral("objectsList"));
+        objectsList->setMaximumSize(QSize(250, 16777215));
+        splitter->addWidget(objectsList);
+
+        horizontalLayout_4->addWidget(splitter);
+
+
+        verticalLayout_3->addWidget(frame);
+
+        horizontalLayout_3 = new QHBoxLayout();
+        horizontalLayout_3->setSpacing(1);
+        horizontalLayout_3->setObjectName(QStringLiteral("horizontalLayout_3"));
+        horizontalLayout_3->setSizeConstraint(QLayout::SetMinimumSize);
+        statusBar = new QLabel(centralWidget);
+        statusBar->setObjectName(QStringLiteral("statusBar"));
+        sizePolicy1.setHeightForWidth(statusBar->sizePolicy().hasHeightForWidth());
+        statusBar->setSizePolicy(sizePolicy1);
+        statusBar->setMinimumSize(QSize(100, 0));
+        QFont font;
+        font.setPointSize(10);
+        statusBar->setFont(font);
+
+        horizontalLayout_3->addWidget(statusBar, 0, Qt::AlignLeft);
+
+        messageBar = new QLabel(centralWidget);
+        messageBar->setObjectName(QStringLiteral("messageBar"));
+        QSizePolicy sizePolicy2(QSizePolicy::Expanding, QSizePolicy::Fixed);
+        sizePolicy2.setHorizontalStretch(0);
+        sizePolicy2.setVerticalStretch(0);
+        sizePolicy2.setHeightForWidth(messageBar->sizePolicy().hasHeightForWidth());
+        messageBar->setSizePolicy(sizePolicy2);
+        messageBar->setMinimumSize(QSize(300, 0));
+        messageBar->setFont(font);
+
+        horizontalLayout_3->addWidget(messageBar);
+
+
+        verticalLayout_3->addLayout(horizontalLayout_3);
+
         MainWindow->setCentralWidget(centralWidget);
         menuBar = new QMenuBar(MainWindow);
         menuBar->setObjectName(QStringLiteral("menuBar"));
-        menuBar->setGeometry(QRect(0, 0, 1084, 26));
+        menuBar->setGeometry(QRect(0, 0, 953, 26));
         menuFile = new QMenu(menuBar);
         menuFile->setObjectName(QStringLiteral("menuFile"));
         menuOptions = new QMenu(menuBar);
@@ -222,6 +312,7 @@ public:
         actionRedraw_all->setText(QApplication::translate("MainWindow", "Redraw all", 0));
         actionClear_all->setText(QApplication::translate("MainWindow", "Clear all", 0));
         openAddingBTN->setText(QApplication::translate("MainWindow", "Manually add", 0));
+        concatinateBTN->setText(QApplication::translate("MainWindow", "Create segment", 0));
         groupBox_2->setTitle(QApplication::translate("MainWindow", "Add Rule", 0));
         ruleBox->clear();
         ruleBox->insertItems(0, QStringList()
@@ -233,9 +324,6 @@ public:
         );
         ruleValueLabel->setText(QApplication::translate("MainWindow", "Value: ", 0));
         pushButton->setText(QApplication::translate("MainWindow", "Add", 0));
-        concatinateBTN->setText(QApplication::translate("MainWindow", "Create segment", 0));
-        statusBar->setText(QApplication::translate("MainWindow", "Done", 0));
-        messageBar->setText(QString());
 #ifndef QT_NO_TOOLTIP
         selectBTNTool->setToolTip(QApplication::translate("MainWindow", "Select (Ctrl + 1)", 0));
 #endif // QT_NO_TOOLTIP
@@ -251,6 +339,8 @@ public:
 #endif // QT_NO_TOOLTIP
         ZoomBTNTool->setText(QApplication::translate("MainWindow", "Z", 0));
         ZoomBTNTool->setShortcut(QApplication::translate("MainWindow", "Ctrl+5", 0));
+        statusBar->setText(QApplication::translate("MainWindow", "Done", 0));
+        messageBar->setText(QString());
         menuFile->setTitle(QApplication::translate("MainWindow", "File", 0));
         menuOptions->setTitle(QApplication::translate("MainWindow", "Options", 0));
     } // retranslateUi
