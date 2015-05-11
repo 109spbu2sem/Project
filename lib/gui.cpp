@@ -73,17 +73,130 @@ void MainWindow::WriteText(const char* Short, const char* Long)
 
 bool MainWindow::Set_properties_of_point(unsigned id, double x, double y, Color c)
 {
-	return false;
+	ui->propertiesList->clear();
+	QString s;
+	QListWidgetItem* item = new QListWidgetItem;
+	
+	item->setText("Point");
+	item->setData(17, 0);
+	ui->propertiesList->addItem(item);
+
+	s.setNum(id);
+	item->setText("id:\t" + s);
+	item->setData(17, id);
+	ui->propertiesList->addItem(item);
+
+	item = new QListWidgetItem;
+	s.setNum(x);
+	item->setText("x:\t" + s);
+	item->setData(17, x);
+	ui->propertiesList->addItem(item);
+
+	item = new QListWidgetItem;
+	s.setNum(y);
+	item->setText("y:\t" + s);
+	item->setData(17, y);
+	ui->propertiesList->addItem(item);
+
+	item = new QListWidgetItem;
+	s.setNum(c.getColor());
+	item->setText("color:\t" + s);
+	item->setData(17, c.getColor());
+	ui->propertiesList->addItem(item);
+	return true;
 }
 
 bool MainWindow::Set_properties_of_segment(unsigned id, double x1, double y1, double x2, double y2, Color c)
 {
-	return false;
+	ui->propertiesList->clear();
+	QString s;
+	QListWidgetItem* item = new QListWidgetItem;
+
+	item->setText("Segment");
+	item->setData(17, 1);
+	ui->propertiesList->addItem(item);
+
+	s.setNum(id);
+	item->setText("id:\t" + s);
+	item->setData(17, id);
+	ui->propertiesList->addItem(item);
+
+	item = new QListWidgetItem;
+	s.setNum(x1);
+	item->setText("x1:\t" + s);
+	item->setData(17, x1);
+	ui->propertiesList->addItem(item);
+
+	item = new QListWidgetItem;
+	s.setNum(y1);
+	item->setText("y1:\t" + s);
+	item->setData(17, y1);
+	ui->propertiesList->addItem(item);
+
+	item = new QListWidgetItem;
+	s.setNum(x2);
+	item->setText("x2:\t" + s);
+	item->setData(17, x2);
+	ui->propertiesList->addItem(item);
+
+	item = new QListWidgetItem;
+	s.setNum(y2);
+	item->setText("y2:\t" + s);
+	item->setData(17, y2);
+	ui->propertiesList->addItem(item);
+
+	item = new QListWidgetItem;
+	s.setNum(c.getColor());
+	item->setText("color:\t" + s);
+	item->setData(17, c.getColor());
+	ui->propertiesList->addItem(item);
+	return true;
 }
 
 bool MainWindow::Set_properties_of_circle(unsigned id, double x, double y, double r, Color c)
 {
-	return false;
+	ui->propertiesList->clear();
+	QString s;
+	QListWidgetItem* item = new QListWidgetItem;
+
+	item->setText("Circle");
+	item->setData(17, 2);
+	ui->propertiesList->addItem(item);
+
+	s.setNum(id);
+	item->setText("id:\t" + s);
+	item->setData(17, id);
+	ui->propertiesList->addItem(item);
+
+	item = new QListWidgetItem;
+	s.setNum(x);
+	item->setText("x:\t" + s);
+	item->setData(17, x);
+	ui->propertiesList->addItem(item);
+
+	item = new QListWidgetItem;
+	s.setNum(y);
+	item->setText("y:\t" + s);
+	item->setData(17, y);
+	ui->propertiesList->addItem(item);
+
+	item = new QListWidgetItem;
+	s.setNum(r);
+	item->setText("r:\t" + s);
+	item->setData(17, r);
+	ui->propertiesList->addItem(item);
+
+	item = new QListWidgetItem;
+	s.setNum(c.getColor());
+	item->setText("color:\t" + s);
+	item->setData(17, c.getColor());
+	ui->propertiesList->addItem(item);
+	return true;
+}
+
+void MainWindow::Clear_properties()
+{
+	ui->propertiesList->clear();
 }
 
 bool MainWindow::DrawPoint(unsigned id, double x, double y, Color c)

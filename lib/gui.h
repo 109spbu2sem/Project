@@ -40,6 +40,7 @@ public:
 	bool Set_properties_of_point(unsigned, double, double, Color = 0);
 	bool Set_properties_of_segment(unsigned, double, double, double, double, Color = 0);
 	bool Set_properties_of_circle(unsigned, double, double, double, Color = 0);
+	void Clear_properties();
 
 	void WriteError(const char* Text);
 	void WriteStatus(const char* Text);

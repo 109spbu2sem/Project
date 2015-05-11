@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>953</width>
-    <height>768</height>
+    <height>692</height>
    </rect>
   </property>
   <property name="sizePolicy">
@@ -44,31 +44,6 @@
          <number>1</number>
         </property>
         <item>
-         <widget class="QPushButton" name="openAddingBTN">
-          <property name="sizePolicy">
-           <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
-            <horstretch>0</horstretch>
-            <verstretch>0</verstretch>
-           </sizepolicy>
-          </property>
-          <property name="minimumSize">
-           <size>
-            <width>100</width>
-            <height>28</height>
-           </size>
-          </property>
-          <property name="maximumSize">
-           <size>
-            <width>100</width>
-            <height>28</height>
-           </size>
-          </property>
-          <property name="text">
-           <string>Manually add</string>
-          </property>
-         </widget>
-        </item>
-        <item>
          <widget class="QPushButton" name="concatinateBTN">
           <property name="sizePolicy">
            <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
@@ -98,105 +73,114 @@
       <item>
        <widget class="QGroupBox" name="groupBox_2">
         <property name="sizePolicy">
-         <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+         <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
           <horstretch>0</horstretch>
           <verstretch>0</verstretch>
          </sizepolicy>
         </property>
         <property name="minimumSize">
          <size>
-          <width>420</width>
-          <height>50</height>
+          <width>0</width>
+          <height>0</height>
          </size>
         </property>
         <property name="title">
          <string>Add Rule</string>
         </property>
-        <widget class="QComboBox" name="ruleBox">
-         <property name="geometry">
-          <rect>
-           <x>10</x>
-           <y>20</y>
-           <width>206</width>
-           <height>22</height>
-          </rect>
+        <layout class="QVBoxLayout" name="verticalLayout_5">
+         <property name="spacing">
+          <number>3</number>
+         </property>
+         <property name="leftMargin">
+          <number>1</number>
+         </property>
+         <property name="topMargin">
+          <number>1</number>
+         </property>
+         <property name="rightMargin">
+          <number>1</number>
+         </property>
+         <property name="bottomMargin">
+          <number>1</number>
          </property>
          <item>
-          <property name="text">
-           <string>Distance from point to point</string>
-          </property>
-         </item>
-         <item>
-          <property name="text">
-           <string>Distance from point to line</string>
-          </property>
-         </item>
-         <item>
-          <property name="text">
-           <string>Three points on line</string>
-          </property>
-         </item>
-         <item>
-          <property name="text">
-           <string>Ratio between three points</string>
-          </property>
-         </item>
-         <item>
-          <property name="text">
-           <string>Angle between segments</string>
-          </property>
-         </item>
-         <item>
-          <property name="text">
-           <string>External circle contact</string>
-          </property>
-         </item>
-         <item>
-          <property name="text">
-           <string>Internal circle contact</string>
-          </property>
-         </item>
-         <item>
-          <property name="text">
-           <string>Distance from point to segment</string>
-          </property>
-         </item>
-        </widget>
-        <widget class="QWidget" name="layoutWidget">
-         <property name="geometry">
-          <rect>
-           <x>220</x>
-           <y>15</y>
-           <width>181</width>
-           <height>30</height>
-          </rect>
-         </property>
-         <layout class="QHBoxLayout" name="horizontalLayout">
-          <item>
-           <widget class="QLabel" name="ruleValueLabel">
+          <widget class="QComboBox" name="ruleBox">
+           <item>
             <property name="text">
-             <string>Value: </string>
+             <string>Distance from point to point</string>
             </property>
-           </widget>
-          </item>
-          <item>
-           <widget class="QLineEdit" name="ruleValueEdit"/>
-          </item>
-          <item>
-           <widget class="QPushButton" name="pushButton">
-            <property name="maximumSize">
-             <size>
-              <width>50</width>
-              <height>16777215</height>
-             </size>
-            </property>
+           </item>
+           <item>
             <property name="text">
-             <string>Add</string>
+             <string>Distance from point to line</string>
             </property>
-           </widget>
-          </item>
-         </layout>
-        </widget>
+           </item>
+           <item>
+            <property name="text">
+             <string>Three points on line</string>
+            </property>
+           </item>
+           <item>
+            <property name="text">
+             <string>Ratio between three points</string>
+            </property>
+           </item>
+           <item>
+            <property name="text">
+             <string>Angle between segments</string>
+            </property>
+           </item>
+           <item>
+            <property name="text">
+             <string>External circle contact</string>
+            </property>
+           </item>
+           <item>
+            <property name="text">
+             <string>Internal circle contact</string>
+            </property>
+           </item>
+           <item>
+            <property name="text">
+             <string>Distance from point to segment</string>
+            </property>
+           </item>
+          </widget>
+         </item>
+         <item>
+          <layout class="QHBoxLayout" name="horizontalLayout">
+           <item>
+            <widget class="QLabel" name="ruleValueLabel">
+             <property name="text">
+              <string>Value: </string>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QLineEdit" name="ruleValueEdit"/>
+           </item>
+           <item>
+            <widget class="QPushButton" name="pushButton">
+             <property name="sizePolicy">
+              <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+               <horstretch>0</horstretch>
+               <verstretch>0</verstretch>
+              </sizepolicy>
+             </property>
+             <property name="maximumSize">
+              <size>
+               <width>16777215</width>
+               <height>16777215</height>
+              </size>
+             </property>
+             <property name="text">
+              <string>Add</string>
+             </property>
+            </widget>
+           </item>
+          </layout>
+         </item>
+        </layout>
        </widget>
       </item>
       <item>
@@ -222,18 +206,21 @@
       <property name="frameShadow">
        <enum>QFrame::Raised</enum>
       </property>
-      <layout class="QHBoxLayout" name="horizontalLayout_4">
+      <layout class="QHBoxLayout" name="horizontalLayout_7">
+       <property name="spacing">
+        <number>3</number>
+       </property>
        <property name="leftMargin">
-        <number>2</number>
+        <number>1</number>
        </property>
        <property name="topMargin">
-        <number>2</number>
+        <number>1</number>
        </property>
        <property name="rightMargin">
-        <number>2</number>
+        <number>1</number>
        </property>
        <property name="bottomMargin">
-        <number>2</number>
+        <number>1</number>
        </property>
        <item>
         <layout class="QVBoxLayout" name="verticalLayout_2">
@@ -384,38 +371,203 @@
           </property>
          </widget>
          <widget class="QSplitter" name="splitter">
+          <property name="sizePolicy">
+           <sizepolicy hsizetype="Preferred" vsizetype="Expanding">
+            <horstretch>0</horstretch>
+            <verstretch>0</verstretch>
+           </sizepolicy>
+          </property>
           <property name="orientation">
            <enum>Qt::Vertical</enum>
           </property>
           <property name="childrenCollapsible">
            <bool>false</bool>
           </property>
-          <widget class="QListWidget" name="objectsList">
-           <property name="maximumSize">
-            <size>
-             <width>300</width>
-             <height>16777215</height>
-            </size>
-           </property>
-           <property name="editTriggers">
-            <set>QAbstractItemView::DoubleClicked|QAbstractItemView::SelectedClicked</set>
-           </property>
-           <property name="selectionMode">
-            <enum>QAbstractItemView::MultiSelection</enum>
-           </property>
+          <widget class="QWidget" name="">
+           <layout class="QVBoxLayout" name="verticalLayout_8">
+            <property name="spacing">
+             <number>3</number>
+            </property>
+            <property name="sizeConstraint">
+             <enum>QLayout::SetMinAndMaxSize</enum>
+            </property>
+            <item>
+             <widget class="QListWidget" name="propertiesList">
+              <property name="minimumSize">
+               <size>
+                <width>0</width>
+                <height>0</height>
+               </size>
+              </property>
+              <property name="maximumSize">
+               <size>
+                <width>300</width>
+                <height>16777215</height>
+               </size>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <layout class="QHBoxLayout" name="horizontalLayout_8">
+              <item>
+               <widget class="QPushButton" name="pushButton_3">
+                <property name="maximumSize">
+                 <size>
+                  <width>100</width>
+                  <height>28</height>
+                 </size>
+                </property>
+                <property name="text">
+                 <string>Change object</string>
+                </property>
+               </widget>
+              </item>
+             </layout>
+            </item>
+           </layout>
           </widget>
-          <widget class="QListWidget" name="propertiesList">
-           <property name="maximumSize">
-            <size>
-             <width>300</width>
-             <height>16777215</height>
-            </size>
-           </property>
+          <widget class="QWidget" name="">
+           <layout class="QVBoxLayout" name="verticalLayout_7">
+            <property name="spacing">
+             <number>3</number>
+            </property>
+            <property name="sizeConstraint">
+             <enum>QLayout::SetMinAndMaxSize</enum>
+            </property>
+            <item>
+             <widget class="QListWidget" name="objectsList">
+              <property name="maximumSize">
+               <size>
+                <width>300</width>
+                <height>16777215</height>
+               </size>
+              </property>
+              <property name="editTriggers">
+               <set>QAbstractItemView::DoubleClicked|QAbstractItemView::SelectedClicked</set>
+              </property>
+              <property name="selectionMode">
+               <enum>QAbstractItemView::MultiSelection</enum>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <layout class="QHBoxLayout" name="horizontalLayout_6">
+              <item>
+               <widget class="QPushButton" name="openAddingBTN">
+                <property name="sizePolicy">
+                 <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+                  <horstretch>0</horstretch>
+                  <verstretch>0</verstretch>
+                 </sizepolicy>
+                </property>
+                <property name="minimumSize">
+                 <size>
+                  <width>100</width>
+                  <height>28</height>
+                 </size>
+                </property>
+                <property name="maximumSize">
+                 <size>
+                  <width>100</width>
+                  <height>28</height>
+                 </size>
+                </property>
+                <property name="text">
+                 <string>Add object</string>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="QPushButton" name="pushButton_5">
+                <property name="sizePolicy">
+                 <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+                  <horstretch>0</horstretch>
+                  <verstretch>0</verstretch>
+                 </sizepolicy>
+                </property>
+                <property name="minimumSize">
+                 <size>
+                  <width>100</width>
+                  <height>28</height>
+                 </size>
+                </property>
+                <property name="maximumSize">
+                 <size>
+                  <width>100</width>
+                  <height>28</height>
+                 </size>
+                </property>
+                <property name="text">
+                 <string>Delete objects</string>
+                </property>
+               </widget>
+              </item>
+             </layout>
+            </item>
+           </layout>
+          </widget>
+          <widget class="QWidget" name="">
+           <layout class="QVBoxLayout" name="verticalLayout_6">
+            <property name="spacing">
+             <number>3</number>
+            </property>
+            <property name="sizeConstraint">
+             <enum>QLayout::SetMinAndMaxSize</enum>
+            </property>
+            <item>
+             <widget class="QListWidget" name="rulesList">
+              <property name="maximumSize">
+               <size>
+                <width>300</width>
+                <height>16777215</height>
+               </size>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <layout class="QHBoxLayout" name="horizontalLayout_4">
+              <item>
+               <widget class="QPushButton" name="pushButton_2">
+                <property name="maximumSize">
+                 <size>
+                  <width>100</width>
+                  <height>28</height>
+                 </size>
+                </property>
+                <property name="text">
+                 <string>Add rule</string>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="QPushButton" name="pushButton_4">
+                <property name="maximumSize">
+                 <size>
+                  <width>100</width>
+                  <height>28</height>
+                 </size>
+                </property>
+                <property name="text">
+                 <string>Delete rule</string>
+                </property>
+               </widget>
+              </item>
+             </layout>
+            </item>
+           </layout>
           </widget>
          </widget>
         </widget>
        </item>
       </layout>
+      <zorder>splitter_2</zorder>
+      <zorder>pushButton_3</zorder>
+      <zorder>horizontalLayoutWidget</zorder>
+      <zorder>rulesList</zorder>
+      <zorder>pushButton_5</zorder>
+      <zorder>openAddingBTN</zorder>
+      <zorder>horizontalLayoutWidget</zorder>
+      <zorder>splitter_2</zorder>
      </widget>
     </item>
     <item>

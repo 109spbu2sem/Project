@@ -76,6 +76,27 @@ void CORE::Select(double x, double y)
 			if (object->isSelected())
 			{
 				_selected_objects.add(object);
+				switch (object->objectType())
+				{
+					case PRIMITIVE_POINT:
+					{
+						Point* p = dynamic_cast<Point*>(object);
+						mygui->Set_properties_of_point(p->id.getID(), *p->x, *p->y, p->color.getColor());
+						break;
+					}
+					case PRIMITIVE_SEGMENT:
+					{
+						Segment* s = dynamic_cast<Segment*>(object);
+						mygui->Set_properties_of_segment(s->id.getID(), *s->p1->x, *s->p1->y, *s->p2->x, *s->p2->y, s->color.getColor());
+						break;
+					}
+					case PRIMITIVE_CIRCLE:
+					{
+						Circle* c = dynamic_cast<Circle*>(object);
+						mygui->Set_properties_of_circle(c->id.getID(), *c->p->x, *c->p->y, *c->r, c->color.getColor());
+						break;
+					}
+				}
 			}
 			else
 			{
@@ -177,6 +198,7 @@ void CORE::ClearSelection()
 	_selected_objects.clear();
 	writeToLog("Select was cleared", 2);
 	Redraw();
+	mygui->Clear_properties();
 	mygui->WriteStatus("Done");
 }
 
