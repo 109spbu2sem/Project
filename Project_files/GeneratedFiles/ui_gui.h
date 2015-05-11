@@ -246,11 +246,13 @@ public:
         splitter->setChildrenCollapsible(false);
         objectsList = new QListWidget(splitter);
         objectsList->setObjectName(QStringLiteral("objectsList"));
-        objectsList->setMaximumSize(QSize(250, 16777215));
+        objectsList->setMaximumSize(QSize(300, 16777215));
+        objectsList->setEditTriggers(QAbstractItemView::DoubleClicked|QAbstractItemView::SelectedClicked);
+        objectsList->setSelectionMode(QAbstractItemView::MultiSelection);
         splitter->addWidget(objectsList);
         propertiesList = new QListWidget(splitter);
         propertiesList->setObjectName(QStringLiteral("propertiesList"));
-        propertiesList->setMaximumSize(QSize(250, 16777215));
+        propertiesList->setMaximumSize(QSize(300, 16777215));
         splitter->addWidget(propertiesList);
         splitter_2->addWidget(splitter);
 
@@ -335,6 +337,7 @@ public:
          << QApplication::translate("MainWindow", "Angle between segments", 0)
          << QApplication::translate("MainWindow", "External circle contact", 0)
          << QApplication::translate("MainWindow", "Internal circle contact", 0)
+         << QApplication::translate("MainWindow", "Distance from point to segment", 0)
         );
         ruleValueLabel->setText(QApplication::translate("MainWindow", "Value: ", 0));
         pushButton->setText(QApplication::translate("MainWindow", "Add", 0));

@@ -49,7 +49,7 @@ unsigned CORE::AddObject(unsigned id1, unsigned id2, Color color, unsigned id, b
 		writeToLog(color.getColor(), "color= ", 2);
 		writeToLog(newid.getID(), "id= ", 2);
 		writeToLog("< /add >", 2);
-		if (!wait) mygui->DrawSegment(newid.getID(), *s->p1->x, *s->p1->y, *s->p2->x, *s->p2->y, color);
+		if (!wait)	mygui->DrawSegment(newid.getID(), *s->p1->x, *s->p1->y, *s->p2->x, *s->p2->y, color);
 
 		return newid.getID();
 	}
@@ -80,7 +80,7 @@ unsigned CORE::AddObject(unsigned pointid, double radius, Color color, unsigned 
 		writeToLog(color.getColor(), "color= ", 2);
 		writeToLog(newid.getID(), "id= ", 2);
 		writeToLog("< /add >", 2);
-		if (!wait) mygui->DrawCircle(newid.getID(), *c->p->x, *c->p->y, radius, color);
+		if (!wait)	mygui->DrawCircle(newid.getID(), *c->p->x, *c->p->y, radius, color);
 
 		return newid.getID();
 	}

@@ -102,7 +102,12 @@ bool MainWindow::DrawPoint(unsigned id, double x, double y, Color c)
 	QString s;
 	s.setNum(id);
 	s += "\tPoint";
-	ui->objectsList->addItem(s);
+	QListWidgetItem* it = new QListWidgetItem;
+	it->setText(s);
+	it->setData(17, id);
+	ui->objectsList->addItem(it);
+	if (c.getColor() == COLORSELECTED)
+		it->setSelected(true);
 	return true;
 }
 
@@ -119,6 +124,15 @@ bool MainWindow::DrawSegment(unsigned id, double x1, double y1, double x2, doubl
 	ui->editG->setText(s.setNum(c.getColor(2)));
 	ui->editB->setText(s.setNum(c.getColor(3)));*/
 	mainscene->addLine(x1, -y1, x2, -y2, QPen(QColor(c.getColor(1), c.getColor(2), c.getColor(3))));
+	QString s;
+	s.setNum(id);
+	s += "\tSegment";
+	QListWidgetItem* it = new QListWidgetItem;
+	it->setText(s);
+	it->setData(17, id);
+	ui->objectsList->addItem(it);
+	if (c.getColor() == COLORSELECTED)
+		it->setSelected(true);
 	return true;
 }
 
@@ -134,6 +148,15 @@ bool MainWindow::DrawCircle(unsigned id, double x, double y, double r, Color c)
 	ui->editG->setText(s.setNum(c.getColor(2)));
 	ui->editB->setText(s.setNum(c.getColor(3)));*/
 	mainscene->addEllipse(x - r, -y - r, r * 2, r * 2, QPen(QColor(c.getColor(1), c.getColor(2), c.getColor(3))));
+	QString s;
+	s.setNum(id);
+	s += "\tCircle";
+	QListWidgetItem* it = new QListWidgetItem;
+	it->setText(s);
+	it->setData(17, id);
+	ui->objectsList->addItem(it);
+	if (c.getColor() == COLORSELECTED)
+		it->setSelected(true);
 	return true;
 }
 
@@ -233,11 +256,24 @@ void MainWindow::on_pushButton_clicked()
 		case 5:
 		{
 			mycore->AddRule(CONSTR_EXCONTACT);
+			mycore->Calculate();
 			break;
 		}
 		case 6:
 		{
 			mycore->AddRule(CONSTR_INCONTACT);
+			mycore->Calculate();
+			break;
+		}
+		case 7:
+		{
+			if (!ui->ruleValueEdit->text().isEmpty())
+			{
+				mycore->AddRule(CONSTR_P2SECTDIST, ui->ruleValueEdit->text().toDouble());
+				mycore->Calculate();
+			}
+			else
+				WriteStatus("Need value");
 			break;
 		}
 	}
@@ -298,4 +334,8 @@ void MainWindow::on_actionClear_all_triggered()
 void MainWindow::on_actionLoad_triggered()
 {
 	// here load function
+}
+void MainWindow::on_objectsList_clicked(const QModelIndex &index)
+{
+	mycore->Select(index.data(17).toUInt());
 }

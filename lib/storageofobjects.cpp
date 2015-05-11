@@ -74,24 +74,16 @@ bool StorageOfObjects::viewer::canMoveNext()
 
 ObjectSkin* StorageOfObjects::get(unsigned id)
 {
-	try
-	{
+	if (_shelf.hasKey(id))
 		return _shelf.getValuebyKey(id);
-	}
-	catch (std::logic_error a)
-	{
-		throw a;
-	}
+	else
+		return 0;
 }
 
 ObjectSkin* StorageOfObjects::get(ID& id)
 {
-	try
-	{
+	if (_shelf.hasKey(id.getID()))
 		return _shelf.getValuebyKey(id.getID());
-	}
-	catch (std::logic_error a)
-	{
-		throw a;
-	}
+	else
+		return 0;
 }
