@@ -39,12 +39,14 @@ void CORE::Select(double x, double y)
 				double B = *s->p1->x - *s->p2->x;
 				double C = *s->p1->y * *s->p2->x - *s->p1->x * *s->p2->y;
 				if ((abs(A*x + B*y + C) / sqrt(A*A + B*B) < min) &&
-					 (length(*s->p1->x, *s->p1->y, x, y) <
-					 ((A*x + B*y + C)*(A*x + B*y + C) / (A*A + B*B) +
-					 length(*s->p1->x, *s->p1->y, *s->p2->x, *s->p2->y)))
-					 && (length(*s->p2->x, *s->p2->y, x, y) <
-					 ((A*x + B*y + C)*(A*x + B*y + C) / (A*A + B*B) +
-					 length(*s->p1->x, *s->p1->y, *s->p2->x, *s->p2->y))))
+					(pow(length(*s->p1->x, *s->p1->y, x, y),2) <=
+					((A*x + B*y + C)*(A*x + B*y + C) / (A*A + B*B) +
+					pow(length(*s->p1->x, *s->p1->y, *s->p2->x, *s->p2->y),2)))
+					&& (pow(length(*s->p2->x, *s->p2->y, x, y),2) <=
+					((A*x + B*y + C)*(A*x + B*y + C) / (A*A + B*B) +
+					pow(length(*s->p1->x, *s->p1->y, *s->p2->x, *s->p2->y),2))) 
+					&& length(*s->p1->x, *s->p1->y, x, y)>1.67 && 
+					length(*s->p2->x, *s->p2->y, x, y)>1.67)
 				{
 					min = abs(A*x + B*y + C) / sqrt(A*A + B*B);
 					min_id = s->id.getID();
