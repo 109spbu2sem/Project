@@ -9,6 +9,8 @@
 #include <QString>
 #include <QTableWidgetItem>
 #include <QFileDialog>
+#include <QListView>
+#include <QList>
 
 
 MainWindow::MainWindow(QWidget *parent) :
@@ -20,7 +22,6 @@ MainWindow::MainWindow(QWidget *parent) :
 	mainscene = ui->graphicsView->getScene();
 	ui->graphicsView->connectCORECanvas(mycore);
 	ui->graphicsView->scale(2, 2);
-	//ui->objectsList->setColumnCount(6);
 	mainscene->addLine(0, -5000, 0, 5000, QPen(Qt::DotLine));
 	mainscene->addLine(-5000, 0, 5000, 0, QPen(Qt::DotLine));
 	toolsbuttons = new QButtonGroup;
@@ -63,77 +64,76 @@ void MainWindow::WriteMessage(const char* Text)
 	ui->messageBar->setText(Text);
 	return;
 }
-
-bool MainWindow::DrawPoint(unsigned id, double x, double y, Color c, unsigned mode)
+// Write Short to status bar, Long to message bar
+void MainWindow::WriteText(const char* Short, const char* Long)
 {
-	if (mode)
-	{
-		/*ui->typesOfObjects->setCurrentIndex(0);
-		QString s;
-		ui->editID->setText(s.setNum(id));
-		ui->editX1->setText(s.setNum(x));
-		ui->editY1->setText(s.setNum(y));
-		ui->editR->setText(s.setNum(c.getColor(1)));
-		ui->editG->setText(s.setNum(c.getColor(2)));
-		ui->editB->setText(s.setNum(c.getColor(3)));*/
-	}
-	else
-	{
-		mainscene->addEllipse(x - 1.2, -y - 1.2, 2.4, 2.4,
-									 QPen(QColor(c.getColor(1), c.getColor(2), c.getColor(3))),
-									 QBrush(QColor(c.getColor(1), c.getColor(2), c.getColor(3))));
-	}
-	/*for (unsigned i = 0; i < 10000; i++)
-	{
-	ui->objectsList->setRowCount(ui->objectsList->rowCount());
-	QTableWidgetItem* item = new QTableWidgetItem;//(tr("%1").arg((ui->objectsList->rowCount()+1)*(0+1)));
-	item->setText("Point");
-	ui->objectsList->setItem(ui->objectsList->rowCount() - 1, 0, item);
-	//ui->objectsList->setItem();
-	}*/
+	ui->statusBar->setText(Short);
+	ui->messageBar->setText(Long);
+}
+
+bool MainWindow::Set_properties_of_point(unsigned id, double x, double y, Color c)
+{
+	return false;
+}
+
+bool MainWindow::Set_properties_of_segment(unsigned id, double x1, double y1, double x2, double y2, Color c)
+{
+	return false;
+}
+
+bool MainWindow::Set_properties_of_circle(unsigned id, double x, double y, double r, Color c)
+{
+	return false;
+}
+
+bool MainWindow::DrawPoint(unsigned id, double x, double y, Color c)
+{
+	/*ui->typesOfObjects->setCurrentIndex(0);
+	QString s;
+	ui->editID->setText(s.setNum(id));
+	ui->editX1->setText(s.setNum(x));
+	ui->editY1->setText(s.setNum(y));
+	ui->editR->setText(s.setNum(c.getColor(1)));
+	ui->editG->setText(s.setNum(c.getColor(2)));
+	ui->editB->setText(s.setNum(c.getColor(3)));*/
+	mainscene->addEllipse(x - 1.2, -y - 1.2, 2.4, 2.4,
+								 QPen(QColor(c.getColor(1), c.getColor(2), c.getColor(3))),
+								 QBrush(QColor(c.getColor(1), c.getColor(2), c.getColor(3))));
+	QString s;
+	s.setNum(id);
+	s += "\tPoint";
+	ui->objectsList->addItem(s);
 	return true;
 }
 
-bool MainWindow::DrawSegment(unsigned id, double x1, double y1, double x2, double y2, Color c, unsigned mode)
+bool MainWindow::DrawSegment(unsigned id, double x1, double y1, double x2, double y2, Color c)
 {
-	if (mode)
-	{
-		/*ui->typesOfObjects->setCurrentIndex(1);
-		QString s;
-		ui->editID->setText(s.setNum(id));
-		ui->editX1->setText(s.setNum(x1));
-		ui->editY1->setText(s.setNum(y1));
-		ui->editX2->setText(s.setNum(x2));
-		ui->editY2->setText(s.setNum(y2));
-		ui->editR->setText(s.setNum(c.getColor(1)));
-		ui->editG->setText(s.setNum(c.getColor(2)));
-		ui->editB->setText(s.setNum(c.getColor(3)));*/
-	}
-	else
-	{
-		mainscene->addLine(x1, -y1, x2, -y2, QPen(QColor(c.getColor(1), c.getColor(2), c.getColor(3))));
-	}
+	/*ui->typesOfObjects->setCurrentIndex(1);
+	QString s;
+	ui->editID->setText(s.setNum(id));
+	ui->editX1->setText(s.setNum(x1));
+	ui->editY1->setText(s.setNum(y1));
+	ui->editX2->setText(s.setNum(x2));
+	ui->editY2->setText(s.setNum(y2));
+	ui->editR->setText(s.setNum(c.getColor(1)));
+	ui->editG->setText(s.setNum(c.getColor(2)));
+	ui->editB->setText(s.setNum(c.getColor(3)));*/
+	mainscene->addLine(x1, -y1, x2, -y2, QPen(QColor(c.getColor(1), c.getColor(2), c.getColor(3))));
 	return true;
 }
 
-bool MainWindow::DrawCircle(unsigned id, double x, double y, double r, Color c, unsigned mode)
+bool MainWindow::DrawCircle(unsigned id, double x, double y, double r, Color c)
 {
-	if (mode)
-	{
-		/*ui->typesOfObjects->setCurrentIndex(2);
-		QString s;
-		ui->editID->setText(s.setNum(id));
-		ui->editX1->setText(s.setNum(x));
-		ui->editY1->setText(s.setNum(y));
-		ui->editX2->setText(s.setNum(r));
-		ui->editR->setText(s.setNum(c.getColor(1)));
-		ui->editG->setText(s.setNum(c.getColor(2)));
-		ui->editB->setText(s.setNum(c.getColor(3)));*/
-	}
-	else
-	{
-		mainscene->addEllipse(x - r, -y - r, r * 2, r * 2, QPen(QColor(c.getColor(1), c.getColor(2), c.getColor(3))));
-	}
+	/*ui->typesOfObjects->setCurrentIndex(2);
+	QString s;
+	ui->editID->setText(s.setNum(id));
+	ui->editX1->setText(s.setNum(x));
+	ui->editY1->setText(s.setNum(y));
+	ui->editX2->setText(s.setNum(r));
+	ui->editR->setText(s.setNum(c.getColor(1)));
+	ui->editG->setText(s.setNum(c.getColor(2)));
+	ui->editB->setText(s.setNum(c.getColor(3)));*/
+	mainscene->addEllipse(x - r, -y - r, r * 2, r * 2, QPen(QColor(c.getColor(1), c.getColor(2), c.getColor(3))));
 	return true;
 }
 
@@ -142,7 +142,7 @@ bool MainWindow::Clear()
 	mainscene->clear();
 	mainscene->addLine(0, -5000, 0, 5000, QPen(Qt::DotLine));
 	mainscene->addLine(-5000, 0, 5000, 0, QPen(Qt::DotLine));
-	//ui->objectsList->clear();
+	ui->objectsList->clear();
 	return true;
 }
 
@@ -157,19 +157,21 @@ void MainWindow::on_openAddingBTN_clicked()
 
 void MainWindow::on_ruleBox_currentIndexChanged(int index)
 {
-    switch (index)
+	switch (index)
 	{
-	case 2:
-	{
-		ui->ruleValueEdit->setEnabled(false);
-		break;
-	}
-	default:
-	{
-		if (!ui->ruleValueEdit->isEnabled())
-			ui->ruleValueEdit->setEnabled(true);
-		break;
-	}
+		case 5:
+		case 6:
+		case 2:
+		{
+			ui->ruleValueEdit->setEnabled(false);
+			break;
+		}
+		default:
+		{
+			if (!ui->ruleValueEdit->isEnabled())
+				ui->ruleValueEdit->setEnabled(true);
+			break;
+		}
 	}
 	return;
 }
@@ -178,56 +180,66 @@ void MainWindow::on_pushButton_clicked()
 {
 	switch (ui->ruleBox->currentIndex())
 	{
-	case 0:
-	{
-		if (!ui->ruleValueEdit->text().isEmpty())
+		case 0:
 		{
-			mycore->AddRule(CONSTR_P2PDIST, ui->ruleValueEdit->text().toDouble());
-			mycore->Calculate();
+			if (!ui->ruleValueEdit->text().isEmpty())
+			{
+				mycore->AddRule(CONSTR_P2PDIST, ui->ruleValueEdit->text().toDouble());
+				mycore->Calculate();
+			}
+			else
+				WriteStatus("Need value");
+			break;
 		}
-		else
-			WriteStatus("Need value");
-		break;
-	}
-	case 1:
-	{
-		if (!ui->ruleValueEdit->text().isEmpty())
+		case 1:
 		{
-			mycore->AddRule(CONSTR_P2LINEDIST, ui->ruleValueEdit->text().toDouble());
-			mycore->Calculate();
+			if (!ui->ruleValueEdit->text().isEmpty())
+			{
+				mycore->AddRule(CONSTR_P2LINEDIST, ui->ruleValueEdit->text().toDouble());
+				mycore->Calculate();
+			}
+			else
+				WriteStatus("Need value");
+			break;
 		}
-		else
-			WriteStatus("Need value");
-		break;
-	}
-	case 2:
-	{
-		mycore->AddRule(CONSTR_3PONLINE);
-		mycore->Calculate();
-		break;
-	}
-	case 3:
-	{
-		if (!ui->ruleValueEdit->text().isEmpty())
+		case 2:
 		{
-			mycore->AddRule(CONSTR_3PRATIO, ui->ruleValueEdit->text().toDouble());
+			mycore->AddRule(CONSTR_3PONLINE);
 			mycore->Calculate();
+			break;
 		}
-		else
-			WriteStatus("Need value");
-		break;
-	}
-	case 4:
-	{
-		if (!ui->ruleValueEdit->text().isEmpty())
+		case 3:
 		{
-			mycore->AddRule(CONSTR_L2LANGLE, ui->ruleValueEdit->text().toDouble());
-			mycore->Calculate();
+			if (!ui->ruleValueEdit->text().isEmpty())
+			{
+				mycore->AddRule(CONSTR_3PRATIO, ui->ruleValueEdit->text().toDouble());
+				mycore->Calculate();
+			}
+			else
+				WriteStatus("Need value");
+			break;
 		}
-		else
-			WriteStatus("Need value");
-		break;
-	}
+		case 4:
+		{
+			if (!ui->ruleValueEdit->text().isEmpty())
+			{
+				mycore->AddRule(CONSTR_L2LANGLE, ui->ruleValueEdit->text().toDouble());
+				mycore->Calculate();
+			}
+			else
+				WriteStatus("Need value");
+			break;
+		}
+		case 5:
+		{
+			mycore->AddRule(CONSTR_EXCONTACT);
+			break;
+		}
+		case 6:
+		{
+			mycore->AddRule(CONSTR_INCONTACT);
+			break;
+		}
 	}
 	ui->ruleValueEdit->clear();
 }

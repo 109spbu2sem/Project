@@ -143,7 +143,17 @@
          </item>
          <item>
           <property name="text">
-           <string>Angle</string>
+           <string>Angle between segments</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>External circle contact</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>Internal circle contact</string>
           </property>
          </item>
         </widget>
@@ -209,16 +219,16 @@
       </property>
       <layout class="QHBoxLayout" name="horizontalLayout_4">
        <property name="leftMargin">
-        <number>1</number>
+        <number>2</number>
        </property>
        <property name="topMargin">
-        <number>1</number>
+        <number>2</number>
        </property>
        <property name="rightMargin">
-        <number>1</number>
+        <number>2</number>
        </property>
        <property name="bottomMargin">
-        <number>1</number>
+        <number>2</number>
        </property>
        <item>
         <layout class="QVBoxLayout" name="verticalLayout_2">
@@ -356,22 +366,41 @@
         </layout>
        </item>
        <item>
-        <widget class="QSplitter" name="splitter">
+        <widget class="QSplitter" name="splitter_2">
          <property name="orientation">
           <enum>Qt::Horizontal</enum>
+         </property>
+         <property name="childrenCollapsible">
+          <bool>false</bool>
          </property>
          <widget class="MyCanvas" name="graphicsView">
           <property name="cursor" stdset="0">
            <cursorShape>CrossCursor</cursorShape>
           </property>
          </widget>
-         <widget class="QListWidget" name="objectsList">
-          <property name="maximumSize">
-           <size>
-            <width>250</width>
-            <height>16777215</height>
-           </size>
+         <widget class="QSplitter" name="splitter">
+          <property name="orientation">
+           <enum>Qt::Vertical</enum>
           </property>
+          <property name="childrenCollapsible">
+           <bool>false</bool>
+          </property>
+          <widget class="QListWidget" name="objectsList">
+           <property name="maximumSize">
+            <size>
+             <width>250</width>
+             <height>16777215</height>
+            </size>
+           </property>
+          </widget>
+          <widget class="QListWidget" name="propertiesList">
+           <property name="maximumSize">
+            <size>
+             <width>250</width>
+             <height>16777215</height>
+            </size>
+           </property>
+          </widget>
          </widget>
         </widget>
        </item>

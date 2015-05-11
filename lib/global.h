@@ -18,7 +18,7 @@ enum CONSTR_TYPE
 	CONSTR_L2LANGLE,
 	CONSTR_3PRATIO,
 	CONSTR_EXCONTACT,
-	CONSTR_INTCONTACT
+	CONSTR_INCONTACT
 };
 
 enum PRIMITIVE_TYPE
@@ -54,12 +54,12 @@ public:
 class Interface
 {
 public:
-	// id, x, y, color, write mode
-	virtual bool DrawPoint(unsigned, double, double, Color = 0, unsigned = 0) = 0;
-	// id, x1, y1, x2, y2, color, write mode
-	virtual bool DrawSegment(unsigned, double, double, double, double, Color = 0, unsigned = 0) = 0;
-	// id, x, y, r, color, write mode
-	virtual bool DrawCircle(unsigned, double, double, double, Color = 0, unsigned = 0) = 0;
+	// id, x, y, color
+	virtual bool DrawPoint(unsigned, double, double, Color = 0) = 0;
+	// id, x1, y1, x2, y2, color
+	virtual bool DrawSegment(unsigned, double, double, double, double, Color = 0) = 0;
+	// id, x, y, r, color
+	virtual bool DrawCircle(unsigned, double, double, double, Color = 0) = 0;
 	virtual bool Clear() = 0;
 };
 

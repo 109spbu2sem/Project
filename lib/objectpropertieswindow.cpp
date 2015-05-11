@@ -10,7 +10,7 @@ objectPropertiesWindow::objectPropertiesWindow(QWidget *parent) :
 	ui->editY2->setVisible(false);
 	ui->labelX2->setVisible(false);
 	ui->labelY2->setVisible(false);
-	QRegExp doub("[0-9]{1,8}\\.[0-9]{0,8}");
+	QRegExp doub("\-?[0-9]{1,8}\\.[0-9]{0,8}");
 	doubvalid = new QRegExpValidator(doub, this);
 	ui->editX1->setValidator(doubvalid);
 	ui->editY1->setValidator(doubvalid);

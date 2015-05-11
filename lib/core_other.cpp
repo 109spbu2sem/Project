@@ -74,27 +74,6 @@ void CORE::Select(double x, double y)
 			if (object->isSelected())
 			{
 				_selected_objects.add(object);
-				switch (object->objectType())
-				{
-					case PRIMITIVE_POINT:
-					{
-						Point* p = dynamic_cast<Point*>(object);
-						mygui->DrawPoint(p->id.getID(), *p->x, *p->y, p->color, 1);
-						break;
-					}
-					case PRIMITIVE_SEGMENT:
-					{
-						Segment* s = dynamic_cast<Segment*>(object);
-						mygui->DrawSegment(s->id.getID(), *s->p1->x, *s->p1->y, *s->p2->x, *s->p2->y, s->color, 1);
-						break;
-					}
-					case PRIMITIVE_CIRCLE:
-					{
-						Circle* p = dynamic_cast<Circle*>(object);
-						mygui->DrawCircle(p->id.getID(), *p->p->x, *p->p->y, *p->r, p->color, 1);
-						break;
-					}
-				}
 			}
 			else
 			{
@@ -107,7 +86,7 @@ void CORE::Select(double x, double y)
 					}
 				}
 			}
-			writeToLog(min_id, "selection was changed for ", 2);
+			writeToLog(min_id, "selection was changed for (ID) ", 2);
 			Redraw();
 		}
 		catch (...)
@@ -242,14 +221,14 @@ void CORE::IWantSave()
 		if (i.value()->objectType() == PRIMITIVE_POINT)
 		{
 			Point* v = dynamic_cast<Point*>(i.value());
-			mysave->DrawPoint(v->id.getID(), *v->x, *v->y, v->color.getColor(), 0);
+			mysave->DrawPoint(v->id.getID(), *v->x, *v->y, v->color.getColor());
 			i.moveNext();
 			continue;
 		}
 		if (i.value()->objectType() == PRIMITIVE_SEGMENT)
 		{
 			Segment* v = dynamic_cast<Segment*>(i.value());
-			mysave->DrawSegment(v->id.getID(), *v->p1->x, *v->p1->y, *v->p2->x, *v->p2->y, v->color.getColor(), 0);
+			mysave->DrawSegment(v->id.getID(), *v->p1->x, *v->p1->y, *v->p2->x, *v->p2->y, v->color.getColor());
 			i.moveNext();
 			continue;
 
@@ -257,7 +236,7 @@ void CORE::IWantSave()
 		if (i.value()->objectType() == PRIMITIVE_CIRCLE)
 		{
 			Circle* v = dynamic_cast<Circle*>(i.value());
-			mysave->DrawCircle(v->id.getID(), *v->p->x, *v->p->y, *v->r, v->color.getColor(), 0);
+			mysave->DrawCircle(v->id.getID(), *v->p->x, *v->p->y, *v->r, v->color.getColor());
 			i.moveNext();
 			continue;
 		}

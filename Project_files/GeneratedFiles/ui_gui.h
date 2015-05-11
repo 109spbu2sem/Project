@@ -63,9 +63,11 @@ public:
     QPushButton *pointBTNTool;
     QPushButton *ZoomBTNTool;
     QSpacerItem *verticalSpacer;
-    QSplitter *splitter;
+    QSplitter *splitter_2;
     MyCanvas *graphicsView;
+    QSplitter *splitter;
     QListWidget *objectsList;
+    QListWidget *propertiesList;
     QHBoxLayout *horizontalLayout_3;
     QLabel *statusBar;
     QLabel *messageBar;
@@ -183,7 +185,7 @@ public:
         horizontalLayout_4->setSpacing(6);
         horizontalLayout_4->setContentsMargins(11, 11, 11, 11);
         horizontalLayout_4->setObjectName(QStringLiteral("horizontalLayout_4"));
-        horizontalLayout_4->setContentsMargins(1, 1, 1, 1);
+        horizontalLayout_4->setContentsMargins(2, 2, 2, 2);
         verticalLayout_2 = new QVBoxLayout();
         verticalLayout_2->setSpacing(1);
         verticalLayout_2->setObjectName(QStringLiteral("verticalLayout_2"));
@@ -230,19 +232,29 @@ public:
 
         horizontalLayout_4->addLayout(verticalLayout_2);
 
-        splitter = new QSplitter(frame);
-        splitter->setObjectName(QStringLiteral("splitter"));
-        splitter->setOrientation(Qt::Horizontal);
-        graphicsView = new MyCanvas(splitter);
+        splitter_2 = new QSplitter(frame);
+        splitter_2->setObjectName(QStringLiteral("splitter_2"));
+        splitter_2->setOrientation(Qt::Horizontal);
+        splitter_2->setChildrenCollapsible(false);
+        graphicsView = new MyCanvas(splitter_2);
         graphicsView->setObjectName(QStringLiteral("graphicsView"));
         graphicsView->viewport()->setProperty("cursor", QVariant(QCursor(Qt::CrossCursor)));
-        splitter->addWidget(graphicsView);
+        splitter_2->addWidget(graphicsView);
+        splitter = new QSplitter(splitter_2);
+        splitter->setObjectName(QStringLiteral("splitter"));
+        splitter->setOrientation(Qt::Vertical);
+        splitter->setChildrenCollapsible(false);
         objectsList = new QListWidget(splitter);
         objectsList->setObjectName(QStringLiteral("objectsList"));
         objectsList->setMaximumSize(QSize(250, 16777215));
         splitter->addWidget(objectsList);
+        propertiesList = new QListWidget(splitter);
+        propertiesList->setObjectName(QStringLiteral("propertiesList"));
+        propertiesList->setMaximumSize(QSize(250, 16777215));
+        splitter->addWidget(propertiesList);
+        splitter_2->addWidget(splitter);
 
-        horizontalLayout_4->addWidget(splitter);
+        horizontalLayout_4->addWidget(splitter_2);
 
 
         verticalLayout_3->addWidget(frame);
@@ -320,7 +332,9 @@ public:
          << QApplication::translate("MainWindow", "Distance from point to line", 0)
          << QApplication::translate("MainWindow", "Three points on line", 0)
          << QApplication::translate("MainWindow", "Ratio between three points", 0)
-         << QApplication::translate("MainWindow", "Angle", 0)
+         << QApplication::translate("MainWindow", "Angle between segments", 0)
+         << QApplication::translate("MainWindow", "External circle contact", 0)
+         << QApplication::translate("MainWindow", "Internal circle contact", 0)
         );
         ruleValueLabel->setText(QApplication::translate("MainWindow", "Value: ", 0));
         pushButton->setText(QApplication::translate("MainWindow", "Add", 0));

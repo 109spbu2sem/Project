@@ -26,7 +26,7 @@ void Save::begin() {
 	_save << "<list>\n";
 }
 
-bool Save::DrawPoint(unsigned id, double x, double y, Color c, unsigned mode)
+bool Save::DrawPoint(unsigned id, double x, double y, Color c)
 {
 	_save << "	<point>\n";
 	_save << "		<id>" << id << "</id>\n";
@@ -37,7 +37,7 @@ bool Save::DrawPoint(unsigned id, double x, double y, Color c, unsigned mode)
 	return true;
 }
 
-bool Save::DrawSegment(unsigned id, double x1, double y1, double x2, double y2, Color c, unsigned mode)
+bool Save::DrawSegment(unsigned id, double x1, double y1, double x2, double y2, Color c)
 {
 	_save << "	<segment>\n";
 	_save << "		<id>" << id << "</id>\n";
@@ -50,7 +50,7 @@ bool Save::DrawSegment(unsigned id, double x1, double y1, double x2, double y2, 
 	return true;
 }
 
-bool Save::DrawCircle(unsigned id, double x, double y, double r, Color c, unsigned mode)
+bool Save::DrawCircle(unsigned id, double x, double y, double r, Color c)
 {
 	_save << "	<circle>\n";
 	_save << "		<id>" << id << "</id>\n";

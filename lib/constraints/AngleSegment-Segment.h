@@ -50,6 +50,8 @@ public:
 			return _angle(_p3y, _p3x, _p4y, _p4x, _p1y, _p1x, _p2y, _p2x);
 		if (par == _p4y)
 			return -(_angle(_p3y, _p3x, _p4y, _p4x, _p1y, _p1x, _p2y, _p2x));
+		if (par == _a)
+			return -2 * sqrt(error())*sin(*_a);
 		return 0;
 	}
 	virtual CONSTR_TYPE type()

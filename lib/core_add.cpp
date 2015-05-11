@@ -69,7 +69,7 @@ unsigned CORE::AddObject(unsigned pointid, double radius, Color color, unsigned 
 	Circle* c = new Circle(dynamic_cast<Point*>(_storage_of_objects.get(pointid)), r);
 	if (c->p)
 	{
-		_parameters.add(r, false);
+		_parameters.add(r, true);
 		c->color.setColor(color);
 		ID newid = _storage_of_objects.add(c, id);
 		mygui->WriteStatus("Done");
@@ -109,7 +109,12 @@ void CORE::ConcatenatePoints()
 			s->color.setColor(COLORDEF);
 			_storage_of_objects.add(s);
 			writeToLog("Concatenate points", 2);
+			mygui->WriteText("Done", "Segment added");
 			ClearSelection();
+		}
+		else
+		{
+			mygui->WriteText("Tip:", "Please select two points before creating segment.");
 		}
 	}
 }
@@ -209,6 +214,19 @@ void CORE::AddRule(unsigned type, double value)
 				mygui->WriteMessage("Can't add rule to these objects.");
 			}
 		}
+		case CONSTR_INCONTACT:
+		{
+			if (addc_incontact())
+			{
+				mygui->WriteStatus("Done");
+				mygui->WriteMessage("Rule added");
+			}
+			else
+			{
+				mygui->WriteStatus("Error");
+				mygui->WriteMessage("Can't add rule to these objects.");
+			}
+		}
 		default:
 		{
 			mygui->WriteStatus("FATAL ERROR");
@@ -216,6 +234,7 @@ void CORE::AddRule(unsigned type, double value)
 			return;
 		}
 	}
+	Calculate();
 }
 
 void CORE::AddRule(unsigned type, unsigned id1, unsigned id2, unsigned id3, double value)
@@ -341,6 +360,50 @@ bool CORE::addc_3pratio(double value)
 }
 bool CORE::addc_excontact()
 {
+	if (_selected_objects.size() == 2)
+	{
+		ListViewer<ObjectSkin*> k(_selected_objects);
+		Circle* o1 = dynamic_cast<Circle*>(k.getValue());
+		if (o1)
+		{
+			k.moveNext();
+			Circle* o2 = dynamic_cast<Circle*>(k.getValue());
+			if (o2)
+			{
+
+				ExternalContactCircle* rule = new ExternalContactCircle(o1->p->x, o1->p->y, o2->p->x,
+																						  o2->p->y, o1->r, o2->r);
+				double* param[6] = { o1->p->x, o1->p->y, o2->p->x,
+					o2->p->y, o1->r, o2->r };
+				_storage_of_constraint.add(rule, *param);
+				return true;
+			}
+		}
+	}
+	return false;
+}
+bool CORE::addc_incontact()
+{
+	if (_selected_objects.size() == 2)
+	{
+		ListViewer<ObjectSkin*> k(_selected_objects);
+		Circle* o1 = dynamic_cast<Circle*>(k.getValue());
+		if (o1)
+		{
+			k.moveNext();
+			Circle* o2 = dynamic_cast<Circle*>(k.getValue());
+			if (o2)
+			{
+
+				InternalContactCircle* rule = new InternalContactCircle(o1->p->x, o1->p->y, o2->p->x,
+																						  o2->p->y, o1->r, o2->r);
+				double* param[6] = { o1->p->x, o1->p->y, o2->p->x,
+					o2->p->y, o1->r, o2->r };
+				_storage_of_constraint.add(rule, *param);
+				return true;
+			}
+		}
+	}
 	return false;
 }
 bool CORE::addc_l2langle(double value)

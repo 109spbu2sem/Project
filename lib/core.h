@@ -57,6 +57,7 @@ private:
 	bool addc_3pratio(double);
 	bool addc_3ponline();
 	bool addc_excontact();
+	bool addc_incontact();
 
 public:
 	CORE();

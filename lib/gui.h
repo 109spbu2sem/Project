@@ -32,14 +32,19 @@ public:
 	
 	void ConnectCORE(CORE* core);
 	
-	bool DrawPoint(unsigned, double, double, Color = 0, unsigned = 0); // point (id, x, y, color)
-	bool DrawSegment(unsigned, double, double, double, double, Color = 0, unsigned = 0); // segment (id, x1, y1, x2, y2, color)
-	bool DrawCircle(unsigned, double, double, double, Color = 0, unsigned = 0); // circle (id, x, y, r, color)
+	bool DrawPoint(unsigned, double, double, Color = 0); // point (id, x, y, color)
+	bool DrawSegment(unsigned, double, double, double, double, Color = 0); // segment (id, x1, y1, x2, y2, color)
+	bool DrawCircle(unsigned, double, double, double, Color = 0); // circle (id, x, y, r, color)
 	bool Clear();
+
+	bool Set_properties_of_point(unsigned, double, double, Color = 0);
+	bool Set_properties_of_segment(unsigned, double, double, double, double, Color = 0);
+	bool Set_properties_of_circle(unsigned, double, double, double, Color = 0);
 
 	void WriteError(const char* Text);
 	void WriteStatus(const char* Text);
 	void WriteMessage(const char* Text);
+	void WriteText(const char* Short, const char* Long);
 
 	//void setupObjectParameters(PRIMITIVE_TYPE, unsigned, double, double, double, double, Color);
 

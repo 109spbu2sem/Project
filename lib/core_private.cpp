@@ -118,13 +118,10 @@ void CORE::Redraw()
 void CORE::Calculate()
 {
 	writeToLog("**********************Start calculating******************");
+	mygui->WriteText("Work","Start redrawing");
 	ConstraintCollector collector;
 	Storage_Array< double* > parameters;
 	writeToLog("Generating graphs");
-	/*for (ListViewer< IConstraint* > i(_storage_of_constraints); i.canMoveNext(); i.moveNext())
-	{
-		collector.addConstraint(i.getValue());
-	}*/
 	for (HashViewer<IConstraint*, double*> i(_storage_of_constraint); i.canMoveNext(); i.moveNext())
 	{
 		try
@@ -135,14 +132,18 @@ void CORE::Calculate()
 	}
 	for (AVLVeiwer< double*, bool > i(_parameters); i.canMoveNext(); i.moveNext())
 	{
-		parameters.add(i.getValue().key);
+		if (i.getValue().value)
+		{
+			parameters.add(i.getValue().key);
+		}
 	}
 	//BuildFigure(&collector, &parameters);
 	writeToLog("---------------------Building new figure-----------------");
+	mygui->WriteText("Work", "Redrawing...");
 	BuildFigureGoldMethod(&collector, &parameters);
 	writeToLog("---------------------Success build-----------------------");
 	Redraw();
-	mygui->WriteStatus("Done");
+	mygui->WriteText("Done", "");
 	writeToLog("**********************Success calculate******************");
 	return;
 }
