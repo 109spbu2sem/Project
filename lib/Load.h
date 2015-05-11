@@ -17,8 +17,10 @@ class Load {
 	streamoff _cur;
 	QFile*_file;
 	QXmlStreamReader _xml;
+	CORE*_action;
 public:
 	Load();
+	void ConnectCORE(CORE*core);
 	void fileWay(QString);
 	void begin();
 	void point();

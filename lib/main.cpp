@@ -15,6 +15,7 @@ int main(int argc, char *argv[])
 	Load testload;
 	testsave.ConnectCORE(&testcore);
 	testgui.ConnectCORE(&testcore);
+	testload.ConnectCORE(&testcore);
 	testcore.Connect(&testgui, &testsave, &testload);
 	testgui.show();
 	return app.exec();

@@ -446,7 +446,11 @@ void MainWindow::on_actionClear_all_triggered()
 
 void MainWindow::on_actionLoad_triggered()
 {
-	// here load function
+	QString filename = QFileDialog::getOpenFileName(
+		this, tr("Open File"),
+		"C://",
+		"Text File (*.txt);; Xml File (*.xml)");
+	mycore->IWantLoad(filename);
 }
 void MainWindow::on_objectsList_clicked(const QModelIndex &index)
 {
