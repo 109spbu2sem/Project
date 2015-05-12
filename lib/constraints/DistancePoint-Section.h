@@ -52,10 +52,7 @@ public:
 				_YY = *_y2;
 			}
 		}
-		if (_STARTING_ERROR == 0)
-		{
-			_STARTING_ERROR = err;
-		}
+		_STARTING_ERROR = err;
 		return (err - *_d)*(err - *_d);
 	};
 
@@ -91,6 +88,6 @@ public:
 private:
 	double _XX;
 	double _YY;
-    double _STARTING_ERROR;
+	double _STARTING_ERROR;
 };
 #endif // DISTANCEPOINT_TO_SECTION_H

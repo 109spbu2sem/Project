@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <class>MainWindow</class>
- <widget class="QMainWindow" name="MainWindow">
+ <class>GUI</class>
+ <widget class="QMainWindow" name="GUI">
   <property name="geometry">
    <rect>
     <x>0</x>
@@ -296,10 +296,6 @@
            <property name="text">
             <string/>
            </property>
-           <property name="icon">
-            <iconset>
-             <normaloff>icons/pointbtn.png</normaloff>icons/pointbtn.png</iconset>
-           </property>
            <property name="shortcut">
             <string>Ctrl+2</string>
            </property>
@@ -365,7 +361,7 @@
          <property name="childrenCollapsible">
           <bool>false</bool>
          </property>
-         <widget class="MyCanvas" name="graphicsView">
+         <widget class="MyCanvas" name="myCanvas">
           <property name="cursor" stdset="0">
            <cursorShape>CrossCursor</cursorShape>
           </property>
@@ -383,7 +379,7 @@
           <property name="childrenCollapsible">
            <bool>false</bool>
           </property>
-          <widget class="QWidget" name="">
+          <widget class="QWidget" name="layoutWidget">
            <layout class="QVBoxLayout" name="verticalLayout_8">
             <property name="spacing">
              <number>3</number>
@@ -410,7 +406,7 @@
             <item>
              <layout class="QHBoxLayout" name="horizontalLayout_8">
               <item>
-               <widget class="QPushButton" name="pushButton_3">
+               <widget class="QPushButton" name="openChangingDialog">
                 <property name="maximumSize">
                  <size>
                   <width>100</width>
@@ -426,7 +422,7 @@
             </item>
            </layout>
           </widget>
-          <widget class="QWidget" name="">
+          <widget class="QWidget" name="layoutWidget">
            <layout class="QVBoxLayout" name="verticalLayout_7">
             <property name="spacing">
              <number>3</number>
@@ -478,7 +474,7 @@
                </widget>
               </item>
               <item>
-               <widget class="QPushButton" name="pushButton_5">
+               <widget class="QPushButton" name="deleteObjBTN">
                 <property name="sizePolicy">
                  <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
                   <horstretch>0</horstretch>
@@ -506,7 +502,7 @@
             </item>
            </layout>
           </widget>
-          <widget class="QWidget" name="">
+          <widget class="QWidget" name="layoutWidget">
            <layout class="QVBoxLayout" name="verticalLayout_6">
             <property name="spacing">
              <number>3</number>
@@ -527,7 +523,7 @@
             <item>
              <layout class="QHBoxLayout" name="horizontalLayout_4">
               <item>
-               <widget class="QPushButton" name="pushButton_2">
+               <widget class="QPushButton" name="addRuleBTN">
                 <property name="maximumSize">
                  <size>
                   <width>100</width>
@@ -540,7 +536,7 @@
                </widget>
               </item>
               <item>
-               <widget class="QPushButton" name="pushButton_4">
+               <widget class="QPushButton" name="deleteRulesBTN">
                 <property name="maximumSize">
                  <size>
                   <width>100</width>
@@ -548,7 +544,7 @@
                  </size>
                 </property>
                 <property name="text">
-                 <string>Delete rule</string>
+                 <string>Delete rules</string>
                 </property>
                </widget>
               </item>
@@ -560,14 +556,6 @@
         </widget>
        </item>
       </layout>
-      <zorder>splitter_2</zorder>
-      <zorder>pushButton_3</zorder>
-      <zorder>horizontalLayoutWidget</zorder>
-      <zorder>rulesList</zorder>
-      <zorder>pushButton_5</zorder>
-      <zorder>openAddingBTN</zorder>
-      <zorder>horizontalLayoutWidget</zorder>
-      <zorder>splitter_2</zorder>
      </widget>
     </item>
     <item>

@@ -1,9 +1,8 @@
 #ifndef MYCANVAS_H
 #define MYCANVAS_H
 
-#include <QGraphicsView>
+#include "QtWidgets\qgraphicsview.h"
 #include <QMouseEvent>
-#include <QWidget>
 #include "core.h"
 #include "enums.h"
 

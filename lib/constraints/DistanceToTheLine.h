@@ -32,10 +32,7 @@ public:
 	double error()
 	{
 		double err = DistPointLine(*_x, *_y, *_x1, *_y1, *_x2, *_y2);
-		if (_STARTING_ERROR == 0)
-		{
-			_STARTING_ERROR = err;
-		}
+		_STARTING_ERROR = err;
 		return (err - *_d)*(err - *_d);
 	};
 

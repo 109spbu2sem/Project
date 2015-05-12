@@ -241,6 +241,21 @@ void CORE::AddRule(unsigned type, unsigned id1, unsigned id2, unsigned id3, doub
 
 }
 
+bool CORE::ChangePoint(unsigned id, double point_x, double point_y, Color color)
+{
+	return false;
+}
+
+bool CORE::ChangeSegment(unsigned id, unsigned point1_id, unsigned point2_id, Color color)
+{
+	return false;
+}
+
+bool CORE::ChangeCircle(unsigned id, unsigned point_id, double radius, Color color)
+{
+	return false;
+}
+
 bool CORE::addc_p2pdist(double value)
 {
 	if (_selected_objects.size() == 2)

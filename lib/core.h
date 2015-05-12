@@ -25,7 +25,6 @@ class CORE
 {
 private:
 	GraphicsInterface* mygui;
-	Load* myload;
 
 	//Storage_List<double> _storage_of_parameters;
 	Storage_AVL<double*, bool> _parameters;
@@ -63,12 +62,10 @@ public:
 	CORE();
 	CORE(GraphicsInterface* gui);
 	~CORE();
-	void Connect(GraphicsInterface* gui, Load* load)
+	void Connect(GraphicsInterface* gui)
 	{
 		mygui = gui;
-		myload = load;
 		writeToLog("GUI connected to CORE", 2);
-		writeToLog("LOAD connected to CORE", 2);
 	}
 
 	void writeToLog(std::string, char = 1);
@@ -85,14 +82,14 @@ public:
 	unsigned AddObject(double point_x, double point_y, Color color = COLORDEF, unsigned id = 0, bool wait = false); // add point
 	unsigned AddObject(unsigned point1_id, unsigned point2_id, Color color = COLORDEF, unsigned id = 0, bool wait = false); // add segment for 2 points
 	unsigned AddObject(unsigned point_id, double radius, Color color = COLORDEF, unsigned id = 0, bool wait = false);
-	/*void AddObject(double point_x1, double point_y1, double point_x2, double point_y2, Color color = COLORDEF, unsigned id = 0); // add segment, automatical adds 2 points
-	void AddObject(double point_x, double point_y, double radius, Color color = COLORDEF, unsigned id = 0); // add circle, automatical add center of circle*/
 	void ConcatenatePoints();
 
 	void AddRule(unsigned type, double value = 0);
 	void AddRule(unsigned type, unsigned id1, unsigned id2, unsigned id3 = 0, double value = 0);
 
-	void ChangeStatus(unsigned char status_key); // need refine
+	bool ChangePoint(unsigned id, double point_x, double point_y, Color color);
+	bool ChangeSegment(unsigned id, unsigned point1_id, unsigned point2_id, Color color);
+	bool ChangeCircle(unsigned id, unsigned point_id, double radius, Color color);
 
 	void Select(double x, double y);
 	void Select(double x1, double y1, double x2, double y2);

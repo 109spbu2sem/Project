@@ -1,22 +1,14 @@
 #include "core.h"
 #include "gui.h"
-#include "Save.h"
-#include "Load.h"
-//#include "storages\storage_array.h"
-//#include "storages\storage_list.h"
-#include <QApplication>
+#include "QtWidgets\qapplication.h"
 
 int main(int argc, char *argv[])
 {
 	QApplication app(argc, argv);
 	CORE testcore;
 	GUI testgui;
-	//Save testsave;
-	Load testload;
-	//testsave.ConnectCORE(&testcore);
 	testgui.ConnectCORE(&testcore);
-	testload.ConnectCORE(&testcore);
-	testcore.Connect(&testgui, &testload);
+	testcore.Connect(&testgui);
 	testgui.show();
 	return app.exec();
 }

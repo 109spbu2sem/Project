@@ -23,6 +23,7 @@ objectPropertiesWindow::objectPropertiesWindow(QWidget *parent) :
 	ui->editB->setValidator(unsvalid);
 	ui->editID->setValidator(unsvalid);
 	
+	flag = 0;
 }
 
 objectPropertiesWindow::~objectPropertiesWindow()
@@ -34,62 +35,78 @@ objectPropertiesWindow::~objectPropertiesWindow()
 
 void objectPropertiesWindow::on_buttonBox_accepted()
 {
-	switch (ui->typesOfObjects->currentIndex())
+	switch (flag)
 	{
-		// add point
 		case 0:
 		{
-			if (!ui->editX1->text().isEmpty() &&
-				 !ui->editY1->text().isEmpty() /*&&
-														 ui->editX1->text(). &&
-														 ui->editY1->text().toDouble()*/)
+			switch (ui->typesOfObjects->currentIndex())
 			{
-				Color c;
-				c.setColor(ui->editR->text().toUInt(), ui->editG->text().toUInt(), ui->editB->text().toUInt());
-				mycore->AddObject(ui->editX1->text().toDouble(),
-										ui->editY1->text().toDouble(), c);
+				// add point
+				case 0:
+				{
+					if (!ui->editX1->text().isEmpty() &&
+						 !ui->editY1->text().isEmpty() /*&&
+																 ui->editX1->text(). &&
+																 ui->editY1->text().toDouble()*/)
+					{
+						Color c;
+						c.setColor(ui->editR->text().toUInt(), ui->editG->text().toUInt(), ui->editB->text().toUInt());
+						mycore->AddObject(ui->editX1->text().toDouble(),
+												ui->editY1->text().toDouble(), c);
+					}
+					break;
+				}
+					// add segment
+				case 1:
+				{
+					if (!ui->editX1->text().isEmpty() &&
+						 !ui->editY1->text().isEmpty() &&
+						 !ui->editX2->text().isEmpty() &&
+						 !ui->editY2->text().isEmpty() /*&&
+																 ui->editX1->text().toDouble() &&
+																 ui->editY1->text().toDouble() &&
+																 ui->editX2->text().toDouble() &&
+																 ui->editY2->text().toDouble()*/)
+					{
+						Color c;
+						c.setColor(ui->editR->text().toUInt(), ui->editG->text().toUInt(), ui->editB->text().toUInt());
+						unsigned id1 = mycore->AddObject(ui->editX1->text().toDouble(), ui->editY1->text().toDouble(), c, 0);
+						unsigned id2 = mycore->AddObject(ui->editX2->text().toDouble(), ui->editY2->text().toDouble(), c, 0);
+						mycore->AddObject(id1, id2, c, 0);
+					}
+					break;
+				}
+					// add circle
+				case 2:
+				{
+					if (!ui->editX1->text().isEmpty() &&
+						 !ui->editY1->text().isEmpty() &&
+						 !ui->editX2->text().isEmpty() /*&&
+																 ui->editX1->text().toDouble() &&
+																 ui->editY1->text().toDouble() &&
+																 ui->editX2->text().toDouble()*/)
+					{
+						Color c;
+						c.setColor(ui->editR->text().toUInt(), ui->editG->text().toUInt(), ui->editB->text().toUInt());
+						unsigned id = mycore->AddObject(ui->editX1->text().toDouble(), ui->editY1->text().toDouble(), c, 0);
+						mycore->AddObject(id, ui->editX2->text().toDouble(), c, 0);
+					}
+					break;
+				}
 			}
 			break;
 		}
-			// add segment
 		case 1:
 		{
-			if (!ui->editX1->text().isEmpty() &&
-				 !ui->editY1->text().isEmpty() &&
-				 !ui->editX2->text().isEmpty() &&
-				 !ui->editY2->text().isEmpty() /*&&
-														 ui->editX1->text().toDouble() &&
-														 ui->editY1->text().toDouble() &&
-														 ui->editX2->text().toDouble() &&
-														 ui->editY2->text().toDouble()*/)
-			{
-				Color c;
-				c.setColor(ui->editR->text().toUInt(), ui->editG->text().toUInt(), ui->editB->text().toUInt());
-				unsigned id1 = mycore->AddObject(ui->editX1->text().toDouble(), ui->editY1->text().toDouble(), c, 0);
-				unsigned id2 = mycore->AddObject(ui->editX2->text().toDouble(), ui->editY2->text().toDouble(), c, 0);
-				mycore->AddObject(id1, id2, c, 0);
-			}
-			break;
-		}
-			// add circle
-		case 2:
-		{
-			if (!ui->editX1->text().isEmpty() &&
-				 !ui->editY1->text().isEmpty() &&
-				 !ui->editX2->text().isEmpty() /*&&
-														 ui->editX1->text().toDouble() &&
-														 ui->editY1->text().toDouble() &&
-														 ui->editX2->text().toDouble()*/)
-			{
-				Color c;
-				c.setColor(ui->editR->text().toUInt(), ui->editG->text().toUInt(), ui->editB->text().toUInt());
-				unsigned id = mycore->AddObject(ui->editX1->text().toDouble(), ui->editY1->text().toDouble(), c, 0);
-				mycore->AddObject(id, ui->editX2->text().toDouble(), c, 0);
-			}
 			break;
 		}
 	}
 	this->close();
+}
+
+void objectPropertiesWindow::setFlag(unsigned f)
+{
+	flag = f;
 }
 
 void objectPropertiesWindow::on_buttonBox_rejected()

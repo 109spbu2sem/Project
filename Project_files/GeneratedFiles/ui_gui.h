@@ -63,25 +63,25 @@ public:
     QPushButton *ZoomBTNTool;
     QSpacerItem *verticalSpacer;
     QSplitter *splitter_2;
-    MyCanvas *graphicsView;
+    MyCanvas *myCanvas;
     QSplitter *splitter;
-    QWidget *widget;
+    QWidget *layoutWidget;
     QVBoxLayout *verticalLayout_8;
     QListWidget *propertiesList;
     QHBoxLayout *horizontalLayout_8;
-    QPushButton *pushButton_3;
-    QWidget *widget1;
+    QPushButton *openChangingDialog;
+    QWidget *layoutWidget1;
     QVBoxLayout *verticalLayout_7;
     QListWidget *objectsList;
     QHBoxLayout *horizontalLayout_6;
     QPushButton *openAddingBTN;
-    QPushButton *pushButton_5;
-    QWidget *widget2;
+    QPushButton *deleteObjBTN;
+    QWidget *layoutWidget2;
     QVBoxLayout *verticalLayout_6;
     QListWidget *rulesList;
     QHBoxLayout *horizontalLayout_4;
-    QPushButton *pushButton_2;
-    QPushButton *pushButton_4;
+    QPushButton *addRuleBTN;
+    QPushButton *deleteRulesBTN;
     QHBoxLayout *horizontalLayout_3;
     QLabel *statusBar;
     QLabel *messageBar;
@@ -89,30 +89,30 @@ public:
     QMenu *menuFile;
     QMenu *menuOptions;
 
-    void setupUi(QMainWindow *MainWindow)
+    void setupUi(QMainWindow *GUI)
     {
-        if (MainWindow->objectName().isEmpty())
-            MainWindow->setObjectName(QStringLiteral("MainWindow"));
-        MainWindow->resize(953, 692);
+        if (GUI->objectName().isEmpty())
+            GUI->setObjectName(QStringLiteral("GUI"));
+        GUI->resize(953, 692);
         QSizePolicy sizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
         sizePolicy.setHorizontalStretch(0);
         sizePolicy.setVerticalStretch(0);
-        sizePolicy.setHeightForWidth(MainWindow->sizePolicy().hasHeightForWidth());
-        MainWindow->setSizePolicy(sizePolicy);
-        MainWindow->setStyleSheet(QStringLiteral(""));
-        actionLoad = new QAction(MainWindow);
+        sizePolicy.setHeightForWidth(GUI->sizePolicy().hasHeightForWidth());
+        GUI->setSizePolicy(sizePolicy);
+        GUI->setStyleSheet(QStringLiteral(""));
+        actionLoad = new QAction(GUI);
         actionLoad->setObjectName(QStringLiteral("actionLoad"));
-        actionSave = new QAction(MainWindow);
+        actionSave = new QAction(GUI);
         actionSave->setObjectName(QStringLiteral("actionSave"));
-        actionSave_As = new QAction(MainWindow);
+        actionSave_As = new QAction(GUI);
         actionSave_As->setObjectName(QStringLiteral("actionSave_As"));
-        actionClose = new QAction(MainWindow);
+        actionClose = new QAction(GUI);
         actionClose->setObjectName(QStringLiteral("actionClose"));
-        actionRedraw_all = new QAction(MainWindow);
+        actionRedraw_all = new QAction(GUI);
         actionRedraw_all->setObjectName(QStringLiteral("actionRedraw_all"));
-        actionClear_all = new QAction(MainWindow);
+        actionClear_all = new QAction(GUI);
         actionClear_all->setObjectName(QStringLiteral("actionClear_all"));
-        centralWidget = new QWidget(MainWindow);
+        centralWidget = new QWidget(GUI);
         centralWidget->setObjectName(QStringLiteral("centralWidget"));
         verticalLayout_3 = new QVBoxLayout(centralWidget);
         verticalLayout_3->setSpacing(6);
@@ -226,9 +226,6 @@ public:
         pointBTNTool->setSizePolicy(sizePolicy1);
         pointBTNTool->setMinimumSize(QSize(29, 29));
         pointBTNTool->setMaximumSize(QSize(29, 29));
-        QIcon icon;
-        icon.addFile(QStringLiteral("icons/pointbtn.png"), QSize(), QIcon::Normal, QIcon::Off);
-        pointBTNTool->setIcon(icon);
         pointBTNTool->setCheckable(true);
 
         verticalLayout_2->addWidget(pointBTNTool);
@@ -254,10 +251,10 @@ public:
         splitter_2->setObjectName(QStringLiteral("splitter_2"));
         splitter_2->setOrientation(Qt::Horizontal);
         splitter_2->setChildrenCollapsible(false);
-        graphicsView = new MyCanvas(splitter_2);
-        graphicsView->setObjectName(QStringLiteral("graphicsView"));
-        graphicsView->viewport()->setProperty("cursor", QVariant(QCursor(Qt::CrossCursor)));
-        splitter_2->addWidget(graphicsView);
+        myCanvas = new MyCanvas(splitter_2);
+        myCanvas->setObjectName(QStringLiteral("myCanvas"));
+        myCanvas->viewport()->setProperty("cursor", QVariant(QCursor(Qt::CrossCursor)));
+        splitter_2->addWidget(myCanvas);
         splitter = new QSplitter(splitter_2);
         splitter->setObjectName(QStringLiteral("splitter"));
         QSizePolicy sizePolicy4(QSizePolicy::Preferred, QSizePolicy::Expanding);
@@ -267,15 +264,15 @@ public:
         splitter->setSizePolicy(sizePolicy4);
         splitter->setOrientation(Qt::Vertical);
         splitter->setChildrenCollapsible(false);
-        widget = new QWidget(splitter);
-        widget->setObjectName(QStringLiteral("widget"));
-        verticalLayout_8 = new QVBoxLayout(widget);
+        layoutWidget = new QWidget(splitter);
+        layoutWidget->setObjectName(QStringLiteral("layoutWidget"));
+        verticalLayout_8 = new QVBoxLayout(layoutWidget);
         verticalLayout_8->setSpacing(3);
         verticalLayout_8->setContentsMargins(11, 11, 11, 11);
         verticalLayout_8->setObjectName(QStringLiteral("verticalLayout_8"));
         verticalLayout_8->setSizeConstraint(QLayout::SetMinAndMaxSize);
         verticalLayout_8->setContentsMargins(0, 0, 0, 0);
-        propertiesList = new QListWidget(widget);
+        propertiesList = new QListWidget(layoutWidget);
         propertiesList->setObjectName(QStringLiteral("propertiesList"));
         propertiesList->setMinimumSize(QSize(0, 0));
         propertiesList->setMaximumSize(QSize(300, 16777215));
@@ -285,25 +282,25 @@ public:
         horizontalLayout_8 = new QHBoxLayout();
         horizontalLayout_8->setSpacing(6);
         horizontalLayout_8->setObjectName(QStringLiteral("horizontalLayout_8"));
-        pushButton_3 = new QPushButton(widget);
-        pushButton_3->setObjectName(QStringLiteral("pushButton_3"));
-        pushButton_3->setMaximumSize(QSize(100, 28));
+        openChangingDialog = new QPushButton(layoutWidget);
+        openChangingDialog->setObjectName(QStringLiteral("openChangingDialog"));
+        openChangingDialog->setMaximumSize(QSize(100, 28));
 
-        horizontalLayout_8->addWidget(pushButton_3);
+        horizontalLayout_8->addWidget(openChangingDialog);
 
 
         verticalLayout_8->addLayout(horizontalLayout_8);
 
-        splitter->addWidget(widget);
-        widget1 = new QWidget(splitter);
-        widget1->setObjectName(QStringLiteral("widget1"));
-        verticalLayout_7 = new QVBoxLayout(widget1);
+        splitter->addWidget(layoutWidget);
+        layoutWidget1 = new QWidget(splitter);
+        layoutWidget1->setObjectName(QStringLiteral("layoutWidget1"));
+        verticalLayout_7 = new QVBoxLayout(layoutWidget1);
         verticalLayout_7->setSpacing(3);
         verticalLayout_7->setContentsMargins(11, 11, 11, 11);
         verticalLayout_7->setObjectName(QStringLiteral("verticalLayout_7"));
         verticalLayout_7->setSizeConstraint(QLayout::SetMinAndMaxSize);
         verticalLayout_7->setContentsMargins(0, 0, 0, 0);
-        objectsList = new QListWidget(widget1);
+        objectsList = new QListWidget(layoutWidget1);
         objectsList->setObjectName(QStringLiteral("objectsList"));
         objectsList->setMaximumSize(QSize(300, 16777215));
         objectsList->setEditTriggers(QAbstractItemView::DoubleClicked|QAbstractItemView::SelectedClicked);
@@ -314,7 +311,7 @@ public:
         horizontalLayout_6 = new QHBoxLayout();
         horizontalLayout_6->setSpacing(6);
         horizontalLayout_6->setObjectName(QStringLiteral("horizontalLayout_6"));
-        openAddingBTN = new QPushButton(widget1);
+        openAddingBTN = new QPushButton(layoutWidget1);
         openAddingBTN->setObjectName(QStringLiteral("openAddingBTN"));
         sizePolicy1.setHeightForWidth(openAddingBTN->sizePolicy().hasHeightForWidth());
         openAddingBTN->setSizePolicy(sizePolicy1);
@@ -323,28 +320,28 @@ public:
 
         horizontalLayout_6->addWidget(openAddingBTN);
 
-        pushButton_5 = new QPushButton(widget1);
-        pushButton_5->setObjectName(QStringLiteral("pushButton_5"));
-        sizePolicy1.setHeightForWidth(pushButton_5->sizePolicy().hasHeightForWidth());
-        pushButton_5->setSizePolicy(sizePolicy1);
-        pushButton_5->setMinimumSize(QSize(100, 28));
-        pushButton_5->setMaximumSize(QSize(100, 28));
+        deleteObjBTN = new QPushButton(layoutWidget1);
+        deleteObjBTN->setObjectName(QStringLiteral("deleteObjBTN"));
+        sizePolicy1.setHeightForWidth(deleteObjBTN->sizePolicy().hasHeightForWidth());
+        deleteObjBTN->setSizePolicy(sizePolicy1);
+        deleteObjBTN->setMinimumSize(QSize(100, 28));
+        deleteObjBTN->setMaximumSize(QSize(100, 28));
 
-        horizontalLayout_6->addWidget(pushButton_5);
+        horizontalLayout_6->addWidget(deleteObjBTN);
 
 
         verticalLayout_7->addLayout(horizontalLayout_6);
 
-        splitter->addWidget(widget1);
-        widget2 = new QWidget(splitter);
-        widget2->setObjectName(QStringLiteral("widget2"));
-        verticalLayout_6 = new QVBoxLayout(widget2);
+        splitter->addWidget(layoutWidget1);
+        layoutWidget2 = new QWidget(splitter);
+        layoutWidget2->setObjectName(QStringLiteral("layoutWidget2"));
+        verticalLayout_6 = new QVBoxLayout(layoutWidget2);
         verticalLayout_6->setSpacing(3);
         verticalLayout_6->setContentsMargins(11, 11, 11, 11);
         verticalLayout_6->setObjectName(QStringLiteral("verticalLayout_6"));
         verticalLayout_6->setSizeConstraint(QLayout::SetMinAndMaxSize);
         verticalLayout_6->setContentsMargins(0, 0, 0, 0);
-        rulesList = new QListWidget(widget2);
+        rulesList = new QListWidget(layoutWidget2);
         rulesList->setObjectName(QStringLiteral("rulesList"));
         rulesList->setMaximumSize(QSize(300, 16777215));
 
@@ -353,32 +350,26 @@ public:
         horizontalLayout_4 = new QHBoxLayout();
         horizontalLayout_4->setSpacing(6);
         horizontalLayout_4->setObjectName(QStringLiteral("horizontalLayout_4"));
-        pushButton_2 = new QPushButton(widget2);
-        pushButton_2->setObjectName(QStringLiteral("pushButton_2"));
-        pushButton_2->setMaximumSize(QSize(100, 28));
+        addRuleBTN = new QPushButton(layoutWidget2);
+        addRuleBTN->setObjectName(QStringLiteral("addRuleBTN"));
+        addRuleBTN->setMaximumSize(QSize(100, 28));
 
-        horizontalLayout_4->addWidget(pushButton_2);
+        horizontalLayout_4->addWidget(addRuleBTN);
 
-        pushButton_4 = new QPushButton(widget2);
-        pushButton_4->setObjectName(QStringLiteral("pushButton_4"));
-        pushButton_4->setMaximumSize(QSize(100, 28));
+        deleteRulesBTN = new QPushButton(layoutWidget2);
+        deleteRulesBTN->setObjectName(QStringLiteral("deleteRulesBTN"));
+        deleteRulesBTN->setMaximumSize(QSize(100, 28));
 
-        horizontalLayout_4->addWidget(pushButton_4);
+        horizontalLayout_4->addWidget(deleteRulesBTN);
 
 
         verticalLayout_6->addLayout(horizontalLayout_4);
 
-        splitter->addWidget(widget2);
+        splitter->addWidget(layoutWidget2);
         splitter_2->addWidget(splitter);
 
         horizontalLayout_7->addWidget(splitter_2);
 
-        splitter_2->raise();
-        pushButton_3->raise();
-        rulesList->raise();
-        pushButton_5->raise();
-        openAddingBTN->raise();
-        splitter_2->raise();
 
         verticalLayout_3->addWidget(frame);
 
@@ -409,15 +400,15 @@ public:
 
         verticalLayout_3->addLayout(horizontalLayout_3);
 
-        MainWindow->setCentralWidget(centralWidget);
-        menuBar = new QMenuBar(MainWindow);
+        GUI->setCentralWidget(centralWidget);
+        menuBar = new QMenuBar(GUI);
         menuBar->setObjectName(QStringLiteral("menuBar"));
         menuBar->setGeometry(QRect(0, 0, 953, 26));
         menuFile = new QMenu(menuBar);
         menuFile->setObjectName(QStringLiteral("menuFile"));
         menuOptions = new QMenu(menuBar);
         menuOptions->setObjectName(QStringLiteral("menuOptions"));
-        MainWindow->setMenuBar(menuBar);
+        GUI->setMenuBar(menuBar);
 
         menuBar->addAction(menuFile->menuAction());
         menuBar->addAction(menuOptions->menuAction());
@@ -429,67 +420,65 @@ public:
         menuOptions->addAction(actionRedraw_all);
         menuOptions->addAction(actionClear_all);
 
-        retranslateUi(MainWindow);
+        retranslateUi(GUI);
 
-        QMetaObject::connectSlotsByName(MainWindow);
+        QMetaObject::connectSlotsByName(GUI);
     } // setupUi
 
-    void retranslateUi(QMainWindow *MainWindow)
+    void retranslateUi(QMainWindow *GUI)
     {
-        MainWindow->setWindowTitle(QApplication::translate("MainWindow", "Painter", 0));
-        actionLoad->setText(QApplication::translate("MainWindow", "Open", 0));
-        actionSave->setText(QApplication::translate("MainWindow", "Save", 0));
-        actionSave_As->setText(QApplication::translate("MainWindow", "Save As", 0));
-        actionClose->setText(QApplication::translate("MainWindow", "Close", 0));
-        actionRedraw_all->setText(QApplication::translate("MainWindow", "Redraw all", 0));
-        actionClear_all->setText(QApplication::translate("MainWindow", "Clear all", 0));
-        concatinateBTN->setText(QApplication::translate("MainWindow", "Create segment", 0));
-        groupBox_2->setTitle(QApplication::translate("MainWindow", "Add Rule", 0));
+        GUI->setWindowTitle(QApplication::translate("GUI", "Painter", 0));
+        actionLoad->setText(QApplication::translate("GUI", "Open", 0));
+        actionSave->setText(QApplication::translate("GUI", "Save", 0));
+        actionSave_As->setText(QApplication::translate("GUI", "Save As", 0));
+        actionClose->setText(QApplication::translate("GUI", "Close", 0));
+        actionRedraw_all->setText(QApplication::translate("GUI", "Redraw all", 0));
+        actionClear_all->setText(QApplication::translate("GUI", "Clear all", 0));
+        concatinateBTN->setText(QApplication::translate("GUI", "Create segment", 0));
+        groupBox_2->setTitle(QApplication::translate("GUI", "Add Rule", 0));
         ruleBox->clear();
         ruleBox->insertItems(0, QStringList()
-         << QApplication::translate("MainWindow", "Distance from point to point", 0)
-         << QApplication::translate("MainWindow", "Distance from point to line", 0)
-         << QApplication::translate("MainWindow", "Three points on line", 0)
-         << QApplication::translate("MainWindow", "Ratio between three points", 0)
-         << QApplication::translate("MainWindow", "Angle between segments", 0)
-         << QApplication::translate("MainWindow", "External circle contact", 0)
-         << QApplication::translate("MainWindow", "Internal circle contact", 0)
-         << QApplication::translate("MainWindow", "Distance from point to segment", 0)
+         << QApplication::translate("GUI", "Distance from point to point", 0)
+         << QApplication::translate("GUI", "Distance from point to line", 0)
+         << QApplication::translate("GUI", "Three points on line", 0)
+         << QApplication::translate("GUI", "Ratio between three points", 0)
+         << QApplication::translate("GUI", "Angle between segments", 0)
+         << QApplication::translate("GUI", "External circle contact", 0)
+         << QApplication::translate("GUI", "Internal circle contact", 0)
+         << QApplication::translate("GUI", "Distance from point to segment", 0)
         );
-        ruleValueLabel->setText(QApplication::translate("MainWindow", "Value: ", 0));
-        pushButton->setText(QApplication::translate("MainWindow", "Add", 0));
+        ruleValueLabel->setText(QApplication::translate("GUI", "Value: ", 0));
+        pushButton->setText(QApplication::translate("GUI", "Add", 0));
 #ifndef QT_NO_TOOLTIP
-        selectBTNTool->setToolTip(QApplication::translate("MainWindow", "Select (Ctrl + 1)", 0));
+        selectBTNTool->setToolTip(QApplication::translate("GUI", "Select (Ctrl + 1)", 0));
 #endif // QT_NO_TOOLTIP
-        selectBTNTool->setText(QApplication::translate("MainWindow", "S", 0));
-        selectBTNTool->setShortcut(QApplication::translate("MainWindow", "Ctrl+1", 0));
+        selectBTNTool->setText(QApplication::translate("GUI", "S", 0));
+        selectBTNTool->setShortcut(QApplication::translate("GUI", "Ctrl+1", 0));
 #ifndef QT_NO_TOOLTIP
-        pointBTNTool->setToolTip(QApplication::translate("MainWindow", "Draw point (Ctrl + 2)", 0));
+        pointBTNTool->setToolTip(QApplication::translate("GUI", "Draw point (Ctrl + 2)", 0));
 #endif // QT_NO_TOOLTIP
         pointBTNTool->setText(QString());
-        pointBTNTool->setShortcut(QApplication::translate("MainWindow", "Ctrl+2", 0));
+        pointBTNTool->setShortcut(QApplication::translate("GUI", "Ctrl+2", 0));
 #ifndef QT_NO_TOOLTIP
-        ZoomBTNTool->setToolTip(QApplication::translate("MainWindow", "Zoom+ (Ctrl + 5)", 0));
+        ZoomBTNTool->setToolTip(QApplication::translate("GUI", "Zoom+ (Ctrl + 5)", 0));
 #endif // QT_NO_TOOLTIP
-        ZoomBTNTool->setText(QApplication::translate("MainWindow", "Z", 0));
-        ZoomBTNTool->setShortcut(QApplication::translate("MainWindow", "Ctrl+5", 0));
-        pushButton_3->setText(QApplication::translate("MainWindow", "Change object", 0));
-        openAddingBTN->setText(QApplication::translate("MainWindow", "Add object", 0));
-        pushButton_5->setText(QApplication::translate("MainWindow", "Delete objects", 0));
-        pushButton_2->setText(QApplication::translate("MainWindow", "Add rule", 0));
-        pushButton_4->setText(QApplication::translate("MainWindow", "Delete rule", 0));
-        statusBar->setText(QApplication::translate("MainWindow", "Done", 0));
+        ZoomBTNTool->setText(QApplication::translate("GUI", "Z", 0));
+        ZoomBTNTool->setShortcut(QApplication::translate("GUI", "Ctrl+5", 0));
+        openChangingDialog->setText(QApplication::translate("GUI", "Change object", 0));
+        openAddingBTN->setText(QApplication::translate("GUI", "Add object", 0));
+        deleteObjBTN->setText(QApplication::translate("GUI", "Delete objects", 0));
+        addRuleBTN->setText(QApplication::translate("GUI", "Add rule", 0));
+        deleteRulesBTN->setText(QApplication::translate("GUI", "Delete rules", 0));
+        statusBar->setText(QApplication::translate("GUI", "Done", 0));
         messageBar->setText(QString());
-        menuFile->setTitle(QApplication::translate("MainWindow", "File", 0));
-        menuOptions->setTitle(QApplication::translate("MainWindow", "Options", 0));
+        menuFile->setTitle(QApplication::translate("GUI", "File", 0));
+        menuOptions->setTitle(QApplication::translate("GUI", "Options", 0));
     } // retranslateUi
 
 };
 
 namespace Ui {
-	class GUI : public Ui_GUI
-	{
-	};
+    class GUI: public Ui_GUI {};
 } // namespace Ui
 
 QT_END_NAMESPACE

@@ -1,7 +1,7 @@
 #ifndef OBJECTPROPERTIESWINDOW_H
 #define OBJECTPROPERTIESWINDOW_H
 
-#include <QDialog>
+#include "QtWidgets\qdialog.h"
 #include "global.h"
 #include <QColor>
 #include "core.h"
@@ -25,6 +25,8 @@ public:
 	void setupPointProperties(unsigned id, double x, double y, QColor& c);
 	void setupSegmentProperties(unsigned id, double x, double y, double x2, double y2, QColor& c);
 	void setupCircleProperties(unsigned id, double x, double y, double r, QColor& c);
+
+	void setFlag(unsigned);
 	
 private slots:
 	void on_buttonBox_rejected();
@@ -38,6 +40,7 @@ private:
 	CORE* mycore;
 	QRegExpValidator *doubvalid;
 	QRegExpValidator *unsvalid;
+	unsigned flag;
 };
 
 #endif // OBJECTPROPERTIESWINDOW_H

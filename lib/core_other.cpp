@@ -2,10 +2,6 @@
 #include <string>
 
 
-void CORE::ChangeStatus(unsigned char status_key)
-{
-}
-
 void CORE::Select(double x, double y)
 {
 	

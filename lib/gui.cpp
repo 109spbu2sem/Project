@@ -2,15 +2,15 @@
 #include "global.h"
 #include "ui_gui.h"
 #include "objectpropertieswindow.h"
-#include <QGraphicsSceneMouseEvent>
-#include <QDebug>
+#include "QtWidgets\qgraphicssceneevent.h"
 #include "mycanvas.h"
-#include <QMessageBox>
+#include "QtWidgets\qmessagebox.h"
 #include <QString>
-#include <QTableWidgetItem>
-#include <QFileDialog>
-#include <QListView>
+#include "QtWidgets\qfiledialog.h"
+#include "QtWidgets\qlistview.h"
+#include "qlist.h"
 #include <QList>
+
 
 
 GUI::GUI(QWidget *parent) :
@@ -19,11 +19,9 @@ GUI::GUI(QWidget *parent) :
 {
 	ui->setupUi(this);
 	mycore = 0;
-	mainscene = ui->graphicsView->getScene();
-	ui->graphicsView->connectCORECanvas(mycore);
-	ui->graphicsView->scale(2, 2);
-	mainscene->addLine(0, -5000, 0, 5000, QPen(Qt::DotLine));
-	mainscene->addLine(-5000, 0, 5000, 0, QPen(Qt::DotLine));
+	mainscene = ui->myCanvas->getScene();
+	ui->myCanvas->connectCORECanvas(mycore);
+	ui->pointBTNTool->setIcon(QIcon("icons/pointbtn.png"));
 	toolsbuttons = new QButtonGroup;
 	toolsbuttons->addButton(ui->selectBTNTool);
 	toolsbuttons->addButton(ui->pointBTNTool);
@@ -35,7 +33,7 @@ GUI::GUI(QWidget *parent) :
 void GUI::ConnectCORE(CORE* core)
 {
 	mycore = core;
-	ui->graphicsView->connectCORECanvas(core);
+	ui->myCanvas->connectCORECanvas(core);
 }
 
 GUI::~GUI()
@@ -412,17 +410,17 @@ void GUI::on_concatinateBTN_clicked()
 
 void GUI::on_selectBTNTool_clicked()
 {
-    ui->graphicsView->setTool(TOOL_Select);
+    ui->myCanvas->setTool(TOOL_Select);
 }
 
 void GUI::on_pointBTNTool_clicked()
 {
-    ui->graphicsView->setTool(TOOL_Point);
+    ui->myCanvas->setTool(TOOL_Point);
 }
 
 void GUI::on_ZoomBTNTool_clicked()
 {
-    ui->graphicsView->setTool(TOOL_Zoom);
+    ui->myCanvas->setTool(TOOL_Zoom);
 }
 
 void GUI::on_actionClose_triggered()
@@ -467,4 +465,19 @@ void GUI::on_actionLoad_triggered()
 void GUI::on_objectsList_clicked(const QModelIndex &index)
 {
 	mycore->Select(index.data(17).toUInt());
+}
+
+void GUI::on_openChangingDialog_clicked()
+{
+	objectPropertiesWindow ow(this);
+	ow.connectCORE(mycore);
+	ow.setFlag(1);
+	WriteText("Change object", "");
+	ow.exec();
+	WriteText("Done", "");
+}
+
+void GUI::on_deleteObjBTN_clicked()
+{
+    
 }

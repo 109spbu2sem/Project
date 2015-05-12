@@ -2,16 +2,14 @@
 #define GUI_H
 
 #include "core.h"
-#include <QMainWindow>
-#include <QGraphicsScene>
+#include "QtWidgets\qmainwindow.h"
+#include "QtWidgets\qgraphicsscene.h"
 #include "mycanvas.h"
-#include <QButtonGroup>
-#include <QAction>
+#include "QtWidgets\qbuttongroup.h"
+#include "QtWidgets\qaction.h"
 #include "enums.h"
 
 class CORE;
-
-
 
 namespace Ui
 {
@@ -45,8 +43,6 @@ public:
 	virtual void WriteMessage(const char* Text);
 	virtual void WriteText(const char* Short, const char* Long);
 
-	//void setupObjectParameters(PRIMITIVE_TYPE, unsigned, double, double, double, double, Color);
-
 private slots:
 	void on_openAddingBTN_clicked();
 	
@@ -76,6 +72,10 @@ private slots:
 	
 	void on_objectsList_clicked(const QModelIndex &index);
 	
+	void on_openChangingDialog_clicked();
+	
+	void on_deleteObjBTN_clicked();
+	
 private:
 	Ui::GUI *ui;
 	CORE* mycore;
@@ -84,15 +84,5 @@ private:
 	
 
 };
-
-/*class GUI : public MainWindow
-{
-	Q_OBJECT
-public:
-
-	
-private:
-
-};*/
 
 #endif // GUI_H

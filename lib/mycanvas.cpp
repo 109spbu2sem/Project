@@ -8,6 +8,9 @@ MyCanvas::MyCanvas(QWidget *parent) : QGraphicsView(parent)
 {
 	mainscene = new QGraphicsScene();
 	setScene(mainscene);
+	scale(2, 2);
+	mainscene->addLine(0, -1000, 0, 1000, QPen(Qt::DotLine));
+	mainscene->addLine(-1000, 0, 1000, 0, QPen(Qt::DotLine));
 	_tool = TOOL_Select;
 }
 
@@ -98,7 +101,7 @@ void MyCanvas::wheelEvent(QWheelEvent *event)
 		scale(1.2, 1.2);
 	}
 	else
-		scale(1/1.2, 1/1.2);
+		scale(1 / 1.2, 1 / 1.2);
 }
 
 void MyCanvas::setTool(GTool t)
