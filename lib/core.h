@@ -16,14 +16,14 @@
 #include "storages\AVL_tree.h"
 #include "storageofobjects.h"
 
-class GUI;
+
 class Save;
 class Load;
 
 class CORE
 {
 private:
-	GUI* mygui;
+	Interface* mygui;
 	Save* mysave;
 	Load* myload;
 
@@ -61,9 +61,9 @@ private:
 
 public:
 	CORE();
-	CORE(GUI* gui);
+	CORE(Interface* gui);
 	~CORE();
-	void Connect(GUI* gui, Save* save, Load* load)
+	void Connect(Interface* gui, Save* save, Load* load)
 	{
 		mygui = gui;
 		mysave = save;

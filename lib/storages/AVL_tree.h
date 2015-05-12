@@ -192,18 +192,19 @@ private:
 				c->parent = cur->parent;
 				cur->parent = newcell;
 
-				if (cur->parent)
-				if (cur->parent->data.key < c->data.key)
-				{
-					cur->parent->right = cur;
-					if (cur->parent->data.key == _root->data.key) _root->right = cur;
-				}
-				else
-				{
-					cur->parent->left = cur;
-					if (cur->parent->data.key == _root->data.key) _root->left = cur;
-				}
-				if (c->parent)
+                if (cur->parent){
+                    if ( cur->parent->data.key < c->data.key)
+                    {
+                        cur->parent->right = cur;
+                        if (cur->parent->data.key == _root->data.key) _root->right = cur;
+                    }
+                    else
+                    {
+                        cur->parent->left = cur;
+                        if (cur->parent->data.key == _root->data.key) _root->left = cur;
+                    }
+                }
+                if (c->parent){
 				if (c->parent->data.key < cur->data.key)
 				{
 					c->parent->right = c;
@@ -214,7 +215,7 @@ private:
 					c->parent->left = c;
 					if (c->parent->data.key == _root->data.key) _root->left = c;
 				}
-
+                }
 
 				newcell = cur->left;
 				cell* newcell2 = cur->right;

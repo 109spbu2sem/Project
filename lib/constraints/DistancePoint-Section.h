@@ -88,6 +88,6 @@ public:
 private:
 	double _XX;
 	double _YY;
-	double _STARTING_ERROR = 0;
+    double _STARTING_ERROR;
 };
 #endif // DISTANCEPOINT_TO_SECTION_H

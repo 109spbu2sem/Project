@@ -48,7 +48,8 @@ HEADERS += \
     ../lib/constraints/DistancePoint-Point.h \
     ../lib/constraints/DistancePoint-Section.h \
     ../lib/constraints/DistanceToTheLine.h \
-    ../lib/constraints/ThreePointsOnTheLine.h
+    ../lib/constraints/ThreePointsOnTheLine.h \
+    ../lib/enums.h
 
 SOURCES += \
     ../lib/Color.cpp \

@@ -29,7 +29,7 @@
 #include <QtWidgets/QSplitter>
 #include <QtWidgets/QVBoxLayout>
 #include <QtWidgets/QWidget>
-#include "mycanvas.h"
+//#include "mycanvas.h"
 
 QT_BEGIN_NAMESPACE
 

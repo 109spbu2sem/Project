@@ -66,6 +66,6 @@ public:
 		return CONSTR_P2LINEDIST;
 	}
 private:
-	double _STARTING_ERROR = 0;
+    double _STARTING_ERROR;
 };
 #endif

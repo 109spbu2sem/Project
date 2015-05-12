@@ -5,11 +5,11 @@
 #include <QMouseEvent>
 #include <QWidget>
 #include "core.h"
-#include "gui.h"
+#include "enums.h"
 
 class CORE;
-class GUI;
-enum GTool;
+
+
 
 class MyCanvas : public QGraphicsView
 {

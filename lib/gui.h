@@ -10,12 +10,7 @@
 
 class CORE;
 
-enum GTool
-{
-	TOOL_Select,
-	TOOL_Point,
-	TOOL_Zoom
-};
+
 
 namespace Ui
 {

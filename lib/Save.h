@@ -21,10 +21,10 @@ public:
 	~Save();
 	void ConnectCORE(CORE*core);
 	void begin();
-	virtual bool Interface::DrawPoint(unsigned, double, double, Color = 0);
-	virtual bool Interface::DrawSegment(unsigned, double, double, double, double, Color = 0);
-	virtual bool Interface::DrawCircle(unsigned, double, double, double, Color = 0);
-	virtual bool Interface::Clear();
+	virtual bool DrawPoint(unsigned, double, double, Color = 0);
+	virtual bool DrawSegment(unsigned, double, double, double, double, Color = 0);
+	virtual bool DrawCircle(unsigned, double, double, double, Color = 0);
+	virtual bool Clear();
 	void end();
 	string fileWay(QString);
 };

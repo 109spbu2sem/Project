@@ -61,6 +61,17 @@ public:
 	// id, x, y, r, color
 	virtual bool DrawCircle(unsigned, double, double, double, Color = 0) = 0;
 	virtual bool Clear() = 0;
+
+    virtual bool Set_properties_of_point(unsigned, double, double, Color = 0) = 0;
+    virtual bool Set_properties_of_segment(unsigned, double, double, double, double, Color = 0) = 0;
+    virtual bool Set_properties_of_circle(unsigned, double, double, double, Color = 0) = 0;
+    virtual void Clear_properties() = 0;
+
+    virtual void WriteError(const char* Text) = 0;
+    virtual void WriteStatus(const char* Text) = 0;
+    virtual void WriteMessage(const char* Text) = 0;
+    virtual void WriteText(const char* Short, const char* Long) = 0;
+
 };
 
 #endif

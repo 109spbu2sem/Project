@@ -44,7 +44,7 @@ public:
 
 template <typename FirstType, typename SecondType> class HashViewer;
 
-template <typename FirstType, typename SecondType, typename HashType = HashRs<FirstType>> class HashTable
+template <typename FirstType, typename SecondType, typename HashType = HashRs<FirstType> > class HashTable
 {
 private:
 	struct ABstruct
@@ -151,7 +151,7 @@ private:
 public:
 	friend class HashTable < FirstType, SecondType > ;
 	HashViewer();
-	HashViewer(HashTable<typename FirstType, typename SecondType>& table)
+    HashViewer(HashTable<FirstType, SecondType>& table)
 	{
 		_topViewer = table._table;
 		_end = &(_topViewer[HashTable<FirstType, SecondType>::_TABLERATIO - 1]);

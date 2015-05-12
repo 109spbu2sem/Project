@@ -1,6 +1,6 @@
 #ifndef STORAGE_ARRAY_H
 #define STORAGE_ARRAY_H
-
+#include <stdexcept>
 #include <iostream>
 
 template<typename Item> class ArrayViewer;

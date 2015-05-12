@@ -24,7 +24,7 @@ CORE::CORE()
 	writeToLog("GUI was not connected to CORE", 2);
 }
 
-CORE::CORE(GUI* gui)
+CORE::CORE(Interface* gui)
 {
 	mygui = gui;
 	Settings::SettingsLoader::setupSettings(&mysettings);

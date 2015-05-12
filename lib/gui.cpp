@@ -284,7 +284,7 @@ bool MainWindow::Clear()
 
 void MainWindow::on_openAddingBTN_clicked()
 {
-    objectPropertiesWindow ow = objectPropertiesWindow(this);
+    objectPropertiesWindow ow(this);
 	 ow.connectCORE(mycore);
 	 WriteStatus("Add object");
 	 ow.exec();
