@@ -4,49 +4,27 @@
 #include <ctime>
 
 using namespace std;
-unsigned const v = 11;  // строка
-unsigned const n = 11;  // столбец, который не нужен 
+unsigned const v = 11;  // stroka
+unsigned const n = 11;  // stolbec, kotory ne nuzhen
 
-// Пусть задан граф
-// Реализуем его разбиние на связные подграфы
-// С помощью Матричного метода разбиения
-
-int**umnog(int**matr1, int**matr2, int v)
+int**umnog(int**matr1, int**matr2, int**matr3, int v)
 {
-	int**matr3 = new int*[v];
-	for (int i = 0; i < v; i++)
-		matr3[i] = new int[v];
-
-	/*
-		1) A[n*m] * B[m*k] = AB[a*k];
-		2) A[n*n] * B[n*n] = AB[n*n];
-		3) A[n*m] * B[k*l] = X;
-
-		if ("m1" - кол-во столбцов м-цы A == "m2" - кол-ву строк м-цы B =>  A[n*m1] * B[m2*n] = AB[n*n];
-		if ("m1" - кол-во столбцов м-цы A != "m2" - кол-ву строк м-цы B =>  A[n*m1] * B[m2*n] = X; (не умножаются) 
-	*/
-
 	int i, j, k;
 	for (i = 0; i < v; i++)
 	{
 		for (j = 0; j < v; j++)
 		{
 			for (k = 0, matr3[i][j] = 0; k < v; k++)
-			{
-				matr3[i][j] += matr1[i][k] * matr2[k][j]; 
-			}
+				matr3[i][j] += matr1[i][k] * matr2[k][j];
 		}
 	}
 	return matr3;
 }
 
-int**slog(int**E1, int**E2, int**E3, int**E4, int v)
+int**slog(int**E1, int**E2, int**E3, int**E4, int**matr_dostizh, int v)
 {
-	// Нужно посчитать E1 + E2 + E3 + E4;
+	// E1 + E2 + E3 + E4;
 	int i, j;
-	int** matr_dostizh = new int*[v];
-	for (int i = 0; i < n; i++)
-		matr_dostizh[i] = new int[v];
 	for (i = 0; i < v; i++)
 	for (j = 0; j < v; j++)
 		matr_dostizh[i][j] = E1[i][j] + E2[i][j];
@@ -56,32 +34,15 @@ int**slog(int**E1, int**E2, int**E3, int**E4, int v)
 	for (i = 0; i < v; i++)
 	for (j = 0; j < v; j++)
 		matr_dostizh[i][j] = matr_dostizh[i][j] + E4[i][j];
-	
+
 	return matr_dostizh;
 };
 
-int**umnogpoel(int**matr_dostizh, int **contr_dostizh)
+int** transp(int**helper, int**test, int v)
 {
-	int i, j;
-	int** C = new int*[v];
-	for (int i = 0; i < v; i++)
-		C[i] = new int[v];
-	for (i = 0; i < v; i++)
-	for (j = 0; j < v; j++)
-		C[i][j] = matr_dostizh[i][j] * contr_dostizh[i][j];
-	return C;
-}
-
-int** transp(int**helper, int v)
-{
-	int**test = new int*[v];
-	for (int i = 0; i < v; i++)
-		test[i] = new int[v];
-	
 	for (int i = 0; i < v; i++)
 	for (int j = 0; j < v; j++)
 		test[i][j] = helper[i][j];
-
 
 	int t;
 	for (int i = 0; i < v; i++)
@@ -93,18 +54,21 @@ int** transp(int**helper, int v)
 			test[j][i] = t;
 		}
 	}
+
 	return test;
 }
 
-int**blockdiag(int**C)
+int**umnogpoel(int**matr_dostizh, int **contr_dostizh, int**C)
 {
-	int**block_diag_matr = new int*[v];
-	int**matr_help = new int*[v];
-	for (int i = 0; i < v; i++)
-	{
-		block_diag_matr[i] = new int[v];
-		matr_help[i] = new int[v];
-	}
+	int i, j;
+	for (i = 0; i < v; i++)
+	for (j = 0; j < v; j++)
+		C[i][j] = matr_dostizh[i][j] * contr_dostizh[i][j];
+	return C;
+}
+
+int**blockdiag(int**C, int**BLOCK)
+{
 	int*mass_help = new int[v*v];
 
 	int i, j, k = 0, b = 0;
@@ -113,7 +77,7 @@ int**blockdiag(int**C)
 	{
 		while (C[i][j] != 1)
 		{
-			if (j < v) j++; 
+			if (j < v) j++;
 			if (j == v) { k++; break; }
 		}
 		if (k > 0) { k = 0; continue; }
@@ -121,18 +85,21 @@ int**blockdiag(int**C)
 		for (int h = j + 1; h < v; h++)
 		{
 			if (C[h][j] == 1)
-			{ 
-				mass_help[b] = h; 
+			{
+				mass_help[b] = h;
 				b++;
 				//k++;
-				// немного доработать) 
+				// dodelat' 
 			}
 		}
-		
+
 	}
 	for (i = 0; i < v; i++)
 		cout << mass_help[i] << " " << endl;
-	return block_diag_matr;
+	for (i = 0; i < v*v; i++)
+		delete[] mass_help;
+
+	return BLOCK;
 }
 
 int main()
@@ -140,9 +107,9 @@ int main()
 	setlocale(LC_ALL, "russian");
 	srand(time(NULL));
 
-	// рандомно получаем матрицу смежности
-	int **matr_smezh = new int*[v];       
-	for (int i = 0; i < v; i++)				
+	//	Randomly get Matrix_Snezhnosti
+	int **matr_smezh = new int*[v];
+	for (int i = 0; i < v; i++)
 	{
 		matr_smezh[i] = new int[v];
 		for (int j = 0; j < v; j++)
@@ -157,18 +124,18 @@ int main()
 	matr_smezh[2][0] = 0; matr_smezh[2][1] = 1; matr_smezh[2][2] = 0; matr_smezh[2][3] = 1;
 	matr_smezh[3][0] = 0; matr_smezh[3][1] = 0; matr_smezh[3][2] = 1; matr_smezh[3][3] = 0;*/
 
-	// выведем матрицу СМЕЖНОСТИ
-	// она всегда квадратная
+	// PRINT Matrix_Snezhnosti
+	// She always square
 	cout << "___________________________________" << endl;
-	cout << "___________МАТРИЦА_СМЕЖНОСТИ_______" << endl;
-	for (int i = 0; i < v; i++)	
+	cout << "___________MATRIX_SMEZHNOSTI_______" << endl;
+	for (int i = 0; i < v; i++)
 	for (int j = 0; j < v; j++)
 	{
 		if (j < v - 1) cout << matr_smezh[i][j] << " ";
 		if (j == v - 1) cout << matr_smezh[i][j] << " " << endl;
 	}
 
-	// получим матрицу достижимости 
+	// GET Matrix_Dostizhimosti
 	int **E1 = new int*[v];
 	int **E2 = new int*[v];
 	int **E3 = new int*[v];
@@ -189,25 +156,23 @@ int main()
 		BLOCK[i] = new int[v];
 	}
 
-	// УМНОЖЕНИЕ МАТРИЦ E*E; E^2*E; E^3*E;
+	// Matrix Multiplication: E*E; E^2*E; E^3*E;
 	E1 = matr_smezh;
-	E2 = umnog(E1, E1, v);
-	E3 = umnog(E2, E1, v);
-	E4 = umnog(E3, E1, v);
+	E2 = umnog(E1, E1, E2, v);
+	E3 = umnog(E2, E1, E3, v);
+	E4 = umnog(E3, E1, E4, v);
 
-	// Сложение Матриц: E+E2+E3+E4;
-	matr_dostizh = slog(E1, E2, E3, E4, v);
+	// Matrix Addition: E+E2+E3+E4;
+	matr_dostizh = slog(E1, E2, E3, E4, matr_dostizh, v);
 
-	// Приведем матрицу достижимости к "нормальному" виду - бинарная матрица замыкания.
+	// Matrix_Dostizhimosti -> NORMAL VIEW: [0 and 1]
 	for (int i = 0; i < v; i++)
 	for (int j = 0; j < v; j++)
 		matr_dostizh[i][j] = !!matr_dostizh[i][j];
 
-	// x =  !!x; инверсия - все, что было 0 - будет 0, !0 => 1;
-
-	// Получим матрицу достижимости R [R = matr_dostizh];
+	// PRINT Matrix_Dostizhimosti [ == R]
 	cout << "___________________________________" << endl;
-	cout << "_______МАТРИЦА_ДОСТИЖИМОСТИ________" << endl;
+	cout << "_______MATRIX_DOSTIZHIMOSTI________" << endl;
 	for (int i = 0; i < v; i++)
 	for (int j = 0; j < v; j++)
 	{
@@ -216,12 +181,12 @@ int main()
 	}
 	cout << endl;
 
-	// Находим матрицу Контрдостижимости Q, траспонировав матрицу Достижимости   [Q = contr_dostizh];
-	contr_dostizh = transp(matr_dostizh, v);
+	// GET Matrix_Contr_Dostizhimosti [ == Q]
+	contr_dostizh = transp(matr_dostizh, contr_dostizh, v);
 
-	// вывод ТРАНСПОНИРОВАННОЙ матрицы ДОСТИЖИМОСТИ
-	cout << "___________МАТРИЦА_________________" << endl;
-	cout << "_______КОНТРДОСТИЖИМОСТИ___________" << endl;
+	// PRINT Matrix_Contr_Dostizhimosti
+	cout << "___________MATRIX_________________" << endl;
+	cout << "_______CONTR_DOSTIZHIMOSTI________" << endl;
 	for (int i = 0; i < v; i++)
 	for (int j = 0; j < v; j++)
 	{
@@ -229,13 +194,13 @@ int main()
 		if (j == v - 1) cout << contr_dostizh[i][j] << " " << endl;
 	}
 	cout << endl;
-	
-	// Найдем матрицу C, полученную поэлементным умножением Q и R
-	C = umnogpoel(matr_dostizh, contr_dostizh);
+
+	// FIND MATRIX C  [ C = R * Q, poelementno ]
+	C = umnogpoel(matr_dostizh, contr_dostizh, C);
 
 	cout << "___________________________________" << endl;
-	cout << "_________МАТРИЦА_C_________________" << endl;
-	// вывод матрицы C
+	cout << "_________MATRIX_C__________________" << endl;
+	// PRINT MATRIX_C
 	for (int i = 0; i < v; i++)
 	for (int j = 0; j < v; j++)
 	{
@@ -243,11 +208,23 @@ int main()
 		if (j == v - 1) cout << C[i][j] << " " << endl;
 	}
 	cout << endl;
-	
-	//BLOCK = blockdiag(C);
-	
-	
-	
-	
+
+
+	for (int i = 0; i < v; i++)
+	{
+		delete[] E1[i];
+		delete[] E2[i];
+		delete[] E3[i];
+		delete[] E4[i];
+		delete[] matr_dostizh[i];
+		delete[] contr_dostizh[i];
+		delete[] C[i];
+		delete[] BLOCK[i];
+	}
+
+	//BLOCK = blockdiag(C, BLOCK);
+
+
+
 	return 0;
 }

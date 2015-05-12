@@ -11,9 +11,9 @@
     </ProjectConfiguration>
   </ItemGroup>
   <PropertyGroup Label="Globals">
-    <ProjectGuid>{2820AF80-9136-4F4C-B027-EFB38F4287F3}</ProjectGuid>
+    <ProjectGuid>{69AA79B3-E060-4627-A5E0-78E9A3AE1D8A}</ProjectGuid>
     <Keyword>Win32Proj</Keyword>
-    <RootNamespace>Graph</RootNamespace>
+    <RootNamespace>Graph2</RootNamespace>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
@@ -76,7 +76,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="mainGraph.cpp" />
+    <ClCompile Include="Graph2.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
