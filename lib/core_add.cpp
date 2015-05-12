@@ -29,32 +29,35 @@ unsigned CORE::AddObject(double point_x, double point_y, Color color, unsigned i
 	writeToLog(color.getColor(), "color= ", 2);
 	writeToLog(newid.getID(), "id= ", 2);
 	writeToLog("< /add >", 2);
-	if (!wait) mygui->DrawPoint(newid.getID(), point_x, point_y, color);
+	if (!wait) mygui->DrawPoint(newid.getID(), point_x, point_y, color, false);
 
 	return newid.getID();
 }
 // add segment with current point's ids
 unsigned CORE::AddObject(unsigned id1, unsigned id2, Color color, unsigned id, bool wait)
 {
-	Segment* s = new Segment(dynamic_cast<Point*>(_storage_of_objects.get(id1)), dynamic_cast<Point*>(_storage_of_objects.get(id2)));
-	if (s->p1 && s->p2)
+	Point* p1 = dynamic_cast<Point*>(_storage_of_objects.get(id1));
+	if (p1)
 	{
-		s->color.setColor(color);
-		ID newid = _storage_of_objects.add(s, id);
-		mygui->WriteStatus("Done");
-		mygui->WriteMessage("Segment added");
-		writeToLog("< add > Segment", 2);
-		writeToLog(id1, "point 1 id= ", 2);
-		writeToLog(id2, "point 2 id= ", 2);
-		writeToLog(color.getColor(), "color= ", 2);
-		writeToLog(newid.getID(), "id= ", 2);
-		writeToLog("< /add >", 2);
-		if (!wait)	mygui->DrawSegment(newid.getID(), *s->p1->x, *s->p1->y, *s->p2->x, *s->p2->y, color);
+		Point* p2 = dynamic_cast<Point*>(_storage_of_objects.get(id2));
+		if (p2)
+		{
+			Segment* s = new Segment(p1, p2);
+			s->color.setColor(color);
+			ID newid = _storage_of_objects.add(s, id);
+			mygui->WriteStatus("Done");
+			mygui->WriteMessage("Segment added");
+			writeToLog("< add > Segment", 2);
+			writeToLog(id1, "point 1 id= ", 2);
+			writeToLog(id2, "point 2 id= ", 2);
+			writeToLog(color.getColor(), "color= ", 2);
+			writeToLog(newid.getID(), "id= ", 2);
+			writeToLog("< /add >", 2);
+			if (!wait)	mygui->DrawSegment(newid.getID(), *s->p1->x, *s->p1->y, *s->p2->x, *s->p2->y, color, false);
 
-		return newid.getID();
+			return newid.getID();
+		}
 	}
-	else
-		delete s;
 	writeToLog("Can't add segment with point's ids:", 2);
 	writeToLog(id1, "point 1 id= ", 2);
 	writeToLog(id2, "point 2 id= ", 2);
@@ -64,11 +67,12 @@ unsigned CORE::AddObject(unsigned id1, unsigned id2, Color color, unsigned id, b
 // add circle with current point's id and radius
 unsigned CORE::AddObject(unsigned pointid, double radius, Color color, unsigned id, bool wait)
 {
-	double *r = new double;
-	*r = radius;
-	Circle* c = new Circle(dynamic_cast<Point*>(_storage_of_objects.get(pointid)), r);
-	if (c->p)
+	Point* p = dynamic_cast<Point*>(_storage_of_objects.get(pointid));
+	if (p)
 	{
+		double *r = new double;
+		*r = radius;
+		Circle* c = new Circle(p, r);
 		_parameters.add(r, true);
 		c->color.setColor(color);
 		ID newid = _storage_of_objects.add(c, id);
@@ -80,14 +84,9 @@ unsigned CORE::AddObject(unsigned pointid, double radius, Color color, unsigned 
 		writeToLog(color.getColor(), "color= ", 2);
 		writeToLog(newid.getID(), "id= ", 2);
 		writeToLog("< /add >", 2);
-		if (!wait)	mygui->DrawCircle(newid.getID(), *c->p->x, *c->p->y, radius, color);
+		if (!wait)	mygui->DrawCircle(newid.getID(), *c->p->x, *c->p->y, radius, color, false);
 
 		return newid.getID();
-	}
-	else
-	{
-		delete c;
-		delete r;
 	}
 	writeToLog("Can't add circle with point's id:", 2);
 	writeToLog(pointid, "point id= ", 2);

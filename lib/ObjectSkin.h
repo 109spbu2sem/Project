@@ -3,6 +3,7 @@
 #include "LineSkin.h"
 #include "Id.h"
 #include "global.h"
+#include "enums.h"
 
 class ObjectSkin
 {
@@ -15,7 +16,7 @@ public:
 	ID id;
 	//unsigned char visible; // 0 - invisible, 100 - full visible; // May be unused
 	ObjectSkin();
-	~ObjectSkin();
+	virtual ~ObjectSkin();
 	void changeVisible();
 	void changeSelect(bool b);
 	void changeSelect()

@@ -19,6 +19,10 @@ public:
 		_r1 = r1;
 		_r2 = r2;
 	}
+	virtual ~InternalContactCircle()
+	{
+
+	}
 	virtual double error()
 	{
 		return ((*_r1 - *_r2 - length(*_p1x, *_p1y, *_p2x, *_p2y))*(*_r1 - *_r2 - length(*_p1x, *_p1y, *_p2x, *_p2y)));
@@ -58,6 +62,10 @@ public:
 		_p2y = p2y;
 		_r1 = r1;
 		_r2 = r2;
+	}
+	virtual ~ExternalContactCircle()
+	{
+
 	}
 	virtual double error()
 	{

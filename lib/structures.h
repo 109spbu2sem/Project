@@ -16,7 +16,7 @@ public:
 		x = xx;
 		y = yy;
 	}
-	~Point() 
+	virtual ~Point()
 	{
 	}
 	virtual PRIMITIVE_TYPE objectType()
@@ -42,7 +42,9 @@ public:
 		p1 = point1;
 		p2 = point2;
 	}
-	~Segment() {}
+	virtual ~Segment()
+	{
+	}
 	virtual PRIMITIVE_TYPE objectType()
 	{
 		return PRIMITIVE_SEGMENT;
@@ -109,6 +111,10 @@ public:
 	{
 		p = 0;
 		r = 0;
+	}
+	virtual ~Circle()
+	{
+
 	}
 	Circle(Point *point, double *radius)
 	{

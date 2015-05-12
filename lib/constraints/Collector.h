@@ -12,6 +12,10 @@ private:
 	Storage_Array<IConstraint*> _storage;
 public:
 	ConstraintCollector() {};
+	virtual ~ConstraintCollector()
+	{
+
+	}
 	void addConstraint(IConstraint *c)
 	{
 		if (c) _storage.add(c);

@@ -18,6 +18,10 @@ public:
 		_p3x = p3x;
 		_p3y = p3y;
 	}
+	virtual ~ThreePoints()
+	{
+
+	}
 	double error()
 	{
 		return pow(((*_p3x*(*_p2y-*_p1y) + *_p3y*(*_p1x - *_p2x) + *_p1y*(*_p2x-*_p1x) - *_p1x*(*_p2y - *_p1y))), 2);

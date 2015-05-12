@@ -7,6 +7,7 @@
 #include "mycanvas.h"
 #include <QButtonGroup>
 #include <QAction>
+#include "enums.h"
 
 class CORE;
 
@@ -14,33 +15,35 @@ class CORE;
 
 namespace Ui
 {
-	class MainWindow;
+	class GUI;
 }
 
-class MainWindow : public QMainWindow, public Interface
+class GUI : public QMainWindow, public GraphicsInterface
 {
 	Q_OBJECT
 	
 public:
-	explicit MainWindow(QWidget *parent = 0);
-	~MainWindow();
+	explicit GUI(QWidget *parent = 0);
+	~GUI();
 	
 	void ConnectCORE(CORE* core);
 	
-	bool DrawPoint(unsigned, double, double, Color = 0); // point (id, x, y, color)
-	bool DrawSegment(unsigned, double, double, double, double, Color = 0); // segment (id, x1, y1, x2, y2, color)
-	bool DrawCircle(unsigned, double, double, double, Color = 0); // circle (id, x, y, r, color)
-	bool Clear();
+	virtual bool SetNameOfWindow(std::string);
 
-	bool Set_properties_of_point(unsigned, double, double, Color = 0);
-	bool Set_properties_of_segment(unsigned, double, double, double, double, Color = 0);
-	bool Set_properties_of_circle(unsigned, double, double, double, Color = 0);
-	void Clear_properties();
+	virtual bool DrawPoint(unsigned, double, double, Color, bool); // point (id, x, y, color)
+	virtual bool DrawSegment(unsigned, double, double, double, double, Color, bool); // segment (id, x1, y1, x2, y2, color)
+	virtual bool DrawCircle(unsigned, double, double, double, Color, bool); // circle (id, x, y, r, color)
+	virtual bool Clear();
 
-	void WriteError(const char* Text);
-	void WriteStatus(const char* Text);
-	void WriteMessage(const char* Text);
-	void WriteText(const char* Short, const char* Long);
+	virtual bool Set_properties_of_point(unsigned, double, double, Color);
+	virtual bool Set_properties_of_segment(unsigned, double, double, double, double, Color);
+	virtual bool Set_properties_of_circle(unsigned, double, double, double, Color);
+	virtual void Clear_properties();
+
+	virtual void WriteError(const char* Text);
+	virtual void WriteStatus(const char* Text);
+	virtual void WriteMessage(const char* Text);
+	virtual void WriteText(const char* Short, const char* Long);
 
 	//void setupObjectParameters(PRIMITIVE_TYPE, unsigned, double, double, double, double, Color);
 
@@ -74,7 +77,7 @@ private slots:
 	void on_objectsList_clicked(const QModelIndex &index);
 	
 private:
-	Ui::MainWindow *ui;
+	Ui::GUI *ui;
 	CORE* mycore;
 	QGraphicsScene* mainscene;
 	QButtonGroup* toolsbuttons;
@@ -82,26 +85,14 @@ private:
 
 };
 
-class GUI : public MainWindow
+/*class GUI : public MainWindow
 {
 	Q_OBJECT
 public:
-	/*GUI(CORE* core)
-	{
-		mycore = core;
-		mainwindow = getUI();
-	}
-	void ConnectCORE(CORE* core)
-	{
-		mycore = core;
-	}
-	bool Redraw();
-	void WriteError(unsigned ErrorKey);*/
+
 	
 private:
-	/*CORE* mycore;
-	QGraphicsScene* mainscene;
-	Ui::MainWindow* mainwindow;*/
-};
+
+};*/
 
 #endif // GUI_H

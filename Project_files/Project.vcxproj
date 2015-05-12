@@ -167,6 +167,7 @@
     <ClInclude Include="..\lib\constraints\DistancePoint-Point.h" />
     <ClInclude Include="..\lib\constraints\DistancePoint-Section.h" />
     <ClInclude Include="..\lib\constraints\DistanceToTheLine.h" />
+    <ClInclude Include="..\lib\enums.h" />
     <ClInclude Include="..\lib\Id.h" />
     <ClInclude Include="..\lib\LineSkin.h" />
     <ClInclude Include="..\lib\ObjectSkin.h" />

@@ -24,7 +24,7 @@ CORE::CORE()
 	writeToLog("GUI was not connected to CORE", 2);
 }
 
-CORE::CORE(Interface* gui)
+CORE::CORE(GraphicsInterface* gui)
 {
 	mygui = gui;
 	Settings::SettingsLoader::setupSettings(&mysettings);
@@ -50,12 +50,12 @@ CORE::~CORE()
 		_logfile.close();
 }
 
-void CORE::Redraw()
+void CORE::Redraw(Interface* infa)
 {
-	if (mygui)
+	if (infa)
 	{
 		writeToLog("*******Redrawing*******");
-		mygui->Clear();
+		infa->Clear();
 		// new method for tree
 		for (StorageOfObjects::viewer i(_storage_of_objects); i.canMoveNext(); i.moveNext())
 		{
@@ -65,29 +65,28 @@ void CORE::Redraw()
 			case PRIMITIVE_POINT:
 			{
 				Point* p = dynamic_cast<Point*>(i.value());
-				writeToLog("<point>", 2);
-				writeToLog(*p->x, "x= ", 2);
-				writeToLog(*p->y, "y= ", 2);
-				writeToLog(p->color.getColor(), "color= ", 2);
-				writeToLog(p->id.getID(), "id= ", 2);
-				writeToLog("</point>", 2);
-				mygui->DrawPoint(p->id.getID(), *p->x, *p->y,
-									  p->isSelected() ? COLORSELECTED : p->color);
+				writeToLog("<point>", 3);
+				writeToLog(*p->x, "x= ", 3);
+				writeToLog(*p->y, "y= ", 3);
+				writeToLog(p->color.getColor(), "color= ", 3);
+				writeToLog(p->id.getID(), "id= ", 3);
+				writeToLog("</point>", 3);
+				infa->DrawPoint(p->id.getID(), *p->x, *p->y, p->color, p->isSelected());
 				break;
 			}
 			case PRIMITIVE_SEGMENT:
 			{
 				Segment* s = dynamic_cast<Segment*>(i.value());
-				writeToLog("<segment>", 2);
-				writeToLog(*s->p1->x, "x1= ", 2);
-				writeToLog(*s->p1->y, "y1= ", 2);
-				writeToLog(*s->p2->x, "x2= ", 2);
-				writeToLog(*s->p2->y, "y2= ", 2);
-				writeToLog(s->color.getColor(), "color= ", 2);
-				writeToLog(s->id.getID(), "id= ", 2);
-				writeToLog("</segment>", 2);
-				mygui->DrawSegment(s->id.getID(), *s->p1->x, *s->p1->y,
-										 *s->p2->x, *s->p2->y, s->isSelected() ? COLORSELECTED : s->color);
+				writeToLog("<segment>", 3);
+				writeToLog(*s->p1->x, "x1= ", 3);
+				writeToLog(*s->p1->y, "y1= ", 3);
+				writeToLog(*s->p2->x, "x2= ", 3);
+				writeToLog(*s->p2->y, "y2= ", 3);
+				writeToLog(s->color.getColor(), "color= ", 3);
+				writeToLog(s->id.getID(), "id= ", 3);
+				writeToLog("</segment>", 3);
+				infa->DrawSegment(s->id.getID(), *s->p1->x, *s->p1->y,
+										*s->p2->x, *s->p2->y, s->color, s->isSelected());
 				break;
 			}
 			case PRIMITIVE_CIRCLE:
@@ -100,8 +99,8 @@ void CORE::Redraw()
 				writeToLog(c->color.getColor(), "color= ", 3);
 				writeToLog(c->id.getID(), "id= ", 3);
 				writeToLog("</circle>", 3);
-				mygui->DrawCircle(c->id.getID(), *c->p->x, *c->p->y,
-										*c->r, c->isSelected() ? COLORSELECTED : c->color);
+				infa->DrawCircle(c->id.getID(), *c->p->x, *c->p->y,
+									  *c->r, c->color, c->isSelected());
 				break;
 			}
 			}
@@ -110,7 +109,7 @@ void CORE::Redraw()
 	}
 	else
 	{
-		writeToLog("GUI is not connected to CORE");
+		writeToLog("Interface is invalid.");
 	}
 	return;
 }
@@ -142,7 +141,7 @@ void CORE::Calculate()
 	mygui->WriteText("Work", "Redrawing...");
 	BuildFigureGoldMethod(&collector, &parameters);
 	writeToLog("---------------------Success build-----------------------");
-	Redraw();
+	Redraw(mygui);
 	mygui->WriteText("Done", "");
 	writeToLog("**********************Success calculate******************");
 	return;

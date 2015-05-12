@@ -19,6 +19,10 @@ public:
 		_p3y = p3y;
 		_k = k;
 	}
+	virtual ~AspectRatio()
+	{
+
+	}
 	double error()
 	{
 		return pow(*_k - length(*_p1x, *_p1y, *_p2x, *_p2y) / length(*_p2x, *_p2y, *_p3x, *_p3y), 2);

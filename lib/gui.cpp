@@ -13,9 +13,9 @@
 #include <QList>
 
 
-MainWindow::MainWindow(QWidget *parent) :
+GUI::GUI(QWidget *parent) :
 	QMainWindow(parent),
-	ui(new Ui::MainWindow)
+	ui(new Ui::GUI)
 {
 	ui->setupUi(this);
 	mycore = 0;
@@ -32,19 +32,25 @@ MainWindow::MainWindow(QWidget *parent) :
 	showMaximized();
 }
 
-void MainWindow::ConnectCORE(CORE* core)
+void GUI::ConnectCORE(CORE* core)
 {
 	mycore = core;
 	ui->graphicsView->connectCORECanvas(core);
 }
 
-MainWindow::~MainWindow()
+GUI::~GUI()
 {
 	delete toolsbuttons;
 	delete ui;
 }
 
-void MainWindow::WriteError(const char* Text)
+bool GUI::SetNameOfWindow(std::string header)
+{
+	setWindowTitle(QString(header.c_str()));
+	return true;
+}
+
+void GUI::WriteError(const char* Text)
 {
 	ui->statusBar->setText("Error");
 	QMessageBox b;
@@ -53,25 +59,25 @@ void MainWindow::WriteError(const char* Text)
 	return;
 }
 
-void MainWindow::WriteStatus(const char* Text)
+void GUI::WriteStatus(const char* Text)
 {
 	ui->statusBar->setText(Text);
 	return;
 }
 
-void MainWindow::WriteMessage(const char* Text)
+void GUI::WriteMessage(const char* Text)
 {
 	ui->messageBar->setText(Text);
 	return;
 }
 // Write Short to status bar, Long to message bar
-void MainWindow::WriteText(const char* Short, const char* Long)
+void GUI::WriteText(const char* Short, const char* Long)
 {
 	ui->statusBar->setText(Short);
 	ui->messageBar->setText(Long);
 }
 
-bool MainWindow::Set_properties_of_point(unsigned id, double x, double y, Color c)
+bool GUI::Set_properties_of_point(unsigned id, double x, double y, Color c)
 {
 	ui->propertiesList->clear();
 	QString s;
@@ -106,7 +112,7 @@ bool MainWindow::Set_properties_of_point(unsigned id, double x, double y, Color 
 	return true;
 }
 
-bool MainWindow::Set_properties_of_segment(unsigned id, double x1, double y1, double x2, double y2, Color c)
+bool GUI::Set_properties_of_segment(unsigned id, double x1, double y1, double x2, double y2, Color c)
 {
 	ui->propertiesList->clear();
 	QString s;
@@ -153,7 +159,7 @@ bool MainWindow::Set_properties_of_segment(unsigned id, double x1, double y1, do
 	return true;
 }
 
-bool MainWindow::Set_properties_of_circle(unsigned id, double x, double y, double r, Color c)
+bool GUI::Set_properties_of_circle(unsigned id, double x, double y, double r, Color c)
 {
 	ui->propertiesList->clear();
 	QString s;
@@ -194,12 +200,12 @@ bool MainWindow::Set_properties_of_circle(unsigned id, double x, double y, doubl
 	return true;
 }
 
-void MainWindow::Clear_properties()
+void GUI::Clear_properties()
 {
 	ui->propertiesList->clear();
 }
 
-bool MainWindow::DrawPoint(unsigned id, double x, double y, Color c)
+bool GUI::DrawPoint(unsigned id, double x, double y, Color c, bool selected)
 {
 	/*ui->typesOfObjects->setCurrentIndex(0);
 	QString s;
@@ -210,7 +216,9 @@ bool MainWindow::DrawPoint(unsigned id, double x, double y, Color c)
 	ui->editG->setText(s.setNum(c.getColor(2)));
 	ui->editB->setText(s.setNum(c.getColor(3)));*/
 	mainscene->addEllipse(x - 1.2, -y - 1.2, 2.4, 2.4,
+								 selected ? QPen(QColor(QRgb(COLORSELECTED))) :
 								 QPen(QColor(c.getColor(1), c.getColor(2), c.getColor(3))),
+								 selected ? QBrush(QColor(QRgb(COLORSELECTED))) :
 								 QBrush(QColor(c.getColor(1), c.getColor(2), c.getColor(3))));
 	QString s;
 	s.setNum(id);
@@ -219,12 +227,12 @@ bool MainWindow::DrawPoint(unsigned id, double x, double y, Color c)
 	it->setText(s);
 	it->setData(17, id);
 	ui->objectsList->addItem(it);
-	if (c.getColor() == COLORSELECTED)
+	if (selected)
 		it->setSelected(true);
 	return true;
 }
 
-bool MainWindow::DrawSegment(unsigned id, double x1, double y1, double x2, double y2, Color c)
+bool GUI::DrawSegment(unsigned id, double x1, double y1, double x2, double y2, Color c, bool selected)
 {
 	/*ui->typesOfObjects->setCurrentIndex(1);
 	QString s;
@@ -236,7 +244,9 @@ bool MainWindow::DrawSegment(unsigned id, double x1, double y1, double x2, doubl
 	ui->editR->setText(s.setNum(c.getColor(1)));
 	ui->editG->setText(s.setNum(c.getColor(2)));
 	ui->editB->setText(s.setNum(c.getColor(3)));*/
-	mainscene->addLine(x1, -y1, x2, -y2, QPen(QColor(c.getColor(1), c.getColor(2), c.getColor(3))));
+	mainscene->addLine(x1, -y1, x2, -y2,
+							 selected ? QPen(QColor(QRgb(COLORSELECTED))) :
+							 QPen(QColor(c.getColor(1), c.getColor(2), c.getColor(3))));
 	QString s;
 	s.setNum(id);
 	s += "\tSegment";
@@ -244,12 +254,12 @@ bool MainWindow::DrawSegment(unsigned id, double x1, double y1, double x2, doubl
 	it->setText(s);
 	it->setData(17, id);
 	ui->objectsList->addItem(it);
-	if (c.getColor() == COLORSELECTED)
+	if (selected)
 		it->setSelected(true);
 	return true;
 }
 
-bool MainWindow::DrawCircle(unsigned id, double x, double y, double r, Color c)
+bool GUI::DrawCircle(unsigned id, double x, double y, double r, Color c, bool selected)
 {
 	/*ui->typesOfObjects->setCurrentIndex(2);
 	QString s;
@@ -260,7 +270,9 @@ bool MainWindow::DrawCircle(unsigned id, double x, double y, double r, Color c)
 	ui->editR->setText(s.setNum(c.getColor(1)));
 	ui->editG->setText(s.setNum(c.getColor(2)));
 	ui->editB->setText(s.setNum(c.getColor(3)));*/
-	mainscene->addEllipse(x - r, -y - r, r * 2, r * 2, QPen(QColor(c.getColor(1), c.getColor(2), c.getColor(3))));
+	mainscene->addEllipse(x - r, -y - r, r * 2, r * 2,
+								 selected ? QPen(QColor(QRgb(COLORSELECTED))) : 
+								 QPen(QColor(c.getColor(1), c.getColor(2), c.getColor(3))));
 	QString s;
 	s.setNum(id);
 	s += "\tCircle";
@@ -268,12 +280,12 @@ bool MainWindow::DrawCircle(unsigned id, double x, double y, double r, Color c)
 	it->setText(s);
 	it->setData(17, id);
 	ui->objectsList->addItem(it);
-	if (c.getColor() == COLORSELECTED)
+	if (selected)
 		it->setSelected(true);
 	return true;
 }
 
-bool MainWindow::Clear()
+bool GUI::Clear()
 {	
 	mainscene->clear();
 	mainscene->addLine(0, -5000, 0, 5000, QPen(Qt::DotLine));
@@ -282,7 +294,7 @@ bool MainWindow::Clear()
 	return true;
 }
 
-void MainWindow::on_openAddingBTN_clicked()
+void GUI::on_openAddingBTN_clicked()
 {
     objectPropertiesWindow ow(this);
 	 ow.connectCORE(mycore);
@@ -291,7 +303,7 @@ void MainWindow::on_openAddingBTN_clicked()
 	 WriteStatus("Done");
 }
 
-void MainWindow::on_ruleBox_currentIndexChanged(int index)
+void GUI::on_ruleBox_currentIndexChanged(int index)
 {
 	switch (index)
 	{
@@ -312,7 +324,7 @@ void MainWindow::on_ruleBox_currentIndexChanged(int index)
 	return;
 }
 
-void MainWindow::on_pushButton_clicked()
+void GUI::on_pushButton_clicked()
 {
 	switch (ui->ruleBox->currentIndex())
 	{
@@ -393,44 +405,44 @@ void MainWindow::on_pushButton_clicked()
 	ui->ruleValueEdit->clear();
 }
 
-void MainWindow::on_concatinateBTN_clicked()
+void GUI::on_concatinateBTN_clicked()
 {
 	mycore->ConcatenatePoints();
 }
 
-void MainWindow::on_selectBTNTool_clicked()
+void GUI::on_selectBTNTool_clicked()
 {
     ui->graphicsView->setTool(TOOL_Select);
 }
 
-void MainWindow::on_pointBTNTool_clicked()
+void GUI::on_pointBTNTool_clicked()
 {
     ui->graphicsView->setTool(TOOL_Point);
 }
 
-void MainWindow::on_ZoomBTNTool_clicked()
+void GUI::on_ZoomBTNTool_clicked()
 {
     ui->graphicsView->setTool(TOOL_Zoom);
 }
 
-void MainWindow::on_actionClose_triggered()
+void GUI::on_actionClose_triggered()
 {
 	// need add dialog if had changes
 	close();
 }
 
-void MainWindow::on_actionRedraw_all_triggered()
+void GUI::on_actionRedraw_all_triggered()
 {
 	mycore->Calculate();
 }
 
-void MainWindow::on_actionSave_triggered()
+void GUI::on_actionSave_triggered()
 {
 	// need add save as if 1st time
 	mycore->IWantSave();
 }
 
-void MainWindow::on_actionSave_As_triggered()
+void GUI::on_actionSave_As_triggered()
 {
 	QString filename = QFileDialog::getSaveFileName(
 		this, tr("Open File"),
@@ -439,12 +451,12 @@ void MainWindow::on_actionSave_As_triggered()
 	mycore->IWantSaveAs(filename);
 }
 
-void MainWindow::on_actionClear_all_triggered()
+void GUI::on_actionClear_all_triggered()
 {
 	mycore->DeleteAll();
 }
 
-void MainWindow::on_actionLoad_triggered()
+void GUI::on_actionLoad_triggered()
 {
 	QString filename = QFileDialog::getOpenFileName(
 		this, tr("Open File"),
@@ -452,7 +464,7 @@ void MainWindow::on_actionLoad_triggered()
 		"Text File (*.txt);; Xml File (*.xml)");
 	mycore->IWantLoad(filename);
 }
-void MainWindow::on_objectsList_clicked(const QModelIndex &index)
+void GUI::on_objectsList_clicked(const QModelIndex &index)
 {
 	mycore->Select(index.data(17).toUInt());
 }

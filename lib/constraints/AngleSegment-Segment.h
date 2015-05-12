@@ -27,6 +27,10 @@ public:
 		_p4y = p4y;
 		_a = a;
 	}
+	virtual ~AngleSegmentSegment()
+	{
+
+	}
 	double error()
 	{
 		return pow(cos(*_a) - ((*_p1x - *_p2x)*(*_p3x - *_p4x) + (*_p1y - *_p2y)*(*_p3y - *_p4y)) /

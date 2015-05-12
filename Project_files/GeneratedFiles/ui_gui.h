@@ -29,11 +29,11 @@
 #include <QtWidgets/QSplitter>
 #include <QtWidgets/QVBoxLayout>
 #include <QtWidgets/QWidget>
-//#include "mycanvas.h"
+#include "mycanvas.h"
 
 QT_BEGIN_NAMESPACE
 
-class Ui_MainWindow
+class Ui_GUI
 {
 public:
     QAction *actionLoad;
@@ -487,7 +487,9 @@ public:
 };
 
 namespace Ui {
-    class MainWindow: public Ui_MainWindow {};
+	class GUI : public Ui_GUI
+	{
+	};
 } // namespace Ui
 
 QT_END_NAMESPACE

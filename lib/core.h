@@ -15,6 +15,7 @@
 #include "storages\heshtable.h"
 #include "storages\AVL_tree.h"
 #include "storageofobjects.h"
+#include "enums.h"
 
 
 class Save;
@@ -23,8 +24,7 @@ class Load;
 class CORE
 {
 private:
-	Interface* mygui;
-	Save* mysave;
+	GraphicsInterface* mygui;
 	Load* myload;
 
 	//Storage_List<double> _storage_of_parameters;
@@ -43,7 +43,7 @@ private:
 	void BuildFigure(IConstraint*, Storage_Array<double*>*);
 	void BuildFigureNewton(IConstraint*, Storage_Array<double*>*);
 	void BuildFigureGoldMethod(IConstraint*, Storage_Array < double* >*);
-	void Redraw();
+	void Redraw(Interface*);
 	
 	Settings mysettings;
 	std::fstream _logfile;
@@ -61,15 +61,13 @@ private:
 
 public:
 	CORE();
-	CORE(Interface* gui);
+	CORE(GraphicsInterface* gui);
 	~CORE();
-	void Connect(Interface* gui, Save* save, Load* load)
+	void Connect(GraphicsInterface* gui, Load* load)
 	{
 		mygui = gui;
-		mysave = save;
 		myload = load;
 		writeToLog("GUI connected to CORE", 2);
-		writeToLog("SAVE connected to CORE", 2);
 		writeToLog("LOAD connected to CORE", 2);
 	}
 

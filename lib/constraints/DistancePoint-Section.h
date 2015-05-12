@@ -24,7 +24,10 @@ public:
 		_y2 = y2;
 		_d = d;
 	}
+	virtual ~DistanceFromPointToSection()
+	{
 
+	}
 	double error()
 	{
 		double err;

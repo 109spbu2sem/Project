@@ -110,7 +110,7 @@ void CORE::Select(double x, double y)
 				}
 			}
 			writeToLog(min_id, "selection was changed for (ID) ", 2);
-			Redraw();
+			Redraw(mygui);
 		}
 		catch (...)
 		{
@@ -143,7 +143,7 @@ bool CORE::Select(unsigned id)
 			}
 		}
 		writeToLog(id, "selection was changed for (ID) ", 2);
-		Redraw();
+		Redraw(mygui);
 		return object->isSelected();
 	}
 	return false;
@@ -197,7 +197,7 @@ void CORE::ClearSelection()
 	}
 	_selected_objects.clear();
 	writeToLog("Select was cleared", 2);
-	Redraw();
+	Redraw(mygui);
 	mygui->Clear_properties();
 	mygui->WriteStatus("Done");
 }
@@ -217,8 +217,7 @@ void CORE::DeleteAll()
 	writeToLog("All parameters were deleted");
 	writeToLog("All clear");
 	mygui->Clear();
-	mygui->WriteStatus("Done");
-	mygui->WriteMessage("All clear");
+	mygui->WriteText("Done", "All clear");
 }
 
 void CORE::DeleteSelected()
@@ -255,12 +254,12 @@ void CORE::DeleteSelected()
 		_storage_of_objects.remove(i.getValue()->id);
 	}
 	_selected_objects.clear();
-	Redraw();
+	Redraw(mygui);
 }
 
 void CORE::IWantSave()
 {
-	mysave->begin();
+	/*mysave->begin();
 	StorageOfObjects::viewer i(_storage_of_objects);
 	while (i.canMoveNext())
 	{
@@ -293,16 +292,16 @@ void CORE::IWantSave()
 		}
 	}
 
-	mysave->end();
+	mysave->end();*/
 }
 
 void CORE::IWantSaveAs(QString way) {
-	mysave->fileWay(way);
-	IWantSave();
+	/*mysave->fileWay(way);
+	IWantSave();*/
 }
 
 void CORE::IWantLoad(QString way)
 {
-	myload->fileWay(way);
-	myload->begin();
+	/*myload->fileWay(way);
+	myload->begin();*/
 }

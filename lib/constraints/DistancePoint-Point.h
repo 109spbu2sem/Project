@@ -16,6 +16,10 @@ public:
 		_p2y = p2y;
 		_d = d;
 	}
+	virtual ~Point2Point()
+	{
+
+	}
 	virtual double error()
 	{
 		return (*_d - length(*_p1x, *_p1y, *_p2x, *_p2y))*(*_d - length(*_p1x, *_p1y, *_p2x, *_p2y));
