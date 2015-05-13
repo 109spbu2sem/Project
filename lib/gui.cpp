@@ -82,9 +82,10 @@ bool GUI::Set_properties_of_point(unsigned id, double x, double y, Color c)
 	QListWidgetItem* item = new QListWidgetItem;
 	
 	item->setText("Point");
-	item->setData(17, 0);
+	item->setData(17, static_cast<unsigned>(POINT));
 	ui->propertiesList->addItem(item);
 
+	item = new QListWidgetItem;
 	s.setNum(id);
 	item->setText("id:\t" + s);
 	item->setData(17, id);
@@ -117,9 +118,10 @@ bool GUI::Set_properties_of_segment(unsigned id, double x1, double y1, double x2
 	QListWidgetItem* item = new QListWidgetItem;
 
 	item->setText("Segment");
-	item->setData(17, 1);
+	item->setData(17, static_cast<unsigned>(SEGMENT));
 	ui->propertiesList->addItem(item);
 
+	item = new QListWidgetItem;
 	s.setNum(id);
 	item->setText("id:\t" + s);
 	item->setData(17, id);
@@ -164,9 +166,10 @@ bool GUI::Set_properties_of_circle(unsigned id, double x, double y, double r, Co
 	QListWidgetItem* item = new QListWidgetItem;
 
 	item->setText("Circle");
-	item->setData(17, 2);
+	item->setData(17, static_cast<unsigned>(CIRCLE));
 	ui->propertiesList->addItem(item);
 
+	item = new QListWidgetItem;
 	s.setNum(id);
 	item->setText("id:\t" + s);
 	item->setData(17, id);
@@ -205,14 +208,6 @@ void GUI::Clear_properties()
 
 bool GUI::DrawPoint(unsigned id, double x, double y, Color c, bool selected)
 {
-	/*ui->typesOfObjects->setCurrentIndex(0);
-	QString s;
-	ui->editID->setText(s.setNum(id));
-	ui->editX1->setText(s.setNum(x));
-	ui->editY1->setText(s.setNum(y));
-	ui->editR->setText(s.setNum(c.getColor(1)));
-	ui->editG->setText(s.setNum(c.getColor(2)));
-	ui->editB->setText(s.setNum(c.getColor(3)));*/
 	mainscene->addEllipse(x - 1.2, -y - 1.2, 2.4, 2.4,
 								 selected ? QPen(QColor(QRgb(COLORSELECTED))) :
 								 QPen(QColor(c.red(), c.green(), c.blue())),
@@ -232,16 +227,6 @@ bool GUI::DrawPoint(unsigned id, double x, double y, Color c, bool selected)
 
 bool GUI::DrawSegment(unsigned id, double x1, double y1, double x2, double y2, Color c, bool selected)
 {
-	/*ui->typesOfObjects->setCurrentIndex(1);
-	QString s;
-	ui->editID->setText(s.setNum(id));
-	ui->editX1->setText(s.setNum(x1));
-	ui->editY1->setText(s.setNum(y1));
-	ui->editX2->setText(s.setNum(x2));
-	ui->editY2->setText(s.setNum(y2));
-	ui->editR->setText(s.setNum(c.getColor(1)));
-	ui->editG->setText(s.setNum(c.getColor(2)));
-	ui->editB->setText(s.setNum(c.getColor(3)));*/
 	mainscene->addLine(x1, -y1, x2, -y2,
 							 selected ? QPen(QColor(QRgb(COLORSELECTED))) :
 							 QPen(QColor(c.red(), c.green(), c.blue())));
@@ -259,15 +244,6 @@ bool GUI::DrawSegment(unsigned id, double x1, double y1, double x2, double y2, C
 
 bool GUI::DrawCircle(unsigned id, double x, double y, double r, Color c, bool selected)
 {
-	/*ui->typesOfObjects->setCurrentIndex(2);
-	QString s;
-	ui->editID->setText(s.setNum(id));
-	ui->editX1->setText(s.setNum(x));
-	ui->editY1->setText(s.setNum(y));
-	ui->editX2->setText(s.setNum(r));
-	ui->editR->setText(s.setNum(c.getColor(1)));
-	ui->editG->setText(s.setNum(c.getColor(2)));
-	ui->editB->setText(s.setNum(c.getColor(3)));*/
 	mainscene->addEllipse(x - r, -y - r, r * 2, r * 2,
 								 selected ? QPen(QColor(QRgb(COLORSELECTED))) : 
 								 QPen(QColor(c.red(), c.green(), c.blue())));
@@ -470,51 +446,57 @@ void GUI::on_objectsList_clicked(const QModelIndex &index)
 
 void GUI::on_openChangingDialog_clicked()
 {
-	WriteText("Change object", "");
-	objectPropertiesWindow ow(this);
-	ow.connectCORE(mycore);
-	ow.setFlag(1);
-	switch (ui->propertiesList->item(0)->data(17).toUInt())
+	if (ui->propertiesList->count())
 	{
-		case 0:
+		WriteText("Change object", "");
+		objectPropertiesWindow ow(this);
+		ow.connectCORE(mycore);
+		ow.setFlag(1);
+		unsigned SWITCH = ui->propertiesList->item(0)->data(17).toUInt();
+		switch (SWITCH)
 		{
-			ow.setupPointProperties(ui->propertiesList->item(1)->data(17).toUInt(),
-											ui->propertiesList->item(2)->data(17).toDouble(),
-											false,
-											ui->propertiesList->item(3)->data(17).toDouble(),
-											false,
-											Color(ui->propertiesList->item(4)->data(17).toUInt()) );
-			break;
+			case 0:
+			{
+				ow.setupPointProperties(ui->propertiesList->item(1)->data(17).toUInt(),
+												ui->propertiesList->item(2)->data(17).toDouble(),
+												false,
+												ui->propertiesList->item(3)->data(17).toDouble(),
+												false,
+												Color(ui->propertiesList->item(4)->data(17).toUInt()));
+				break;
+			}
+			case 1:
+			{
+				ow.setupSegmentProperties(ui->propertiesList->item(1)->data(17).toUInt(),
+												  ui->propertiesList->item(2)->data(17).toDouble(),
+												  false,
+												  ui->propertiesList->item(3)->data(17).toDouble(),
+												  false,
+												  ui->propertiesList->item(4)->data(17).toDouble(),
+												  false,
+												  ui->propertiesList->item(5)->data(17).toDouble(),
+												  false,
+												  Color(ui->propertiesList->item(6)->data(17).toUInt()));
+				break;
+			}
+			case 2:
+			{
+				ow.setupCircleProperties(ui->propertiesList->item(1)->data(17).toUInt(),
+												 ui->propertiesList->item(2)->data(17).toDouble(),
+												 false,
+												 ui->propertiesList->item(3)->data(17).toDouble(),
+												 false,
+												 ui->propertiesList->item(4)->data(17).toDouble(),
+												 false,
+												 Color(ui->propertiesList->item(5)->data(17).toUInt()));
+				break;
+			}
 		}
-		case 1:
-		{
-			ow.setupSegmentProperties(ui->propertiesList->item(1)->data(17).toUInt(),
-											  ui->propertiesList->item(2)->data(17).toDouble(),
-											  false,
-											  ui->propertiesList->item(3)->data(17).toDouble(),
-											  false,
-											  ui->propertiesList->item(4)->data(17).toDouble(),
-											  false,
-											  ui->propertiesList->item(5)->data(17).toDouble(),
-											  false,
-											  Color(ui->propertiesList->item(6)->data(17).toUInt()));
-			break;
-		}
-		case 2:
-		{
-			ow.setupCircleProperties(ui->propertiesList->item(1)->data(17).toUInt(),
-											 ui->propertiesList->item(2)->data(17).toDouble(),
-											 false,
-											 ui->propertiesList->item(3)->data(17).toDouble(),
-											 false,
-											 ui->propertiesList->item(4)->data(17).toDouble(),
-											 false,
-											 Color(ui->propertiesList->item(5)->data(17).toUInt()));
-			break;
-		}
+		ow.exec();
+		WriteText("Done", "");
 	}
-	ow.exec();
-	WriteText("Done", "");
+	else
+		WriteText("Tip:", "Select any object.");
 }
 
 void GUI::on_deleteObjBTN_clicked()

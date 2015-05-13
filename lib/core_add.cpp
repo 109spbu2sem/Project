@@ -8,6 +8,8 @@
 #include "constraints\CircleContact.h"
 
 #include "core.h"
+#include "qdebug.h"
+#include "qstring.h"
 
 unsigned CORE::AddObject(double point_x, bool isconstx, double point_y, bool isconsty, Color color, unsigned id, bool wait)
 {
@@ -29,7 +31,6 @@ unsigned CORE::AddObject(double point_x, bool isconstx, double point_y, bool isc
 	writeToLog(newid.getID(), "id= ", 2);
 	writeToLog("< /add >", 2);
 	if (!wait) mygui->DrawPoint(newid.getID(), point_x, point_y, color, false);
-
 	return newid.getID();
 }
 // add segment with current point's ids
@@ -255,7 +256,10 @@ void CORE::AddRule(unsigned type, unsigned id1, unsigned id2, unsigned id3, doub
 
 }
 
-bool CORE::ChangePoint(unsigned id, double point_x, bool isconstx, double point_y, bool isconsty, Color color)
+bool CORE::ChangePoint(unsigned id, 
+							  double point_x, bool isconstx,
+							  double point_y, bool isconsty,
+							  Color color)
 {
 	Point* p = dynamic_cast<Point*>(_storage_of_objects.get(id));
 	if (p)
@@ -272,18 +276,25 @@ bool CORE::ChangePoint(unsigned id, double point_x, bool isconstx, double point_
 	return false;
 }
 
-bool CORE::ChangeSegment(unsigned id, unsigned point1_id, unsigned point2_id, Color color)
+bool CORE::ChangeSegment(unsigned id,
+								 double point_x1, bool isconstx1,
+								 double point_y1, bool isconsty1,
+								 double point_x2, bool isconstx2,
+								 double point_y2, bool isconsty2,
+								 Color color)
 {
 	Segment* s = dynamic_cast<Segment*>(_storage_of_objects.get(id));
-	Point* p1 = dynamic_cast<Point*>(_storage_of_objects.get(point1_id));
-	Point* p2 = dynamic_cast<Point*>(_storage_of_objects.get(point2_id));
-	if (s && p1 && p2 && p1 != p2)
+	if (s)
 	{
 		writeToLog(id, "Change segment properties ", 2);
-		if (s->p1 != p1)
-			s->p1 = p1;
-		if (s->p2 != p2)
-			s->p2 = p2;
+		*s->p1->x = point_x1;
+		*s->p1->y = point_y1;
+		*s->p2->x = point_x2;
+		*s->p2->y = point_y2;
+		_parameters.getValuebyKey(s->p1->x) = isconstx1;
+		_parameters.getValuebyKey(s->p1->y) = isconsty1;
+		_parameters.getValuebyKey(s->p2->x) = isconstx2;
+		_parameters.getValuebyKey(s->p2->y) = isconsty2;
 		s->color = color;
 		Redraw(mygui);
 		return true;
@@ -291,15 +302,21 @@ bool CORE::ChangeSegment(unsigned id, unsigned point1_id, unsigned point2_id, Co
 	return false;
 }
 
-bool CORE::ChangeCircle(unsigned id, unsigned point_id, double radius, bool isconst, Color color)
+bool CORE::ChangeCircle(unsigned id,
+								double point_x, bool isconstx,
+								double point_y, bool isconsty,
+								double radius, bool isconst,
+								Color color)
 {
 	Circle* c = dynamic_cast<Circle*>(_storage_of_objects.get(id));
-	Point* p = dynamic_cast<Point*>(_storage_of_objects.get(point_id));
-	if (c && p)
+	if (c)
 	{
 		writeToLog(id, "Change segment properties ", 2);
-		if (c->p != p)
-			c->p = p;
+		*c->p->x = point_x;
+		*c->p->y = point_y;
+		*c->r = radius;
+		_parameters.getValuebyKey(c->p->x) = isconstx;
+		_parameters.getValuebyKey(c->p->y) = isconsty;
 		_parameters.getValuebyKey(c->r) = isconst;
 		c->color = color;
 		Redraw(mygui);

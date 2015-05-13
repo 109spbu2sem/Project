@@ -126,6 +126,27 @@ bool CORE::Select(unsigned id)
 		if (object->isSelected())
 		{
 			_selected_objects.add(object);
+			switch (object->objectType())
+			{
+				case PRIMITIVE_POINT:
+				{
+					Point* p = dynamic_cast<Point*>(object);
+					mygui->Set_properties_of_point(p->id.getID(), *p->x, *p->y, p->color.getColor());
+					break;
+				}
+				case PRIMITIVE_SEGMENT:
+				{
+					Segment* s = dynamic_cast<Segment*>(object);
+					mygui->Set_properties_of_segment(s->id.getID(), *s->p1->x, *s->p1->y, *s->p2->x, *s->p2->y, s->color.getColor());
+					break;
+				}
+				case PRIMITIVE_CIRCLE:
+				{
+					Circle* c = dynamic_cast<Circle*>(object);
+					mygui->Set_properties_of_circle(c->id.getID(), *c->p->x, *c->p->y, *c->r, c->color.getColor());
+					break;
+				}
+			}
 		}
 		else
 		{
@@ -229,8 +250,6 @@ void CORE::DeleteSelected()
 			{
 				_parameters.remove(p->x);
 				_parameters.remove(p->y);
-				delete p->x;
-				delete p->y;
 				delete p;
 			}
 			catch (...) { }
@@ -243,7 +262,12 @@ void CORE::DeleteSelected()
 		}
 		case PRIMITIVE_CIRCLE:
 		{
-			//Circle* c = dynamic_cast<Circle*>(i.getValue());
+			Circle* c = dynamic_cast<Circle*>(i.getValue());
+			try
+			{
+				_parameters.remove(c->r);
+			}
+			catch (...) { }
 			break;
 		}
 		}

@@ -32,6 +32,11 @@ ID StorageOfObjects::add(ObjectSkin* object, unsigned objid)
 
 void StorageOfObjects::clear()
 {
+	for (AVLVeiwer<unsigned, ObjectSkin*> i(_shelf); i.canMoveNext(); i.moveNext())
+	{
+		if (i.getValue().key == 0) continue;
+		delete i.getValue().value;
+	}
 	_shelf.clear();
 	_last_id = 0;
 	_shelf.add(0, 0);

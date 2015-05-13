@@ -372,6 +372,21 @@
    </item>
   </layout>
  </widget>
+ <tabstops>
+  <tabstop>editX1</tabstop>
+  <tabstop>editY1</tabstop>
+  <tabstop>editX2</tabstop>
+  <tabstop>editY2</tabstop>
+  <tabstop>checkX1</tabstop>
+  <tabstop>checkY1</tabstop>
+  <tabstop>checkX2</tabstop>
+  <tabstop>checkY2</tabstop>
+  <tabstop>typesOfObjects</tabstop>
+  <tabstop>editR</tabstop>
+  <tabstop>editG</tabstop>
+  <tabstop>editB</tabstop>
+  <tabstop>editID</tabstop>
+ </tabstops>
  <resources/>
  <connections>
   <connection>

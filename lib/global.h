@@ -6,6 +6,10 @@
 #define COLORSELECTED 0x3560d6
 #define COLORDEF 0x000000
 
+#define POINT 0
+#define SEGMENT 1
+#define CIRCLE 2
+
 double length(double, double, double, double);
 
 double min(double, double);

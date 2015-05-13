@@ -39,6 +39,7 @@ void objectPropertiesWindow::on_buttonBox_accepted()
 {
 	switch (flag)
 	{
+		//	add:
 		case 0:
 		{
 			switch (ui->typesOfObjects->currentIndex())
@@ -102,17 +103,16 @@ void objectPropertiesWindow::on_buttonBox_accepted()
 			break;
 		}
 			// ----------------------------------------------------------------------------------------------------------------
+			//	change:
 		case 1:
 		{
 			switch (ui->typesOfObjects->currentIndex())
 			{
-				// add point
+				// change point
 				case 0:
 				{
 					if (!ui->editX1->text().isEmpty() &&
-						 !ui->editY1->text().isEmpty() /*&&
-																 ui->editX1->text(). &&
-																 ui->editY1->text().toDouble()*/)
+						 !ui->editY1->text().isEmpty())
 					{
 						Color c;
 						c.setColor(ui->editR->text().toUInt(), ui->editG->text().toUInt(), ui->editB->text().toUInt());
@@ -121,43 +121,37 @@ void objectPropertiesWindow::on_buttonBox_accepted()
 					}
 					break;
 				}
-					// add segment
+					// change segment
 				case 1:
 				{
 					if (!ui->editX1->text().isEmpty() &&
 						 !ui->editY1->text().isEmpty() &&
 						 !ui->editX2->text().isEmpty() &&
-						 !ui->editY2->text().isEmpty() /*&&
-																 ui->editX1->text().toDouble() &&
-																 ui->editY1->text().toDouble() &&
-																 ui->editX2->text().toDouble() &&
-																 ui->editY2->text().toDouble()*/)
+						 !ui->editY2->text().isEmpty())
 					{
 						Color c;
 						c.setColor(ui->editR->text().toUInt(), ui->editG->text().toUInt(), ui->editB->text().toUInt());
-						unsigned id1 = mycore->ChangePoint(ui->editID->text().toUInt(), ui->editX1->text().toDouble(), ui->checkX1->isChecked(),
-																	ui->editY1->text().toDouble(), ui->checkY1->isChecked(), c);
-						unsigned id2 = mycore->ChangePoint(ui->editID->text().toUInt(), ui->editX2->text().toDouble(), ui->checkX2->isChecked(),
-																	ui->editY2->text().toDouble(), ui->checkY2->isChecked(), c);
-						mycore->ChangeSegment(0, id1, id2, c);
+						mycore->ChangeSegment(ui->editID->text().toUInt(),
+													 ui->editX1->text().toDouble(), ui->checkX1->isChecked(),
+													 ui->editY1->text().toDouble(), ui->checkY1->isChecked(),
+													 ui->editX2->text().toDouble(), ui->checkX2->isChecked(),
+													 ui->editY2->text().toDouble(), ui->checkY2->isChecked(), c);
 					}
 					break;
 				}
-					// add circle
+					// change circle
 				case 2:
 				{
 					if (!ui->editX1->text().isEmpty() &&
 						 !ui->editY1->text().isEmpty() &&
-						 !ui->editX2->text().isEmpty() /*&&
-																 ui->editX1->text().toDouble() &&
-																 ui->editY1->text().toDouble() &&
-																 ui->editX2->text().toDouble()*/)
+						 !ui->editX2->text().isEmpty())
 					{
 						Color c;
 						c.setColor(ui->editR->text().toUInt(), ui->editG->text().toUInt(), ui->editB->text().toUInt());
-						unsigned id = mycore->ChangePoint(ui->editID->text().toUInt(), ui->editX1->text().toDouble(), ui->checkX1->isChecked(),
-																  ui->editY1->text().toDouble(), ui->checkY1->isChecked(), c);
-						mycore->ChangeCircle(ui->editID->text().toUInt(), id, ui->editX2->text().toDouble(), ui->checkX2->isChecked(), c);
+						mycore->ChangeCircle(ui->editID->text().toUInt(),
+													ui->editX1->text().toDouble(), ui->checkX1->isChecked(),
+													ui->editY1->text().toDouble(), ui->checkY1->isChecked(),
+													ui->editX2->text().toDouble(), ui->checkX2->isChecked(), c);
 					}
 					break;
 				}

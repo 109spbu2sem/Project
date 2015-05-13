@@ -265,6 +265,18 @@ public:
 
         verticalLayout_2->addWidget(buttonBox);
 
+        QWidget::setTabOrder(editX1, editY1);
+        QWidget::setTabOrder(editY1, editX2);
+        QWidget::setTabOrder(editX2, editY2);
+        QWidget::setTabOrder(editY2, checkX1);
+        QWidget::setTabOrder(checkX1, checkY1);
+        QWidget::setTabOrder(checkY1, checkX2);
+        QWidget::setTabOrder(checkX2, checkY2);
+        QWidget::setTabOrder(checkY2, typesOfObjects);
+        QWidget::setTabOrder(typesOfObjects, editR);
+        QWidget::setTabOrder(editR, editG);
+        QWidget::setTabOrder(editG, editB);
+        QWidget::setTabOrder(editB, editID);
 
         retranslateUi(objectPropertiesWindow);
         QObject::connect(buttonBox, SIGNAL(rejected()), objectPropertiesWindow, SLOT(reject()));

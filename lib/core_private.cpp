@@ -139,7 +139,7 @@ void CORE::Calculate()
 	//BuildFigure(&collector, &parameters);
 	writeToLog("---------------------Building new figure-----------------");
 	mygui->WriteText("Work", "Redrawing...");
-	BuildFigureGoldMethod(&collector, &parameters);
+	BuildFigure/*GoldMethod*/(&collector, &parameters);
 	writeToLog("---------------------Success build-----------------------");
 	Redraw(mygui);
 	mygui->WriteText("Done", "");
@@ -246,16 +246,17 @@ void CORE::BuildFigure(IConstraint* constraint, Storage_Array<double*>* paramete
 {
 	if (!constraint || !parameters) return; // check for true work
 
-	const double f_epsi = 1e-12;
+	const double f_epsi = 1e-6;
 	double current = constraint->error();
 	double previous = 0;
 	double *dx = new double[parameters->size()];
-
+	writeToLog(current, "f = ", 2);
+	writeToLog(abs(previous - current) /*/ abs(f_prev)*/, "delta f= ", 2);
 	do
 	{
 		previous = current;
 
-		double step_min = 0.000001;
+		double step_min = 0.0001;
 		//double step_max = 1000;
 
 		for (unsigned i = 0; i < parameters->size(); i++)
@@ -264,6 +265,8 @@ void CORE::BuildFigure(IConstraint* constraint, Storage_Array<double*>* paramete
 			*(*parameters)[i] += dx[i];										 // change parameters
 
 		current = constraint->error();
+		writeToLog(current, "f = ", 2);
+		writeToLog(abs(previous - current) /*/ abs(f_prev)*/, "delta f= ", 2);
 	} while (abs(previous - current) > f_epsi);
 	delete[] dx;
 	return;
