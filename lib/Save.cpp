@@ -9,11 +9,9 @@ Save::Save(){
 };
 
 Save::~Save(){
+	_save << "</list>\n";
+	_save.close();
 };
-
-void Save::ConnectCORE(CORE*core){
-	_action = core;
-}
 
 string Save::fileWay(QString way) {
 	_way = way.toStdString();
@@ -26,7 +24,7 @@ void Save::begin() {
 	_save << "<list>\n";
 }
 
-bool Save::DrawPoint(unsigned id, double x, double y, Color c)
+bool Save::DrawPoint(unsigned id, double x, double y, Color c, bool mode)
 {
 	_save << "	<point>\n";
 	_save << "		<id>" << id << "</id>\n";
@@ -37,7 +35,7 @@ bool Save::DrawPoint(unsigned id, double x, double y, Color c)
 	return true;
 }
 
-bool Save::DrawSegment(unsigned id, double x1, double y1, double x2, double y2, Color c)
+bool Save::DrawSegment(unsigned id, double x1, double y1, double x2, double y2, Color c, bool mode)
 {
 	_save << "	<segment>\n";
 	_save << "		<id>" << id << "</id>\n";
@@ -50,7 +48,7 @@ bool Save::DrawSegment(unsigned id, double x1, double y1, double x2, double y2, 
 	return true;
 }
 
-bool Save::DrawCircle(unsigned id, double x, double y, double r, Color c)
+bool Save::DrawCircle(unsigned id, double x, double y, double r, Color c, bool mode)
 {
 	_save << "	<circle>\n";
 	_save << "		<id>" << id << "</id>\n";
@@ -60,11 +58,6 @@ bool Save::DrawCircle(unsigned id, double x, double y, double r, Color c)
 	_save << "		<color>" << c.getColor() << "</color>\n";
 	_save << "	</circle>\n";
 	return true;
-}
-
-void Save::end() {
-	_save << "</list>\n";
-	_save.close();
 }
 
 bool Save::Clear() {

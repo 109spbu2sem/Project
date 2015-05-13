@@ -11,7 +11,7 @@ void Load::ConnectCORE(CORE*core){
 	_action = core;
 }
 void Load::begin() {
-	_action->DeleteAll();
+	//_action->DeleteAll();
 	_file = new QFile(_way);
 	if (!_file->open(QIODevice::ReadOnly | QIODevice::Text))
 	{

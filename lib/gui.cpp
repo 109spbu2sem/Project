@@ -460,6 +460,7 @@ void GUI::on_actionLoad_triggered()
 		this, tr("Open File"),
 		"C://",
 		"Text File (*.txt);; Xml File (*.xml)");
+	mycore->DeleteAll();
 	mycore->IWantLoad(filename);
 }
 void GUI::on_objectsList_clicked(const QModelIndex &index)
