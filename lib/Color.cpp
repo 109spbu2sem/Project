@@ -35,6 +35,21 @@ unsigned Color::getColor(char mode) const
 	return 0;
 }
 
+unsigned Color::red() const
+{
+	return (_color >> 16) & 0xFF;
+}
+
+unsigned Color::green() const
+{
+	return (_color >> 8) & 0xFF;
+}
+
+unsigned Color::blue() const
+{
+	return _color & 0xFF;
+}
+
 void Color::setColor(const Color& c)
 {
 	_color = c._color;

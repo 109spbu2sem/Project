@@ -22,9 +22,10 @@ public:
 
 	void connectCORE(CORE*);
 
-	void setupPointProperties(unsigned id, double x, double y, QColor& c);
-	void setupSegmentProperties(unsigned id, double x, double y, double x2, double y2, QColor& c);
-	void setupCircleProperties(unsigned id, double x, double y, double r, QColor& c);
+	void setupPointProperties(unsigned id, double x, bool ischeckedx, double y, bool ischeckedy, Color c);
+	void setupSegmentProperties(unsigned id, double x1, bool ischeckedx1, double y1, bool ischeckedy1,
+										 double x2, bool ischeckedx2, double y2, bool ischeckedy2, Color c);
+	void setupCircleProperties(unsigned id, double x, bool ischeckedx, double y, bool ischeckedy, double r, bool ischecked, Color c);
 
 	void setFlag(unsigned);
 	

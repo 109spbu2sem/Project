@@ -9,17 +9,16 @@
 
 #include "core.h"
 
-unsigned CORE::AddObject(double point_x, double point_y, Color color, unsigned id, bool wait)
+unsigned CORE::AddObject(double point_x, bool isconstx, double point_y, bool isconsty, Color color, unsigned id, bool wait)
 {
 	double* x = new double;
-	_parameters.add(x, false);
+	_parameters.add(x, isconstx);
 	double* y = new double;
-	_parameters.add(y, false);
+	_parameters.add(y, isconsty);
 	*x = point_x;
 	*y = point_y;
 	Point* p = new Point(x, y);
 	p->color.setColor(color);
-	// _storage_of_points.add(*p);
 	ID newid = _storage_of_objects.add(p, id);
 	mygui->WriteStatus("Done");
 	mygui->WriteMessage("Point added");
@@ -65,7 +64,7 @@ unsigned CORE::AddObject(unsigned id1, unsigned id2, Color color, unsigned id, b
 	return 0;
 }
 // add circle with current point's id and radius
-unsigned CORE::AddObject(unsigned pointid, double radius, Color color, unsigned id, bool wait)
+unsigned CORE::AddObject(unsigned pointid, double radius, bool isconst, Color color, unsigned id, bool wait)
 {
 	Point* p = dynamic_cast<Point*>(_storage_of_objects.get(pointid));
 	if (p)
@@ -73,7 +72,7 @@ unsigned CORE::AddObject(unsigned pointid, double radius, Color color, unsigned 
 		double *r = new double;
 		*r = radius;
 		Circle* c = new Circle(p, r);
-		_parameters.add(r, true);
+		_parameters.add(r, isconst);
 		c->color.setColor(color);
 		ID newid = _storage_of_objects.add(c, id);
 		mygui->WriteStatus("Done");
@@ -133,6 +132,7 @@ void CORE::AddRule(unsigned type, double value)
 			{
 				mygui->WriteStatus("Error");
 				mygui->WriteMessage("Can't add rule to these objects.");
+				return;
 			}
 		}
 		case CONSTR_P2SECTDIST:
@@ -146,7 +146,9 @@ void CORE::AddRule(unsigned type, double value)
 			{
 				mygui->WriteStatus("Error");
 				mygui->WriteMessage("Can't add rule to these objects.");
+				return;
 			}
+			break;
 		}
 		case CONSTR_P2LINEDIST:
 		{
@@ -159,7 +161,9 @@ void CORE::AddRule(unsigned type, double value)
 			{
 				mygui->WriteStatus("Error");
 				mygui->WriteMessage("Can't add rule to these objects.");
+				return;
 			}
+			break;
 		}
 		case CONSTR_L2LANGLE:
 		{
@@ -172,7 +176,9 @@ void CORE::AddRule(unsigned type, double value)
 			{
 				mygui->WriteStatus("Error");
 				mygui->WriteMessage("Can't add rule to these objects.");
+				return;
 			}
+			break;
 		}
 		case CONSTR_3PRATIO:
 		{
@@ -185,7 +191,9 @@ void CORE::AddRule(unsigned type, double value)
 			{
 				mygui->WriteStatus("Error");
 				mygui->WriteMessage("Can't add rule to these objects.");
+				return;
 			}
+			break;
 		}
 		case CONSTR_3PONLINE:
 		{
@@ -198,7 +206,9 @@ void CORE::AddRule(unsigned type, double value)
 			{
 				mygui->WriteStatus("Error");
 				mygui->WriteMessage("Can't add rule to these objects.");
+				return;
 			}
+			break;
 		}
 		case CONSTR_EXCONTACT:
 		{
@@ -211,7 +221,9 @@ void CORE::AddRule(unsigned type, double value)
 			{
 				mygui->WriteStatus("Error");
 				mygui->WriteMessage("Can't add rule to these objects.");
+				return;
 			}
+			break;
 		}
 		case CONSTR_INCONTACT:
 		{
@@ -224,7 +236,9 @@ void CORE::AddRule(unsigned type, double value)
 			{
 				mygui->WriteStatus("Error");
 				mygui->WriteMessage("Can't add rule to these objects.");
+				return;
 			}
+			break;
 		}
 		default:
 		{
@@ -241,18 +255,56 @@ void CORE::AddRule(unsigned type, unsigned id1, unsigned id2, unsigned id3, doub
 
 }
 
-bool CORE::ChangePoint(unsigned id, double point_x, double point_y, Color color)
+bool CORE::ChangePoint(unsigned id, double point_x, bool isconstx, double point_y, bool isconsty, Color color)
 {
+	Point* p = dynamic_cast<Point*>(_storage_of_objects.get(id));
+	if (p)
+	{
+		writeToLog(id, "Change point properties ", 2);
+		*p->x = point_x;
+		*p->y = point_y;
+		_parameters.getValuebyKey(p->x) = isconstx;
+		_parameters.getValuebyKey(p->y) = isconsty;
+		p->color = color;
+		Redraw(mygui);
+		return true;
+	}
 	return false;
 }
 
 bool CORE::ChangeSegment(unsigned id, unsigned point1_id, unsigned point2_id, Color color)
 {
+	Segment* s = dynamic_cast<Segment*>(_storage_of_objects.get(id));
+	Point* p1 = dynamic_cast<Point*>(_storage_of_objects.get(point1_id));
+	Point* p2 = dynamic_cast<Point*>(_storage_of_objects.get(point2_id));
+	if (s && p1 && p2 && p1 != p2)
+	{
+		writeToLog(id, "Change segment properties ", 2);
+		if (s->p1 != p1)
+			s->p1 = p1;
+		if (s->p2 != p2)
+			s->p2 = p2;
+		s->color = color;
+		Redraw(mygui);
+		return true;
+	}
 	return false;
 }
 
-bool CORE::ChangeCircle(unsigned id, unsigned point_id, double radius, Color color)
+bool CORE::ChangeCircle(unsigned id, unsigned point_id, double radius, bool isconst, Color color)
 {
+	Circle* c = dynamic_cast<Circle*>(_storage_of_objects.get(id));
+	Point* p = dynamic_cast<Point*>(_storage_of_objects.get(point_id));
+	if (c && p)
+	{
+		writeToLog(id, "Change segment properties ", 2);
+		if (c->p != p)
+			c->p = p;
+		_parameters.getValuebyKey(c->r) = isconst;
+		c->color = color;
+		Redraw(mygui);
+		return true;
+	}
 	return false;
 }
 

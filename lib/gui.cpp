@@ -215,9 +215,9 @@ bool GUI::DrawPoint(unsigned id, double x, double y, Color c, bool selected)
 	ui->editB->setText(s.setNum(c.getColor(3)));*/
 	mainscene->addEllipse(x - 1.2, -y - 1.2, 2.4, 2.4,
 								 selected ? QPen(QColor(QRgb(COLORSELECTED))) :
-								 QPen(QColor(c.getColor(1), c.getColor(2), c.getColor(3))),
+								 QPen(QColor(c.red(), c.green(), c.blue())),
 								 selected ? QBrush(QColor(QRgb(COLORSELECTED))) :
-								 QBrush(QColor(c.getColor(1), c.getColor(2), c.getColor(3))));
+								 QBrush(QColor(c.red(), c.green(), c.blue())));
 	QString s;
 	s.setNum(id);
 	s += "\tPoint";
@@ -244,7 +244,7 @@ bool GUI::DrawSegment(unsigned id, double x1, double y1, double x2, double y2, C
 	ui->editB->setText(s.setNum(c.getColor(3)));*/
 	mainscene->addLine(x1, -y1, x2, -y2,
 							 selected ? QPen(QColor(QRgb(COLORSELECTED))) :
-							 QPen(QColor(c.getColor(1), c.getColor(2), c.getColor(3))));
+							 QPen(QColor(c.red(), c.green(), c.blue())));
 	QString s;
 	s.setNum(id);
 	s += "\tSegment";
@@ -270,7 +270,7 @@ bool GUI::DrawCircle(unsigned id, double x, double y, double r, Color c, bool se
 	ui->editB->setText(s.setNum(c.getColor(3)));*/
 	mainscene->addEllipse(x - r, -y - r, r * 2, r * 2,
 								 selected ? QPen(QColor(QRgb(COLORSELECTED))) : 
-								 QPen(QColor(c.getColor(1), c.getColor(2), c.getColor(3))));
+								 QPen(QColor(c.red(), c.green(), c.blue())));
 	QString s;
 	s.setNum(id);
 	s += "\tCircle";
@@ -469,15 +469,54 @@ void GUI::on_objectsList_clicked(const QModelIndex &index)
 
 void GUI::on_openChangingDialog_clicked()
 {
+	WriteText("Change object", "");
 	objectPropertiesWindow ow(this);
 	ow.connectCORE(mycore);
 	ow.setFlag(1);
-	WriteText("Change object", "");
+	switch (ui->propertiesList->item(0)->data(17).toUInt())
+	{
+		case 0:
+		{
+			ow.setupPointProperties(ui->propertiesList->item(1)->data(17).toUInt(),
+											ui->propertiesList->item(2)->data(17).toDouble(),
+											false,
+											ui->propertiesList->item(3)->data(17).toDouble(),
+											false,
+											Color(ui->propertiesList->item(4)->data(17).toUInt()) );
+			break;
+		}
+		case 1:
+		{
+			ow.setupSegmentProperties(ui->propertiesList->item(1)->data(17).toUInt(),
+											  ui->propertiesList->item(2)->data(17).toDouble(),
+											  false,
+											  ui->propertiesList->item(3)->data(17).toDouble(),
+											  false,
+											  ui->propertiesList->item(4)->data(17).toDouble(),
+											  false,
+											  ui->propertiesList->item(5)->data(17).toDouble(),
+											  false,
+											  Color(ui->propertiesList->item(6)->data(17).toUInt()));
+			break;
+		}
+		case 2:
+		{
+			ow.setupCircleProperties(ui->propertiesList->item(1)->data(17).toUInt(),
+											 ui->propertiesList->item(2)->data(17).toDouble(),
+											 false,
+											 ui->propertiesList->item(3)->data(17).toDouble(),
+											 false,
+											 ui->propertiesList->item(4)->data(17).toDouble(),
+											 false,
+											 Color(ui->propertiesList->item(5)->data(17).toUInt()));
+			break;
+		}
+	}
 	ow.exec();
 	WriteText("Done", "");
 }
 
 void GUI::on_deleteObjBTN_clicked()
 {
-    
+	mycore->DeleteSelected();
 }

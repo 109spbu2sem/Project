@@ -128,7 +128,6 @@ template<typename Item> Item* Storage_Array<Item>::add(const Item& item)
 		_items[_size - 1] = item;
 		return _items + _size - 1;
 	}
-	return _items;
 }
 
 //-----------------------------------------------------------------------

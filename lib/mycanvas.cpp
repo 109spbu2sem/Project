@@ -35,7 +35,7 @@ void MyCanvas::mousePressEvent(QMouseEvent *event)
 	case TOOL_Point:
 	{
 		if (event->button() == Qt::LeftButton)
-			mycore->AddObject(pt.x(), -pt.y());
+			mycore->AddObject(pt.x(), false, -pt.y(), false);
 		break;
 	}
 	case TOOL_Zoom:

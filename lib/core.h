@@ -79,17 +79,17 @@ public:
 
 	void Calculate();
 
-	unsigned AddObject(double point_x, double point_y, Color color = COLORDEF, unsigned id = 0, bool wait = false); // add point
+	unsigned AddObject(double point_x, bool isconstx, double point_y, bool isconsty, Color color = COLORDEF, unsigned id = 0, bool wait = false); // add point
 	unsigned AddObject(unsigned point1_id, unsigned point2_id, Color color = COLORDEF, unsigned id = 0, bool wait = false); // add segment for 2 points
-	unsigned AddObject(unsigned point_id, double radius, Color color = COLORDEF, unsigned id = 0, bool wait = false);
+	unsigned AddObject(unsigned point_id, double radius, bool isconst, Color color = COLORDEF, unsigned id = 0, bool wait = false);
 	void ConcatenatePoints();
 
 	void AddRule(unsigned type, double value = 0);
 	void AddRule(unsigned type, unsigned id1, unsigned id2, unsigned id3 = 0, double value = 0);
 
-	bool ChangePoint(unsigned id, double point_x, double point_y, Color color);
+	bool ChangePoint(unsigned id, double point_x, bool isconstx, double point_y, bool isconsty, Color color);
 	bool ChangeSegment(unsigned id, unsigned point1_id, unsigned point2_id, Color color);
-	bool ChangeCircle(unsigned id, unsigned point_id, double radius, Color color);
+	bool ChangeCircle(unsigned id, unsigned point_id, double radius, bool isconst, Color color);
 
 	void Select(double x, double y);
 	void Select(double x1, double y1, double x2, double y2);
