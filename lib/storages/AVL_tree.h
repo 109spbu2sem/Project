@@ -95,6 +95,10 @@ public:
 		}
 		return true;
 	}
+	void showTree(/*const Key& a*/)
+	{
+		return show(_root);
+	}
 
 	void clear()
 	{
@@ -173,6 +177,16 @@ private:
 			{
 				if (c == _root)
 				{
+					if (c->right == cur && c->left)
+					{
+						c->left->parent = cur;
+						cur->left = c->left;
+					}
+					else if (c->left == cur && c->right)
+					{
+						c->right->parent = cur;
+						cur->right = c->right;
+					}
 					_root = cur;
 					cur->parent = 0;
 				}
@@ -264,6 +278,33 @@ private:
 			}
 			delete c;
 		}
+	}
+	void show(cell* c)
+	{
+		cell* cur = c;
+		if (c && c->left)
+		{
+			c = c->left;
+			cout << c->parent->data.key << c->parent->data.value << " ->left = " << c->data.key << c->data.value << endl;
+			show(c);
+		}
+		if (cur && cur->right)
+		{
+			cur = cur->right;
+			cout << cur->parent->data.key << cur->parent->data.value << " ->right = " << cur->data.key << cur->data.value << endl;
+			show(cur);
+		}
+		/*while (c->left)
+		{
+			c = c->left;
+			cout << c->data.key << c->data.value << endl;
+			show(c);
+		}
+		if (c->right)
+		{
+			c = c->right;
+			cout << c->data.key << c->data.value << endl;
+		}*/
 	}
 };
 
