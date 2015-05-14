@@ -13,8 +13,8 @@ public:
 	};
 	friend class AVLVeiwer<Key, Value>;
 	Storage_AVL()
-	{ 
-		_root = 0; 
+	{
+		_root = 0;
 		_size = 0;
 	}
 	~Storage_AVL()
@@ -51,15 +51,15 @@ public:
 					cur = cur->right;
 				else cur = cur->left;
 			}
-			if (parent->data.key < a) 
+			if (parent->data.key < a)
 				parent->right = newcell;
-			else 
+			else
 				parent->left = newcell;
 			newcell->parent = parent;
 			balance(newcell);
 		}
 		++_size;
-		
+
 	}
 	bool hasKey(const Key& a){
 		cell *cur = _root;
@@ -79,9 +79,9 @@ public:
 		}
 		throw std::logic_error("No such item");
 	};
-	unsigned size()const 
-	{ 
-		return _size; 
+	unsigned size()const
+	{
+		return _size;
 	};
 	bool remove(const Key&a)
 	{
@@ -94,6 +94,10 @@ public:
 			return false;
 		}
 		return true;
+	}
+	void showTree(/*const Key& a*/)
+	{
+		return show(_root);
 	}
 
 	void clear()
@@ -108,7 +112,7 @@ public:
 		AVLVeiwer<Key, Value> v(*this);
 		return v;
 	}
-	
+
 private:
 	struct cell{
 		cell *left;
@@ -156,7 +160,7 @@ private:
 		}
 		else
 		{
-			
+
 			cell* c = cur;
 			cell* newcell;
 			if (heightdiff(cur) <= 0)
@@ -173,6 +177,16 @@ private:
 			{
 				if (c == _root)
 				{
+					if (c->right == cur && c->left)
+					{
+						c->left->parent = cur;
+						cur->left = c->left;
+					}
+					else if (c->left == cur && c->right)
+					{
+						c->right->parent = cur;
+						cur->right = c->right;
+					}
 					_root = cur;
 					cur->parent = 0;
 				}
@@ -200,30 +214,30 @@ private:
 				c->parent = cur->parent;
 				cur->parent = newcell;
 
-                if (cur->parent){
-                    if ( cur->parent->data.key < c->data.key)
-                    {
-                        cur->parent->right = cur;
-                        if (cur->parent->data.key == _root->data.key) _root->right = cur;
-                    }
-                    else
-                    {
-                        cur->parent->left = cur;
-                        if (cur->parent->data.key == _root->data.key) _root->left = cur;
-                    }
-                }
-                if (c->parent){
-				if (c->parent->data.key < cur->data.key)
-				{
-					c->parent->right = c;
-					if (c->parent->data.key == _root->data.key) _root->right = c;
+				if (cur->parent){
+					if (cur->parent->data.key < c->data.key)
+					{
+						cur->parent->right = cur;
+						if (cur->parent->data.key == _root->data.key) _root->right = cur;
+					}
+					else
+					{
+						cur->parent->left = cur;
+						if (cur->parent->data.key == _root->data.key) _root->left = cur;
+					}
 				}
-				else
-				{
-					c->parent->left = c;
-					if (c->parent->data.key == _root->data.key) _root->left = c;
+				if (c->parent){
+					if (c->parent->data.key < cur->data.key)
+					{
+						c->parent->right = c;
+						if (c->parent->data.key == _root->data.key) _root->right = c;
+					}
+					else
+					{
+						c->parent->left = c;
+						if (c->parent->data.key == _root->data.key) _root->left = c;
+					}
 				}
-                }
 
 				newcell = cur->left;
 				cell* newcell2 = cur->right;
@@ -265,6 +279,33 @@ private:
 			delete c;
 		}
 	}
+	void show(cell* c)
+	{
+		cell* cur = c;
+		if (c && c->left)
+		{
+			c = c->left;
+			cout << c->parent->data.key << c->parent->data.value << " ->left = " << c->data.key << c->data.value << endl;
+			show(c);
+		}
+		if (cur && cur->right)
+		{
+			cur = cur->right;
+			cout << cur->parent->data.key << cur->parent->data.value << " ->right = " << cur->data.key << cur->data.value << endl;
+			show(cur);
+		}
+		/*while (c->left)
+		{
+		c = c->left;
+		cout << c->data.key << c->data.value << endl;
+		show(c);
+		}
+		if (c->right)
+		{
+		c = c->right;
+		cout << c->data.key << c->data.value << endl;
+		}*/
+	}
 };
 
 template<typename Key, typename Value> int Storage_AVL<Key, Value>::heightdiff(cell *c)
@@ -283,7 +324,7 @@ template<typename Key, typename Value> int Storage_AVL<Key, Value>::height(cell 
 }
 template<typename Key, typename Value> void Storage_AVL<Key, Value>::rotCCW(cell *c1)
 {
-	if(c1 == 0) return;
+	if (c1 == 0) return;
 	cell* parent = c1->parent;
 	cell* c2 = c1->right;
 	if (c2 == 0) return;
@@ -313,7 +354,7 @@ template<typename Key, typename Value> void Storage_AVL<Key, Value>::rotCW(cell 
 	cell *T2 = c2->right;
 
 	c1->left = T2;
-	if(T2) T2->parent = c1;
+	if (T2) T2->parent = c1;
 
 	c2->right = c1;
 	c1->parent = c2;
@@ -344,7 +385,7 @@ template<typename Key, typename Value> void Storage_AVL<Key, Value>::lrotCW(cell
 	if (!c1) return;
 	if (!c1->left) return;
 	if (!c1->left->right) return;
-	
+
 	rotCCW(c1->left);
 	rotCW(c1);
 	return;
@@ -355,7 +396,7 @@ template<typename Key, typename Value> void Storage_AVL<Key, Value>::balance(cel
 	{
 		rotCCW(c);
 	}
-	else 
+	else
 	if (heightdiff(c) <= -2 && height(c->right->left) > height(c->right->right))
 	{
 		lrotCCW(c);
@@ -370,7 +411,7 @@ template<typename Key, typename Value> void Storage_AVL<Key, Value>::balance(cel
 	{
 		lrotCW(c);
 	}
-	
+
 	if (c->parent)
 	{
 		balance(c->parent);
