@@ -83,9 +83,17 @@ public:
 	{ 
 		return _size; 
 	};
-	void remove(const Key&a)
+	bool remove(const Key&a)
 	{
-		deletecell(findcell(a));
+		try
+		{
+			deletecell(findcell(a));
+		}
+		catch (std::logic_error err)
+		{
+			return false;
+		}
+		return true;
 	}
 
 	void clear()

@@ -26,15 +26,9 @@ class CORE
 private:
 	GraphicsInterface* mygui;
 
-	//Storage_List<double> _storage_of_parameters;
 	Storage_AVL<double*, bool> _parameters;
-	//Storage_List<double*> _constants;
-	//Storage_List<double> _storage_of_constants;
-	//Storage_List<Point> _storage_of_points;
-	//Storage_List<Segment> _storage_of_segments;
-	//Storage_List<Circle> _storage_of_circles;
-	//Storage_List<IConstraint*> _storage_of_constraints;
-	HashTable<IConstraint*, double*> _storage_of_constraint;
+	Storage_List<IConstraint*> _storage_of_constraints;
+	Storage_AVL<double*, IConstraint*> _storage_of_constraint;
 	Storage_List<ObjectSkin*> _selected_objects;
 	StorageOfObjects _storage_of_objects;
 
@@ -57,6 +51,7 @@ private:
 	bool addc_3ponline();
 	bool addc_excontact();
 	bool addc_incontact();
+	bool addc_spratio(double);
 
 public:
 	CORE();

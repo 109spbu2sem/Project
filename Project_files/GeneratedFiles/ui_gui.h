@@ -446,6 +446,7 @@ public:
          << QApplication::translate("GUI", "External circle contact", 0)
          << QApplication::translate("GUI", "Internal circle contact", 0)
          << QApplication::translate("GUI", "Distance from point to segment", 0)
+         << QApplication::translate("GUI", "Ratio between point and segment", 0)
         );
         ruleValueLabel->setText(QApplication::translate("GUI", "Value: ", 0));
         pushButton->setText(QApplication::translate("GUI", "Add", 0));

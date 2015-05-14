@@ -224,6 +224,7 @@ void CORE::DeleteAll()
 	mygui->WriteStatus("Cleaning...");
 	mygui->WriteMessage("");
 	_storage_of_constraint.clear();
+	_storage_of_constraints.clear();
 	mygui->WriteMessage("All rules were deleted");
 	writeToLog("All rules were deleted");
 	_storage_of_objects.clear();
@@ -243,35 +244,30 @@ void CORE::DeleteSelected()
 	{
 		switch (i.getValue()->objectType())
 		{
-		case PRIMITIVE_POINT:
-		{
-			Point* p = dynamic_cast<Point*>(i.getValue());
-			try
+			case PRIMITIVE_POINT:
 			{
+				Point* p = dynamic_cast<Point*>(i.getValue());
+				_storage_of_constraint.remove(p->x);
+				_storage_of_constraint.remove(p->y);
 				_parameters.remove(p->x);
 				_parameters.remove(p->y);
-				delete p;
+				//delete p;
+				break;
 			}
-			catch (...) { }
-			break;
-		}
-		case PRIMITIVE_SEGMENT:
-		{
-			//Segment* s = dynamic_cast<Segment*>(i.getValue());
-			break;
-		}
-		case PRIMITIVE_CIRCLE:
-		{
-			Circle* c = dynamic_cast<Circle*>(i.getValue());
-			try
+			case PRIMITIVE_SEGMENT:
 			{
-				_parameters.remove(c->r);
+				break;
 			}
-			catch (...) { }
-			break;
-		}
+			case PRIMITIVE_CIRCLE:
+			{
+				Circle* c = dynamic_cast<Circle*>(i.getValue());
+				_storage_of_constraint.remove(c->r);
+				_parameters.remove(c->r);
+				break;
+			}
 		}
 		_storage_of_objects.remove(i.getValue()->id);
+		delete i.getValue();
 	}
 	_selected_objects.clear();
 	Redraw(mygui);

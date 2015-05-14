@@ -145,6 +145,11 @@
              <string>Distance from point to segment</string>
             </property>
            </item>
+           <item>
+            <property name="text">
+             <string>Ratio between point and segment</string>
+            </property>
+           </item>
           </widget>
          </item>
          <item>

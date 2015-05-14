@@ -117,15 +117,18 @@ void CORE::Redraw(Interface* infa)
 void CORE::Calculate()
 {
 	writeToLog("**********************Start calculating******************");
-	mygui->WriteText("Work","Start redrawing");
+	mygui->WriteText("Work", "Start redrawing");
 	ConstraintCollector collector;
 	Storage_Array< double* > parameters;
 	writeToLog("Generating graphs");
-	for (HashViewer<IConstraint*, double*> i(_storage_of_constraint); i.canMoveNext(); i.moveNext())
+
+	/*Here for Anton's graphs*/
+
+	for (ListViewer<IConstraint*> i(_storage_of_constraints); i.canMoveNext(); i.moveNext())
 	{
 		try
 		{
-			collector.addConstraint(i.getFirst());
+			collector.addConstraint(i.getValue());
 		}
 		catch (...) {}
 	}
@@ -139,7 +142,7 @@ void CORE::Calculate()
 	//BuildFigure(&collector, &parameters);
 	writeToLog("---------------------Building new figure-----------------");
 	mygui->WriteText("Work", "Redrawing...");
-	BuildFigure/*GoldMethod*/(&collector, &parameters);
+	BuildFigureGoldMethod(&collector, &parameters);
 	writeToLog("---------------------Success build-----------------------");
 	Redraw(mygui);
 	mygui->WriteText("Done", "");
@@ -151,11 +154,11 @@ void CORE::BuildFigureGoldMethod(IConstraint *constr, Storage_Array<double*>* pa
 {
 	// small value
 	const double f_epsi = 1e-6;
+	if (constr->error() < f_epsi) return;
 	// great value
 	const double f_Epsi = 1e+6;
 	// amount of iterations
 	unsigned f_count = 0;
-	if (constr->error() < f_epsi) return;
 	// current value of function
 	double f_current = constr->error();
 	// value of function on previous iteration
@@ -169,68 +172,74 @@ void CORE::BuildFigureGoldMethod(IConstraint *constr, Storage_Array<double*>* pa
 	{
 		f_count++;
 		f_prev = f_current;
-		for (unsigned k = 0; k < parameters->size(); ++k)
+		for (unsigned k = 0; k < parameters->size(); k++)
 			grad[k] = constr->diff((*parameters)[k]);
 
-		double alpha1 = 1;
-		for (unsigned k = 0; k < parameters->size(); ++k)
+		double a1 = 1;
+		for (unsigned k = 0; k < parameters->size(); k++)
 			old_para[k] = *(*parameters)[k];
-		for (unsigned k = 0; k < parameters->size(); ++k)
-			*(*parameters)[k] -= alpha1*grad[k];
-		double f_alpha1 = constr->error();
+		for (unsigned k = 0; k < parameters->size(); k++)
+			*(*parameters)[k] -= a1*grad[k];
+		double f_a1 = constr->error();
 		nf_eval++;
 
-		while (f_alpha1 <= f_prev)
+		double *newgrad = new double[parameters->size()];
+		for (unsigned k = 0; k < parameters->size(); k++)
+			newgrad[k] = grad[k];
+		while (f_a1 <= f_prev)
 		{
-			alpha1 *= 2;
-			for (unsigned k = 0; k < parameters->size(); ++k)
-				*(*parameters)[k] = old_para[k] - alpha1*grad[k];
-			f_alpha1 = constr->error();
+			a1 *= 2; // 1.5
+			for (unsigned k = 0; k < parameters->size(); k++)
+				*(*parameters)[k] = old_para[k] - a1*grad[k];
+			f_a1 = constr->error();
+			for (unsigned k = 0; k < parameters->size(); k++)
+				newgrad[k] = constr->diff((*parameters)[k]);
 			nf_eval++;
 		}
+		delete[] newgrad;
 		// ratio of the golden section
 		const double gold = 0.5 + sqrt(5.0 / 4);
-		double alpha0 = 0;
-		double f_alpha0 = f_prev;
-		double alphal = alpha1 - (alpha1 - alpha0) / gold;
-		double alphar = alpha0 + (alpha1 - alpha0) / gold;
-		for (unsigned k = 0; k < parameters->size(); ++k)
-			*(*parameters)[k] = old_para[k] - alphal*grad[k];
-		double f_alphal = constr->error();
+		double a0 = 0;
+		double f_a0 = f_prev;
+		double aleft = a1 - (a1 - a0) / gold;
+		double aright = a0 + (a1 - a0) / gold;
+		for (unsigned k = 0; k < parameters->size(); k++)
+			*(*parameters)[k] = old_para[k] - aleft*grad[k];
+		double f_al = constr->error();
 		nf_eval++;
-		for (unsigned k = 0; k < parameters->size(); ++k)
-			*(*parameters)[k] = old_para[k] - alphar*grad[k];
-		double f_alphar = constr->error();
+		for (unsigned k = 0; k < parameters->size(); k++)
+			*(*parameters)[k] = old_para[k] - aright*grad[k];
+		double f_ar = constr->error();
 		nf_eval++;
 		// amount of interations of the golden section
 		unsigned gold_count = 0;
-		while (abs(f_alphal - f_alphar) > f_epsi && gold_count < f_Epsi)
+		while (abs(f_al - f_ar) > f_epsi && gold_count < f_Epsi)
 		{
 			gold_count++;
-			if (f_alphal < f_alphar)
+			if (f_al < f_ar)
 			{
-				alpha1 = alphar; f_alpha1 = f_alphar;
-				alphar = alphal; f_alphar = f_alphal;
-				alphal = alpha1 - (alpha1 - alpha0) / gold;
-				for (unsigned k = 0; k < parameters->size(); ++k)
-					*(*parameters)[k] = old_para[k] - alphal*grad[k];
-				f_alphal = constr->error();
+				a1 = aright; f_a1 = f_ar;
+				aright = aleft; f_ar = f_al;
+				aleft = a1 - (a1 - a0) / gold;
+				for (unsigned k = 0; k < parameters->size(); k++)
+					*(*parameters)[k] = old_para[k] - aleft*grad[k];
+				f_al = constr->error();
 				nf_eval++;
 			}
 			else
 			{
-				alpha0 = alphal; f_alpha0 = f_alphal;
-				alphal = alphar; f_alphal = f_alphar;
-				alphar = alpha0 + (alpha1 - alpha0) / gold;
-				for (unsigned k = 0; k < parameters->size(); ++k)
-					*(*parameters)[k] = old_para[k] - alphar*grad[k];
-				f_alphar = constr->error();
+				a0 = aleft; f_a0 = f_al;
+				aleft = aright; f_al = f_ar;
+				aright = a0 + (a1 - a0) / gold;
+				for (unsigned k = 0; k < parameters->size(); k++)
+					*(*parameters)[k] = old_para[k] - aright*grad[k];
+				f_ar = constr->error();
 				nf_eval++;
 			}
 		}
 		writeToLog(gold_count, "golden iterations= ", 2);
-		for (unsigned k = 0; k < parameters->size(); ++k)
-			*(*parameters)[k] = old_para[k] - (alphar + alphal) / 2 * grad[k];
+		for (unsigned k = 0; k < parameters->size(); k++)
+			*(*parameters)[k] = old_para[k] - (aright + aleft) / 2 * grad[k];
 		f_current = constr->error();
 		nf_eval++;
 		writeToLog(f_current, "f = ", 2);
@@ -238,6 +247,7 @@ void CORE::BuildFigureGoldMethod(IConstraint *constr, Storage_Array<double*>* pa
 	//} while (abs(f_prev - f_current) > f_epsi);
 	} while (abs(f_prev - f_current) /*/ abs(f_prev)*/ > f_epsi && f_count < f_Epsi);
 	writeToLog(f_count, "iterations= ", 2);
+	writeToLog(nf_eval, "Steps= ", 2);
 	delete[] grad;
 	delete[] old_para;
 }

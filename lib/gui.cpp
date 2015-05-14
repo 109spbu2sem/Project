@@ -60,12 +60,14 @@ void GUI::WriteError(const char* Text)
 void GUI::WriteStatus(const char* Text)
 {
 	ui->statusBar->setText(Text);
+	this->repaint();
 	return;
 }
 
 void GUI::WriteMessage(const char* Text)
 {
 	ui->messageBar->setText(Text);
+	this->repaint();
 	return;
 }
 // Write Short to status bar, Long to message bar
@@ -73,6 +75,7 @@ void GUI::WriteText(const char* Short, const char* Long)
 {
 	ui->statusBar->setText(Short);
 	ui->messageBar->setText(Long);
+	this->repaint();
 }
 
 bool GUI::Set_properties_of_point(unsigned id, double x, double y, Color c)
@@ -369,6 +372,17 @@ void GUI::on_pushButton_clicked()
 			if (!ui->ruleValueEdit->text().isEmpty())
 			{
 				mycore->AddRule(CONSTR_P2SECTDIST, ui->ruleValueEdit->text().toDouble());
+				mycore->Calculate();
+			}
+			else
+				WriteStatus("Need value");
+			break;
+		}
+		case 8:
+		{
+			if (!ui->ruleValueEdit->text().isEmpty())
+			{
+				mycore->AddRule(CONSTR_SPRATIO, ui->ruleValueEdit->text().toDouble());
 				mycore->Calculate();
 			}
 			else
