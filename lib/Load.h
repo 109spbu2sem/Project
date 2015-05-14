@@ -13,15 +13,12 @@ using namespace std;
 
 class Load {
 	QString _way;
-	ifstream _load;
-	streamoff _cur;
 	QFile*_file;
 	QXmlStreamReader _xml;
 	CORE*_action;
 public:
 	Load();
-	void ConnectCORE(CORE*core);
-	void fileWay(QString);
+	Load(CORE*, QString);
 	void begin();
 	void point();
 	void segment();

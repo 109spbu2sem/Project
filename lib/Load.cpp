@@ -2,16 +2,16 @@
 #include "global.h"
 
 Load::Load(){
-
+	_action->Calculate();
 };
-void Load::fileWay(QString way) {
-	_way = way;
-}
-void Load::ConnectCORE(CORE*core){
+
+Load::Load(CORE*core, QString way){
 	_action = core;
-}
+	_way = way;
+	_action->DeleteAll();
+};
+
 void Load::begin() {
-	//_action->DeleteAll();
 	_file = new QFile(_way);
 	if (!_file->open(QIODevice::ReadOnly | QIODevice::Text))
 	{
@@ -53,7 +53,10 @@ void Load::point() {
 	_xml.readNext();
 	c = _xml.text().toDouble();
 	Color c1(c);
-	_action->AddObject(x, y, c1, id, 0);
+	_action->AddObject(x, 0, y, 0, c1, id, 0);
+	while (_xml.name() != "point" && _xml.name() != "segment" && _xml.name() != "circle" && !_xml.atEnd())
+		_xml.readNext();
+	_xml.readNext();
 	while (_xml.name() != "point" && _xml.name() != "segment" && _xml.name() != "circle" && !_xml.atEnd())
 		_xml.readNext();
 	if (_xml.name() == "point")
@@ -68,10 +71,8 @@ void Load::point() {
 
 void Load::segment() {
 	unsigned id;
-	double x1;
-	double y1;
-	double x2;
-	double y2;
+	unsigned id1;
+	unsigned id2;
 	double c;
 	while (_xml.name() != "id") {
 		_xml.readNext();
@@ -80,27 +81,23 @@ void Load::segment() {
 	}
 	_xml.readNext();
 	id = _xml.text().toInt();
-	while (_xml.name() != "x1")
+	while (_xml.name() != "id1")
 		_xml.readNext();
 	_xml.readNext();
-	x1 = _xml.text().toDouble();
-	while (_xml.name() != "y1")
+	id1 = _xml.text().toInt();
+	while (_xml.name() != "id2")
 		_xml.readNext();
 	_xml.readNext();
-	y1 = _xml.text().toDouble();
-	while (_xml.name() != "x2")
-		_xml.readNext();
-	_xml.readNext();
-	x2 = _xml.text().toDouble();
-	while (_xml.name() != "y2")
-		_xml.readNext();
-	_xml.readNext();
-	y2 = _xml.text().toDouble();
+	id2 = _xml.text().toInt();
 	while (_xml.name() != "color")
 		_xml.readNext();
 	_xml.readNext();
 	c = _xml.text().toDouble();
 	Color c1(c);
+	_action->AddObject(id1, id2, c1, id, 0);
+	while (_xml.name() != "point" && _xml.name() != "segment" && _xml.name() != "circle" && !_xml.atEnd())
+		_xml.readNext();
+	_xml.readNext();
 	while (_xml.name() != "point" && _xml.name() != "segment" && _xml.name() != "circle" && !_xml.atEnd())
 		_xml.readNext();
 	if (_xml.name() == "point")
@@ -115,8 +112,7 @@ void Load::segment() {
 
 void Load::circle() {
 	unsigned id;
-	double x;
-	double y;
+	unsigned id1;
 	double r;
 	double c;
 	while (_xml.name() != "id") {
@@ -126,14 +122,10 @@ void Load::circle() {
 	}
 	_xml.readNext();
 	id = _xml.text().toInt();
-	while (_xml.name() != "x")
+	while (_xml.name() != "id1")
 		_xml.readNext();
 	_xml.readNext();
-	x = _xml.text().toDouble();
-	while (_xml.name() != "y")
-		_xml.readNext();
-	_xml.readNext();
-	y = _xml.text().toDouble();
+	id1 = _xml.text().toInt();
 	while (_xml.name() != "radius")
 		_xml.readNext();
 	_xml.readNext();
@@ -143,6 +135,10 @@ void Load::circle() {
 	_xml.readNext();
 	c = _xml.text().toDouble();
 	Color c1(c);
+	_action->AddObject(id1, r, 0, c1, id, 0);
+	while (_xml.name() != "point" && _xml.name() != "segment" && _xml.name() != "circle" && !_xml.atEnd())
+		_xml.readNext();
+	_xml.readNext();
 	while (_xml.name() != "point" && _xml.name() != "segment" && _xml.name() != "circle" && !_xml.atEnd())
 		_xml.readNext();
 	if (_xml.name() == "point")

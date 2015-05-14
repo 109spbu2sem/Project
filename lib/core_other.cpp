@@ -275,9 +275,7 @@ void CORE::DeleteSelected()
 
 void CORE::IWantSave()
 {
-	Save mysave;
-	Redraw(&mysave);
-	mysave.begin();
+	Save mysave(_fileWay);
 	StorageOfObjects::viewer i(_storage_of_objects);
 	while (i.canMoveNext())
 	{
@@ -296,7 +294,7 @@ void CORE::IWantSave()
 		if (i.value()->objectType() == PRIMITIVE_SEGMENT)
 		{
 			Segment* v = dynamic_cast<Segment*>(i.value());
-			mysave.DrawSegment(v->id.getID(), *v->p1->x, *v->p1->y, *v->p2->x, *v->p2->y, v->color.getColor(), 0);
+			mysave.DrawSegment(v->id.getID(), v->p1->id.getID(), v->p2->id.getID(), v->color.getColor(), 0);
 			i.moveNext();
 			continue;
 
@@ -304,7 +302,7 @@ void CORE::IWantSave()
 		if (i.value()->objectType() == PRIMITIVE_CIRCLE)
 		{
 			Circle* v = dynamic_cast<Circle*>(i.value());
-			mysave.DrawCircle(v->id.getID(), *v->p->x, *v->p->y, *v->r, v->color.getColor(), 0);
+			mysave.DrawCircle(v->id.getID(), v->p->id.getID(), *v->r, v->color.getColor(), 0);
 			i.moveNext();
 			continue;
 		}
@@ -312,10 +310,8 @@ void CORE::IWantSave()
 }
 
 void CORE::IWantSaveAs(QString way) {
-	Save mysave;
-	Redraw(&mysave);
-	mysave.fileWay(way);
-	mysave.begin();
+	_fileWay = way;
+	Save mysave(way);
 	StorageOfObjects::viewer i(_storage_of_objects);
 	while (i.canMoveNext())
 	{
@@ -334,7 +330,7 @@ void CORE::IWantSaveAs(QString way) {
 		if (i.value()->objectType() == PRIMITIVE_SEGMENT)
 		{
 			Segment* v = dynamic_cast<Segment*>(i.value());
-			mysave.DrawSegment(v->id.getID(), *v->p1->x, *v->p1->y, *v->p2->x, *v->p2->y, v->color.getColor(), 0);
+			mysave.DrawSegment(v->id.getID(), v->p1->id.getID(), v->p2->id.getID(), v->color.getColor(), 0);
 			i.moveNext();
 			continue;
 
@@ -342,7 +338,7 @@ void CORE::IWantSaveAs(QString way) {
 		if (i.value()->objectType() == PRIMITIVE_CIRCLE)
 		{
 			Circle* v = dynamic_cast<Circle*>(i.value());
-			mysave.DrawCircle(v->id.getID(), *v->p->x, *v->p->y, *v->r, v->color.getColor(), 0);
+			mysave.DrawCircle(v->id.getID(), v->p->id.getID(), *v->r, v->color.getColor(), 0);
 			i.moveNext();
 			continue;
 		}
@@ -351,6 +347,6 @@ void CORE::IWantSaveAs(QString way) {
 
 void CORE::IWantLoad(QString way)
 {
-/*	myload.fileWay(way);
-	myload.begin();*/
+	Load myload(this, way);
+	myload.begin();
 }

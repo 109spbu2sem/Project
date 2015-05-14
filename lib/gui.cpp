@@ -426,7 +426,14 @@ void GUI::on_actionRedraw_all_triggered()
 
 void GUI::on_actionSave_triggered()
 {
-	// need add save as if 1st time
+	if (flag == false) {
+		QString filename = QFileDialog::getSaveFileName(
+			this, tr("Open File"),
+			"C://",
+			"Text File (*.txt);; Xml File (*.xml)");
+		mycore->IWantSaveAs(filename);
+		flag = true;
+	}
 	mycore->IWantSave();
 }
 
@@ -436,6 +443,7 @@ void GUI::on_actionSave_As_triggered()
 		this, tr("Open File"),
 		"C://",
 		"Text File (*.txt);; Xml File (*.xml)");
+	flag = true;
 	mycore->IWantSaveAs(filename);
 }
 
@@ -450,7 +458,8 @@ void GUI::on_actionLoad_triggered()
 		this, tr("Open File"),
 		"C://",
 		"Text File (*.txt);; Xml File (*.xml)");
-	mycore->DeleteAll();
+	if (filename == "")
+		return;
 	mycore->IWantLoad(filename);
 }
 void GUI::on_objectsList_clicked(const QModelIndex &index)

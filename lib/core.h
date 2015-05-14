@@ -25,6 +25,7 @@ class CORE
 {
 private:
 	GraphicsInterface* mygui;
+	QString _fileWay;
 
 	Storage_AVL<double*, bool> _parameters;
 	Storage_List<IConstraint*> _storage_of_constraints;

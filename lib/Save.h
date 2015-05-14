@@ -11,18 +11,15 @@
 using namespace std;
 class CORE;
 
-class Save: public Interface{
+class Save {
 	string _way;
 	fstream _save;
-	//CORE*_action;
 public:
 	Save();
+	Save(QString);
 	~Save();
-	void begin();
-	virtual bool DrawPoint(unsigned, double, double, Color, bool);
-	virtual bool DrawSegment(unsigned, double, double, double, double, Color, bool);
-	virtual bool DrawCircle(unsigned, double, double, double, Color, bool);
-	virtual bool Clear();
-	string fileWay(QString);
+	bool DrawPoint(unsigned, double, double, Color, bool);
+	bool DrawSegment(unsigned, unsigned, unsigned, Color, bool);
+	bool DrawCircle(unsigned, unsigned, double, Color, bool);
 };
 #endif // SAVE_H 
