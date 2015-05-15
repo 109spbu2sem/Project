@@ -748,7 +748,7 @@ bool CORE::addc_spratio(double value)
 				_storage_of_constraint.add(val, rule);
 				return true;
 			}
-		}
-		return false;
+		}	
 	}
+    return false;
 }

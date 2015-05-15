@@ -16,7 +16,7 @@ Save::Save(QString way) {
 Save::~Save(){
 	_save << "</list>\n";
 	_save.close();
-};
+}
 
 bool Save::DrawPoint(unsigned id, double x, double y, Color c, bool mode)
 {

@@ -77,7 +77,7 @@ private slots:
 	void on_deleteObjBTN_clicked();
 	
 private:
-	bool flag = false;
+    bool flag;
 	Ui::GUI *ui;
 	CORE* mycore;
 	QGraphicsScene* mainscene;

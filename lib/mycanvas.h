@@ -31,7 +31,6 @@ public:
 
 public slots:
 	void mousePressEvent(QMouseEvent *event);
-	void mouseDoubleClickEvent(QMouseEvent *event);
 	void wheelEvent(QWheelEvent *event);
 	void keyPressEvent(QKeyEvent *event);
 private:

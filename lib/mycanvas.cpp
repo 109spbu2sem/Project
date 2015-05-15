@@ -78,22 +78,6 @@ void MyCanvas::keyPressEvent(QKeyEvent *event)
 	}
 }
 
-void MyCanvas::mouseDoubleClickEvent(QMouseEvent *event)
-{	
-	/*switch (_tool)
-	{
-	case TOOL_Select:
-	{
-		QPointF pt = mapToScene(event->pos());
-		objectPropertiesWindow ob(this);
-		ob.exec();
-		return;
-	}
-	default:
-		return;
-	}*/
-}
-
 void MyCanvas::wheelEvent(QWheelEvent *event)
 {
 	if (event->delta() > 0)
