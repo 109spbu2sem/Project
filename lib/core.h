@@ -16,6 +16,7 @@
 #include "storages\AVL_tree.h"
 #include "storageofobjects.h"
 #include "enums.h"
+#include "storageofconstraints.h"
 
 
 class Save;
@@ -29,8 +30,8 @@ private:
 
 	Storage_AVL<double*, bool> _parameters;
 	Storage_List<IConstraint*> _storage_of_constraints;
-	Storage_AVL<double*, IConstraint*> _storage_of_constraint;
-	Storage_List<ObjectSkin*> _selected_objects;
+	Storage_AVL<ObjectBase*, IConstraint*> _storage_of_constraint;
+	Storage_List<ObjectBase*> _selected_objects;
 	StorageOfObjects _storage_of_objects;
 
 	bool isInArea(double x, double y, double x1, double y1, double x2, double y2);

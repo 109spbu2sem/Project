@@ -98,7 +98,7 @@ void CORE::ConcatenatePoints()
 {
 	if (_selected_objects.size() == 2)
 	{
-		ListViewer<ObjectSkin*> k(_selected_objects);
+		ListViewer<ObjectBase*> k(_selected_objects);
 		Point* obj = dynamic_cast<Point*>(k.getValue());
 		k.moveNext();
 		Point* obj1 = dynamic_cast<Point*>(k.getValue());
@@ -133,6 +133,7 @@ void CORE::AddRule(unsigned type, double value)
 			{
 				mygui->WriteStatus("Error");
 				mygui->WriteMessage("Can't add rule to these objects.");
+				mygui->WriteError("Can't add rule to these objects.");
 				return;
 			}
 		}
@@ -147,6 +148,7 @@ void CORE::AddRule(unsigned type, double value)
 			{
 				mygui->WriteStatus("Error");
 				mygui->WriteMessage("Can't add rule to these objects.");
+				mygui->WriteError("Can't add rule to these objects.");
 				return;
 			}
 			break;
@@ -162,6 +164,7 @@ void CORE::AddRule(unsigned type, double value)
 			{
 				mygui->WriteStatus("Error");
 				mygui->WriteMessage("Can't add rule to these objects.");
+				mygui->WriteError("Can't add rule to these objects.");
 				return;
 			}
 			break;
@@ -177,6 +180,7 @@ void CORE::AddRule(unsigned type, double value)
 			{
 				mygui->WriteStatus("Error");
 				mygui->WriteMessage("Can't add rule to these objects.");
+				mygui->WriteError("Can't add rule to these objects.");
 				return;
 			}
 			break;
@@ -192,6 +196,7 @@ void CORE::AddRule(unsigned type, double value)
 			{
 				mygui->WriteStatus("Error");
 				mygui->WriteMessage("Can't add rule to these objects.");
+				mygui->WriteError("Can't add rule to these objects.");
 				return;
 			}
 			break;
@@ -207,6 +212,7 @@ void CORE::AddRule(unsigned type, double value)
 			{
 				mygui->WriteStatus("Error");
 				mygui->WriteMessage("Can't add rule to these objects.");
+				mygui->WriteError("Can't add rule to these objects.");
 				return;
 			}
 			break;
@@ -222,6 +228,7 @@ void CORE::AddRule(unsigned type, double value)
 			{
 				mygui->WriteStatus("Error");
 				mygui->WriteMessage("Can't add rule to these objects.");
+				mygui->WriteError("Can't add rule to these objects.");
 				return;
 			}
 			break;
@@ -237,6 +244,7 @@ void CORE::AddRule(unsigned type, double value)
 			{
 				mygui->WriteStatus("Error");
 				mygui->WriteMessage("Can't add rule to these objects.");
+				mygui->WriteError("Can't add rule to these objects.");
 				return;
 			}
 			break;
@@ -252,6 +260,7 @@ void CORE::AddRule(unsigned type, double value)
 			{
 				mygui->WriteStatus("Error");
 				mygui->WriteMessage("Can't add rule to these objects.");
+				mygui->WriteError("Can't add rule to these objects.");
 				return;
 			}
 			break;
@@ -260,6 +269,7 @@ void CORE::AddRule(unsigned type, double value)
 		{
 			mygui->WriteStatus("FATAL ERROR");
 			mygui->WriteMessage("Wrong type of rule.");
+			mygui->WriteError("FATAL ERROR: Wrong type of rule");
 			return;
 		}
 	}
@@ -344,7 +354,7 @@ bool CORE::addc_p2pdist(double value)
 {
 	if (_selected_objects.size() == 2)
 	{
-		ListViewer<ObjectSkin*> k(_selected_objects);
+		ListViewer<ObjectBase*> k(_selected_objects);
 		Point* obj1 = dynamic_cast<Point*>(k.getValue());
 		k.moveNext();
 		Point* obj2 = dynamic_cast<Point*>(k.getValue());
@@ -357,11 +367,8 @@ bool CORE::addc_p2pdist(double value)
 															obj2->x, obj2->y,
 															val);
 			_storage_of_constraints.add(rule);
-			_storage_of_constraint.add(obj1->x, rule);
-			_storage_of_constraint.add(obj1->y, rule);
-			_storage_of_constraint.add(obj2->x, rule);
-			_storage_of_constraint.add(obj2->y, rule);
-			_storage_of_constraint.add(val, rule);
+			_storage_of_constraint.add(obj1, rule);
+			_storage_of_constraint.add(obj2, rule);
 			return true;
 		}
 	}
@@ -371,7 +378,7 @@ bool CORE::addc_3ponline()
 {
 	if (_selected_objects.size() == 2)
 	{
-		ListViewer<ObjectSkin*> k(_selected_objects);
+		ListViewer<ObjectBase*> k(_selected_objects);
 		Point* obj1 = dynamic_cast<Point*>(k.getValue());
 		if (obj1)
 		{
@@ -383,12 +390,8 @@ bool CORE::addc_3ponline()
 																obj2->p1->x, obj2->p1->y,
 																obj2->p2->x, obj2->p2->y);
 				_storage_of_constraints.add(rule);
-				_storage_of_constraint.add(obj1->x, rule);
-				_storage_of_constraint.add(obj1->y, rule);
-				_storage_of_constraint.add(obj2->p1->x, rule);
-				_storage_of_constraint.add(obj2->p1->y, rule);
-				_storage_of_constraint.add(obj2->p2->x, rule);
-				_storage_of_constraint.add(obj2->p2->y, rule);
+				_storage_of_constraint.add(obj1, rule);
+				_storage_of_constraint.add(obj2, rule);
 				return true;
 			}
 		}
@@ -403,12 +406,8 @@ bool CORE::addc_3ponline()
 																ob2->p1->x, ob2->p1->y,
 																ob2->p2->x, ob2->p2->y);
 				_storage_of_constraints.add(rule);
-				_storage_of_constraint.add(ob1->x, rule);
-				_storage_of_constraint.add(ob1->y, rule);
-				_storage_of_constraint.add(ob2->p1->x, rule);
-				_storage_of_constraint.add(ob2->p1->y, rule);
-				_storage_of_constraint.add(ob2->p2->x, rule);
-				_storage_of_constraint.add(ob2->p2->y, rule);
+				_storage_of_constraint.add(ob1, rule);
+				_storage_of_constraint.add(ob2, rule);
 				return true;
 			}
 		}
@@ -416,7 +415,7 @@ bool CORE::addc_3ponline()
 	}
 	else if (_selected_objects.size() == 3)
 	{
-		ListViewer<ObjectSkin*> k(_selected_objects);
+		ListViewer<ObjectBase*> k(_selected_objects);
 		Point* o1 = dynamic_cast<Point*>(k.getValue());
 		if (o1)
 		{
@@ -432,12 +431,9 @@ bool CORE::addc_3ponline()
 																	o2->x, o2->y,
 																	o3->x, o3->y);
 					_storage_of_constraints.add(rule);
-					_storage_of_constraint.add(o1->x, rule);
-					_storage_of_constraint.add(o1->y, rule);
-					_storage_of_constraint.add(o2->x, rule);
-					_storage_of_constraint.add(o2->y, rule);
-					_storage_of_constraint.add(o3->x, rule);
-					_storage_of_constraint.add(o3->y, rule);
+					_storage_of_constraint.add(o1, rule);
+					_storage_of_constraint.add(o2, rule);
+					_storage_of_constraint.add(o3, rule);
 					return true;
 				}
 			}
@@ -450,7 +446,7 @@ bool CORE::addc_3pratio(double value)
 {
 	if (_selected_objects.size() == 3)
 	{
-		ListViewer<ObjectSkin*> k(_selected_objects);
+		ListViewer<ObjectBase*> k(_selected_objects);
 		Point* o1 = dynamic_cast<Point*>(k.getValue());
 		if (o1)
 		{
@@ -470,13 +466,9 @@ bool CORE::addc_3pratio(double value)
 																	o3->x, o3->y,
 																	val);
 					_storage_of_constraints.add(rule);
-					_storage_of_constraint.add(o1->x, rule);
-					_storage_of_constraint.add(o1->y, rule);
-					_storage_of_constraint.add(o2->x, rule);
-					_storage_of_constraint.add(o2->y, rule);
-					_storage_of_constraint.add(o3->x, rule);
-					_storage_of_constraint.add(o3->y, rule);
-					_storage_of_constraint.add(val, rule);
+					_storage_of_constraint.add(o1, rule);
+					_storage_of_constraint.add(o2, rule);
+					_storage_of_constraint.add(o3, rule);
 					return true;
 				}
 			}
@@ -488,7 +480,7 @@ bool CORE::addc_excontact()
 {
 	if (_selected_objects.size() == 2)
 	{
-		ListViewer<ObjectSkin*> k(_selected_objects);
+		ListViewer<ObjectBase*> k(_selected_objects);
 		Circle* o1 = dynamic_cast<Circle*>(k.getValue());
 		if (o1)
 		{
@@ -501,12 +493,8 @@ bool CORE::addc_excontact()
 																						  o2->p->x, o2->p->y,
 																						  o1->r, o2->r);
 				_storage_of_constraints.add(rule);
-				_storage_of_constraint.add(o1->p->x, rule);
-				_storage_of_constraint.add(o1->p->y, rule);
-				_storage_of_constraint.add(o2->p->x, rule);
-				_storage_of_constraint.add(o2->p->y, rule);
-				_storage_of_constraint.add(o1->r, rule);
-				_storage_of_constraint.add(o2->r, rule);
+				_storage_of_constraint.add(o1, rule);
+				_storage_of_constraint.add(o2, rule);
 				return true;
 			}
 		}
@@ -517,7 +505,7 @@ bool CORE::addc_incontact()
 {
 	if (_selected_objects.size() == 2)
 	{
-		ListViewer<ObjectSkin*> k(_selected_objects);
+		ListViewer<ObjectBase*> k(_selected_objects);
 		Circle* o1 = dynamic_cast<Circle*>(k.getValue());
 		if (o1)
 		{
@@ -530,12 +518,8 @@ bool CORE::addc_incontact()
 																						  o2->p->x, o2->p->y,
 																						  o1->r, o2->r);
 				_storage_of_constraints.add(rule);
-				_storage_of_constraint.add(o1->p->x, rule);
-				_storage_of_constraint.add(o1->p->y, rule);
-				_storage_of_constraint.add(o2->p->x, rule);
-				_storage_of_constraint.add(o2->p->y, rule);
-				_storage_of_constraint.add(o1->r, rule);
-				_storage_of_constraint.add(o2->r, rule);
+				_storage_of_constraint.add(o1, rule);
+				_storage_of_constraint.add(o2, rule);
 				return true;
 			}
 		}
@@ -546,7 +530,7 @@ bool CORE::addc_l2langle(double value)
 {
 	if (_selected_objects.size() == 2)
 	{
-		ListViewer<ObjectSkin*> k(_selected_objects);
+		ListViewer<ObjectBase*> k(_selected_objects);
 		Segment* obj1 = dynamic_cast<Segment*>(k.getValue());
 		k.moveNext();
 		Segment* obj2 = dynamic_cast<Segment*>(k.getValue());
@@ -561,15 +545,8 @@ bool CORE::addc_l2langle(double value)
 																				 obj2->p2->x, obj2->p2->y,
 																				 val);
 			_storage_of_constraints.add(rule);
-			_storage_of_constraint.add(obj1->p1->x, rule);
-			_storage_of_constraint.add(obj1->p1->y, rule);
-			_storage_of_constraint.add(obj1->p2->x, rule);
-			_storage_of_constraint.add(obj1->p2->y, rule);
-			_storage_of_constraint.add(obj2->p1->x, rule);
-			_storage_of_constraint.add(obj2->p1->y, rule);
-			_storage_of_constraint.add(obj2->p2->x, rule);
-			_storage_of_constraint.add(obj2->p2->y, rule);
-			_storage_of_constraint.add(val, rule);
+			_storage_of_constraint.add(obj1, rule);
+			_storage_of_constraint.add(obj2, rule);
 			return true;
 		}
 	}
@@ -579,7 +556,7 @@ bool CORE::addc_p2ldist(double value)
 {
 	if (_selected_objects.size() == 2)
 	{
-		ListViewer<ObjectSkin*> k(_selected_objects);
+		ListViewer<ObjectBase*> k(_selected_objects);
 		Point* obj1 = dynamic_cast<Point*>(k.getValue());
 		if (obj1)
 		{
@@ -595,13 +572,8 @@ bool CORE::addc_p2ldist(double value)
 																				obj2->p2->x, obj2->p2->y,
 																				val);
 				_storage_of_constraints.add(rule);
-				_storage_of_constraint.add(obj1->x, rule);
-				_storage_of_constraint.add(obj1->y, rule);
-				_storage_of_constraint.add(obj2->p1->x, rule);
-				_storage_of_constraint.add(obj2->p1->y, rule);
-				_storage_of_constraint.add(obj2->p2->x, rule);
-				_storage_of_constraint.add(obj2->p2->y, rule);
-				_storage_of_constraint.add(val, rule);
+				_storage_of_constraint.add(obj1, rule);
+				_storage_of_constraint.add(obj2, rule);
 				return true;
 			}
 			return false;
@@ -621,13 +593,8 @@ bool CORE::addc_p2ldist(double value)
 																				ob2->p2->x, ob2->p2->y,
 																				val);
 				_storage_of_constraints.add(rule);
-				_storage_of_constraint.add(ob1->x, rule);
-				_storage_of_constraint.add(ob1->y, rule);
-				_storage_of_constraint.add(ob2->p1->x, rule);
-				_storage_of_constraint.add(ob2->p1->y, rule);
-				_storage_of_constraint.add(ob2->p2->x, rule);
-				_storage_of_constraint.add(ob2->p2->y, rule);
-				_storage_of_constraint.add(val, rule);
+				_storage_of_constraint.add(ob1, rule);
+				_storage_of_constraint.add(ob2, rule);
 				return true;
 			}
 		}
@@ -638,7 +605,7 @@ bool CORE::addc_p2sdist(double value)
 {
 	if (_selected_objects.size() == 2)
 	{
-		ListViewer<ObjectSkin*> k(_selected_objects);
+		ListViewer<ObjectBase*> k(_selected_objects);
 		Point* obj1 = dynamic_cast<Point*>(k.getValue());
 		if (obj1)
 		{
@@ -654,13 +621,8 @@ bool CORE::addc_p2sdist(double value)
 																										obj2->p2->x, obj2->p2->y,
 																										val);
 				_storage_of_constraints.add(rule);
-				_storage_of_constraint.add(obj1->x, rule);
-				_storage_of_constraint.add(obj1->y, rule);
-				_storage_of_constraint.add(obj2->p1->x, rule);
-				_storage_of_constraint.add(obj2->p1->y, rule);
-				_storage_of_constraint.add(obj2->p2->x, rule);
-				_storage_of_constraint.add(obj2->p2->y, rule);
-				_storage_of_constraint.add(val, rule);
+				_storage_of_constraint.add(obj1, rule);
+				_storage_of_constraint.add(obj2, rule);
 				return true;
 			}
 			return false;
@@ -680,25 +642,19 @@ bool CORE::addc_p2sdist(double value)
 																										ob2->p2->x, ob2->p2->y,
 																										val);
 				_storage_of_constraints.add(rule);
-				_storage_of_constraint.add(ob1->x, rule);
-				_storage_of_constraint.add(ob1->y, rule);
-				_storage_of_constraint.add(ob2->p1->x, rule);
-				_storage_of_constraint.add(ob2->p1->y, rule);
-				_storage_of_constraint.add(ob2->p2->x, rule);
-				_storage_of_constraint.add(ob2->p2->y, rule);
-				_storage_of_constraint.add(val, rule);
+				_storage_of_constraint.add(ob1, rule);
+				_storage_of_constraint.add(ob2, rule);
 				return true;
 			}
 		}
 	}
 	return false;
 }
-
 bool CORE::addc_spratio(double value)
 {
 	if (_selected_objects.size() == 2)
 	{
-		ListViewer<ObjectSkin*> k(_selected_objects);
+		ListViewer<ObjectBase*> k(_selected_objects);
 		Point* obj1 = dynamic_cast<Point*>(k.getValue());
 		if (obj1)
 		{
@@ -714,13 +670,8 @@ bool CORE::addc_spratio(double value)
 																obj2->p2->x, obj2->p2->y,
 																val);
 				_storage_of_constraints.add(rule);
-				_storage_of_constraint.add(obj1->x, rule);
-				_storage_of_constraint.add(obj1->y, rule);
-				_storage_of_constraint.add(obj2->p1->x, rule);
-				_storage_of_constraint.add(obj2->p1->y, rule);
-				_storage_of_constraint.add(obj2->p2->x, rule);
-				_storage_of_constraint.add(obj2->p2->y, rule);
-				_storage_of_constraint.add(val, rule);
+				_storage_of_constraint.add(obj1, rule);
+				_storage_of_constraint.add(obj2, rule);
 				return true;
 			}
 		}
@@ -739,13 +690,8 @@ bool CORE::addc_spratio(double value)
 																ob2->p2->x, ob2->p2->y,
 																val);
 				_storage_of_constraints.add(rule);
-				_storage_of_constraint.add(ob1->x, rule);
-				_storage_of_constraint.add(ob1->y, rule);
-				_storage_of_constraint.add(ob2->p1->x, rule);
-				_storage_of_constraint.add(ob2->p1->y, rule);
-				_storage_of_constraint.add(ob2->p2->x, rule);
-				_storage_of_constraint.add(ob2->p2->y, rule);
-				_storage_of_constraint.add(val, rule);
+				_storage_of_constraint.add(ob1, rule);
+				_storage_of_constraint.add(ob2, rule);
 				return true;
 			}
 		}	

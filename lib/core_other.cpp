@@ -67,7 +67,7 @@ void CORE::Select(double x, double y)
 	{
 		try
 		{
-			ObjectSkin* object = _storage_of_objects.get(min_id);
+			ObjectBase* object = _storage_of_objects.get(min_id);
 			object->changeSelect();
 			if (object->isSelected())
 			{
@@ -96,7 +96,7 @@ void CORE::Select(double x, double y)
 			}
 			else
 			{
-				for (ListViewer<ObjectSkin*> j(_selected_objects); j.canMoveNext(); j.moveNext())
+				for (ListViewer<ObjectBase*> j(_selected_objects); j.canMoveNext(); j.moveNext())
 				{
 					if (object == j.getValue())
 					{
@@ -119,7 +119,7 @@ void CORE::Select(double x, double y)
 
 bool CORE::Select(unsigned id)
 {
-	ObjectSkin* object = _storage_of_objects.get(id); 
+	ObjectBase* object = _storage_of_objects.get(id); 
 	if (object)
 	{
 		object->changeSelect();
@@ -150,7 +150,7 @@ bool CORE::Select(unsigned id)
 		}
 		else
 		{
-			for (ListViewer<ObjectSkin*> j(_selected_objects); j.canMoveNext(); j.moveNext())
+			for (ListViewer<ObjectBase*> j(_selected_objects); j.canMoveNext(); j.moveNext())
 			{
 				if (object == j.getValue())
 				{
@@ -208,7 +208,7 @@ void CORE::Select(double x1, double y1, double x2, double y2)
 
 void CORE::ClearSelection()
 {
-	for (ListViewer< ObjectSkin* > i(_selected_objects); i.canMoveNext(); i.moveNext())
+	for (ListViewer< ObjectBase* > i(_selected_objects); i.canMoveNext(); i.moveNext())
 	{
 		i.getValue()->changeSelect(false);
 	}
@@ -240,18 +240,16 @@ void CORE::DeleteAll()
 
 void CORE::DeleteSelected()
 {
-	for (ListViewer< ObjectSkin* > i(_selected_objects); i.canMoveNext(); i.moveNext())
+	for (ListViewer< ObjectBase* > i(_selected_objects); i.canMoveNext(); i.moveNext())
 	{
 		switch (i.getValue()->objectType())
 		{
 			case PRIMITIVE_POINT:
 			{
 				Point* p = dynamic_cast<Point*>(i.getValue());
-				_storage_of_constraint.remove(p->x);
-				_storage_of_constraint.remove(p->y);
+				_storage_of_constraint.remove(p);
 				_parameters.remove(p->x);
 				_parameters.remove(p->y);
-				//delete p;
 				break;
 			}
 			case PRIMITIVE_SEGMENT:
@@ -261,7 +259,7 @@ void CORE::DeleteSelected()
 			case PRIMITIVE_CIRCLE:
 			{
 				Circle* c = dynamic_cast<Circle*>(i.getValue());
-				_storage_of_constraint.remove(c->r);
+				_storage_of_constraint.remove(c);
 				_parameters.remove(c->r);
 				break;
 			}

@@ -139,8 +139,6 @@
     <ClCompile Include="..\lib\Color.cpp" />
     <ClCompile Include="..\lib\constraints\DistancePoint-Section.cpp" />
     <ClCompile Include="..\lib\constraints\DistanceToTheLine.cpp" />
-    <ClCompile Include="..\lib\LineSkin.cpp" />
-    <ClCompile Include="..\lib\ObjectSkin.cpp" />
     <ClCompile Include="..\lib\core_add.cpp" />
     <ClCompile Include="..\lib\core_other.cpp" />
     <ClCompile Include="..\lib\core_private.cpp" />
@@ -148,11 +146,12 @@
     <ClCompile Include="..\lib\gui.cpp" />
     <ClCompile Include="..\lib\main.cpp" />
     <ClCompile Include="..\lib\mycanvas.cpp" />
+    <ClCompile Include="..\lib\ObjectBase.cpp" />
     <ClCompile Include="..\lib\objectpropertieswindow.cpp" />
     <ClCompile Include="..\lib\Save.cpp" />
     <ClCompile Include="..\lib\settings.cpp" />
+    <ClCompile Include="..\lib\storageofconstraints .cpp" />
     <ClCompile Include="..\lib\storageofobjects.cpp" />
-    <ClCompile Include="..\lib\structures.cpp" />
     <ClCompile Include="..\lib\Load.cpp" />
     <ClCompile Include="Release\moc_objectpropertieswindow.cpp">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
@@ -169,13 +168,13 @@
     <ClInclude Include="..\lib\constraints\DistanceToTheLine.h" />
     <ClInclude Include="..\lib\enums.h" />
     <ClInclude Include="..\lib\Id.h" />
-    <ClInclude Include="..\lib\LineSkin.h" />
-    <ClInclude Include="..\lib\ObjectSkin.h" />
     <ClInclude Include="..\lib\constraints\ThreePointsOnTheLine.h" />
     <ClInclude Include="..\lib\core.h" />
     <ClInclude Include="..\lib\global.h" />
+    <ClInclude Include="..\lib\ObjectBase.h" />
     <ClInclude Include="..\lib\Save.h" />
     <ClInclude Include="..\lib\settings.h" />
+    <ClInclude Include="..\lib\storageofconstraints.h" />
     <ClInclude Include="..\lib\storageofobjects.h" />
     <ClInclude Include="..\lib\storages\AVL_tree.h" />
     <ClInclude Include="..\lib\storages\queue.h" />

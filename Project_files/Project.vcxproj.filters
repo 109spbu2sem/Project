@@ -56,12 +56,6 @@
     <ClCompile Include="..\lib\constraints\DistanceToTheLine.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="..\lib\LineSkin.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="..\lib\ObjectSkin.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="..\lib\core_add.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -84,9 +78,6 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="..\lib\objectpropertieswindow.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="..\lib\structures.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Debug\moc_gui.cpp">
@@ -119,6 +110,12 @@
     <ClCompile Include="..\lib\Load.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="..\lib\storageofconstraints .cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\lib\ObjectBase.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\lib\constraints\AngleSegment-Segment.h">
@@ -143,12 +140,6 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="..\lib\Id.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\lib\LineSkin.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\lib\ObjectSkin.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="..\lib\constraints\ThreePointsOnTheLine.h">
@@ -212,6 +203,12 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="..\lib\enums.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\lib\storageofconstraints.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\lib\ObjectBase.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

@@ -183,20 +183,14 @@ void CORE::BuildFigureGoldMethod(IConstraint *constr, Storage_Array<double*>* pa
 		double f_a1 = constr->error();
 		nf_eval++;
 
-		double *newgrad = new double[parameters->size()];
-		for (unsigned k = 0; k < parameters->size(); k++)
-			newgrad[k] = grad[k];
 		while (f_a1 <= f_prev)
 		{
 			a1 *= 2; // 1.5
 			for (unsigned k = 0; k < parameters->size(); k++)
 				*(*parameters)[k] = old_para[k] - a1*grad[k];
 			f_a1 = constr->error();
-			for (unsigned k = 0; k < parameters->size(); k++)
-				newgrad[k] = constr->diff((*parameters)[k]);
 			nf_eval++;
 		}
-		delete[] newgrad;
 		// ratio of the golden section
 		const double gold = 0.5 + sqrt(5.0 / 4);
 		double a0 = 0;
@@ -248,6 +242,8 @@ void CORE::BuildFigureGoldMethod(IConstraint *constr, Storage_Array<double*>* pa
 	} while (abs(f_prev - f_current) /*/ abs(f_prev)*/ > f_epsi && f_count < f_Epsi);
 	writeToLog(f_count, "iterations= ", 2);
 	writeToLog(nf_eval, "Steps= ", 2);
+	if (constr->error() >= f_epsi)
+		mygui->WriteError("Can't build true figure.");
 	delete[] grad;
 	delete[] old_para;
 }

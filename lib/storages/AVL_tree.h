@@ -95,10 +95,10 @@ public:
 		}
 		return true;
 	}
-	void showTree(/*const Key& a*/)
-	{
+	//void showTree(/*const Key& a*/)
+	/*{
 		return show(_root);
-	}
+	}*/
 
 	void clear()
 	{
@@ -279,7 +279,7 @@ private:
 			delete c;
 		}
 	}
-	void show(cell* c)
+	/*void show(cell* c)
 	{
 		cell* cur = c;
 		if (c && c->left)
@@ -294,18 +294,7 @@ private:
 			cout << cur->parent->data.key << cur->parent->data.value << " ->right = " << cur->data.key << cur->data.value << endl;
 			show(cur);
 		}
-		/*while (c->left)
-		{
-			c = c->left;
-			cout << c->data.key << c->data.value << endl;
-			show(c);
-		}
-		if (c->right)
-		{
-			c = c->right;
-			cout << c->data.key << c->data.value << endl;
-		}*/
-	}
+	}*/
 };
 
 template<typename Key, typename Value> int Storage_AVL<Key, Value>::heightdiff(cell *c)

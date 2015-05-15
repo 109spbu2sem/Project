@@ -8,7 +8,7 @@ ID StorageOfObjects::generateID()
 	return ID(_last_id);
 }
 
-ID StorageOfObjects::add(ObjectSkin* object, ID& objid)
+ID StorageOfObjects::add(ObjectBase* object, ID& objid)
 {
 	if (_shelf.hasKey(objid.getID()))
 	{
@@ -19,7 +19,7 @@ ID StorageOfObjects::add(ObjectSkin* object, ID& objid)
 	return objid;
 }
 
-ID StorageOfObjects::add(ObjectSkin* object, unsigned objid)
+ID StorageOfObjects::add(ObjectBase* object, unsigned objid)
 {
 	if (_shelf.hasKey(objid))
 	{
@@ -32,7 +32,7 @@ ID StorageOfObjects::add(ObjectSkin* object, unsigned objid)
 
 void StorageOfObjects::clear()
 {
-	for (AVLVeiwer<unsigned, ObjectSkin*> i(_shelf); i.canMoveNext(); i.moveNext())
+	for (AVLVeiwer<unsigned, ObjectBase*> i(_shelf); i.canMoveNext(); i.moveNext())
 	{
 		if (i.getValue().key == 0) continue;
 		delete i.getValue().value;
@@ -57,7 +57,7 @@ bool StorageOfObjects::remove(ID& id)
 	return false;
 }
 
-ObjectSkin* StorageOfObjects::viewer::value()
+ObjectBase* StorageOfObjects::viewer::value()
 {
 	return _current.getValue().value;
 }
@@ -77,7 +77,7 @@ bool StorageOfObjects::viewer::canMoveNext()
 	return _current.canMoveNext();
 };
 
-ObjectSkin* StorageOfObjects::get(unsigned id)
+ObjectBase* StorageOfObjects::get(unsigned id)
 {
 	if (_shelf.hasKey(id))
 		return _shelf.getValuebyKey(id);
@@ -85,7 +85,7 @@ ObjectSkin* StorageOfObjects::get(unsigned id)
 		return 0;
 }
 
-ObjectSkin* StorageOfObjects::get(ID& id)
+ObjectBase* StorageOfObjects::get(ID& id)
 {
 	if (_shelf.hasKey(id.getID()))
 		return _shelf.getValuebyKey(id.getID());

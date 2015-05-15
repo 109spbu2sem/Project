@@ -3,14 +3,14 @@
 
 #include "global.h"
 #include "Id.h"
-#include "ObjectSkin.h"
+#include "ObjectBase.h"
 #include "storages\AVL_tree.h"
 
 class StorageOfObjects
 {
 private:
 	unsigned _last_id;
-	Storage_AVL<unsigned, ObjectSkin*> _shelf;
+	Storage_AVL<unsigned, ObjectBase*> _shelf;
 
 	ID generateID();
 public:
@@ -21,25 +21,25 @@ public:
 		_shelf.add(0, 0);
 	}
 
-	ID add(ObjectSkin*, ID& id);
-	ID add(ObjectSkin*, unsigned id = 0);
+	ID add(ObjectBase*, ID& id);
+	ID add(ObjectBase*, unsigned id = 0);
 	bool remove(ID&);
-	ObjectSkin* get(ID&);
-	ObjectSkin* get(unsigned);
+	ObjectBase* get(ID&);
+	ObjectBase* get(unsigned);
 
 	void clear();
 
 	class viewer
 	{
 	private:
-		AVLVeiwer<unsigned, ObjectSkin*> _current;
+		AVLVeiwer<unsigned, ObjectBase*> _current;
 	public:
 		viewer() { }
 		viewer(StorageOfObjects& store)
 		{
 			_current = store._shelf.getIterator();
 		}
-		ObjectSkin* value();
+		ObjectBase* value();
 		ID key();
 		void moveNext();
 		bool canMoveNext();
