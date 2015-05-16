@@ -176,6 +176,7 @@ public:
 	{
 		_current = l._first;
 	}
+
 	Item& getValue() { if (_current) return _current->data; throw std::out_of_range("No such item"); }
 	void moveNext() { if (_current) _current = _current->next; }
 	bool canMoveNext()
