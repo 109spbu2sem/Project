@@ -20,7 +20,7 @@ private:
 	Cell *_last;
 	unsigned _size;
 public:
-	friend class ListViewer < Item > ;
+	friend class ListViewer < Item >;
 	//constructor
 	Storage_List(void)
 	{
@@ -37,20 +37,18 @@ public:
 			//create first cell with storage's data
 			_first = new Cell;
 			_first->data = storage._first->data;
-			_first->next = 0;
+			_first->next = storage._first->next;
 			Cell* _current = _first;
-			storage.rewind();
-			storage.move_next();
 			//copy others cells
-			while (storage._current)
+			while (_current->next)
 			{
 				Cell *p = new Cell;
-				p->data = storage._current->data;
+				p->data = _current->next->data;
+				p->next = _current->next->next;
 				_current->next = p;
-				_current = _current->next;
-				storage.move_next();
+				_current = p;
 			}
-			_current->next = 0;
+			_last = _current;
 			_size = storage._size;
 		}
 		return;
@@ -120,6 +118,7 @@ template<typename Item> void Storage_List<Item>::remove(ListViewer<Item>* viewer
 	if (_cur == viewer->_current)
 	{
 		viewer->_current = _cur->next;
+		viewer->_begin = viewer->_current;
 		_first = _cur->next;
 		delete _cur;
 		_size--;
@@ -168,8 +167,9 @@ template<typename Item> class ListViewer
 {
 private:
 	typename Storage_List<Item>::Cell *_current;
+	typename Storage_List<Item>::Cell *_begin;
 public:
-	friend class Storage_List < Item > ;
+	friend class Storage_List < Item >;
 	ListViewer()
 	{
 		_current = 0;
@@ -177,12 +177,16 @@ public:
 	ListViewer(Storage_List<Item>& l)
 	{
 		_current = l._first;
+		_begin = _current;
 	}
 	Item& getValue() { if (_current) return _current->data; throw std::out_of_range("No such item"); }
 	void moveNext() { if (_current) _current = _current->next; }
 	bool canMoveNext()
 	{
 		if (_current) return true; return false;
+	}
+	void back_to_begin(){
+		_current = _begin;
 	}
 };
 
