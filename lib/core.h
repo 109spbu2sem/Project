@@ -90,7 +90,9 @@ public:
 	void ConcatenatePoints();
 
 	void AddRule(unsigned type, double value = 0);
-	void AddRule(unsigned type, unsigned id1, unsigned id2, unsigned id3 = 0, double value = 0);
+	bool AddRule(CONSTR_TYPE type, unsigned id1, unsigned id2);
+	bool AddRule(CONSTR_TYPE type, unsigned id1, unsigned id2, double value);
+	bool AddRule(CONSTR_TYPE type, unsigned id1, unsigned id2, unsigned id3);
 
 	bool ChangePoint(unsigned id,
 						  double point_x, bool isconstx,

@@ -118,7 +118,6 @@ template<typename Item> void Storage_List<Item>::remove(ListViewer<Item>* viewer
 	if (_cur == viewer->_current)
 	{
 		viewer->_current = _cur->next;
-		viewer->_begin = viewer->_current;
 		_first = _cur->next;
 		delete _cur;
 		_size--;
@@ -167,7 +166,6 @@ template<typename Item> class ListViewer
 {
 private:
 	typename Storage_List<Item>::Cell *_current;
-	typename Storage_List<Item>::Cell *_begin;
 public:
 	friend class Storage_List < Item >;
 	ListViewer()
@@ -177,16 +175,12 @@ public:
 	ListViewer(Storage_List<Item>& l)
 	{
 		_current = l._first;
-		_begin = _current;
 	}
 	Item& getValue() { if (_current) return _current->data; throw std::out_of_range("No such item"); }
 	void moveNext() { if (_current) _current = _current->next; }
 	bool canMoveNext()
 	{
 		if (_current) return true; return false;
-	}
-	void back_to_begin(){
-		_current = _begin;
 	}
 };
 

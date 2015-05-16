@@ -276,9 +276,104 @@ void CORE::AddRule(unsigned type, double value)
 	Calculate();
 }
 
-void CORE::AddRule(unsigned type, unsigned id1, unsigned id2, unsigned id3, double value)
+bool CORE::AddRule(CONSTR_TYPE type, unsigned id1, unsigned id2)
 {
+	switch (type)
+	{
+		case CONSTR_EXCONTACT:
+		{
+			Circle* o1 = dynamic_cast<Circle*>(_storage_of_objects.get(id1));
+			if (o1)
+			{
+				Circle* o2 = dynamic_cast<Circle*>(_storage_of_objects.get(id2));
+				if (o2)
+				{
 
+					ExternalContactCircle* rule = new ExternalContactCircle(o1->p->x, o1->p->y,
+																							  o2->p->x, o2->p->y,
+																							  o1->r, o2->r);
+					_constraints.add(rule);
+					_storage_of_constraints.add(o1, rule);
+					_storage_of_constraints.add(o2, rule);
+					return true;
+				}
+			}
+			break;
+		}
+		case CONSTR_INCONTACT:
+		{
+			Circle* o1 = dynamic_cast<Circle*>(_storage_of_objects.get(id1));
+			if (o1)
+			{
+				Circle* o2 = dynamic_cast<Circle*>(_storage_of_objects.get(id2));
+				if (o2)
+				{
+
+					InternalContactCircle* rule = new InternalContactCircle(o1->p->x, o1->p->y,
+																							  o2->p->x, o2->p->y,
+																							  o1->r, o2->r);
+					_constraints.add(rule);
+					_storage_of_constraints.add(o1, rule);
+					_storage_of_constraints.add(o2, rule);
+					return true;
+				}
+			}
+			break;
+		}
+	}
+	return false;
+}
+
+bool CORE::AddRule(CONSTR_TYPE type, unsigned id1, unsigned id2, double value)
+{
+	switch (type)
+	{
+		case CONSTR_P2PDIST:
+			break;
+		case CONSTR_P2SECTDIST:
+			break;
+		case CONSTR_P2LINEDIST:
+			break;
+		case CONSTR_L2LANGLE:
+			break;
+		case CONSTR_3PRATIO:
+			break;
+		case CONSTR_SPRATIO:
+			break;
+	}
+}
+
+bool CORE::AddRule(CONSTR_TYPE type, unsigned id1, unsigned id2, unsigned id3)
+{
+	switch (type)
+	{
+		case CONSTR_3PONLINE:
+		{
+			Point* o1 = dynamic_cast<Point*>(_storage_of_objects.get(id1));
+			if (o1)
+			{
+				Point* o2 = dynamic_cast<Point*>(_storage_of_objects.get(id2));
+				if (o2)
+				{
+					Point* o3 = dynamic_cast<Point*>(_storage_of_objects.get(id3));
+					if (o3)
+					{
+						ThreePoints* rule = new ThreePoints(o1->x, o1->y,
+																		o2->x, o2->y,
+																		o3->x, o3->y);
+						_constraints.add(rule);
+						_storage_of_constraints.add(o1, rule);
+						_storage_of_constraints.add(o2, rule);
+						_storage_of_constraints.add(o3, rule);
+						return true;
+					}
+				}
+
+			}
+			break;
+		}
+	}
+	return false;
 }
 
 bool CORE::ChangePoint(unsigned id, 
