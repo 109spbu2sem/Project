@@ -56,7 +56,6 @@ void CORE::Redraw(Interface* infa)
 	{
 		writeToLog("*******Redrawing*******");
 		infa->Clear();
-		// new method for tree
 		for (StorageOfObjects::viewer i(_storage_of_objects); i.canMoveNext(); i.moveNext())
 		{
 			if (i.key().getID() == 0) continue;
@@ -103,6 +102,72 @@ void CORE::Redraw(Interface* infa)
 									  *c->r, c->color, c->isSelected());
 				break;
 			}
+			}
+		}
+		for (StorageOfConstraints::viewer iter(_storage_of_constraints); iter.canMoveNext(); iter.moveNext())
+		{
+			switch (iter.constraint()->type())
+			{
+				case CONSTR_COLLECTOR:
+				{
+					continue;
+				}
+				case CONSTR_P2PDIST:
+				{
+					mygui->WriteRule(iter.objects().front()->id.getID(), iter.objects().back()->id.getID(),
+										  iter.constraint()->type(), iter.constraint()->value());
+					break;
+				}
+				case CONSTR_P2SECTDIST:
+				{
+					mygui->WriteRule(iter.objects().front()->id.getID(), iter.objects().back()->id.getID(),
+										  iter.constraint()->type(), iter.constraint()->value());
+					break;
+				}
+				case CONSTR_P2LINEDIST:
+				{
+					mygui->WriteRule(iter.objects().front()->id.getID(), iter.objects().back()->id.getID(),
+										  iter.constraint()->type(), iter.constraint()->value());
+					break;
+				}
+				case CONSTR_3PONLINE:
+				{
+					std::list<ObjectBase*>::iterator i = iter.objects().begin();
+					unsigned id1 = (*i)->id.getID(); i++;
+					unsigned id2 = (*i)->id.getID(); i++;
+					unsigned id3 = (*i)->id.getID();
+					mygui->WriteRule(id1, id2, id3,
+										  iter.constraint()->type(), iter.constraint()->value());
+					break;
+				}
+				case CONSTR_L2LANGLE:
+				{
+					mygui->WriteRule(iter.objects().front()->id.getID(), iter.objects().back()->id.getID(),
+										  iter.constraint()->type(), iter.constraint()->value());
+					break;
+				}
+				case CONSTR_3PRATIO:
+				{
+					std::list<ObjectBase*>::iterator i = iter.objects().begin();
+					unsigned id1 = (*i)->id.getID(); i++;
+					unsigned id2 = (*i)->id.getID(); i++;
+					unsigned id3 = (*i)->id.getID();
+					mygui->WriteRule(id1, id2, id3,
+										  iter.constraint()->type(), iter.constraint()->value());
+					break;
+				}
+				case CONSTR_EXCONTACT:
+				{
+					mygui->WriteRule(iter.objects().front()->id.getID(), iter.objects().back()->id.getID(),
+										  iter.constraint()->type(), iter.constraint()->value());
+					break;
+				}
+				case CONSTR_INCONTACT:
+				{
+					mygui->WriteRule(iter.objects().front()->id.getID(), iter.objects().back()->id.getID(),
+										  iter.constraint()->type(), iter.constraint()->value());
+					break;
+				}
 			}
 		}
 		writeToLog("*******Redrawed*******", 3);

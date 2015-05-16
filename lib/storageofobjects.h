@@ -42,7 +42,7 @@ public:
 		ObjectBase* value();
 		ID key();
 		void moveNext();
-		bool canMoveNext();
+		bool canMoveNext() const;
 	};
 
 	viewer getIterator()

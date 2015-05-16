@@ -72,7 +72,7 @@ void StorageOfObjects::viewer::moveNext()
 	_current.moveNext();
 }
 
-bool StorageOfObjects::viewer::canMoveNext()
+bool StorageOfObjects::viewer::canMoveNext() const
 {
 	return _current.canMoveNext();
 };

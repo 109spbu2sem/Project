@@ -28,7 +28,7 @@ void MyCanvas::mousePressEvent(QMouseEvent *event)
 	{
 		if (event->button() == Qt::RightButton)
 			mycore->ClearSelection();
-		else
+		if (event->button() == Qt::LeftButton)
 			mycore->Select(pt.x(), -pt.y());
 		break;
 	}
@@ -36,13 +36,15 @@ void MyCanvas::mousePressEvent(QMouseEvent *event)
 	{
 		if (event->button() == Qt::LeftButton)
 			mycore->AddObject(pt.x(), false, -pt.y(), false);
+		if (event->button() == Qt::RightButton)
+			mycore->ClearSelection();
 		break;
 	}
 	case TOOL_Zoom:
 	{
 		if (event->button() == Qt::RightButton)
 			scale(0.5, 0.5);
-		else
+		if (event->button() == Qt::LeftButton)
 			scale(2, 2);
 		break;
 	}

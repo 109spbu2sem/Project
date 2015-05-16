@@ -32,10 +32,10 @@ enum CONSTR_TYPE
 class IConstraint
 {
 public:
-	//virtual ~IConstraint() = 0;
 	virtual double error() = 0;
 	virtual double diff(double *par) = 0;
 	virtual CONSTR_TYPE type() = 0;
+	virtual double value() const = 0;
 };
 
 class Color

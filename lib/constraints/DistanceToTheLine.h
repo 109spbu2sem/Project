@@ -65,6 +65,10 @@ public:
 	{
 		return CONSTR_P2LINEDIST;
 	}
+	virtual double value() const
+	{
+		return *_d;
+	}
 private:
     double _STARTING_ERROR;
 };

@@ -38,5 +38,9 @@ public:
 	{
 		return CONSTR_COLLECTOR;
 	}
+	virtual double value() const
+	{
+		return NAN;
+	}
 };
 #endif

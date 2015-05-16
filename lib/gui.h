@@ -8,6 +8,8 @@
 #include "QtWidgets\qbuttongroup.h"
 #include "QtWidgets\qaction.h"
 #include "enums.h"
+#include "qregexp.h"
+#include "qvalidator.h"
 
 class CORE;
 
@@ -76,10 +78,14 @@ private slots:
 	void on_actionLoad_triggered();
 	
 	void on_objectsList_clicked(const QModelIndex &index);
+
+	void on_rulesList_clicked(const QModelIndex &index);
 	
 	void on_openChangingDialog_clicked();
 	
 	void on_deleteObjBTN_clicked();
+
+	void on_deleteRuleBTN_clicked();
 	
 private:
     bool flag;
@@ -87,6 +93,7 @@ private:
 	CORE* mycore;
 	QGraphicsScene* mainscene;
 	QButtonGroup* toolsbuttons;
+	QRegExpValidator *doubvalid;
 	
 	char* ConstrTypeToString(CONSTR_TYPE);
 

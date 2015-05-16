@@ -62,5 +62,9 @@ public:
 	{
 		return CONSTR_L2LANGLE;
 	}
+	virtual double value() const
+	{
+		return *_a;
+	}
 };
 #endif // ANGLE_SEGMENT_SEGMENT_H

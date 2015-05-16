@@ -466,7 +466,8 @@ public:
 		}
 
 	};
-	bool canMoveNext(){
+	bool canMoveNext() const
+	{
 		if (_cur == 0) return false;
 		return true;
 	};

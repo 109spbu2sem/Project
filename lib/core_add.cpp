@@ -113,7 +113,7 @@ void CORE::ConcatenatePoints()
 		}
 		else
 		{
-			mygui->WriteText("Tip:", "Please select two points before creating segment.");
+			mygui->WriteError("Select two points before creating segment.");
 		}
 	}
 }
@@ -136,6 +136,7 @@ void CORE::AddRule(unsigned type, double value)
 				mygui->WriteError("Can't add rule to these objects.");
 				return;
 			}
+			break;
 		}
 		case CONSTR_P2SECTDIST:
 		{
@@ -958,8 +959,9 @@ bool CORE::addc_spratio(double value)
 																obj2->p2->x, obj2->p2->y,
 																val);
 				_constraints.add(rule);
+				_storage_of_constraints.add(obj2->p1, rule);
 				_storage_of_constraints.add(obj1, rule);
-				_storage_of_constraints.add(obj2, rule);
+				_storage_of_constraints.add(obj2->p2, rule);
 				return true;
 			}
 		}

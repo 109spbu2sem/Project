@@ -57,6 +57,10 @@ public:
 	{
 		return CONSTR_3PRATIO;
 	}
+	virtual double value() const
+	{
+		return *_k;
+	}
 };
 
 #endif

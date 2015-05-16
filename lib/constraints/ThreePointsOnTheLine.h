@@ -46,6 +46,10 @@ public:
 	{
 		return CONSTR_3PONLINE;
 	}
+	virtual double value() const
+	{
+		return NAN;
+	}
 };
 
 #endif // THREE_POINTS_LINE_H

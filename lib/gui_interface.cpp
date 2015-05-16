@@ -20,9 +20,12 @@ bool GUI::SetNameOfWindow(std::string header)
 void GUI::WriteError(const char* Text)
 {
 	ui->statusBar->setText("Error");
+	ui->bottonBar->setStyleSheet(QLatin1String("background-color: rgb(202, 81, 0); color: rgb(255, 255, 255);}"));
+	this->repaint();
 	QMessageBox b;
 	b.setText(Text);
 	b.exec();
+	ui->bottonBar->setStyleSheet(QLatin1String("background-color: rgb(0, 122, 204); color: rgb(255, 255, 255);"));
 	return;
 }
 
@@ -240,6 +243,7 @@ bool GUI::Clear()
 	mainscene->addLine(0, -5000, 0, 5000, QPen(Qt::DotLine));
 	mainscene->addLine(-5000, 0, 5000, 0, QPen(Qt::DotLine));
 	ui->objectsList->clear();
+	ui->rulesList->clear();
 	return true;
 }
 
@@ -250,18 +254,52 @@ bool GUI::WriteRule(unsigned id1, unsigned id2, CONSTR_TYPE type)
 	QListWidgetItem* it = new QListWidgetItem;
 	it->setText(s);
 	it->setData(17, type);
+	it->setData(18, 0);
+	it->setData(19, id1);
+	it->setData(20, id2);
+	it->setData(21, 0);
 	ui->rulesList->addItem(it);
 	return true;
 }
 bool GUI::WriteRule(unsigned id1, unsigned id2, CONSTR_TYPE type, double value)
 {
+	QString s;
+	s = ConstrTypeToString(type);
+	QListWidgetItem* it = new QListWidgetItem;
+	it->setText(s);
+	it->setData(17, type);
+	it->setData(18, value);
+	it->setData(19, id1);
+	it->setData(20, id2);
+	it->setData(21, 0);
+	ui->rulesList->addItem(it);
 	return true;
 }
 bool GUI::WriteRule(unsigned id1, unsigned id2, unsigned id3, CONSTR_TYPE type)
 {
+	QString s;
+	s = ConstrTypeToString(type);
+	QListWidgetItem* it = new QListWidgetItem;
+	it->setText(s);
+	it->setData(17, type);
+	it->setData(18, 0);
+	it->setData(19, id1);
+	it->setData(20, id2);
+	it->setData(21, id3);
+	ui->rulesList->addItem(it);
 	return true;
 }
 bool GUI::WriteRule(unsigned id1, unsigned id2, unsigned id3, CONSTR_TYPE type, double value)
 {
+	QString s;
+	s = ConstrTypeToString(type);
+	QListWidgetItem* it = new QListWidgetItem;
+	it->setText(s);
+	it->setData(17, type);
+	it->setData(18, value);
+	it->setData(19, id1);
+	it->setData(20, id2);
+	it->setData(21, id3);
+	ui->rulesList->addItem(it);
 	return true;
 }

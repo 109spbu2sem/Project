@@ -42,6 +42,10 @@ public:
 	{
 		return CONSTR_P2PDIST;
 	}
+	virtual double value() const
+	{
+		return *_d;
+	}
 };
 
 

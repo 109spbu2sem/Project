@@ -48,6 +48,10 @@ public:
 	{
 		return CONSTR_INCONTACT;
 	}
+	virtual double value() const
+	{
+		return -1;
+	}
 };
 class ExternalContactCircle :public IConstraint
 {
@@ -90,6 +94,10 @@ public:
 	virtual CONSTR_TYPE type()
 	{
 		return CONSTR_EXCONTACT;
+	}
+	virtual double value() const
+	{
+		return NAN;
 	}
 };
 

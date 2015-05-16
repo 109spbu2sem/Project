@@ -17,6 +17,9 @@ GUI::GUI(QWidget *parent) :
 {
 	ui->setupUi(this);
 	mycore = 0;
+	QRegExp doub("[0-9]{1,8}\\.[0-9]{0,8}");
+	doubvalid = new QRegExpValidator(doub, this);
+	ui->ruleValueEdit->setValidator(doubvalid);
 	mainscene = ui->myCanvas->getScene();
 	ui->myCanvas->connectCORECanvas(mycore);
 	ui->pointBTNTool->setIcon(QIcon("icons/pointbtn.png"));
@@ -24,6 +27,7 @@ GUI::GUI(QWidget *parent) :
 	toolsbuttons->addButton(ui->selectBTNTool);
 	toolsbuttons->addButton(ui->pointBTNTool);
 	toolsbuttons->addButton(ui->ZoomBTNTool);
+	ui->addRuleBTN->setVisible(false);
 
 	showMaximized();
 }
@@ -38,6 +42,7 @@ GUI::~GUI()
 {
 	delete toolsbuttons;
 	delete ui;
+	delete doubvalid;
 }
 
 char* GUI::ConstrTypeToString(CONSTR_TYPE type)
@@ -265,6 +270,36 @@ void GUI::on_objectsList_clicked(const QModelIndex &index)
 	mycore->Select(index.data(17).toUInt());
 }
 
+void GUI::on_rulesList_clicked(const QModelIndex &index)
+{
+	ui->propertiesList->clear();
+	QString s;
+
+	QListWidgetItem* item = new QListWidgetItem;
+	item->setText(ConstrTypeToString(static_cast<CONSTR_TYPE>(index.data(17).toUInt())));
+	ui->propertiesList->addItem(item);
+
+	item = new QListWidgetItem;
+	s.setNum(index.data(18).toDouble());
+	item->setText("value:\t" + s);
+	ui->propertiesList->addItem(item);
+
+	item = new QListWidgetItem;
+	s.setNum(index.data(19).toUInt());
+	item->setText("object's id:\t" + s);
+	ui->propertiesList->addItem(item);
+
+	item = new QListWidgetItem;
+	s.setNum(index.data(20).toUInt());
+	item->setText("object's id:\t" + s);
+	ui->propertiesList->addItem(item);
+
+	item = new QListWidgetItem;
+	s.setNum(index.data(21).toUInt());
+	item->setText("object's id:\t" + s);
+	ui->propertiesList->addItem(item);
+}
+
 void GUI::on_openChangingDialog_clicked()
 {
 	if (ui->propertiesList->count())
@@ -323,4 +358,9 @@ void GUI::on_openChangingDialog_clicked()
 void GUI::on_deleteObjBTN_clicked()
 {
 	mycore->DeleteSelected();
+}
+
+void GUI::on_deleteRuleBTN_clicked()
+{
+	//mycore->
 }

@@ -85,6 +85,10 @@ public:
 	{
 		return CONSTR_P2SECTDIST;
 	}
+	virtual double value() const
+	{
+		return *_d;
+	}
 private:
 	double _XX;
 	double _YY;

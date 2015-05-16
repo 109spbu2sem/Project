@@ -79,3 +79,20 @@ void StorageOfConstraints::clear()
 	_objects.clear();
 	_constraints.clear();
 }
+
+std::list<ObjectBase*>& StorageOfConstraints::viewer::objects()
+{
+	return _viewer.getValue().value;
+}
+IConstraint* StorageOfConstraints::viewer::constraint()
+{
+	return _viewer.getValue().key;
+}
+bool StorageOfConstraints::viewer::canMoveNext() const
+{
+	return _viewer.canMoveNext();
+}
+void StorageOfConstraints::viewer::moveNext()
+{
+	_viewer.moveNext();
+}
