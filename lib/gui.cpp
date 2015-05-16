@@ -69,6 +69,10 @@ char* GUI::ConstrTypeToString(CONSTR_TYPE type)
 			return "Internal circle contact";
 		case CONSTR_SPRATIO:
 			return "Ratio between point and segment";
+		case CONSTR_PARALLELISM:
+			return "Parallel lines";
+		case CONSTR_ORTHOGONALITY:
+			return "Orthogonal lines";
 		default:
 			return "Not a Constraint";
 	}
@@ -89,6 +93,8 @@ void GUI::on_ruleBox_currentIndexChanged(int index)
 	{
 		case 5:
 		case 6:
+		case 9:
+		case 10:
 		case 2:
 		{
 			ui->ruleValueEdit->setEnabled(false);
@@ -191,6 +197,18 @@ void GUI::on_pushButton_clicked()
 			else
 				WriteStatus("Need value");
 			break;
+		}
+		case 9:
+		{
+						mycore->AddRule(CONSTR_PARALLELISM);
+						mycore->Calculate();
+						break;
+		}
+		case 10:
+		{
+						mycore->AddRule(CONSTR_ORTHOGONALITY);
+						mycore->Calculate();
+						break;
 		}
 	}
 	ui->ruleValueEdit->clear();

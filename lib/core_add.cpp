@@ -6,9 +6,10 @@
 #include "constraints\AspectRatio.h"
 #include "constraints\Collector.h"
 #include "constraints\CircleContact.h"
+#include "constraints\ParallelLines.h"
+#include "constraints\OrthogonalLines.h"
 
 #include "core.h"
-#include "qdebug.h"
 #include "qstring.h"
 
 unsigned CORE::AddObject(double point_x, bool isconstx, double point_y, bool isconsty, Color color, unsigned id, bool wait)
@@ -266,13 +267,45 @@ void CORE::AddRule(unsigned type, double value)
 			}
 			break;
 		}
-		default:
+		case CONSTR_PARALLELISM:
 		{
-			mygui->WriteStatus("FATAL ERROR");
-			mygui->WriteMessage("Wrong type of rule.");
-			mygui->WriteError("FATAL ERROR: Wrong type of rule");
-			return;
+			if (addc_parallelism())
+			{
+			  mygui->WriteStatus(DONESTRING);
+			  mygui->WriteMessage("Rule added");
+			}
+			else
+			{
+		   	mygui->WriteStatus("Error");
+				mygui->WriteMessage("Can't add rule to these objects.");
+				mygui->WriteError("Can't add rule to these objects.");
+				return;
+			}
+			break;
 		}
+    case CONSTR_ORTHOGONALITY:
+    {
+       if (addc_orthogonality())
+       {
+         mygui->WriteStatus(DONESTRING);
+         mygui->WriteMessage("Rule added");
+       }
+       else
+       {
+         mygui->WriteStatus("Error");
+         mygui->WriteMessage("Can't add rule to these objects.");
+         mygui->WriteError("Can't add rule to these objects.");
+         return;
+       }
+       break;
+    }
+    default:
+    {
+             mygui->WriteStatus("FATAL ERROR");
+             mygui->WriteMessage("Wrong type of rule.");
+             mygui->WriteError("FATAL ERROR: Wrong type of rule");
+             return;
+    }
 	}
 	Calculate();
 }
@@ -987,4 +1020,48 @@ bool CORE::addc_spratio(double value)
 		}	
 	}
     return false;
+}
+bool CORE::addc_parallelism()
+{
+	if (_selected_objects.size() == 2)
+	{
+		ListViewer<ObjectBase*> k(_selected_objects);
+		Segment* obj1 = dynamic_cast<Segment*>(k.getValue());
+		k.moveNext();
+		Segment* obj2 = dynamic_cast<Segment*>(k.getValue());
+		if (obj1 && obj2)
+		{
+			ParallelLines* rule = new ParallelLines(obj1->p1->x, obj1->p1->y,
+				obj1->p2->x, obj1->p2->y,
+				obj2->p1->x, obj2->p1->y,
+				obj2->p2->x, obj2->p2->y);
+			_constraints.add(rule);
+			_storage_of_constraints.add(obj1, rule);
+			_storage_of_constraints.add(obj2, rule);
+			return true;
+		}
+	}
+	return false;
+}
+bool CORE::addc_orthogonality()
+{
+	if (_selected_objects.size() == 2)
+	{
+		ListViewer<ObjectBase*> k(_selected_objects);
+		Segment* obj1 = dynamic_cast<Segment*>(k.getValue());
+		k.moveNext();
+		Segment* obj2 = dynamic_cast<Segment*>(k.getValue());
+		if (obj1 && obj2)
+		{
+			OrthogonalLines* rule = new OrthogonalLines(obj1->p1->x, obj1->p1->y,
+				obj1->p2->x, obj1->p2->y,
+				obj2->p1->x, obj2->p1->y,
+				obj2->p2->x, obj2->p2->y);
+			_constraints.add(rule);
+			_storage_of_constraints.add(obj1, rule);
+			_storage_of_constraints.add(obj2, rule);
+			return true;
+		}
+	}
+	return false;
 }

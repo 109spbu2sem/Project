@@ -165,6 +165,16 @@
              <string>Ratio between point and segment</string>
             </property>
            </item>
+           <item>
+            <property name="text">
+             <string>Parallel Lines</string>
+            </property>
+           </item>
+           <item>
+            <property name="text">
+             <string>Orthogonal Lines</string>
+            </property>
+           </item>
           </widget>
          </item>
          <item>
@@ -680,7 +690,7 @@ color: rgb(255, 255, 255);</string>
      <x>0</x>
      <y>0</y>
      <width>953</width>
-     <height>26</height>
+     <height>21</height>
     </rect>
    </property>
    <widget class="QMenu" name="menuFile">

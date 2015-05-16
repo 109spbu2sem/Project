@@ -54,6 +54,8 @@ private:
 	bool addc_excontact();
 	bool addc_incontact();
 	bool addc_spratio(double);
+	bool addc_parallelism();
+	bool addc_orthogonality();
 	
 	const char* DONESTRING = "Done";
 	const char* WORKSTRING = "Work";
