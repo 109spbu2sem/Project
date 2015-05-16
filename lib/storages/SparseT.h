@@ -59,7 +59,7 @@ public:
 
 Storage_List<std::set<unsigned>> graphsfind(Storage_List<Pair> List){
 	Storage_List<std::set<unsigned>> data;
-	std::set<unsigned> compsub, condidates, Not,all;
+	std::set<unsigned> compsub, condidates,all;
 	ListViewer<Pair> A(List);
 
 	while (A.canMoveNext())
@@ -75,7 +75,7 @@ Storage_List<std::set<unsigned>> graphsfind(Storage_List<Pair> List){
 	condidates.insert(*(all.begin()));
 	while (all.size() != 0){
 		while (condidates.size()!=0){
-			A.back_to_begin();
+			ListViewer<Pair> A(List);
 			do{
 				if (A.getValue().c == copy){
 					condidates.insert(A.getValue().r);
@@ -89,15 +89,9 @@ Storage_List<std::set<unsigned>> graphsfind(Storage_List<Pair> List){
 				else A.moveNext();
 			} while (A.canMoveNext());
 
-			A.back_to_begin();
-			/*while (A.canMoveNext())
-			{
-				std::cout << A.getValue().c << ' ' << A.getValue().r << '\n';
-				A.moveNext();
-			}*/
 			compsub.insert(copy);
 			condidates.erase(copy);
-			Not.insert(copy);
+			
 			all.erase(copy);
 			if(condidates.size()) copy = *(condidates.begin());
 			if (all.size() == 1){
@@ -109,7 +103,6 @@ Storage_List<std::set<unsigned>> graphsfind(Storage_List<Pair> List){
 		}
 		data.add(compsub);
 		compsub.clear();
-		Not.clear();
 		if (all.size()){
 			copy = *(all.begin());
 			condidates.insert(copy);
