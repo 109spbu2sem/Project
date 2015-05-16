@@ -216,7 +216,7 @@ void CORE::ClearSelection()
 	writeToLog("Select was cleared", 2);
 	Redraw(mygui);
 	mygui->Clear_properties();
-	mygui->WriteStatus("Done");
+	mygui->WriteStatus(DONESTRING);
 }
 
 void CORE::DeleteAll()
@@ -235,7 +235,7 @@ void CORE::DeleteAll()
 	writeToLog("All parameters were deleted");
 	writeToLog("All clear");
 	mygui->Clear();
-	mygui->WriteText("Done", "All clear");
+	mygui->WriteText(DONESTRING, "All clear");
 }
 
 void CORE::DeleteSelected()

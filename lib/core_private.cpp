@@ -18,7 +18,7 @@ CORE::CORE()
 		if (!_logfile.is_open()) mysettings.setWritelogMode(0);
 	}
 	writeToLog("--------------------------------------\nOPEN at ");
-	writeToLog(GenerateTimeString("", "").c_str());
+	writeToLog(GenerateTimeString(const_cast<char*>(EMPTYSTRING), const_cast<char*>(EMPTYSTRING)).c_str());
 	writeToLog("--------------------------------------");
 	writeToLog("Settings = ok", 2);
 	writeToLog("GUI was not connected to CORE", 2);
@@ -30,9 +30,9 @@ CORE::CORE(GraphicsInterface* gui)
 	Settings::SettingsLoader::setupSettings(&mysettings);
 	if (mysettings.WritelogMode() >= 1)
 	{
-		_logfile.open("logfile.txt", std::ios_base::out | std::ios_base::app);
-		if (!_logfile.is_open())
-			_logfile.open("logfile.txt", std::ios_base::out | std::ios_base::trunc);
+		_mkdir("logfiles");
+		_logfile.open(GenerateTimeString("logfiles/logfile", ".log").c_str(), std::ios_base::out | std::ios_base::trunc);
+		if (!_logfile.is_open()) mysettings.setWritelogMode(0);
 	}
 	writeToLog("--------------------------------------\nOPEN at ");
 	writeToLog(static_cast<int>(time(0)));
@@ -44,7 +44,7 @@ CORE::CORE(GraphicsInterface* gui)
 CORE::~CORE()
 {
 	writeToLog("--------------------------------------\n CLOSE at ");
-	writeToLog(GenerateTimeString("", "").c_str());
+	writeToLog(GenerateTimeString(const_cast<char*>(EMPTYSTRING), const_cast<char*>(EMPTYSTRING)).c_str());
 	writeToLog("--------------------------------------");
 	if (mysettings.WritelogMode() >= 1)
 		_logfile.close();
@@ -117,7 +117,7 @@ void CORE::Redraw(Interface* infa)
 void CORE::Calculate()
 {
 	writeToLog("**********************Start calculating******************");
-	mygui->WriteText("Work", "Start redrawing");
+	mygui->WriteText(EMPTYSTRING, "Start redrawing");
 	ConstraintCollector collector;
 	Storage_Array< double* > parameters;
 	writeToLog("Generating graphs");
@@ -141,11 +141,11 @@ void CORE::Calculate()
 	}
 	//BuildFigure(&collector, &parameters);
 	writeToLog("---------------------Building new figure-----------------");
-	mygui->WriteText("Work", "Redrawing...");
+	mygui->WriteText(EMPTYSTRING, "Redrawing...");
 	BuildFigureGoldMethod(&collector, &parameters);
 	writeToLog("---------------------Success build-----------------------");
 	Redraw(mygui);
-	mygui->WriteText("Done", "");
+	mygui->WriteText(DONESTRING, EMPTYSTRING);
 	writeToLog("**********************Success calculate******************");
 	return;
 }

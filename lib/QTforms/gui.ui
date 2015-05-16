@@ -24,6 +24,9 @@
   </property>
   <widget class="QWidget" name="centralWidget">
    <layout class="QVBoxLayout" name="verticalLayout_3">
+    <property name="spacing">
+     <number>1</number>
+    </property>
     <property name="leftMargin">
      <number>5</number>
     </property>
@@ -384,25 +387,28 @@
           <property name="childrenCollapsible">
            <bool>false</bool>
           </property>
-          <widget class="QWidget" name="layoutWidget">
+          <widget class="QGroupBox" name="groupBox_4">
+           <property name="title">
+            <string>Properties</string>
+           </property>
+           <property name="flat">
+            <bool>false</bool>
+           </property>
+           <property name="checkable">
+            <bool>false</bool>
+           </property>
            <layout class="QVBoxLayout" name="verticalLayout_8">
             <property name="spacing">
-             <number>3</number>
+             <number>1</number>
             </property>
             <property name="sizeConstraint">
              <enum>QLayout::SetMinAndMaxSize</enum>
             </property>
             <item>
              <widget class="QListWidget" name="propertiesList">
-              <property name="minimumSize">
-               <size>
-                <width>0</width>
-                <height>0</height>
-               </size>
-              </property>
               <property name="maximumSize">
                <size>
-                <width>300</width>
+                <width>500</width>
                 <height>16777215</height>
                </size>
               </property>
@@ -427,10 +433,16 @@
             </item>
            </layout>
           </widget>
-          <widget class="QWidget" name="layoutWidget">
+          <widget class="QGroupBox" name="groupBox_5">
+           <property name="title">
+            <string>List of objects</string>
+           </property>
+           <property name="flat">
+            <bool>false</bool>
+           </property>
            <layout class="QVBoxLayout" name="verticalLayout_7">
             <property name="spacing">
-             <number>3</number>
+             <number>1</number>
             </property>
             <property name="sizeConstraint">
              <enum>QLayout::SetMinAndMaxSize</enum>
@@ -439,7 +451,7 @@
              <widget class="QListWidget" name="objectsList">
               <property name="maximumSize">
                <size>
-                <width>300</width>
+                <width>500</width>
                 <height>16777215</height>
                </size>
               </property>
@@ -461,12 +473,6 @@
                   <verstretch>0</verstretch>
                  </sizepolicy>
                 </property>
-                <property name="minimumSize">
-                 <size>
-                  <width>100</width>
-                  <height>28</height>
-                 </size>
-                </property>
                 <property name="maximumSize">
                  <size>
                   <width>100</width>
@@ -486,12 +492,6 @@
                   <verstretch>0</verstretch>
                  </sizepolicy>
                 </property>
-                <property name="minimumSize">
-                 <size>
-                  <width>100</width>
-                  <height>28</height>
-                 </size>
-                </property>
                 <property name="maximumSize">
                  <size>
                   <width>100</width>
@@ -507,10 +507,16 @@
             </item>
            </layout>
           </widget>
-          <widget class="QWidget" name="layoutWidget">
+          <widget class="QGroupBox" name="groupBox_3">
+           <property name="title">
+            <string>List of rules</string>
+           </property>
+           <property name="flat">
+            <bool>false</bool>
+           </property>
            <layout class="QVBoxLayout" name="verticalLayout_6">
             <property name="spacing">
-             <number>3</number>
+             <number>1</number>
             </property>
             <property name="sizeConstraint">
              <enum>QLayout::SetMinAndMaxSize</enum>
@@ -519,9 +525,12 @@
              <widget class="QListWidget" name="rulesList">
               <property name="maximumSize">
                <size>
-                <width>300</width>
+                <width>500</width>
                 <height>16777215</height>
                </size>
+              </property>
+              <property name="editTriggers">
+               <set>QAbstractItemView::DoubleClicked</set>
               </property>
              </widget>
             </item>
@@ -549,7 +558,7 @@
                  </size>
                 </property>
                 <property name="text">
-                 <string>Delete rules</string>
+                 <string>Delete rule</string>
                 </property>
                </widget>
               </item>

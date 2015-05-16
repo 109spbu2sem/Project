@@ -22,7 +22,7 @@ unsigned CORE::AddObject(double point_x, bool isconstx, double point_y, bool isc
 	Point* p = new Point(x, y);
 	p->color.setColor(color);
 	ID newid = _storage_of_objects.add(p, id);
-	mygui->WriteStatus("Done");
+	mygui->WriteStatus(DONESTRING);
 	mygui->WriteMessage("Point added");
 	writeToLog("< add > Point", 2);
 	writeToLog(point_x, "x= ", 2);
@@ -45,7 +45,7 @@ unsigned CORE::AddObject(unsigned id1, unsigned id2, Color color, unsigned id, b
 			Segment* s = new Segment(p1, p2);
 			s->color.setColor(color);
 			ID newid = _storage_of_objects.add(s, id);
-			mygui->WriteStatus("Done");
+			mygui->WriteStatus(DONESTRING);
 			mygui->WriteMessage("Segment added");
 			writeToLog("< add > Segment", 2);
 			writeToLog(id1, "point 1 id= ", 2);
@@ -76,7 +76,7 @@ unsigned CORE::AddObject(unsigned pointid, double radius, bool isconst, Color co
 		_parameters.add(r, isconst);
 		c->color.setColor(color);
 		ID newid = _storage_of_objects.add(c, id);
-		mygui->WriteStatus("Done");
+		mygui->WriteStatus(DONESTRING);
 		mygui->WriteMessage("Circle added");
 		writeToLog("< add > Circle", 2);
 		writeToLog(pointid, "point id= ", 2);
@@ -108,7 +108,7 @@ void CORE::ConcatenatePoints()
 			s->color.setColor(COLORDEF);
 			_storage_of_objects.add(s);
 			writeToLog("Concatenate points", 2);
-			mygui->WriteText("Done", "Segment added");
+			mygui->WriteText(DONESTRING, "Segment added");
 			ClearSelection();
 		}
 		else
@@ -126,7 +126,7 @@ void CORE::AddRule(unsigned type, double value)
 		{
 			if (addc_p2pdist(value))
 			{
-				mygui->WriteStatus("Done");
+				mygui->WriteStatus(DONESTRING);
 				mygui->WriteMessage("Rule added");
 			}
 			else
@@ -141,7 +141,7 @@ void CORE::AddRule(unsigned type, double value)
 		{
 			if (addc_p2sdist(value))
 			{
-				mygui->WriteStatus("Done");
+				mygui->WriteStatus(DONESTRING);
 				mygui->WriteMessage("Rule added");
 			}
 			else
@@ -157,7 +157,7 @@ void CORE::AddRule(unsigned type, double value)
 		{
 			if (addc_p2ldist(value))
 			{
-				mygui->WriteStatus("Done");
+				mygui->WriteStatus(DONESTRING);
 				mygui->WriteMessage("Rule added");
 			}
 			else
@@ -173,7 +173,7 @@ void CORE::AddRule(unsigned type, double value)
 		{
 			if (addc_l2langle(value))
 			{
-				mygui->WriteStatus("Done");
+				mygui->WriteStatus(DONESTRING);
 				mygui->WriteMessage("Rule added");
 			}
 			else
@@ -189,7 +189,7 @@ void CORE::AddRule(unsigned type, double value)
 		{
 			if (addc_3pratio(value))
 			{
-				mygui->WriteStatus("Done");
+				mygui->WriteStatus(DONESTRING);
 				mygui->WriteMessage("Rule added");
 			}
 			else
@@ -205,7 +205,7 @@ void CORE::AddRule(unsigned type, double value)
 		{
 			if (addc_3ponline())
 			{
-				mygui->WriteStatus("Done");
+				mygui->WriteStatus(DONESTRING);
 				mygui->WriteMessage("Rule added");
 			}
 			else
@@ -221,7 +221,7 @@ void CORE::AddRule(unsigned type, double value)
 		{
 			if (addc_excontact())
 			{
-				mygui->WriteStatus("Done");
+				mygui->WriteStatus(DONESTRING);
 				mygui->WriteMessage("Rule added");
 			}
 			else
@@ -237,7 +237,7 @@ void CORE::AddRule(unsigned type, double value)
 		{
 			if (addc_incontact())
 			{
-				mygui->WriteStatus("Done");
+				mygui->WriteStatus(DONESTRING);
 				mygui->WriteMessage("Rule added");
 			}
 			else
@@ -253,7 +253,7 @@ void CORE::AddRule(unsigned type, double value)
 		{
 			if (addc_spratio(value))
 			{
-				mygui->WriteStatus("Done");
+				mygui->WriteStatus(DONESTRING);
 				mygui->WriteMessage("Rule added");
 			}
 			else
@@ -329,18 +329,211 @@ bool CORE::AddRule(CONSTR_TYPE type, unsigned id1, unsigned id2, double value)
 	switch (type)
 	{
 		case CONSTR_P2PDIST:
+		{
+			Point* obj1 = dynamic_cast<Point*>(_storage_of_objects.get(id1));
+			Point* obj2 = dynamic_cast<Point*>(_storage_of_objects.get(id2));
+			if (obj1 && obj2)
+			{
+				double* val = new double;
+				*val = value;
+				_parameters.add(val, true);
+				Point2Point* rule = new Point2Point(obj1->x, obj1->y,
+																obj2->x, obj2->y,
+																val);
+				_constraints.add(rule);
+				_storage_of_constraints.add(obj1, rule);
+				_storage_of_constraints.add(obj2, rule);
+				return true;
+			}
 			break;
+		}
 		case CONSTR_P2SECTDIST:
+		{
+			Point* obj1 = dynamic_cast<Point*>(_storage_of_objects.get(id1));
+			if (obj1)
+			{
+				Segment* obj2 = dynamic_cast<Segment*>(_storage_of_objects.get(id2));
+				if (obj2)
+				{
+					double* val = new double;
+					*val = value;
+					_parameters.add(val, true);
+					DistanceFromPointToSection* rule = new DistanceFromPointToSection(obj1->x, obj1->y,
+																											obj2->p1->x, obj2->p1->y,
+																											obj2->p2->x, obj2->p2->y,
+																											val);
+					_constraints.add(rule);
+					_storage_of_constraints.add(obj1, rule);
+					_storage_of_constraints.add(obj2, rule);
+					return true;
+				}
+				return false;
+			}
+			Segment* ob2 = dynamic_cast<Segment*>(_storage_of_objects.get(id1));
+			if (ob2)
+			{
+				Point* ob1 = dynamic_cast<Point*>(_storage_of_objects.get(id2));
+				if (ob1)
+				{
+					double* val = new double;
+					*val = value;
+					_parameters.add(val, true);
+					DistanceFromPointToSection* rule = new DistanceFromPointToSection(ob1->x, ob1->y,
+																											ob2->p1->x, ob2->p1->y,
+																											ob2->p2->x, ob2->p2->y,
+																											val);
+					_constraints.add(rule);
+					_storage_of_constraints.add(ob1, rule);
+					_storage_of_constraints.add(ob2, rule);
+					return true;
+				}
+			}
 			break;
+		}
 		case CONSTR_P2LINEDIST:
+		{
+			Point* obj1 = dynamic_cast<Point*>(_storage_of_objects.get(id1));
+			if (obj1)
+			{
+				Segment* obj2 = dynamic_cast<Segment*>(_storage_of_objects.get(id2));
+				if (obj2)
+				{
+					double* val = new double;
+					*val = value;
+					_parameters.add(val, true);
+					DistanceToTheLine* rule = new DistanceToTheLine(obj1->x, obj1->y,
+																					obj2->p1->x, obj2->p1->y,
+																					obj2->p2->x, obj2->p2->y,
+																					val);
+					_constraints.add(rule);
+					_storage_of_constraints.add(obj1, rule);
+					_storage_of_constraints.add(obj2, rule);
+					return true;
+				}
+				return false;
+			}
+			Segment* ob2 = dynamic_cast<Segment*>(_storage_of_objects.get(id1));
+			if (ob2)
+			{
+				Point* ob1 = dynamic_cast<Point*>(_storage_of_objects.get(id2));
+				if (ob1)
+				{
+					double* val = new double;
+					*val = value;
+					_parameters.add(val, true);
+					DistanceToTheLine* rule = new DistanceToTheLine(ob1->x, ob1->y,
+																					ob2->p1->x, ob2->p1->y,
+																					ob2->p2->x, ob2->p2->y,
+																					val);
+					_constraints.add(rule);
+					_storage_of_constraints.add(ob1, rule);
+					_storage_of_constraints.add(ob2, rule);
+					return true;
+				}
+			}
 			break;
+		}
 		case CONSTR_L2LANGLE:
+		{
+			Segment* obj1 = dynamic_cast<Segment*>(_storage_of_objects.get(id1));
+			Segment* obj2 = dynamic_cast<Segment*>(_storage_of_objects.get(id2));
+			if (obj1 && obj2)
+			{
+				double* val = new double;
+				*val = value;
+				_parameters.add(val, true);
+				AngleSegmentSegment* rule = new AngleSegmentSegment(obj1->p1->x, obj1->p1->y,
+																					 obj1->p2->x, obj1->p2->y,
+																					 obj2->p1->x, obj2->p1->y,
+																					 obj2->p2->x, obj2->p2->y,
+																					 val);
+				_constraints.add(rule);
+				_storage_of_constraints.add(obj1, rule);
+				_storage_of_constraints.add(obj2, rule);
+				return true;
+			}
 			break;
-		case CONSTR_3PRATIO:
-			break;
+		}
 		case CONSTR_SPRATIO:
+		{
+			Point* obj1 = dynamic_cast<Point*>(_storage_of_objects.get(id1));
+			if (obj1)
+			{
+				Segment* obj2 = dynamic_cast<Segment*>(_storage_of_objects.get(id2));
+				if (obj2)
+				{
+					double* val = new double;
+					*val = value;
+					_parameters.add(val, true);
+					AspectRatio* rule = new AspectRatio(obj2->p1->x, obj2->p1->y,
+																	obj1->x, obj1->y,
+																	obj2->p2->x, obj2->p2->y,
+																	val);
+					_constraints.add(rule);
+					_storage_of_constraints.add(obj1, rule);
+					_storage_of_constraints.add(obj2, rule);
+					return true;
+				}
+			}
+			Segment* ob2 = dynamic_cast<Segment*>(_storage_of_objects.get(id1));
+			if (ob2)
+			{
+				Point* ob1 = dynamic_cast<Point*>(_storage_of_objects.get(id2));
+				if (ob1)
+				{
+					double* val = new double;
+					*val = value;
+					_parameters.add(val, true);
+					AspectRatio* rule = new AspectRatio(ob2->p1->x, ob2->p1->y,
+																	ob1->x, ob1->y,
+																	ob2->p2->x, ob2->p2->y,
+																	val);
+					_constraints.add(rule);
+					_storage_of_constraints.add(ob1, rule);
+					_storage_of_constraints.add(ob2, rule);
+					return true;
+				}
+			}
 			break;
+		}
 	}
+	return false;
+}
+
+bool CORE::AddRule(CONSTR_TYPE type, unsigned id1, unsigned id2, unsigned id3, double value)
+{
+	switch (type)
+	{
+		case CONSTR_3PRATIO:
+		{
+			Point* o1 = dynamic_cast<Point*>(_storage_of_objects.get(id1));
+			if (o1)
+			{
+				Point* o2 = dynamic_cast<Point*>(_storage_of_objects.get(id2));
+				if (o2)
+				{
+					Point* o3 = dynamic_cast<Point*>(_storage_of_objects.get(id3));
+					if (o3)
+					{
+						double* val = new double;
+						*val = value;
+						_parameters.add(val, true);
+						AspectRatio* rule = new AspectRatio(o1->x, o1->y,
+																		o2->x, o2->y,
+																		o3->x, o3->y,
+																		val);
+						_constraints.add(rule);
+						_storage_of_constraints.add(o1, rule);
+						_storage_of_constraints.add(o2, rule);
+						_storage_of_constraints.add(o3, rule);
+						return true;
+					}
+				}
+			}
+			break;
+		}
+	}
+	return false;
 }
 
 bool CORE::AddRule(CONSTR_TYPE type, unsigned id1, unsigned id2, unsigned id3)

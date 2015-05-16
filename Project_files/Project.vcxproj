@@ -144,6 +144,7 @@
     <ClCompile Include="..\lib\core_private.cpp" />
     <ClCompile Include="..\lib\global.cpp" />
     <ClCompile Include="..\lib\gui.cpp" />
+    <ClCompile Include="..\lib\gui_interface.cpp" />
     <ClCompile Include="..\lib\main.cpp" />
     <ClCompile Include="..\lib\mycanvas.cpp" />
     <ClCompile Include="..\lib\ObjectBase.cpp" />

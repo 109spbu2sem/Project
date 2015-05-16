@@ -54,6 +54,10 @@ private:
 	bool addc_excontact();
 	bool addc_incontact();
 	bool addc_spratio(double);
+	
+	const char* DONESTRING = "Done";
+	const char* WORKSTRING = "Work";
+	const char* EMPTYSTRING = "";
 
 public:
 	CORE();
@@ -93,6 +97,7 @@ public:
 	bool AddRule(CONSTR_TYPE type, unsigned id1, unsigned id2);
 	bool AddRule(CONSTR_TYPE type, unsigned id1, unsigned id2, double value);
 	bool AddRule(CONSTR_TYPE type, unsigned id1, unsigned id2, unsigned id3);
+	bool AddRule(CONSTR_TYPE type, unsigned id1, unsigned id2, unsigned id3, double value);
 
 	bool ChangePoint(unsigned id,
 						  double point_x, bool isconstx,
