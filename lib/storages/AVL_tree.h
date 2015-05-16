@@ -7,14 +7,15 @@ template<typename Key, typename Value> class AVLVeiwer;
 template<typename Key, typename Value> class Storage_AVL
 {
 public:
-	struct tuple{
+	struct tuple
+	{
 		Key key;
 		Value value;
 	};
-	friend class AVLVeiwer<Key, Value>;
+	friend class AVLVeiwer < Key, Value > ;
 	Storage_AVL()
-	{ 
-		_root = 0; 
+	{
+		_root = 0;
 		_size = 0;
 	}
 	~Storage_AVL()
@@ -23,14 +24,16 @@ public:
 	}
 	void add(const Key& a, const Value& b)
 	{
-		if (_root == 0){
+		if (_root == 0)
+		{
 			_root = new cell;
 			_root->parent = 0;
 			_root->data.key = a;
 			_root->data.value = b;
 			_root->left = _root->right = 0;
 		}
-		else{
+		else
+		{
 			cell *newcell = new cell;
 			newcell->data.key = a;
 			newcell->data.value = b;
@@ -51,38 +54,42 @@ public:
 					cur = cur->right;
 				else cur = cur->left;
 			}
-			if (parent->data.key < a) 
+			if (parent->data.key < a)
 				parent->right = newcell;
-			else 
+			else
 				parent->left = newcell;
 			newcell->parent = parent;
 			balance(newcell);
 		}
 		++_size;
-		
+
 	}
-	bool hasKey(const Key& a){
+	bool hasKey(const Key& a) const
+	{
 		cell *cur = _root;
-		while (cur){
+		while (cur)
+		{
 			if (cur->data.key == a) return true;
 			if (cur->data.key < a) cur = cur->right;
 			else cur = cur->left;
 		}
 		return false;
-	};
-	Value& getValuebyKey(const Key& a){
+	}
+	Value& getValuebyKey(const Key& a)
+	{
 		cell *cur = _root;
-		while (cur){
+		while (cur)
+		{
 			if (cur->data.key == a) return cur->data.value;
 			if (cur->data.key < a) cur = cur->right;
 			else cur = cur->left;
 		}
 		throw std::logic_error("No such item");
-	};
-	unsigned size()const 
-	{ 
-		return _size; 
-	};
+	}
+	unsigned size() const
+	{
+		return _size;
+	}
 	bool remove(const Key&a)
 	{
 		try
@@ -98,7 +105,7 @@ public:
 	//void showTree(/*const Key& a*/)
 	/*{
 		return show(_root);
-	}*/
+		}*/
 
 	void clear()
 	{
@@ -112,9 +119,10 @@ public:
 		AVLVeiwer<Key, Value> v(*this);
 		return v;
 	}
-	
+
 private:
-	struct cell{
+	struct cell
+	{
 		cell *left;
 		cell *right;
 		cell *parent;
@@ -129,9 +137,11 @@ private:
 	void lrotCCW(cell *);
 	void lrotCW(cell *);
 	void balance(cell *);
-	cell* findcell(const Key& a){
+	cell* findcell(const Key& a)
+	{
 		cell *cur = _root;
-		while (cur){
+		while (cur)
+		{
 			if (cur->data.key == a) return cur;
 			if (cur->data.key < a) cur = cur->right;
 			else cur = cur->left;
@@ -160,7 +170,7 @@ private:
 		}
 		else
 		{
-			
+
 			cell* c = cur;
 			cell* newcell;
 			if (heightdiff(cur) <= 0)
@@ -214,30 +224,32 @@ private:
 				c->parent = cur->parent;
 				cur->parent = newcell;
 
-                if (cur->parent){
-                    if ( cur->parent->data.key < c->data.key)
-                    {
-                        cur->parent->right = cur;
-                        if (cur->parent->data.key == _root->data.key) _root->right = cur;
-                    }
-                    else
-                    {
-                        cur->parent->left = cur;
-                        if (cur->parent->data.key == _root->data.key) _root->left = cur;
-                    }
-                }
-                if (c->parent){
-				if (c->parent->data.key < cur->data.key)
+				if (cur->parent)
 				{
-					c->parent->right = c;
-					if (c->parent->data.key == _root->data.key) _root->right = c;
+					if (cur->parent->data.key < c->data.key)
+					{
+						cur->parent->right = cur;
+						if (cur->parent->data.key == _root->data.key) _root->right = cur;
+					}
+					else
+					{
+						cur->parent->left = cur;
+						if (cur->parent->data.key == _root->data.key) _root->left = cur;
+					}
 				}
-				else
+				if (c->parent)
 				{
-					c->parent->left = c;
-					if (c->parent->data.key == _root->data.key) _root->left = c;
+					if (c->parent->data.key < cur->data.key)
+					{
+						c->parent->right = c;
+						if (c->parent->data.key == _root->data.key) _root->right = c;
+					}
+					else
+					{
+						c->parent->left = c;
+						if (c->parent->data.key == _root->data.key) _root->left = c;
+					}
 				}
-                }
 
 				newcell = cur->left;
 				cell* newcell2 = cur->right;
@@ -281,19 +293,19 @@ private:
 	}
 	/*void show(cell* c)
 	{
-		cell* cur = c;
-		if (c && c->left)
-		{
-			c = c->left;
-			cout << c->parent->data.key << c->parent->data.value << " ->left = " << c->data.key << c->data.value << endl;
-			show(c);
-		}
-		if (cur && cur->right)
-		{
-			cur = cur->right;
-			cout << cur->parent->data.key << cur->parent->data.value << " ->right = " << cur->data.key << cur->data.value << endl;
-			show(cur);
-		}
+	cell* cur = c;
+	if (c && c->left)
+	{
+	c = c->left;
+	cout << c->parent->data.key << c->parent->data.value << " ->left = " << c->data.key << c->data.value << endl;
+	show(c);
+	}
+	if (cur && cur->right)
+	{
+	cur = cur->right;
+	cout << cur->parent->data.key << cur->parent->data.value << " ->right = " << cur->data.key << cur->data.value << endl;
+	show(cur);
+	}
 	}*/
 };
 

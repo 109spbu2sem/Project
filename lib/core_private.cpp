@@ -124,7 +124,7 @@ void CORE::Calculate()
 
 	/*Here for Anton's graphs*/
 
-	for (ListViewer<IConstraint*> i(_storage_of_constraints); i.canMoveNext(); i.moveNext())
+	for (ListViewer<IConstraint*> i(_constraints); i.canMoveNext(); i.moveNext())
 	{
 		try
 		{

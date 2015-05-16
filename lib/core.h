@@ -29,8 +29,8 @@ private:
 	QString _fileWay;
 
 	Storage_AVL<double*, bool> _parameters;
-	Storage_List<IConstraint*> _storage_of_constraints;
-	Storage_AVL<ObjectBase*, IConstraint*> _storage_of_constraint;
+	Storage_List<IConstraint*> _constraints;
+	StorageOfConstraints _storage_of_constraints;
 	Storage_List<ObjectBase*> _selected_objects;
 	StorageOfObjects _storage_of_objects;
 
