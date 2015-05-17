@@ -76,9 +76,3 @@ SOURCES += \
 FORMS += \
     ../lib/QTforms/gui.ui \
     ../lib/QTforms/objectpropertieswindow.ui
-
-RESOURCES += \
-    ../lib/QTforms/icons/icons.qrc
-
-DISTFILES += \
-    ../lib/QTforms/icons/pointbtn.png

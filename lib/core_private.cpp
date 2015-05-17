@@ -346,9 +346,9 @@ void CORE::BuildFigureGoldMethod(IConstraint *constr, Storage_Array<double*>* pa
 		writeToLog(f_current, "f = ", 2);
 		writeToLog(abs(f_prev - f_current) /*/ abs(f_prev)*/, "delta f= ", 2);
 	//} while (abs(f_prev - f_current) > f_epsi);
-	} while (abs(f_prev - f_current) /*/ abs(f_prev)*/ > f_epsi && f_count < f_Epsi);
+	} while (abs(f_prev - f_current) /*/ abs(f_prev)*/ > f_epsi && f_count < f_Epsi && f_current > f_epsi);
 	writeToLog(f_count, "iterations= ", 2);
-	writeToLog(nf_eval, "Steps= ", 2);
+	writeToLog(nf_eval, "updates= ", 2);
 	/*if (constr->error() >= f_epsi)
 		mygui->WriteError("Can't build true figure.");*/
 	delete[] grad;

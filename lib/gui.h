@@ -89,6 +89,17 @@ private slots:
 	void on_deleteRuleBTN_clicked();
 
 	void on_createCircleBTN_clicked();
+
+	void on_redrawBTN_clicked();
+
+	void on_clearallBTN_clicked();
+
+	void on_gridBTN_clicked();
+
+	void on_saveBTN_clicked();
+	void on_saveasBTN_clicked();
+	void on_openBTN_clicked();
+	void on_closeBTN_clicked();
 	
 private:
     bool flag;

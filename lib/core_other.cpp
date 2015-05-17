@@ -238,6 +238,7 @@ void CORE::DeleteAll()
 	writeToLog("All parameters were deleted");
 	writeToLog("All clear");
 	mygui->Clear();
+	mygui->ClearRules();
 	mygui->WriteText(DONESTRING, "All clear");
 }
 
@@ -374,6 +375,7 @@ bool CORE::DeleteRule(unsigned id)
 		}
 		_storage_of_constraints.remove(id);
 		Redraw(mygui);
+		TransmitRules(mygui);
 		return true;
 	}
 	return false;

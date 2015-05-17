@@ -29,6 +29,7 @@ public:
 	
 	void setTool(GTool);
 	void NewCanvas();
+	void setGrid(bool);
 
 public slots:
 	void mousePressEvent(QMouseEvent *event);
@@ -42,6 +43,7 @@ private:
 	QGraphicsScene* mainscene;
 	CORE* mycore;
 	GTool _tool;
+	bool _displaygrid;
 };
 
 #endif // MYCANVAS_H

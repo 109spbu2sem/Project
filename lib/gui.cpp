@@ -84,9 +84,9 @@ void GUI::on_openAddingBTN_clicked()
 {
     objectPropertiesWindow ow(this);
 	 ow.connectCORE(mycore);
-	 WriteStatus("Add object");
+	 WriteText("Add object", "");
 	 ow.exec();
-	 WriteStatus("Done");
+	 WriteText("Done", "");
 }
 
 void GUI::on_ruleBox_currentIndexChanged(int index)
@@ -278,6 +278,39 @@ void GUI::on_actionSave_As_triggered()
 void GUI::on_actionClear_all_triggered()
 {
 	mycore->DeleteAll();
+}
+
+void GUI::on_saveBTN_clicked()
+{
+	on_actionSave_triggered();
+}
+void GUI::on_saveasBTN_clicked()
+{
+	on_actionSave_As_triggered();
+}
+void GUI::on_openBTN_clicked()
+{
+	on_actionLoad_triggered();
+}
+void GUI::on_closeBTN_clicked()
+{
+	on_actionClose_triggered();
+}
+
+void GUI::on_redrawBTN_clicked()
+{
+	on_actionRedraw_all_triggered();
+}
+
+void GUI::on_clearallBTN_clicked()
+{
+	on_actionClear_all_triggered();
+}
+
+void GUI::on_gridBTN_clicked()
+{
+	ui->myCanvas->setGrid(ui->gridBTN->isChecked());
+	mycore->Calculate();
 }
 
 void GUI::on_actionLoad_triggered()

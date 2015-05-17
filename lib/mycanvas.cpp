@@ -8,8 +8,9 @@ MyCanvas::MyCanvas(QWidget *parent) : QGraphicsView(parent)
 {
 	mainscene = new QGraphicsScene();
 	setScene(mainscene);
-	scale(2, 2);
+	//scale(2, 2);
 	_tool = TOOL_Select;
+	_displaygrid = false;
 	NewCanvas();
 }
 
@@ -18,25 +19,36 @@ MyCanvas::~MyCanvas()
 	delete mainscene;
 }
 
+void MyCanvas::setGrid(bool b)
+{
+	_displaygrid = b;
+}
+
 void MyCanvas::NewCanvas()
 {
-	QPen pen(Qt::DotLine);
-	pen.setCapStyle(Qt::RoundCap);
-	pen.setJoinStyle(Qt::RoundJoin);
-	const double r = 0.4;
-	pen.setWidthF(r - 0.3);
-	mainscene->addLine(0, -1000, 0, 1000, pen);
-	mainscene->addLine(-1000, 0, 1000, 0, pen);
-	QPen pen1;
-	pen1.setWidthF(r - 0.2);
-	QBrush brush(Qt::SolidPattern);
-	for (int x = -200; x <= 200; x += 25)
+	if (_displaygrid)
 	{
-		mainscene->addEllipse(x - r / 2, -r / 2, r, r, pen1, brush);
-	}
-	for (int y = -200; y <= 200; y += 25)
-	{
-		mainscene->addEllipse(-r / 2, y - r / 2, r, r, pen1, brush);
+		QPen pen(Qt::DotLine);
+		pen.setCapStyle(Qt::RoundCap);
+		pen.setJoinStyle(Qt::RoundJoin);
+		const double r = 0.7;
+		pen.setWidthF(r - 0.3);
+		for (int x = -1000; x <= 1000; x += 100)
+		{
+			mainscene->addLine(x, -1000, x, 1000, pen);
+			mainscene->addLine(-1000, x, 1000, x, pen);
+		}
+		/*pen.setWidthF(0.8);
+		mainscene->addLine(0, -1000, 0, 1000, pen);
+		mainscene->addLine(-1000, 0, 1000, 0, pen);*/
+		QPen pen1;
+		pen1.setWidthF(r + 0.4);
+		QBrush brush(Qt::SolidPattern);
+		for (int x = -1000; x <= 1000; x += 25)
+		{
+			mainscene->addEllipse(x - r / 2, -r / 2, r, r, pen1, brush);
+			mainscene->addEllipse(-r / 2, x - r / 2, r, r, pen1, brush);
+		}
 	}
 }
 
