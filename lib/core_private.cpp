@@ -1,6 +1,6 @@
 #include "core.h"
 #include "gui.h"
-#include "constraints\Collector.h"
+#include "constraints/Collector.h"
 #include <fstream>
 #include <string>
 #include <ctime>
@@ -10,6 +10,9 @@
 CORE::CORE()
 {
 	mygui = 0;
+	WORKSTRING = "Working";
+	DONESTRING = "Done";
+	EMPTYSTRING = "";
 	Settings::SettingsLoader::setupSettings(&mysettings);
 	if (mysettings.WritelogMode() >= 1)
 	{
@@ -28,6 +31,9 @@ CORE::CORE()
 CORE::CORE(GraphicsInterface* gui)
 {
 	mygui = gui;
+	WORKSTRING = "Working";
+	DONESTRING = "Done";
+	EMPTYSTRING = "";
 	Settings::SettingsLoader::setupSettings(&mysettings);
 	if (mysettings.WritelogMode() >= 1)
 	{
@@ -300,7 +306,6 @@ void CORE::BuildFigureGoldMethod(IConstraint *constr, Storage_Array<double*>* pa
 		// ratio of the golden section
 		const double gold = 0.5 + sqrt(5.0 / 4);
 		double a0 = 0;
-		double f_a0 = f_prev;
 		double aleft = a1 - (a1 - a0) / gold;
 		double aright = a0 + (a1 - a0) / gold;
 		for (unsigned k = 0; k < parameters->size(); k++)

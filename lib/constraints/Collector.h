@@ -1,7 +1,7 @@
 #ifndef COLLECTOR_H
 #define COLLECTOR_H
-#include "..\global.h"
-#include "..\Storages\storage_array.h"
+#include "../global.h"
+#include "../Storages/storage_array.h"
 
 // type CONSTR_COLLECTOR
 

@@ -3,7 +3,7 @@
 
 #include <string>
 #include <fstream>
-#include "storages\storage_list.h"
+#include "storages/storage_list.h"
 #include "core.h"
 #include <QString>
 

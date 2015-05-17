@@ -1,6 +1,6 @@
 #include "core.h"
 #include "gui.h"
-#include "QtWidgets\qapplication.h"
+#include "QtWidgets/qapplication.h"
 
 int main(int argc, char *argv[])
 {

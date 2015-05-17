@@ -2,12 +2,12 @@
 #include "global.h"
 #include "ui_gui.h"
 #include "objectpropertieswindow.h"
-#include "QtWidgets\qgraphicssceneevent.h"
+#include "QtWidgets/qgraphicssceneevent.h"
 #include "mycanvas.h"
 #include "QtWidgets\qmessagebox.h"
 #include <QString>
-#include "QtWidgets\qfiledialog.h"
-#include "QtWidgets\qlistview.h"
+#include "QtWidgets/qfiledialog.h"
+#include "QtWidgets/qlistview.h"
 #include "qlist.h"
 #include <QList>
 

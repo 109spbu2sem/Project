@@ -1,6 +1,6 @@
 #ifndef ANGLE_SEGMENT_SEGMENT_H
 #define ANGLE_SEGMENT_SEGMENT_H
-#include "..\global.h"
+#include "../global.h"
 #include <cmath>
 
 // (c) Alena // type CONSTR_L2LANGLE
