@@ -53,7 +53,7 @@ public:
 			return 2 * (*_k - length(*_p1x, *_p1y, *_p2x, *_p2y) / length(*_p2x, *_p2y, *_p3x, *_p3y));
 		return 0;
 	}
-	CONSTR_TYPE type()
+	CONSTR_TYPE type() const
 	{
 		return CONSTR_3PRATIO;
 	}

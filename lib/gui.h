@@ -35,10 +35,10 @@ public:
 	virtual bool DrawCircle(unsigned, double, double, double, Color, bool); // circle (id, x, y, r, color)
 	virtual bool Clear();
 
-	virtual bool WriteRule(unsigned, unsigned, CONSTR_TYPE);
-	virtual bool WriteRule(unsigned, unsigned, CONSTR_TYPE, double);
 	virtual bool WriteRule(unsigned, unsigned, unsigned, CONSTR_TYPE);
 	virtual bool WriteRule(unsigned, unsigned, unsigned, CONSTR_TYPE, double);
+	virtual bool WriteRule(unsigned, unsigned, unsigned, unsigned, CONSTR_TYPE);
+	virtual bool WriteRule(unsigned, unsigned, unsigned, unsigned, CONSTR_TYPE, double);
 
 	virtual bool Set_properties_of_point(unsigned, double, double, Color);
 	virtual bool Set_properties_of_segment(unsigned, double, double, double, double, Color);

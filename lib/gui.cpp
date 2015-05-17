@@ -375,10 +375,10 @@ void GUI::on_openChangingDialog_clicked()
 
 void GUI::on_deleteObjBTN_clicked()
 {
-	mycore->DeleteSelected();
+	mycore->DeleteSelectedObjects();
 }
 
 void GUI::on_deleteRuleBTN_clicked()
 {
-	//mycore->
+	mycore->DeleteRule(ui->propertiesList->selectedItems().first()->data(22).toUInt());
 }

@@ -34,7 +34,7 @@ public:
 			res += _storage[k]->diff(par);
 		return res;
 	}
-	virtual CONSTR_TYPE type()
+	virtual CONSTR_TYPE type() const
 	{
 		return CONSTR_COLLECTOR;
 	}

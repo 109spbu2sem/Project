@@ -58,7 +58,7 @@ public:
 			return -2 * sqrt(error())*sin(*_a);
 		return 0;
 	}
-	virtual CONSTR_TYPE type()
+	virtual CONSTR_TYPE type() const
 	{
 		return CONSTR_L2LANGLE;
 	}

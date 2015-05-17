@@ -11,7 +11,6 @@ private:
 public:
 	Color color;
 	ID id;
-	//unsigned char visible; // 0 - invisible, 100 - full visible; // May be unused
 	ObjectBase();
 	virtual ~ObjectBase();
 	void changeSelect(bool b);

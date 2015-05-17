@@ -47,9 +47,13 @@ public:
 			return 2 * ((*_p2y - *_p1y)*(*_p3x - *_p4x) - (*_p4y - *_p3y)*(*_p1x - *_p2x))*(*_p2x - *_p1x);
 		return 0;
 	}
-	virtual CONSTR_TYPE type()
+	virtual CONSTR_TYPE type() const
 	{
 		return CONSTR_PARALLELISM;
+	}
+	virtual double value() const
+	{
+		return NAN;
 	}
 };
 

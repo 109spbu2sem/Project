@@ -42,7 +42,7 @@ public:
 			return 2 * error()*(*_p1x - *_p2x);
 		return 0;
 	}
-	virtual CONSTR_TYPE type()
+	virtual CONSTR_TYPE type() const
 	{
 		return CONSTR_3PONLINE;
 	}

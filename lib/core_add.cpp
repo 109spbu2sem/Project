@@ -326,7 +326,7 @@ bool CORE::AddRule(CONSTR_TYPE type, unsigned id1, unsigned id2)
 					ExternalContactCircle* rule = new ExternalContactCircle(o1->p->x, o1->p->y,
 																							  o2->p->x, o2->p->y,
 																							  o1->r, o2->r);
-					_constraints.add(rule);
+					
 					_storage_of_constraints.add(o1, rule);
 					_storage_of_constraints.add(o2, rule);
 					return true;
@@ -346,7 +346,7 @@ bool CORE::AddRule(CONSTR_TYPE type, unsigned id1, unsigned id2)
 					InternalContactCircle* rule = new InternalContactCircle(o1->p->x, o1->p->y,
 																							  o2->p->x, o2->p->y,
 																							  o1->r, o2->r);
-					_constraints.add(rule);
+					
 					_storage_of_constraints.add(o1, rule);
 					_storage_of_constraints.add(o2, rule);
 					return true;
@@ -374,7 +374,7 @@ bool CORE::AddRule(CONSTR_TYPE type, unsigned id1, unsigned id2, double value)
 				Point2Point* rule = new Point2Point(obj1->x, obj1->y,
 																obj2->x, obj2->y,
 																val);
-				_constraints.add(rule);
+				
 				_storage_of_constraints.add(obj1, rule);
 				_storage_of_constraints.add(obj2, rule);
 				return true;
@@ -396,7 +396,7 @@ bool CORE::AddRule(CONSTR_TYPE type, unsigned id1, unsigned id2, double value)
 																											obj2->p1->x, obj2->p1->y,
 																											obj2->p2->x, obj2->p2->y,
 																											val);
-					_constraints.add(rule);
+					
 					_storage_of_constraints.add(obj1, rule);
 					_storage_of_constraints.add(obj2, rule);
 					return true;
@@ -416,7 +416,7 @@ bool CORE::AddRule(CONSTR_TYPE type, unsigned id1, unsigned id2, double value)
 																											ob2->p1->x, ob2->p1->y,
 																											ob2->p2->x, ob2->p2->y,
 																											val);
-					_constraints.add(rule);
+					
 					_storage_of_constraints.add(ob1, rule);
 					_storage_of_constraints.add(ob2, rule);
 					return true;
@@ -439,7 +439,7 @@ bool CORE::AddRule(CONSTR_TYPE type, unsigned id1, unsigned id2, double value)
 																					obj2->p1->x, obj2->p1->y,
 																					obj2->p2->x, obj2->p2->y,
 																					val);
-					_constraints.add(rule);
+					
 					_storage_of_constraints.add(obj1, rule);
 					_storage_of_constraints.add(obj2, rule);
 					return true;
@@ -459,7 +459,7 @@ bool CORE::AddRule(CONSTR_TYPE type, unsigned id1, unsigned id2, double value)
 																					ob2->p1->x, ob2->p1->y,
 																					ob2->p2->x, ob2->p2->y,
 																					val);
-					_constraints.add(rule);
+					
 					_storage_of_constraints.add(ob1, rule);
 					_storage_of_constraints.add(ob2, rule);
 					return true;
@@ -481,7 +481,7 @@ bool CORE::AddRule(CONSTR_TYPE type, unsigned id1, unsigned id2, double value)
 																					 obj2->p1->x, obj2->p1->y,
 																					 obj2->p2->x, obj2->p2->y,
 																					 val);
-				_constraints.add(rule);
+				
 				_storage_of_constraints.add(obj1, rule);
 				_storage_of_constraints.add(obj2, rule);
 				return true;
@@ -503,7 +503,7 @@ bool CORE::AddRule(CONSTR_TYPE type, unsigned id1, unsigned id2, double value)
 																	obj1->x, obj1->y,
 																	obj2->p2->x, obj2->p2->y,
 																	val);
-					_constraints.add(rule);
+					
 					_storage_of_constraints.add(obj1, rule);
 					_storage_of_constraints.add(obj2, rule);
 					return true;
@@ -522,7 +522,7 @@ bool CORE::AddRule(CONSTR_TYPE type, unsigned id1, unsigned id2, double value)
 																	ob1->x, ob1->y,
 																	ob2->p2->x, ob2->p2->y,
 																	val);
-					_constraints.add(rule);
+					
 					_storage_of_constraints.add(ob1, rule);
 					_storage_of_constraints.add(ob2, rule);
 					return true;
@@ -556,7 +556,7 @@ bool CORE::AddRule(CONSTR_TYPE type, unsigned id1, unsigned id2, unsigned id3, d
 																		o2->x, o2->y,
 																		o3->x, o3->y,
 																		val);
-						_constraints.add(rule);
+						
 						_storage_of_constraints.add(o1, rule);
 						_storage_of_constraints.add(o2, rule);
 						_storage_of_constraints.add(o3, rule);
@@ -588,7 +588,7 @@ bool CORE::AddRule(CONSTR_TYPE type, unsigned id1, unsigned id2, unsigned id3)
 						ThreePoints* rule = new ThreePoints(o1->x, o1->y,
 																		o2->x, o2->y,
 																		o3->x, o3->y);
-						_constraints.add(rule);
+						
 						_storage_of_constraints.add(o1, rule);
 						_storage_of_constraints.add(o2, rule);
 						_storage_of_constraints.add(o3, rule);
@@ -688,7 +688,7 @@ bool CORE::addc_p2pdist(double value)
 			Point2Point* rule = new Point2Point(obj1->x, obj1->y, 
 															obj2->x, obj2->y,
 															val);
-			_constraints.add(rule);
+			
 			_storage_of_constraints.add(obj1, rule);
 			_storage_of_constraints.add(obj2, rule);
 			return true;
@@ -711,7 +711,7 @@ bool CORE::addc_3ponline()
 				ThreePoints* rule = new ThreePoints(obj1->x, obj1->y,
 																obj2->p1->x, obj2->p1->y,
 																obj2->p2->x, obj2->p2->y);
-				_constraints.add(rule);
+				
 				_storage_of_constraints.add(obj1, rule);
 				_storage_of_constraints.add(obj2, rule);
 				return true;
@@ -727,7 +727,7 @@ bool CORE::addc_3ponline()
 				ThreePoints* rule = new ThreePoints(ob1->x, ob1->y,
 																ob2->p1->x, ob2->p1->y,
 																ob2->p2->x, ob2->p2->y);
-				_constraints.add(rule);
+				
 				_storage_of_constraints.add(ob1, rule);
 				_storage_of_constraints.add(ob2, rule);
 				return true;
@@ -752,7 +752,7 @@ bool CORE::addc_3ponline()
 					ThreePoints* rule = new ThreePoints(o1->x, o1->y,
 																	o2->x, o2->y,
 																	o3->x, o3->y);
-					_constraints.add(rule);
+					
 					_storage_of_constraints.add(o1, rule);
 					_storage_of_constraints.add(o2, rule);
 					_storage_of_constraints.add(o3, rule);
@@ -787,7 +787,7 @@ bool CORE::addc_3pratio(double value)
 																	o2->x, o2->y,
 																	o3->x, o3->y,
 																	val);
-					_constraints.add(rule);
+					
 					_storage_of_constraints.add(o1, rule);
 					_storage_of_constraints.add(o2, rule);
 					_storage_of_constraints.add(o3, rule);
@@ -814,7 +814,7 @@ bool CORE::addc_excontact()
 				ExternalContactCircle* rule = new ExternalContactCircle(o1->p->x, o1->p->y,
 																						  o2->p->x, o2->p->y,
 																						  o1->r, o2->r);
-				_constraints.add(rule);
+				
 				_storage_of_constraints.add(o1, rule);
 				_storage_of_constraints.add(o2, rule);
 				return true;
@@ -839,7 +839,7 @@ bool CORE::addc_incontact()
 				InternalContactCircle* rule = new InternalContactCircle(o1->p->x, o1->p->y,
 																						  o2->p->x, o2->p->y,
 																						  o1->r, o2->r);
-				_constraints.add(rule);
+				
 				_storage_of_constraints.add(o1, rule);
 				_storage_of_constraints.add(o2, rule);
 				return true;
@@ -866,7 +866,7 @@ bool CORE::addc_l2langle(double value)
 																				 obj2->p1->x, obj2->p1->y,
 																				 obj2->p2->x, obj2->p2->y,
 																				 val);
-			_constraints.add(rule);
+			
 			_storage_of_constraints.add(obj1, rule);
 			_storage_of_constraints.add(obj2, rule);
 			return true;
@@ -893,7 +893,7 @@ bool CORE::addc_p2ldist(double value)
 																				obj2->p1->x, obj2->p1->y,
 																				obj2->p2->x, obj2->p2->y,
 																				val);
-				_constraints.add(rule);
+				
 				_storage_of_constraints.add(obj1, rule);
 				_storage_of_constraints.add(obj2, rule);
 				return true;
@@ -914,7 +914,7 @@ bool CORE::addc_p2ldist(double value)
 																				ob2->p1->x, ob2->p1->y,
 																				ob2->p2->x, ob2->p2->y,
 																				val);
-				_constraints.add(rule);
+				
 				_storage_of_constraints.add(ob1, rule);
 				_storage_of_constraints.add(ob2, rule);
 				return true;
@@ -942,7 +942,7 @@ bool CORE::addc_p2sdist(double value)
 																										obj2->p1->x, obj2->p1->y,
 																										obj2->p2->x, obj2->p2->y,
 																										val);
-				_constraints.add(rule);
+				
 				_storage_of_constraints.add(obj1, rule);
 				_storage_of_constraints.add(obj2, rule);
 				return true;
@@ -963,7 +963,7 @@ bool CORE::addc_p2sdist(double value)
 																										ob2->p1->x, ob2->p1->y,
 																										ob2->p2->x, ob2->p2->y,
 																										val);
-				_constraints.add(rule);
+				
 				_storage_of_constraints.add(ob1, rule);
 				_storage_of_constraints.add(ob2, rule);
 				return true;
@@ -991,7 +991,7 @@ bool CORE::addc_spratio(double value)
 																obj1->x, obj1->y,
 																obj2->p2->x, obj2->p2->y,
 																val);
-				_constraints.add(rule);
+				
 				_storage_of_constraints.add(obj2->p1, rule);
 				_storage_of_constraints.add(obj1, rule);
 				_storage_of_constraints.add(obj2->p2, rule);
@@ -1012,7 +1012,7 @@ bool CORE::addc_spratio(double value)
 																ob1->x, ob1->y,
 																ob2->p2->x, ob2->p2->y,
 																val);
-				_constraints.add(rule);
+				
 				_storage_of_constraints.add(ob1, rule);
 				_storage_of_constraints.add(ob2, rule);
 				return true;
@@ -1035,7 +1035,7 @@ bool CORE::addc_parallelism()
 				obj1->p2->x, obj1->p2->y,
 				obj2->p1->x, obj2->p1->y,
 				obj2->p2->x, obj2->p2->y);
-			_constraints.add(rule);
+			
 			_storage_of_constraints.add(obj1, rule);
 			_storage_of_constraints.add(obj2, rule);
 			return true;
@@ -1057,7 +1057,7 @@ bool CORE::addc_orthogonality()
 				obj1->p2->x, obj1->p2->y,
 				obj2->p1->x, obj2->p1->y,
 				obj2->p2->x, obj2->p2->y);
-			_constraints.add(rule);
+			
 			_storage_of_constraints.add(obj1, rule);
 			_storage_of_constraints.add(obj2, rule);
 			return true;

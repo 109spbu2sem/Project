@@ -151,7 +151,7 @@
     <ClCompile Include="..\lib\objectpropertieswindow.cpp" />
     <ClCompile Include="..\lib\Save.cpp" />
     <ClCompile Include="..\lib\settings.cpp" />
-    <ClCompile Include="..\lib\storageofconstraints .cpp" />
+    <ClCompile Include="..\lib\storageofconstraints.cpp" />
     <ClCompile Include="..\lib\storageofobjects.cpp" />
     <ClCompile Include="..\lib\Load.cpp" />
     <ClCompile Include="Release\moc_objectpropertieswindow.cpp">
@@ -163,7 +163,6 @@
     <ClInclude Include="..\lib\constraints\AspectRatio.h" />
     <ClInclude Include="..\lib\constraints\CircleContact.h" />
     <ClInclude Include="..\lib\constraints\Collector.h" />
-    <ClInclude Include="..\lib\Color.h" />
     <ClInclude Include="..\lib\constraints\DistancePoint-Point.h" />
     <ClInclude Include="..\lib\constraints\DistancePoint-Section.h" />
     <ClInclude Include="..\lib\constraints\DistanceToTheLine.h" />

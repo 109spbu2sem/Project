@@ -36,7 +36,7 @@ class IConstraint
 public:
 	virtual double error() = 0;
 	virtual double diff(double *par) = 0;
-	virtual CONSTR_TYPE type() = 0;
+	virtual CONSTR_TYPE type() const = 0;
 	virtual double value() const = 0;
 };
 
@@ -67,10 +67,10 @@ public:
 	// id, x, y, r, color
 	virtual bool DrawCircle(unsigned, double, double, double, Color, bool) = 0;
 	virtual bool Clear() = 0;
-	virtual bool WriteRule(unsigned, unsigned, CONSTR_TYPE) = 0;
-	virtual bool WriteRule(unsigned, unsigned, CONSTR_TYPE, double) = 0;
 	virtual bool WriteRule(unsigned, unsigned, unsigned, CONSTR_TYPE) = 0;
 	virtual bool WriteRule(unsigned, unsigned, unsigned, CONSTR_TYPE, double) = 0;
+	virtual bool WriteRule(unsigned, unsigned, unsigned, unsigned, CONSTR_TYPE) = 0;
+	virtual bool WriteRule(unsigned, unsigned, unsigned, unsigned, CONSTR_TYPE, double) = 0;
 
 };
 
@@ -96,10 +96,10 @@ public:
 	virtual void WriteMessage(const char* Text) = 0;
 	virtual void WriteText(const char* Short, const char* Long) = 0;
 
-	virtual bool WriteRule(unsigned, unsigned, CONSTR_TYPE) = 0;
-	virtual bool WriteRule(unsigned, unsigned, CONSTR_TYPE, double) = 0;
 	virtual bool WriteRule(unsigned, unsigned, unsigned, CONSTR_TYPE) = 0;
 	virtual bool WriteRule(unsigned, unsigned, unsigned, CONSTR_TYPE, double) = 0;
+	virtual bool WriteRule(unsigned, unsigned, unsigned, unsigned, CONSTR_TYPE) = 0;
+	virtual bool WriteRule(unsigned, unsigned, unsigned, unsigned, CONSTR_TYPE, double) = 0;
 };
 
 #endif

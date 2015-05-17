@@ -4,7 +4,7 @@
 class Settings
 {
 private:
-	char writelog;
+	unsigned writelog;
 public:
 	Settings()
 	{
@@ -20,7 +20,7 @@ public:
 		return false;
 	}
 
-	char WritelogMode() const
+	unsigned WritelogMode() const
 	{
 		return writelog;
 	}

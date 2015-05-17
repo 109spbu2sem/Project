@@ -223,7 +223,7 @@ void CORE::DeleteAll()
 {
 	mygui->WriteStatus("Cleaning...");
 	mygui->WriteMessage("");
-	_constraints.clear();
+	_selected_objects.clear();
 	_storage_of_constraints.clear();
 	mygui->WriteMessage("All rules were deleted");
 	writeToLog("All rules were deleted");
@@ -238,7 +238,7 @@ void CORE::DeleteAll()
 	mygui->WriteText(DONESTRING, "All clear");
 }
 
-void CORE::DeleteSelected()
+void CORE::DeleteSelectedObjects()
 {
 	unsigned cantdelete = 0;
 	for (ListViewer< ObjectBase* > i(_selected_objects); i.canMoveNext(); i.moveNext())
@@ -357,4 +357,20 @@ void CORE::IWantLoad(QString way)
 {
 	Load myload(this, way);
 	myload.begin();
+}
+
+bool CORE::DeleteRule(unsigned id)
+{
+	if (_storage_of_constraints.has(id))
+	{
+		IConstraint* constraint = _storage_of_constraints.get(id);
+		std::list<ObjectBase*> objlist = _storage_of_constraints.get(constraint);
+		for (std::list<ObjectBase*>::iterator iter = objlist.begin(); iter != objlist.end(); iter++)
+		{
+			_storage_of_constraints.remove(*iter, constraint);
+		}
+		_storage_of_constraints.remove(id);
+		return true;
+	}
+	return false;
 }

@@ -47,9 +47,13 @@ public:
 			return 2 * ((*_p2y - *_p1y)*(*_p4y - *_p3y) + (*_p1x - *_p2x)*(*_p3x - *_p4x))*(*_p2y - *_p1y);
 		return 0;
 	}
-	virtual CONSTR_TYPE type()
+	virtual CONSTR_TYPE type() const
 	{
 		return CONSTR_ORTHOGONALITY;
+	}
+	virtual double value() const
+	{
+		return NAN;
 	}
 };
 

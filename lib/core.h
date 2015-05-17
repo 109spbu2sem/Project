@@ -29,7 +29,6 @@ private:
 	QString _fileWay;
 
 	Storage_AVL<double*, bool> _parameters;
-	Storage_List<IConstraint*> _constraints;
 	StorageOfConstraints _storage_of_constraints;
 	Storage_List<ObjectBase*> _selected_objects;
 	StorageOfObjects _storage_of_objects;
@@ -71,14 +70,14 @@ public:
 		writeToLog("GUI connected to CORE", 2);
 	}
 
-	void writeToLog(std::string, char = 1);
-	void writeToLog(int, char = 1);
-	void writeToLog(double, char = 1);
-	void writeToLog(unsigned, char = 1);
-	void writeToLog(long long, char = 1);
-	void writeToLog(int, std::string, char = 1);
-	void writeToLog(unsigned, std::string, char = 1);
-	void writeToLog(double, std::string, char = 1);
+	void writeToLog(std::string, unsigned = 1);
+	void writeToLog(int, unsigned = 1);
+	void writeToLog(double, unsigned = 1);
+	void writeToLog(unsigned, unsigned = 1);
+	void writeToLog(long long, unsigned = 1);
+	void writeToLog(int, std::string, unsigned = 1);
+	void writeToLog(unsigned, std::string, unsigned = 1);
+	void writeToLog(double, std::string, unsigned = 1);
 
 	void Calculate();
 
@@ -122,8 +121,9 @@ public:
 	bool Select(unsigned id);
 	void ClearSelection();
 
-	void DeleteSelected();
+	void DeleteSelectedObjects();
 	void DeleteAll();
+	bool DeleteRule(unsigned);
 
 	void IWantSave();
 	void IWantSaveAs(QString fileway);

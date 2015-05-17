@@ -21,6 +21,7 @@ CORE::CORE()
 	writeToLog(GenerateTimeString(const_cast<char*>(EMPTYSTRING), const_cast<char*>(EMPTYSTRING)).c_str());
 	writeToLog("--------------------------------------");
 	writeToLog("Settings = ok", 2);
+	writeToLog(mysettings.WritelogMode(), "Logfile level");
 	writeToLog("GUI was not connected to CORE", 2);
 }
 
@@ -38,6 +39,7 @@ CORE::CORE(GraphicsInterface* gui)
 	writeToLog(static_cast<int>(time(0)));
 	writeToLog("--------------------------------------");
 	writeToLog("Settings = ok", 2);
+	writeToLog(mysettings.WritelogMode(), "Logfile level");
 	writeToLog("GUI connected to CORE", 2);
 }
 
@@ -114,19 +116,22 @@ void CORE::Redraw(Interface* infa)
 				}
 				case CONSTR_P2PDIST:
 				{
-					mygui->WriteRule(iter.objects().front()->id.getID(), iter.objects().back()->id.getID(),
+					mygui->WriteRule(_storage_of_constraints.getid(iter.constraint()).getID(),
+										  iter.objects().front()->id.getID(), iter.objects().back()->id.getID(),
 										  iter.constraint()->type(), iter.constraint()->value());
 					break;
 				}
 				case CONSTR_P2SECTDIST:
 				{
-					mygui->WriteRule(iter.objects().front()->id.getID(), iter.objects().back()->id.getID(),
+					mygui->WriteRule(_storage_of_constraints.getid(iter.constraint()).getID(), 
+										  iter.objects().front()->id.getID(), iter.objects().back()->id.getID(),
 										  iter.constraint()->type(), iter.constraint()->value());
 					break;
 				}
 				case CONSTR_P2LINEDIST:
 				{
-					mygui->WriteRule(iter.objects().front()->id.getID(), iter.objects().back()->id.getID(),
+					mygui->WriteRule(_storage_of_constraints.getid(iter.constraint()).getID(), 
+										  iter.objects().front()->id.getID(), iter.objects().back()->id.getID(),
 										  iter.constraint()->type(), iter.constraint()->value());
 					break;
 				}
@@ -136,13 +141,15 @@ void CORE::Redraw(Interface* infa)
 					unsigned id1 = (*i)->id.getID(); i++;
 					unsigned id2 = (*i)->id.getID(); i++;
 					unsigned id3 = (*i)->id.getID();
-					mygui->WriteRule(id1, id2, id3,
+					mygui->WriteRule(_storage_of_constraints.getid(iter.constraint()).getID(), 
+										  id1, id2, id3,
 										  iter.constraint()->type(), iter.constraint()->value());
 					break;
 				}
 				case CONSTR_L2LANGLE:
 				{
-					mygui->WriteRule(iter.objects().front()->id.getID(), iter.objects().back()->id.getID(),
+					mygui->WriteRule(_storage_of_constraints.getid(iter.constraint()).getID(), 
+										  iter.objects().front()->id.getID(), iter.objects().back()->id.getID(),
 										  iter.constraint()->type(), iter.constraint()->value());
 					break;
 				}
@@ -152,19 +159,36 @@ void CORE::Redraw(Interface* infa)
 					unsigned id1 = (*i)->id.getID(); i++;
 					unsigned id2 = (*i)->id.getID(); i++;
 					unsigned id3 = (*i)->id.getID();
-					mygui->WriteRule(id1, id2, id3,
+					mygui->WriteRule(_storage_of_constraints.getid(iter.constraint()).getID(), 
+										  id1, id2, id3,
 										  iter.constraint()->type(), iter.constraint()->value());
 					break;
 				}
 				case CONSTR_EXCONTACT:
 				{
-					mygui->WriteRule(iter.objects().front()->id.getID(), iter.objects().back()->id.getID(),
+					mygui->WriteRule(_storage_of_constraints.getid(iter.constraint()).getID(), 
+										  iter.objects().front()->id.getID(), iter.objects().back()->id.getID(),
 										  iter.constraint()->type(), iter.constraint()->value());
 					break;
 				}
 				case CONSTR_INCONTACT:
 				{
-					mygui->WriteRule(iter.objects().front()->id.getID(), iter.objects().back()->id.getID(),
+					mygui->WriteRule(_storage_of_constraints.getid(iter.constraint()).getID(), 
+										  iter.objects().front()->id.getID(), iter.objects().back()->id.getID(),
+										  iter.constraint()->type(), iter.constraint()->value());
+					break;
+				}
+				case CONSTR_ORTHOGONALITY:
+				{
+					mygui->WriteRule(_storage_of_constraints.getid(iter.constraint()).getID(), 
+										  iter.objects().front()->id.getID(), iter.objects().back()->id.getID(),
+										  iter.constraint()->type(), iter.constraint()->value());
+					break;
+				}
+				case CONSTR_PARALLELISM:
+				{
+					mygui->WriteRule(_storage_of_constraints.getid(iter.constraint()).getID(),
+										  iter.objects().front()->id.getID(), iter.objects().back()->id.getID(),
 										  iter.constraint()->type(), iter.constraint()->value());
 					break;
 				}
@@ -187,15 +211,19 @@ void CORE::Calculate()
 	Storage_Array< double* > parameters;
 	writeToLog("Generating graphs");
 
-	/*Here for Anton's graphs*/
+	/*Here place graph partition*/
 
-	for (ListViewer<IConstraint*> i(_constraints); i.canMoveNext(); i.moveNext())
+	for (StorageOfConstraints::viewer i(_storage_of_constraints); i.canMoveNext(); i.moveNext())
 	{
 		try
 		{
-			collector.addConstraint(i.getValue());
+			collector.addConstraint(i.constraint());
 		}
-		catch (...) {}
+		catch (std::logic_error err)
+		{
+			writeToLog("End of constraints or viewer damaged", 1);
+			break;
+		}
 	}
 	for (AVLVeiwer< double*, bool > i(_parameters); i.canMoveNext(); i.moveNext())
 	{
@@ -365,7 +393,7 @@ bool CORE::isInArea(double x, double y, double x1, double y1, double x2, double 
 }
 // Description:
 // write to log file std::string if current 'logmode' >= mode
-void CORE::writeToLog(std::string s, char mode)
+void CORE::writeToLog(std::string s, unsigned mode)
 {
 	if (mysettings.WritelogMode() >= mode && _logfile.is_open())
 	{ 
@@ -374,7 +402,7 @@ void CORE::writeToLog(std::string s, char mode)
 }
 // Description:
 // write to log file int value if current 'logmode' >= mode
-void CORE::writeToLog(int value, char mode)
+void CORE::writeToLog(int value, unsigned mode)
 {
 	if (mysettings.WritelogMode() >= mode && _logfile.is_open())
 	{
@@ -383,7 +411,7 @@ void CORE::writeToLog(int value, char mode)
 }
 // Description:
 // write to log file double value if current 'logmode' >= mode
-void CORE::writeToLog(double value, char mode)
+void CORE::writeToLog(double value, unsigned mode)
 {
 	if (mysettings.WritelogMode() >= mode && _logfile.is_open())
 	{
@@ -392,7 +420,7 @@ void CORE::writeToLog(double value, char mode)
 }
 // Description:
 // write to log file uint if current 'logmode' >= mode
-void CORE::writeToLog(unsigned value, char mode)
+void CORE::writeToLog(unsigned value, unsigned mode)
 {
 	if (mysettings.WritelogMode() >= mode && _logfile.is_open())
 	{
@@ -401,7 +429,7 @@ void CORE::writeToLog(unsigned value, char mode)
 }
 // Description:
 // write to log file long long int if current 'logmode' >= mode
-void CORE::writeToLog(long long value, char mode)
+void CORE::writeToLog(long long value, unsigned mode)
 {
 	if (mysettings.WritelogMode() >= mode && _logfile.is_open())
 	{
@@ -410,7 +438,7 @@ void CORE::writeToLog(long long value, char mode)
 }
 // Description:
 // write to log file int after string if current 'logmode' >= mode
-void CORE::writeToLog(int value, std::string s, char mode)
+void CORE::writeToLog(int value, std::string s, unsigned mode)
 {
 	if (mysettings.WritelogMode() >= mode && _logfile.is_open())
 	{
@@ -419,7 +447,7 @@ void CORE::writeToLog(int value, std::string s, char mode)
 }
 // Description:
 // write to log file uint after string if current 'logmode' >= mode
-void CORE::writeToLog(unsigned value, std::string s, char mode)
+void CORE::writeToLog(unsigned value, std::string s, unsigned mode)
 {
 	if (mysettings.WritelogMode() >= mode && _logfile.is_open())
 	{
@@ -428,7 +456,7 @@ void CORE::writeToLog(unsigned value, std::string s, char mode)
 }
 // Description:
 // write to log file double after string if current 'logmode' >= mode
-void CORE::writeToLog(double value, std::string s, char mode)
+void CORE::writeToLog(double value, std::string s, unsigned mode)
 {
 	if (mysettings.WritelogMode() >= mode && _logfile.is_open())
 	{

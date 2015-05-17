@@ -183,12 +183,13 @@ void GUI::Clear_properties()
 
 bool GUI::DrawPoint(unsigned id, double x, double y, Color c, bool selected)
 {
-	if (x != x || y != y) return false; // check for NaN
-	mainscene->addEllipse(x - 1.2, -y - 1.2, 2.4, 2.4,
-								 selected ? QPen(QColor(QRgb(COLORSELECTED))) :
-								 QPen(QColor(c.red(), c.green(), c.blue())),
-								 selected ? QBrush(QColor(QRgb(COLORSELECTED))) :
-								 QBrush(QColor(c.red(), c.green(), c.blue())));
+	// if (x != x || y != y) return false; // check for NaN
+	if (!(std::isinf(x) || std::isinf(y)))
+		mainscene->addEllipse(x - 1.2, -y - 1.2, 2.4, 2.4,
+		selected ? QPen(QColor(QRgb(COLORSELECTED))) :
+		QPen(QColor(c.red(), c.green(), c.blue())),
+		selected ? QBrush(QColor(QRgb(COLORSELECTED))) :
+		QBrush(QColor(c.red(), c.green(), c.blue())));
 	QString s;
 	s.setNum(id);
 	s += "\tPoint";
@@ -203,10 +204,11 @@ bool GUI::DrawPoint(unsigned id, double x, double y, Color c, bool selected)
 
 bool GUI::DrawSegment(unsigned id, double x1, double y1, double x2, double y2, Color c, bool selected)
 {
-	if (x1 != x1 || y1 != y1 || x2 != x2 || y2 != y2) return false; // check for NaN
-	mainscene->addLine(x1, -y1, x2, -y2,
-							 selected ? QPen(QColor(QRgb(COLORSELECTED))) :
-							 QPen(QColor(c.red(), c.green(), c.blue())));
+	//if (x1 != x1 || y1 != y1 || x2 != x2 || y2 != y2) return false; // check for NaN
+	if (!(std::isinf(x1) || std::isinf(y1) || std::isinf(x2) || std::isinf(y2)))
+		mainscene->addLine(x1, -y1, x2, -y2,
+		selected ? QPen(QColor(QRgb(COLORSELECTED))) :
+		QPen(QColor(c.red(), c.green(), c.blue())));
 	QString s;
 	s.setNum(id);
 	s += "\tSegment";
@@ -221,10 +223,11 @@ bool GUI::DrawSegment(unsigned id, double x1, double y1, double x2, double y2, C
 
 bool GUI::DrawCircle(unsigned id, double x, double y, double r, Color c, bool selected)
 {
-	if (x != x || y != y || r != r) return false; // check for NaN
-	mainscene->addEllipse(x - r, -y - r, r * 2, r * 2,
-								 selected ? QPen(QColor(QRgb(COLORSELECTED))) :
-								 QPen(QColor(c.red(), c.green(), c.blue())));
+	//if (x != x || y != y || r != r) return false; // check for NaN
+	if (!(std::isinf(x) || std::isinf(y) || std::isinf(r)))
+		mainscene->addEllipse(x - r, -y - r, r * 2, r * 2,
+		selected ? QPen(QColor(QRgb(COLORSELECTED))) :
+		QPen(QColor(c.red(), c.green(), c.blue())));
 	QString s;
 	s.setNum(id);
 	s += "\tCircle";
@@ -247,7 +250,7 @@ bool GUI::Clear()
 	return true;
 }
 
-bool GUI::WriteRule(unsigned id1, unsigned id2, CONSTR_TYPE type)
+bool GUI::WriteRule(unsigned myid, unsigned id1, unsigned id2, CONSTR_TYPE type)
 {
 	QString s;
 	s = ConstrTypeToString(type);
@@ -258,10 +261,11 @@ bool GUI::WriteRule(unsigned id1, unsigned id2, CONSTR_TYPE type)
 	it->setData(19, id1);
 	it->setData(20, id2);
 	it->setData(21, 0);
+	it->setData(22, myid);
 	ui->rulesList->addItem(it);
 	return true;
 }
-bool GUI::WriteRule(unsigned id1, unsigned id2, CONSTR_TYPE type, double value)
+bool GUI::WriteRule(unsigned myid, unsigned id1, unsigned id2, CONSTR_TYPE type, double value)
 {
 	QString s;
 	s = ConstrTypeToString(type);
@@ -272,10 +276,11 @@ bool GUI::WriteRule(unsigned id1, unsigned id2, CONSTR_TYPE type, double value)
 	it->setData(19, id1);
 	it->setData(20, id2);
 	it->setData(21, 0);
+	it->setData(22, myid);
 	ui->rulesList->addItem(it);
 	return true;
 }
-bool GUI::WriteRule(unsigned id1, unsigned id2, unsigned id3, CONSTR_TYPE type)
+bool GUI::WriteRule(unsigned myid, unsigned id1, unsigned id2, unsigned id3, CONSTR_TYPE type)
 {
 	QString s;
 	s = ConstrTypeToString(type);
@@ -286,10 +291,11 @@ bool GUI::WriteRule(unsigned id1, unsigned id2, unsigned id3, CONSTR_TYPE type)
 	it->setData(19, id1);
 	it->setData(20, id2);
 	it->setData(21, id3);
+	it->setData(22, myid);
 	ui->rulesList->addItem(it);
 	return true;
 }
-bool GUI::WriteRule(unsigned id1, unsigned id2, unsigned id3, CONSTR_TYPE type, double value)
+bool GUI::WriteRule(unsigned myid, unsigned id1, unsigned id2, unsigned id3, CONSTR_TYPE type, double value)
 {
 	QString s;
 	s = ConstrTypeToString(type);
@@ -300,6 +306,7 @@ bool GUI::WriteRule(unsigned id1, unsigned id2, unsigned id3, CONSTR_TYPE type, 
 	it->setData(19, id1);
 	it->setData(20, id2);
 	it->setData(21, id3);
+	it->setData(22, myid);
 	ui->rulesList->addItem(it);
 	return true;
 }

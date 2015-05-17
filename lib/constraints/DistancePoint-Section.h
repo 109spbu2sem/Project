@@ -81,7 +81,7 @@ public:
 		}
 		return 0;
 	};
-	virtual CONSTR_TYPE type()
+	virtual CONSTR_TYPE type() const
 	{
 		return CONSTR_P2SECTDIST;
 	}

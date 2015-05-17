@@ -20,27 +20,6 @@ UI_DIR += ./GeneratedFiles
 RCC_DIR += ./GeneratedFiles
 
 HEADERS += \
-    ../lib/Color.h \
-    ../lib/core.h \
-    ../lib/global.h \
-    ../lib/gui.h \
-    ../lib/Id.h \
-    ../lib/LineSkin.h \
-    ../lib/Load.h \
-    ../lib/mycanvas.h \
-    ../lib/objectpropertieswindow.h \
-    ../lib/ObjectSkin.h \
-    ../lib/Save.h \
-    ../lib/settings.h \
-    ../lib/storageofobjects.h \
-    ../lib/structures.h \
-    ../lib/storages/AVL_tree.h \
-    ../lib/storages/double_linked_list.h \
-    ../lib/storages/heshtable.h \
-    ../lib/storages/matrix.h \
-    ../lib/storages/queue.h \
-    ../lib/storages/storage_array.h \
-    ../lib/storages/storage_list.h \
     ../lib/constraints/AngleSegment-Segment.h \
     ../lib/constraints/AspectRatio.h \
     ../lib/constraints/CircleContact.h \
@@ -48,29 +27,58 @@ HEADERS += \
     ../lib/constraints/DistancePoint-Point.h \
     ../lib/constraints/DistancePoint-Section.h \
     ../lib/constraints/DistanceToTheLine.h \
+    ../lib/constraints/OrthogonalLines.h \
+    ../lib/constraints/ParallelLines.h \
     ../lib/constraints/ThreePointsOnTheLine.h \
-    ../lib/enums.h
+    ../lib/core.h \
+    ../lib/enums.h \
+    ../lib/global.h \
+    ../lib/gui.h \
+    ../lib/Id.h \
+    ../lib/Load.h \
+    ../lib/mycanvas.h \
+    ../lib/ObjectBase.h \
+    ../lib/objectpropertieswindow.h \
+    ../lib/Save.h \
+    ../lib/settings.h \
+    ../lib/storageofconstraints.h \
+    ../lib/storageofobjects.h \
+    ../lib/structures.h \
+    ../lib/storages/AVL_tree.h \
+    ../lib/storages/double_linked_list.h \
+    ../lib/storages/heshtable.h \
+    ../lib/storages/matrix.h \
+    ../lib/storages/queue.h \
+    ../lib/storages/SparseT.h \
+    ../lib/storages/storage_array.h \
+    ../lib/storages/storage_list.h
 
 SOURCES += \
+    ../lib/constraints/DistancePoint-Section.cpp \
+    ../lib/constraints/DistanceToTheLine.cpp \
     ../lib/Color.cpp \
     ../lib/core_add.cpp \
     ../lib/core_other.cpp \
     ../lib/core_private.cpp \
     ../lib/global.cpp \
     ../lib/gui.cpp \
-    ../lib/LineSkin.cpp \
+    ../lib/gui_interface.cpp \
     ../lib/Load.cpp \
     ../lib/main.cpp \
     ../lib/mycanvas.cpp \
+    ../lib/ObjectBase.cpp \
     ../lib/objectpropertieswindow.cpp \
-    ../lib/ObjectSkin.cpp \
     ../lib/Save.cpp \
     ../lib/settings.cpp \
-    ../lib/storageofobjects.cpp \
-    ../lib/structures.cpp \
-    ../lib/constraints/DistancePoint-Section.cpp \
-    ../lib/constraints/DistanceToTheLine.cpp
+    ../lib/storageofconstraints.cpp \
+    ../lib/storageofobjects.cpp
 
 FORMS += \
     ../lib/QTforms/gui.ui \
     ../lib/QTforms/objectpropertieswindow.ui
+
+RESOURCES += \
+    ../lib/QTforms/icons/icons.qrc
+
+DISTFILES += \
+    ../lib/QTforms/icons/pointbtn.png

@@ -47,8 +47,7 @@ public:
 
 	viewer getIterator()
 	{
-		viewer v(*this);
-		return v;
+		return viewer(*this);
 	}
 
 };

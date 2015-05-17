@@ -110,13 +110,13 @@
     <ClCompile Include="..\lib\Load.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="..\lib\storageofconstraints .cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="..\lib\ObjectBase.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="..\lib\gui_interface.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\lib\storageofconstraints.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -128,9 +128,6 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="..\lib\constraints\Collector.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\lib\Color.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="..\lib\constraints\DistancePoint-Point.h">

@@ -44,7 +44,7 @@ public:
 			return (-2) * (*_r1 - *_r2 - length(*_p1x, *_p1y, *_p2x, *_p2y));
 		return 0;
 	}
-	virtual CONSTR_TYPE type()
+	virtual CONSTR_TYPE type() const
 	{
 		return CONSTR_INCONTACT;
 	}
@@ -91,7 +91,7 @@ public:
 			return 2 * (*_r1 + *_r2 - length(*_p1x, *_p1y, *_p2x, *_p2y));
 		return 0;
 	}
-	virtual CONSTR_TYPE type()
+	virtual CONSTR_TYPE type() const
 	{
 		return CONSTR_EXCONTACT;
 	}
