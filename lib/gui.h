@@ -96,7 +96,7 @@ private:
 	QRegExpValidator *doubvalid;
 	
 	char* ConstrTypeToString(CONSTR_TYPE);
-
+	unsigned selectedRuleId;
 };
 
 #endif // GUI_H

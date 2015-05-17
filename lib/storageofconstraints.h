@@ -22,6 +22,7 @@ public:
 	StorageOfConstraints()
 	{
 		_last_id = 0;
+		_ids.add(0, 0);
 	}
 	~StorageOfConstraints()
 	{

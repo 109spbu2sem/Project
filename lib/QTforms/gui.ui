@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>953</width>
-    <height>692</height>
+    <width>1062</width>
+    <height>789</height>
    </rect>
   </property>
   <property name="sizePolicy">
@@ -287,7 +287,11 @@
             <string>Select (Ctrl + 1)</string>
            </property>
            <property name="text">
-            <string>S</string>
+            <string/>
+           </property>
+           <property name="icon">
+            <iconset>
+             <normaloff>icons/selectbtn.png</normaloff>icons/selectbtn.png</iconset>
            </property>
            <property name="shortcut">
             <string>Ctrl+1</string>
@@ -326,6 +330,10 @@
            <property name="text">
             <string/>
            </property>
+           <property name="icon">
+            <iconset>
+             <normaloff>icons/pointbtn.png</normaloff>icons/pointbtn.png</iconset>
+           </property>
            <property name="shortcut">
             <string>Ctrl+2</string>
            </property>
@@ -358,7 +366,11 @@
             <string>Zoom+ (Ctrl + 5)</string>
            </property>
            <property name="text">
-            <string>Z</string>
+            <string/>
+           </property>
+           <property name="icon">
+            <iconset>
+             <normaloff>icons/zoombtn.png</normaloff>icons/zoombtn.png</iconset>
            </property>
            <property name="shortcut">
             <string>Ctrl+5</string>
@@ -394,6 +406,9 @@
          <widget class="MyCanvas" name="myCanvas">
           <property name="cursor" stdset="0">
            <cursorShape>CrossCursor</cursorShape>
+          </property>
+          <property name="mouseTracking">
+           <bool>true</bool>
           </property>
          </widget>
          <widget class="QSplitter" name="splitter">
@@ -600,7 +615,7 @@
     <item>
      <widget class="QFrame" name="bottonBar">
       <property name="autoFillBackground">
-       <bool>true</bool>
+       <bool>false</bool>
       </property>
       <property name="styleSheet">
        <string notr="true">background-color: rgb(0, 122, 204);
@@ -623,7 +638,7 @@ color: rgb(255, 255, 255);</string>
         <number>5</number>
        </property>
        <property name="topMargin">
-        <number>1</number>
+        <number>3</number>
        </property>
        <property name="rightMargin">
         <number>1</number>
@@ -679,6 +694,131 @@ color: rgb(255, 255, 255);</string>
          </property>
         </widget>
        </item>
+       <item>
+        <widget class="QFrame" name="horizontalFrame">
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
+         <property name="minimumSize">
+          <size>
+           <width>150</width>
+           <height>0</height>
+          </size>
+         </property>
+         <property name="frameShape">
+          <enum>QFrame::NoFrame</enum>
+         </property>
+         <layout class="QHBoxLayout" name="horizontalLayout_5">
+          <property name="spacing">
+           <number>2</number>
+          </property>
+          <property name="leftMargin">
+           <number>0</number>
+          </property>
+          <property name="topMargin">
+           <number>0</number>
+          </property>
+          <property name="rightMargin">
+           <number>0</number>
+          </property>
+          <property name="bottomMargin">
+           <number>0</number>
+          </property>
+          <item>
+           <widget class="QLabel" name="xCharLabel">
+            <property name="sizePolicy">
+             <sizepolicy hsizetype="Minimum" vsizetype="Minimum">
+              <horstretch>0</horstretch>
+              <verstretch>0</verstretch>
+             </sizepolicy>
+            </property>
+            <property name="text">
+             <string>X:</string>
+            </property>
+            <property name="alignment">
+             <set>Qt::AlignCenter</set>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QLabel" name="xLabel">
+            <property name="sizePolicy">
+             <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
+              <horstretch>0</horstretch>
+              <verstretch>0</verstretch>
+             </sizepolicy>
+            </property>
+            <property name="minimumSize">
+             <size>
+              <width>0</width>
+              <height>0</height>
+             </size>
+            </property>
+            <property name="font">
+             <font>
+              <pointsize>9</pointsize>
+             </font>
+            </property>
+            <property name="layoutDirection">
+             <enum>Qt::RightToLeft</enum>
+            </property>
+            <property name="text">
+             <string>0</string>
+            </property>
+            <property name="alignment">
+             <set>Qt::AlignCenter</set>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QLabel" name="label">
+            <property name="sizePolicy">
+             <sizepolicy hsizetype="Minimum" vsizetype="Minimum">
+              <horstretch>0</horstretch>
+              <verstretch>0</verstretch>
+             </sizepolicy>
+            </property>
+            <property name="text">
+             <string>Y:</string>
+            </property>
+            <property name="alignment">
+             <set>Qt::AlignCenter</set>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QLabel" name="yLabel">
+            <property name="sizePolicy">
+             <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
+              <horstretch>0</horstretch>
+              <verstretch>0</verstretch>
+             </sizepolicy>
+            </property>
+            <property name="minimumSize">
+             <size>
+              <width>0</width>
+              <height>0</height>
+             </size>
+            </property>
+            <property name="font">
+             <font>
+              <pointsize>9</pointsize>
+             </font>
+            </property>
+            <property name="text">
+             <string>0</string>
+            </property>
+            <property name="alignment">
+             <set>Qt::AlignCenter</set>
+            </property>
+           </widget>
+          </item>
+         </layout>
+        </widget>
+       </item>
       </layout>
      </widget>
     </item>
@@ -689,8 +829,8 @@ color: rgb(255, 255, 255);</string>
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>953</width>
-     <height>21</height>
+     <width>1062</width>
+     <height>26</height>
     </rect>
    </property>
    <widget class="QMenu" name="menuFile">
@@ -750,8 +890,45 @@ color: rgb(255, 255, 255);</string>
    <class>MyCanvas</class>
    <extends>QGraphicsView</extends>
    <header>mycanvas.h</header>
+   <slots>
+    <signal>clickedx(double)</signal>
+    <signal>clickedy(double)</signal>
+   </slots>
   </customwidget>
  </customwidgets>
  <resources/>
- <connections/>
+ <connections>
+  <connection>
+   <sender>myCanvas</sender>
+   <signal>clickedx(double)</signal>
+   <receiver>xLabel</receiver>
+   <slot>setNum(double)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>245</x>
+     <y>295</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>1049</x>
+     <y>780</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>myCanvas</sender>
+   <signal>clickedy(double)</signal>
+   <receiver>yLabel</receiver>
+   <slot>setNum(double)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>491</x>
+     <y>719</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>1059</x>
+     <y>774</y>
+    </hint>
+   </hints>
+  </connection>
+ </connections>
 </ui>

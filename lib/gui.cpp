@@ -17,12 +17,15 @@ GUI::GUI(QWidget *parent) :
 {
 	ui->setupUi(this);
 	mycore = 0;
+	selectedRuleId = 0;
 	QRegExp doub("[0-9]{1,8}\\.[0-9]{0,8}");
 	doubvalid = new QRegExpValidator(doub, this);
 	ui->ruleValueEdit->setValidator(doubvalid);
 	mainscene = ui->myCanvas->getScene();
 	ui->myCanvas->connectCORECanvas(mycore);
 	ui->pointBTNTool->setIcon(QIcon("icons/pointbtn.png"));
+	ui->selectBTNTool->setIcon(QIcon("icons/selectbtn.png"));
+	ui->ZoomBTNTool->setIcon(QIcon("icons/zoombtn.png"));
 	toolsbuttons = new QButtonGroup;
 	toolsbuttons->addButton(ui->selectBTNTool);
 	toolsbuttons->addButton(ui->pointBTNTool);
@@ -291,6 +294,7 @@ void GUI::on_objectsList_clicked(const QModelIndex &index)
 void GUI::on_rulesList_clicked(const QModelIndex &index)
 {
 	ui->propertiesList->clear();
+	selectedRuleId = index.data(22).toUInt();
 	QString s;
 
 	QListWidgetItem* item = new QListWidgetItem;
@@ -380,5 +384,6 @@ void GUI::on_deleteObjBTN_clicked()
 
 void GUI::on_deleteRuleBTN_clicked()
 {
-	mycore->DeleteRule(ui->propertiesList->selectedItems().first()->data(22).toUInt());
+	if (ui->propertiesList->count() != 0)
+		mycore->DeleteRule(selectedRuleId);
 }

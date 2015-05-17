@@ -12,12 +12,12 @@ public:
 	}
 	bool setWritelogMode(unsigned mode)
 	{
-		if (mode == 2 || mode == 1 || mode == 0)
-		{
+		/*if (mode == 2 || mode == 1 || mode == 0)
+		{*/
 			writelog = mode;
 			return true;
-		}
-		return false;
+		/*}
+		return false;*/
 	}
 
 	unsigned WritelogMode() const

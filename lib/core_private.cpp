@@ -36,7 +36,7 @@ CORE::CORE(GraphicsInterface* gui)
 		if (!_logfile.is_open()) mysettings.setWritelogMode(0);
 	}
 	writeToLog("--------------------------------------\nOPEN at ");
-	writeToLog(static_cast<int>(time(0)));
+	writeToLog(GenerateTimeString(const_cast<char*>(EMPTYSTRING), const_cast<char*>(EMPTYSTRING)).c_str());
 	writeToLog("--------------------------------------");
 	writeToLog("Settings = ok", 2);
 	writeToLog(mysettings.WritelogMode(), "Logfile level");
@@ -335,8 +335,8 @@ void CORE::BuildFigureGoldMethod(IConstraint *constr, Storage_Array<double*>* pa
 	} while (abs(f_prev - f_current) /*/ abs(f_prev)*/ > f_epsi && f_count < f_Epsi);
 	writeToLog(f_count, "iterations= ", 2);
 	writeToLog(nf_eval, "Steps= ", 2);
-	if (constr->error() >= f_epsi)
-		mygui->WriteError("Can't build true figure.");
+	/*if (constr->error() >= f_epsi)
+		mygui->WriteError("Can't build true figure.");*/
 	delete[] grad;
 	delete[] old_para;
 }

@@ -370,6 +370,7 @@ bool CORE::DeleteRule(unsigned id)
 			_storage_of_constraints.remove(*iter, constraint);
 		}
 		_storage_of_constraints.remove(id);
+		Redraw(mygui);
 		return true;
 	}
 	return false;

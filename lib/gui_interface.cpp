@@ -131,6 +131,10 @@ bool GUI::Set_properties_of_segment(unsigned id, double x1, double y1, double x2
 	item->setText("color:\t" + s);
 	item->setData(17, c.getColor());
 	ui->propertiesList->addItem(item);
+	item = new QListWidgetItem;
+	s.setNum(length(x1, y1, x2, y2));
+	item->setText("lentgth:\t" + s);
+	ui->propertiesList->addItem(item);
 	return true;
 }
 
@@ -243,8 +247,7 @@ bool GUI::DrawCircle(unsigned id, double x, double y, double r, Color c, bool se
 bool GUI::Clear()
 {
 	mainscene->clear();
-	mainscene->addLine(0, -5000, 0, 5000, QPen(Qt::DotLine));
-	mainscene->addLine(-5000, 0, 5000, 0, QPen(Qt::DotLine));
+	ui->myCanvas->NewCanvas();
 	ui->objectsList->clear();
 	ui->rulesList->clear();
 	return true;

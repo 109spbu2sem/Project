@@ -28,11 +28,16 @@ public:
 	}
 	
 	void setTool(GTool);
+	void NewCanvas();
 
 public slots:
 	void mousePressEvent(QMouseEvent *event);
 	void wheelEvent(QWheelEvent *event);
 	void keyPressEvent(QKeyEvent *event);
+	void mouseMoveEvent(QMouseEvent* event);
+signals:
+	void clickedx(double);
+	void clickedy(double);
 private:
 	QGraphicsScene* mainscene;
 	CORE* mycore;
