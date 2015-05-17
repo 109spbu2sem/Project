@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>183</width>
-    <height>227</height>
+    <width>321</width>
+    <height>215</height>
    </rect>
   </property>
   <property name="sizePolicy">
@@ -18,59 +18,98 @@
   </property>
   <property name="minimumSize">
    <size>
-    <width>183</width>
-    <height>227</height>
+    <width>321</width>
+    <height>215</height>
    </size>
   </property>
   <property name="maximumSize">
    <size>
-    <width>281</width>
-    <height>227</height>
+    <width>321</width>
+    <height>215</height>
    </size>
+  </property>
+  <property name="baseSize">
+   <size>
+    <width>100</width>
+    <height>0</height>
+   </size>
+  </property>
+  <property name="font">
+   <font>
+    <family>Arial</family>
+   </font>
   </property>
   <property name="windowTitle">
    <string>Add</string>
   </property>
   <layout class="QVBoxLayout" name="verticalLayout_2">
+   <property name="spacing">
+    <number>5</number>
+   </property>
+   <property name="leftMargin">
+    <number>3</number>
+   </property>
+   <property name="topMargin">
+    <number>3</number>
+   </property>
+   <property name="rightMargin">
+    <number>3</number>
+   </property>
+   <property name="bottomMargin">
+    <number>3</number>
+   </property>
    <item>
     <layout class="QHBoxLayout" name="horizontalLayout">
+     <property name="sizeConstraint">
+      <enum>QLayout::SetFixedSize</enum>
+     </property>
      <item>
       <widget class="QComboBox" name="typesOfObjects">
        <property name="sizePolicy">
-        <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+        <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
          <horstretch>0</horstretch>
          <verstretch>0</verstretch>
         </sizepolicy>
        </property>
+       <property name="font">
+        <font>
+         <pointsize>10</pointsize>
+        </font>
+       </property>
+       <property name="iconSize">
+        <size>
+         <width>15</width>
+         <height>15</height>
+        </size>
+       </property>
        <item>
         <property name="text">
          <string>Point</string>
+        </property>
+        <property name="icon">
+         <iconset>
+          <normaloff>icons/pointbtn.png</normaloff>icons/pointbtn.png</iconset>
         </property>
        </item>
        <item>
         <property name="text">
          <string>Segment</string>
         </property>
+        <property name="icon">
+         <iconset>
+          <normaloff>icons/segmentbtn.png</normaloff>icons/segmentbtn.png</iconset>
+        </property>
        </item>
        <item>
         <property name="text">
          <string>Circle</string>
         </property>
+        <property name="icon">
+         <iconset>
+          <normaloff>icons/circlebtn.png</normaloff>icons/circlebtn.png</iconset>
+        </property>
        </item>
       </widget>
-     </item>
-     <item>
-      <spacer name="horizontalSpacer_2">
-       <property name="orientation">
-        <enum>Qt::Horizontal</enum>
-       </property>
-       <property name="sizeHint" stdset="0">
-        <size>
-         <width>40</width>
-         <height>20</height>
-        </size>
-       </property>
-      </spacer>
      </item>
      <item>
       <widget class="QLabel" name="label_5">
@@ -88,10 +127,13 @@
      <item>
       <widget class="QLineEdit" name="editID">
        <property name="sizePolicy">
-        <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
+        <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
          <horstretch>0</horstretch>
          <verstretch>0</verstretch>
         </sizepolicy>
+       </property>
+       <property name="styleSheet">
+        <string notr="true">background-color: rgb(236, 236, 236);</string>
        </property>
        <property name="inputMethodHints">
         <set>Qt::ImhDigitsOnly|Qt::ImhFormattedNumbersOnly</set>
@@ -123,11 +165,26 @@
      </item>
      <item>
       <widget class="QLineEdit" name="editR">
+       <property name="sizePolicy">
+        <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
+         <horstretch>0</horstretch>
+         <verstretch>0</verstretch>
+        </sizepolicy>
+       </property>
+       <property name="minimumSize">
+        <size>
+         <width>50</width>
+         <height>0</height>
+        </size>
+       </property>
        <property name="maximumSize">
         <size>
-         <width>30</width>
-         <height>22</height>
+         <width>80</width>
+         <height>16777215</height>
         </size>
+       </property>
+       <property name="styleSheet">
+        <string notr="true">background-color: rgb(255, 229, 230);</string>
        </property>
        <property name="inputMethodHints">
         <set>Qt::ImhDigitsOnly|Qt::ImhFormattedNumbersOnly</set>
@@ -145,6 +202,9 @@
          <height>22</height>
         </size>
        </property>
+       <property name="styleSheet">
+        <string notr="true"/>
+       </property>
        <property name="text">
         <string>G:</string>
        </property>
@@ -152,11 +212,26 @@
      </item>
      <item>
       <widget class="QLineEdit" name="editG">
+       <property name="sizePolicy">
+        <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
+         <horstretch>0</horstretch>
+         <verstretch>0</verstretch>
+        </sizepolicy>
+       </property>
+       <property name="minimumSize">
+        <size>
+         <width>50</width>
+         <height>0</height>
+        </size>
+       </property>
        <property name="maximumSize">
         <size>
-         <width>30</width>
-         <height>22</height>
+         <width>80</width>
+         <height>16777215</height>
         </size>
+       </property>
+       <property name="styleSheet">
+        <string notr="true">background-color: rgb(209, 255, 205);</string>
        </property>
        <property name="inputMethodHints">
         <set>Qt::ImhDigitsOnly|Qt::ImhFormattedNumbersOnly</set>
@@ -181,11 +256,26 @@
      </item>
      <item>
       <widget class="QLineEdit" name="editB">
+       <property name="sizePolicy">
+        <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
+         <horstretch>0</horstretch>
+         <verstretch>0</verstretch>
+        </sizepolicy>
+       </property>
+       <property name="minimumSize">
+        <size>
+         <width>50</width>
+         <height>0</height>
+        </size>
+       </property>
        <property name="maximumSize">
         <size>
-         <width>30</width>
-         <height>22</height>
+         <width>80</width>
+         <height>16777215</height>
         </size>
+       </property>
+       <property name="styleSheet">
+        <string notr="true">background-color: rgb(222, 251, 255);</string>
        </property>
        <property name="inputMethodHints">
         <set>Qt::ImhDigitsOnly|Qt::ImhFormattedNumbersOnly</set>
@@ -225,6 +315,11 @@
        <layout class="QHBoxLayout" name="X1layout">
         <item>
          <widget class="QLabel" name="labelX1">
+          <property name="font">
+           <font>
+            <pointsize>10</pointsize>
+           </font>
+          </property>
           <property name="layoutDirection">
            <enum>Qt::RightToLeft</enum>
           </property>
@@ -235,6 +330,17 @@
         </item>
         <item>
          <widget class="QLineEdit" name="editX1">
+          <property name="sizePolicy">
+           <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+            <horstretch>0</horstretch>
+            <verstretch>0</verstretch>
+           </sizepolicy>
+          </property>
+          <property name="font">
+           <font>
+            <pointsize>10</pointsize>
+           </font>
+          </property>
           <property name="inputMethodHints">
            <set>Qt::ImhDigitsOnly|Qt::ImhFormattedNumbersOnly</set>
           </property>
@@ -245,11 +351,27 @@
         </item>
         <item>
          <widget class="QCheckBox" name="checkX1">
+          <property name="sizePolicy">
+           <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+            <horstretch>0</horstretch>
+            <verstretch>0</verstretch>
+           </sizepolicy>
+          </property>
           <property name="toolTip">
            <string>Is constant?</string>
           </property>
           <property name="text">
            <string/>
+          </property>
+          <property name="icon">
+           <iconset>
+            <normaloff>icons/lock.png</normaloff>icons/lock.png</iconset>
+          </property>
+          <property name="iconSize">
+           <size>
+            <width>12</width>
+            <height>12</height>
+           </size>
           </property>
          </widget>
         </item>
@@ -259,6 +381,11 @@
        <layout class="QHBoxLayout" name="Y1layout">
         <item>
          <widget class="QLabel" name="labelY1">
+          <property name="font">
+           <font>
+            <pointsize>10</pointsize>
+           </font>
+          </property>
           <property name="layoutDirection">
            <enum>Qt::RightToLeft</enum>
           </property>
@@ -269,6 +396,17 @@
         </item>
         <item>
          <widget class="QLineEdit" name="editY1">
+          <property name="sizePolicy">
+           <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+            <horstretch>0</horstretch>
+            <verstretch>0</verstretch>
+           </sizepolicy>
+          </property>
+          <property name="font">
+           <font>
+            <pointsize>10</pointsize>
+           </font>
+          </property>
           <property name="inputMethodHints">
            <set>Qt::ImhDigitsOnly|Qt::ImhFormattedNumbersOnly</set>
           </property>
@@ -279,11 +417,27 @@
         </item>
         <item>
          <widget class="QCheckBox" name="checkY1">
+          <property name="sizePolicy">
+           <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+            <horstretch>0</horstretch>
+            <verstretch>0</verstretch>
+           </sizepolicy>
+          </property>
           <property name="toolTip">
            <string>Is constant?</string>
           </property>
           <property name="text">
            <string/>
+          </property>
+          <property name="icon">
+           <iconset>
+            <normaloff>icons/lock.png</normaloff>icons/lock.png</iconset>
+          </property>
+          <property name="iconSize">
+           <size>
+            <width>12</width>
+            <height>12</height>
+           </size>
           </property>
          </widget>
         </item>
@@ -293,6 +447,11 @@
        <layout class="QHBoxLayout" name="X2layout">
         <item>
          <widget class="QLabel" name="labelX2">
+          <property name="font">
+           <font>
+            <pointsize>10</pointsize>
+           </font>
+          </property>
           <property name="layoutDirection">
            <enum>Qt::RightToLeft</enum>
           </property>
@@ -303,6 +462,17 @@
         </item>
         <item>
          <widget class="QLineEdit" name="editX2">
+          <property name="sizePolicy">
+           <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+            <horstretch>0</horstretch>
+            <verstretch>0</verstretch>
+           </sizepolicy>
+          </property>
+          <property name="font">
+           <font>
+            <pointsize>10</pointsize>
+           </font>
+          </property>
           <property name="inputMethodHints">
            <set>Qt::ImhDigitsOnly|Qt::ImhFormattedNumbersOnly</set>
           </property>
@@ -313,11 +483,27 @@
         </item>
         <item>
          <widget class="QCheckBox" name="checkX2">
+          <property name="sizePolicy">
+           <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+            <horstretch>0</horstretch>
+            <verstretch>0</verstretch>
+           </sizepolicy>
+          </property>
           <property name="toolTip">
            <string>Is constant?</string>
           </property>
           <property name="text">
            <string/>
+          </property>
+          <property name="icon">
+           <iconset>
+            <normaloff>icons/lock.png</normaloff>icons/lock.png</iconset>
+          </property>
+          <property name="iconSize">
+           <size>
+            <width>12</width>
+            <height>12</height>
+           </size>
           </property>
          </widget>
         </item>
@@ -327,6 +513,11 @@
        <layout class="QHBoxLayout" name="Y2layout">
         <item>
          <widget class="QLabel" name="labelY2">
+          <property name="font">
+           <font>
+            <pointsize>10</pointsize>
+           </font>
+          </property>
           <property name="text">
            <string>Y2:</string>
           </property>
@@ -334,6 +525,17 @@
         </item>
         <item>
          <widget class="QLineEdit" name="editY2">
+          <property name="sizePolicy">
+           <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+            <horstretch>0</horstretch>
+            <verstretch>0</verstretch>
+           </sizepolicy>
+          </property>
+          <property name="font">
+           <font>
+            <pointsize>10</pointsize>
+           </font>
+          </property>
           <property name="inputMethodHints">
            <set>Qt::ImhDigitsOnly|Qt::ImhFormattedNumbersOnly</set>
           </property>
@@ -344,11 +546,27 @@
         </item>
         <item>
          <widget class="QCheckBox" name="checkY2">
+          <property name="sizePolicy">
+           <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+            <horstretch>0</horstretch>
+            <verstretch>0</verstretch>
+           </sizepolicy>
+          </property>
           <property name="toolTip">
            <string>Is constant?</string>
           </property>
           <property name="text">
            <string/>
+          </property>
+          <property name="icon">
+           <iconset>
+            <normaloff>icons/lock.png</normaloff>icons/lock.png</iconset>
+          </property>
+          <property name="iconSize">
+           <size>
+            <width>12</width>
+            <height>12</height>
+           </size>
           </property>
          </widget>
         </item>
@@ -359,6 +577,12 @@
    </item>
    <item>
     <widget class="QDialogButtonBox" name="buttonBox">
+     <property name="sizePolicy">
+      <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+       <horstretch>0</horstretch>
+       <verstretch>0</verstretch>
+      </sizepolicy>
+     </property>
      <property name="orientation">
       <enum>Qt::Horizontal</enum>
      </property>

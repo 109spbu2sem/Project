@@ -119,49 +119,52 @@ void CORE::Select(double x, double y)
 
 bool CORE::Select(unsigned id)
 {
-	ObjectBase* object = _storage_of_objects.get(id); 
-	if (object)
+	if (id)
 	{
-		object->changeSelect();
-		if (object->isSelected())
+		ObjectBase* object = _storage_of_objects.get(id);
+		if (object)
 		{
-			_selected_objects.add(object);
-			switch (object->objectType())
+			object->changeSelect();
+			if (object->isSelected())
 			{
-				case PRIMITIVE_POINT:
+				_selected_objects.add(object);
+				switch (object->objectType())
 				{
-					Point* p = dynamic_cast<Point*>(object);
-					mygui->Set_properties_of_point(p->id.getID(), *p->x, *p->y, p->color.getColor());
-					break;
-				}
-				case PRIMITIVE_SEGMENT:
-				{
-					Segment* s = dynamic_cast<Segment*>(object);
-					mygui->Set_properties_of_segment(s->id.getID(), *s->p1->x, *s->p1->y, *s->p2->x, *s->p2->y, s->color.getColor());
-					break;
-				}
-				case PRIMITIVE_CIRCLE:
-				{
-					Circle* c = dynamic_cast<Circle*>(object);
-					mygui->Set_properties_of_circle(c->id.getID(), *c->p->x, *c->p->y, *c->r, c->color.getColor());
-					break;
+					case PRIMITIVE_POINT:
+					{
+						Point* p = dynamic_cast<Point*>(object);
+						mygui->Set_properties_of_point(p->id.getID(), *p->x, *p->y, p->color.getColor());
+						break;
+					}
+					case PRIMITIVE_SEGMENT:
+					{
+						Segment* s = dynamic_cast<Segment*>(object);
+						mygui->Set_properties_of_segment(s->id.getID(), *s->p1->x, *s->p1->y, *s->p2->x, *s->p2->y, s->color.getColor());
+						break;
+					}
+					case PRIMITIVE_CIRCLE:
+					{
+						Circle* c = dynamic_cast<Circle*>(object);
+						mygui->Set_properties_of_circle(c->id.getID(), *c->p->x, *c->p->y, *c->r, c->color.getColor());
+						break;
+					}
 				}
 			}
-		}
-		else
-		{
-			for (ListViewer<ObjectBase*> j(_selected_objects); j.canMoveNext(); j.moveNext())
+			else
 			{
-				if (object == j.getValue())
+				for (ListViewer<ObjectBase*> j(_selected_objects); j.canMoveNext(); j.moveNext())
 				{
-					_selected_objects.remove(&j);
-					break;
+					if (object == j.getValue())
+					{
+						_selected_objects.remove(&j);
+						break;
+					}
 				}
 			}
+			writeToLog(id, "selection was changed for (ID) ", 2);
+			Redraw(mygui);
+			return object->isSelected();
 		}
-		writeToLog(id, "selection was changed for (ID) ", 2);
-		Redraw(mygui);
-		return object->isSelected();
 	}
 	return false;
 }

@@ -106,6 +106,20 @@ void CORE::Redraw(Interface* infa)
 			}
 			}
 		}
+		writeToLog("*******Redrawed*******", 3);
+	}
+	else
+	{
+		writeToLog("Interface is invalid.");
+	}
+	return;
+}
+
+void CORE::TransmitRules(Interface* infa)
+{
+	if (infa)
+	{
+		infa->ClearRules();
 		for (StorageOfConstraints::viewer iter(_storage_of_constraints); iter.canMoveNext(); iter.moveNext())
 		{
 			switch (iter.constraint()->type())
@@ -123,14 +137,14 @@ void CORE::Redraw(Interface* infa)
 				}
 				case CONSTR_P2SECTDIST:
 				{
-					mygui->WriteRule(_storage_of_constraints.getid(iter.constraint()).getID(), 
+					mygui->WriteRule(_storage_of_constraints.getid(iter.constraint()).getID(),
 										  iter.objects().front()->id.getID(), iter.objects().back()->id.getID(),
 										  iter.constraint()->type(), iter.constraint()->value());
 					break;
 				}
 				case CONSTR_P2LINEDIST:
 				{
-					mygui->WriteRule(_storage_of_constraints.getid(iter.constraint()).getID(), 
+					mygui->WriteRule(_storage_of_constraints.getid(iter.constraint()).getID(),
 										  iter.objects().front()->id.getID(), iter.objects().back()->id.getID(),
 										  iter.constraint()->type(), iter.constraint()->value());
 					break;
@@ -141,14 +155,14 @@ void CORE::Redraw(Interface* infa)
 					unsigned id1 = (*i)->id.getID(); i++;
 					unsigned id2 = (*i)->id.getID(); i++;
 					unsigned id3 = (*i)->id.getID();
-					mygui->WriteRule(_storage_of_constraints.getid(iter.constraint()).getID(), 
+					mygui->WriteRule(_storage_of_constraints.getid(iter.constraint()).getID(),
 										  id1, id2, id3,
 										  iter.constraint()->type(), iter.constraint()->value());
 					break;
 				}
 				case CONSTR_L2LANGLE:
 				{
-					mygui->WriteRule(_storage_of_constraints.getid(iter.constraint()).getID(), 
+					mygui->WriteRule(_storage_of_constraints.getid(iter.constraint()).getID(),
 										  iter.objects().front()->id.getID(), iter.objects().back()->id.getID(),
 										  iter.constraint()->type(), iter.constraint()->value());
 					break;
@@ -159,28 +173,28 @@ void CORE::Redraw(Interface* infa)
 					unsigned id1 = (*i)->id.getID(); i++;
 					unsigned id2 = (*i)->id.getID(); i++;
 					unsigned id3 = (*i)->id.getID();
-					mygui->WriteRule(_storage_of_constraints.getid(iter.constraint()).getID(), 
+					mygui->WriteRule(_storage_of_constraints.getid(iter.constraint()).getID(),
 										  id1, id2, id3,
 										  iter.constraint()->type(), iter.constraint()->value());
 					break;
 				}
 				case CONSTR_EXCONTACT:
 				{
-					mygui->WriteRule(_storage_of_constraints.getid(iter.constraint()).getID(), 
+					mygui->WriteRule(_storage_of_constraints.getid(iter.constraint()).getID(),
 										  iter.objects().front()->id.getID(), iter.objects().back()->id.getID(),
 										  iter.constraint()->type(), iter.constraint()->value());
 					break;
 				}
 				case CONSTR_INCONTACT:
 				{
-					mygui->WriteRule(_storage_of_constraints.getid(iter.constraint()).getID(), 
+					mygui->WriteRule(_storage_of_constraints.getid(iter.constraint()).getID(),
 										  iter.objects().front()->id.getID(), iter.objects().back()->id.getID(),
 										  iter.constraint()->type(), iter.constraint()->value());
 					break;
 				}
 				case CONSTR_ORTHOGONALITY:
 				{
-					mygui->WriteRule(_storage_of_constraints.getid(iter.constraint()).getID(), 
+					mygui->WriteRule(_storage_of_constraints.getid(iter.constraint()).getID(),
 										  iter.objects().front()->id.getID(), iter.objects().back()->id.getID(),
 										  iter.constraint()->type(), iter.constraint()->value());
 					break;
@@ -194,13 +208,11 @@ void CORE::Redraw(Interface* infa)
 				}
 			}
 		}
-		writeToLog("*******Redrawed*******", 3);
 	}
 	else
 	{
 		writeToLog("Interface is invalid.");
 	}
-	return;
 }
 
 void CORE::Calculate()
@@ -238,6 +250,7 @@ void CORE::Calculate()
 	BuildFigureGoldMethod(&collector, &parameters);
 	writeToLog("---------------------Success build-----------------------");
 	Redraw(mygui);
+	TransmitRules(mygui);
 	mygui->WriteText(DONESTRING, EMPTYSTRING);
 	writeToLog("**********************Success calculate******************");
 	return;
@@ -325,6 +338,7 @@ void CORE::BuildFigureGoldMethod(IConstraint *constr, Storage_Array<double*>* pa
 			}
 		}
 		writeToLog(gold_count, "golden iterations= ", 2);
+		writeToLog((aright + aleft) / 2, "step= ", 2);
 		for (unsigned k = 0; k < parameters->size(); k++)
 			*(*parameters)[k] = old_para[k] - (aright + aleft) / 2 * grad[k];
 		f_current = constr->error();

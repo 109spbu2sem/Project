@@ -71,6 +71,7 @@ public:
 	virtual bool WriteRule(unsigned, unsigned, unsigned, CONSTR_TYPE, double) = 0;
 	virtual bool WriteRule(unsigned, unsigned, unsigned, unsigned, CONSTR_TYPE) = 0;
 	virtual bool WriteRule(unsigned, unsigned, unsigned, unsigned, CONSTR_TYPE, double) = 0;
+	virtual bool ClearRules() = 0;
 
 };
 
@@ -100,6 +101,7 @@ public:
 	virtual bool WriteRule(unsigned, unsigned, unsigned, CONSTR_TYPE, double) = 0;
 	virtual bool WriteRule(unsigned, unsigned, unsigned, unsigned, CONSTR_TYPE) = 0;
 	virtual bool WriteRule(unsigned, unsigned, unsigned, unsigned, CONSTR_TYPE, double) = 0;
+	virtual bool ClearRules() = 0;
 };
 
 #endif

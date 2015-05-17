@@ -133,7 +133,7 @@ bool GUI::Set_properties_of_segment(unsigned id, double x1, double y1, double x2
 	ui->propertiesList->addItem(item);
 	item = new QListWidgetItem;
 	s.setNum(length(x1, y1, x2, y2));
-	item->setText("lentgth:\t" + s);
+	item->setText("length:\t" + s);
 	ui->propertiesList->addItem(item);
 	return true;
 }
@@ -249,6 +249,11 @@ bool GUI::Clear()
 	mainscene->clear();
 	ui->myCanvas->NewCanvas();
 	ui->objectsList->clear();
+	return true;
+}
+
+bool GUI::ClearRules()
+{
 	ui->rulesList->clear();
 	return true;
 }

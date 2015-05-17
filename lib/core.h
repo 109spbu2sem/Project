@@ -38,6 +38,7 @@ private:
 	void BuildFigureNewton(IConstraint*, Storage_Array<double*>*);
 	void BuildFigureGoldMethod(IConstraint*, Storage_Array < double* >*);
 	void Redraw(Interface*);
+	void TransmitRules(Interface*);
 	
 	Settings mysettings;
 	std::fstream _logfile;
@@ -92,7 +93,8 @@ public:
 							 double radius, bool isconst,
 							 Color color = COLORDEF,
 							 unsigned id = 0, bool wait = false);
-	void ConcatenatePoints();
+	void CreateSegment();
+	void CreateCircle(double, bool);
 
 	void AddRule(unsigned type, double value = 0);
 	bool AddRule(CONSTR_TYPE type, unsigned id1, unsigned id2);

@@ -39,6 +39,7 @@ public:
 	virtual bool WriteRule(unsigned, unsigned, unsigned, CONSTR_TYPE, double);
 	virtual bool WriteRule(unsigned, unsigned, unsigned, unsigned, CONSTR_TYPE);
 	virtual bool WriteRule(unsigned, unsigned, unsigned, unsigned, CONSTR_TYPE, double);
+	virtual bool ClearRules();
 
 	virtual bool Set_properties_of_point(unsigned, double, double, Color);
 	virtual bool Set_properties_of_segment(unsigned, double, double, double, double, Color);
@@ -57,7 +58,7 @@ private slots:
 	
 	void on_pushButton_clicked();
 	
-	void on_concatinateBTN_clicked();
+	void on_createSegmentBTN_clicked();
 	
 	void on_selectBTNTool_clicked();
 	
@@ -86,6 +87,8 @@ private slots:
 	void on_deleteObjBTN_clicked();
 
 	void on_deleteRuleBTN_clicked();
+
+	void on_createCircleBTN_clicked();
 	
 private:
     bool flag;

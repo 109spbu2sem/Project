@@ -30,7 +30,6 @@ GUI::GUI(QWidget *parent) :
 	toolsbuttons->addButton(ui->selectBTNTool);
 	toolsbuttons->addButton(ui->pointBTNTool);
 	toolsbuttons->addButton(ui->ZoomBTNTool);
-	ui->addRuleBTN->setVisible(false);
 
 	showMaximized();
 }
@@ -217,9 +216,14 @@ void GUI::on_pushButton_clicked()
 	ui->ruleValueEdit->clear();
 }
 
-void GUI::on_concatinateBTN_clicked()
+void GUI::on_createSegmentBTN_clicked()
 {
-	mycore->ConcatenatePoints();
+	mycore->CreateSegment();
+}
+
+void GUI::on_createCircleBTN_clicked()
+{
+	mycore->CreateCircle(ui->radiusEdit->text().toDouble(), ui->circleCheck->isChecked());
 }
 
 void GUI::on_selectBTNTool_clicked()
@@ -294,6 +298,7 @@ void GUI::on_objectsList_clicked(const QModelIndex &index)
 void GUI::on_rulesList_clicked(const QModelIndex &index)
 {
 	ui->propertiesList->clear();
+	mycore->ClearSelection();
 	selectedRuleId = index.data(22).toUInt();
 	QString s;
 
@@ -310,16 +315,19 @@ void GUI::on_rulesList_clicked(const QModelIndex &index)
 	s.setNum(index.data(19).toUInt());
 	item->setText("object's id:\t" + s);
 	ui->propertiesList->addItem(item);
+	mycore->Select(index.data(19).toUInt());
 
 	item = new QListWidgetItem;
 	s.setNum(index.data(20).toUInt());
 	item->setText("object's id:\t" + s);
 	ui->propertiesList->addItem(item);
+	mycore->Select(index.data(20).toUInt());
 
 	item = new QListWidgetItem;
 	s.setNum(index.data(21).toUInt());
 	item->setText("object's id:\t" + s);
 	ui->propertiesList->addItem(item);
+	mycore->Select(index.data(21).toUInt());
 }
 
 void GUI::on_openChangingDialog_clicked()

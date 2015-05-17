@@ -95,7 +95,7 @@ unsigned CORE::AddObject(unsigned pointid, double radius, bool isconst, Color co
 	return 0;
 }
 
-void CORE::ConcatenatePoints()
+void CORE::CreateSegment()
 {
 	if (_selected_objects.size() == 2)
 	{
@@ -116,6 +116,34 @@ void CORE::ConcatenatePoints()
 		{
 			mygui->WriteError("Select two points before creating segment.");
 		}
+	}
+	else
+	{
+		mygui->WriteError("Select two points before creating segment.");
+	}
+}
+
+void CORE::CreateCircle(double value, bool isconst)
+{
+	if (_selected_objects.size() == 1)
+	{
+		ListViewer<ObjectBase*> k(_selected_objects);
+		Point* obj = dynamic_cast<Point*>(k.getValue());
+		if (obj)
+		{
+			double* val = new double;
+			*val = value;
+			_parameters.add(val, isconst);
+			Circle* c = new Circle(obj, val);
+			c->color.setColor(COLORDEF);
+			_storage_of_objects.add(c);
+			mygui->WriteText(DONESTRING, "Circle added");
+			ClearSelection();
+		}
+	}
+	else
+	{
+		mygui->WriteError("Select point before creating circle.");
 	}
 }
 
