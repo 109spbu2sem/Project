@@ -19,8 +19,8 @@
 
 QT_BEGIN_MOC_NAMESPACE
 struct qt_meta_stringdata_GUI_t {
-    QByteArrayData data[12];
-    char stringdata[95];
+    QByteArrayData data[22];
+    char stringdata[188];
 };
 #define QT_MOC_LITERAL(idx, ofs, len) \
     Q_STATIC_BYTE_ARRAY_DATA_HEADER_INITIALIZER_WITH_OFFSET(len, \
@@ -32,20 +32,32 @@ static const qt_meta_stringdata_GUI_t qt_meta_stringdata_GUI = {
 QT_MOC_LITERAL(0, 0, 3), // "GUI"
 QT_MOC_LITERAL(1, 4, 16), // "statusBarChanged"
 QT_MOC_LITERAL(2, 21, 0), // ""
-QT_MOC_LITERAL(3, 22, 11), // "addNewPoint"
-QT_MOC_LITERAL(4, 34, 1), // "x"
-QT_MOC_LITERAL(5, 36, 1), // "y"
-QT_MOC_LITERAL(6, 38, 9), // "statusBar"
-QT_MOC_LITERAL(7, 48, 12), // "setStatusBar"
-QT_MOC_LITERAL(8, 61, 6), // "String"
-QT_MOC_LITERAL(9, 68, 8), // "newPoint"
-QT_MOC_LITERAL(10, 77, 5), // "Point"
-QT_MOC_LITERAL(11, 83, 11) // "setNewPoint"
+QT_MOC_LITERAL(3, 22, 13), // "newPointAdded"
+QT_MOC_LITERAL(4, 36, 1), // "x"
+QT_MOC_LITERAL(5, 38, 1), // "y"
+QT_MOC_LITERAL(6, 40, 15), // "newSegmentAdded"
+QT_MOC_LITERAL(7, 56, 3), // "a_x"
+QT_MOC_LITERAL(8, 60, 3), // "a_y"
+QT_MOC_LITERAL(9, 64, 3), // "b_x"
+QT_MOC_LITERAL(10, 68, 3), // "b_y"
+QT_MOC_LITERAL(11, 72, 9), // "statusBar"
+QT_MOC_LITERAL(12, 82, 12), // "setStatusBar"
+QT_MOC_LITERAL(13, 95, 6), // "String"
+QT_MOC_LITERAL(14, 102, 8), // "newPoint"
+QT_MOC_LITERAL(15, 111, 5), // "Point"
+QT_MOC_LITERAL(16, 117, 11), // "setNewPoint"
+QT_MOC_LITERAL(17, 129, 11), // "addNewPoint"
+QT_MOC_LITERAL(18, 141, 10), // "newSegment"
+QT_MOC_LITERAL(19, 152, 7), // "Segment"
+QT_MOC_LITERAL(20, 160, 13), // "setNewSegment"
+QT_MOC_LITERAL(21, 174, 13) // "addNewSegment"
 
     },
-    "GUI\0statusBarChanged\0\0addNewPoint\0x\0"
-    "y\0statusBar\0setStatusBar\0String\0"
-    "newPoint\0Point\0setNewPoint"
+    "GUI\0statusBarChanged\0\0newPointAdded\0"
+    "x\0y\0newSegmentAdded\0a_x\0a_y\0b_x\0b_y\0"
+    "statusBar\0setStatusBar\0String\0newPoint\0"
+    "Point\0setNewPoint\0addNewPoint\0newSegment\0"
+    "Segment\0setNewSegment\0addNewSegment"
 };
 #undef QT_MOC_LITERAL
 
@@ -55,37 +67,45 @@ static const uint qt_meta_data_GUI[] = {
        7,       // revision
        0,       // classname
        0,    0, // classinfo
-       7,   14, // methods
-       1,   70, // properties
+      11,   14, // methods
+       1,  118, // properties
        0,    0, // enums/sets
        0,    0, // constructors
        0,       // flags
-       2,       // signalCount
+       3,       // signalCount
 
  // signals: name, argc, parameters, tag, flags
-       1,    0,   49,    2, 0x06 /* Public */,
-       3,    2,   50,    2, 0x06 /* Public */,
+       1,    0,   69,    2, 0x06 /* Public */,
+       3,    2,   70,    2, 0x06 /* Public */,
+       6,    4,   75,    2, 0x06 /* Public */,
 
  // slots: name, argc, parameters, tag, flags
-       6,    0,   55,    2, 0x0a /* Public */,
-       7,    1,   56,    2, 0x0a /* Public */,
-       9,    0,   59,    2, 0x0a /* Public */,
-      11,    2,   60,    2, 0x0a /* Public */,
-       3,    2,   65,    2, 0x0a /* Public */,
+      11,    0,   84,    2, 0x0a /* Public */,
+      12,    1,   85,    2, 0x0a /* Public */,
+      14,    0,   88,    2, 0x0a /* Public */,
+      16,    2,   89,    2, 0x0a /* Public */,
+      17,    2,   94,    2, 0x0a /* Public */,
+      18,    0,   99,    2, 0x0a /* Public */,
+      20,    4,  100,    2, 0x0a /* Public */,
+      21,    4,  109,    2, 0x0a /* Public */,
 
  // signals: parameters
     QMetaType::Void,
-    QMetaType::Void, QMetaType::QVariant, QMetaType::QVariant,    4,    5,
+    QMetaType::Void, QMetaType::Double, QMetaType::Double,    4,    5,
+    QMetaType::Void, QMetaType::Double, QMetaType::Double, QMetaType::Double, QMetaType::Double,    7,    8,    9,   10,
 
  // slots: parameters
     QMetaType::QVariant,
-    QMetaType::Void, QMetaType::QVariant,    8,
-    0x80000000 | 10,
+    QMetaType::Void, QMetaType::QVariant,   13,
+    0x80000000 | 15,
     QMetaType::Void, QMetaType::Double, QMetaType::Double,    4,    5,
     QMetaType::Void, QMetaType::Double, QMetaType::Double,    4,    5,
+    0x80000000 | 19,
+    QMetaType::Void, QMetaType::Double, QMetaType::Double, QMetaType::Double, QMetaType::Double,    7,    8,    9,   10,
+    QMetaType::Void, QMetaType::Double, QMetaType::Double, QMetaType::Double, QMetaType::Double,    7,    8,    9,   10,
 
  // properties: name, type, flags
-       6, QMetaType::QVariant, 0x00495103,
+      11, QMetaType::QVariant, 0x00495103,
 
  // properties: notify_signal_id
        0,
@@ -99,14 +119,19 @@ void GUI::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, void **
         GUI *_t = static_cast<GUI *>(_o);
         switch (_id) {
         case 0: _t->statusBarChanged(); break;
-        case 1: _t->addNewPoint((*reinterpret_cast< QVariant(*)>(_a[1])),(*reinterpret_cast< QVariant(*)>(_a[2]))); break;
-        case 2: { QVariant _r = _t->statusBar();
+        case 1: _t->newPointAdded((*reinterpret_cast< double(*)>(_a[1])),(*reinterpret_cast< double(*)>(_a[2]))); break;
+        case 2: _t->newSegmentAdded((*reinterpret_cast< double(*)>(_a[1])),(*reinterpret_cast< double(*)>(_a[2])),(*reinterpret_cast< double(*)>(_a[3])),(*reinterpret_cast< double(*)>(_a[4]))); break;
+        case 3: { QVariant _r = _t->statusBar();
             if (_a[0]) *reinterpret_cast< QVariant*>(_a[0]) = _r; }  break;
-        case 3: _t->setStatusBar((*reinterpret_cast< const QVariant(*)>(_a[1]))); break;
-        case 4: { Point _r = _t->newPoint();
+        case 4: _t->setStatusBar((*reinterpret_cast< const QVariant(*)>(_a[1]))); break;
+        case 5: { Point _r = _t->newPoint();
             if (_a[0]) *reinterpret_cast< Point*>(_a[0]) = _r; }  break;
-        case 5: _t->setNewPoint((*reinterpret_cast< double(*)>(_a[1])),(*reinterpret_cast< double(*)>(_a[2]))); break;
-        case 6: _t->addNewPoint((*reinterpret_cast< double(*)>(_a[1])),(*reinterpret_cast< double(*)>(_a[2]))); break;
+        case 6: _t->setNewPoint((*reinterpret_cast< double(*)>(_a[1])),(*reinterpret_cast< double(*)>(_a[2]))); break;
+        case 7: _t->addNewPoint((*reinterpret_cast< double(*)>(_a[1])),(*reinterpret_cast< double(*)>(_a[2]))); break;
+        case 8: { Segment _r = _t->newSegment();
+            if (_a[0]) *reinterpret_cast< Segment*>(_a[0]) = _r; }  break;
+        case 9: _t->setNewSegment((*reinterpret_cast< double(*)>(_a[1])),(*reinterpret_cast< double(*)>(_a[2])),(*reinterpret_cast< double(*)>(_a[3])),(*reinterpret_cast< double(*)>(_a[4]))); break;
+        case 10: _t->addNewSegment((*reinterpret_cast< double(*)>(_a[1])),(*reinterpret_cast< double(*)>(_a[2])),(*reinterpret_cast< double(*)>(_a[3])),(*reinterpret_cast< double(*)>(_a[4]))); break;
         default: ;
         }
     } else if (_c == QMetaObject::IndexOfMethod) {
@@ -119,9 +144,15 @@ void GUI::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, void **
             }
         }
         {
-            typedef void (GUI::*_t)(QVariant , QVariant );
-            if (*reinterpret_cast<_t *>(func) == static_cast<_t>(&GUI::addNewPoint)) {
+            typedef void (GUI::*_t)(double , double );
+            if (*reinterpret_cast<_t *>(func) == static_cast<_t>(&GUI::newPointAdded)) {
                 *result = 1;
+            }
+        }
+        {
+            typedef void (GUI::*_t)(double , double , double , double );
+            if (*reinterpret_cast<_t *>(func) == static_cast<_t>(&GUI::newSegmentAdded)) {
+                *result = 2;
             }
         }
     }
@@ -152,13 +183,13 @@ int GUI::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
     if (_id < 0)
         return _id;
     if (_c == QMetaObject::InvokeMetaMethod) {
-        if (_id < 7)
+        if (_id < 11)
             qt_static_metacall(this, _c, _id, _a);
-        _id -= 7;
+        _id -= 11;
     } else if (_c == QMetaObject::RegisterMethodArgumentMetaType) {
-        if (_id < 7)
+        if (_id < 11)
             *reinterpret_cast<int*>(_a[0]) = -1;
-        _id -= 7;
+        _id -= 11;
     }
 #ifndef QT_NO_PROPERTIES
       else if (_c == QMetaObject::ReadProperty) {
@@ -203,9 +234,16 @@ void GUI::statusBarChanged()
 }
 
 // SIGNAL 1
-void GUI::addNewPoint(QVariant _t1, QVariant _t2)
+void GUI::newPointAdded(double _t1, double _t2)
 {
     void *_a[] = { Q_NULLPTR, const_cast<void*>(reinterpret_cast<const void*>(&_t1)), const_cast<void*>(reinterpret_cast<const void*>(&_t2)) };
     QMetaObject::activate(this, &staticMetaObject, 1, _a);
+}
+
+// SIGNAL 2
+void GUI::newSegmentAdded(double _t1, double _t2, double _t3, double _t4)
+{
+    void *_a[] = { Q_NULLPTR, const_cast<void*>(reinterpret_cast<const void*>(&_t1)), const_cast<void*>(reinterpret_cast<const void*>(&_t2)), const_cast<void*>(reinterpret_cast<const void*>(&_t3)), const_cast<void*>(reinterpret_cast<const void*>(&_t4)) };
+    QMetaObject::activate(this, &staticMetaObject, 2, _a);
 }
 QT_END_MOC_NAMESPACE

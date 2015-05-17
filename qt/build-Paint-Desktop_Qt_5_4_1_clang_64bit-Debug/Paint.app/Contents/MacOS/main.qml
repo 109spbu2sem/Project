@@ -9,6 +9,7 @@ import gui.module 1.0
 ApplicationWindow
 {
     signal newPointAdded(double x, double y)
+    signal newSegmentAdded(double a_x, double a_y, double b_x, double b_y)
 
     property double lastX
     property double lastY
@@ -22,43 +23,12 @@ ApplicationWindow
 
     property string fileUrlLoad
 
-    function draw(n)
-    {
-        switch (n)
-        {
-            case 1:
-            {
-                addNewPoint(lastX, lastY)
-                newPointAdded(lastX, lastY)
-            }
-            case 2:
-                //addNewSection()
-            case 3:
-                //addNewArc()
-            default:
-                console.log("n is undefined")
-        }
-
-    }
-
+    //  Points  ================================================================================================================
     function addNewPoint(x, y)
     {
-        console.log('adding new point:' + x + ' ' + y)
         lastX = x
         lastY = y
-        k = 1
-        mainCanvas.requestPaint()
-        statusBar.text = qsTr("<font color = 'green'> New point added <font>")
-    }
-
-    function addNewSection(a_x, a_y, b_x, b_y)
-    {
-        console.log('adding new section:' + a_x + ' ' + a_y + ' to ' + b_x + ' ' + b_y)
-        firstX = a_x
-        firstY = a_y
-        lastX  = b_x
-        lastY  = b_y
-        k = 2
+        console.log("requesting point drawing")
         mainCanvas.requestPaint()
         statusBar.text = qsTr("<font color = 'green'> New point added <font>")
     }
@@ -71,21 +41,35 @@ ApplicationWindow
         ctx.moveTo(lastX, lastY)
         ctx.fillRect(lastX, lastY, 3, 3)
         ctx.stroke()
+        console.log("drawPoint()")
     }
 
-    function drawSection(ctx, firstX, firstY, lastX, lastY)
+    //  Segments  ==============================================================================================================
+    function addNewSegment(a_x, a_y, b_x, b_y)
+    {
+        firstX = a_x
+        firstY = a_y
+        lastX  = b_x
+        lastY  = b_y
+        console.log("requesting segment drawing")
+        mainCanvas.requestPaint()
+        statusBar.text = qsTr("<font color = 'green'> New segment added <font>")
+    }
+
+    function drawLine(ctx, firstX, firstY, lastX, lastY)
     {
         ctx.fillStyle = "black"
-        ctx.lineWidth = 1.5
-        ctx.moveTo(firstX, firstY)
+        ctx.lineWidth = 1
         ctx.beginPath()
-        ctx.lineTo(lastX, lastY)
+        ctx.moveTo(firstX + 1, firstY + 1)
+        ctx.lineTo(lastX + 1, lastY + 1)
         ctx.stroke()
+        console.log("drawSegment()")
     }
 
-    // -----------------------------------------------------------------------
-    // -----------------------------------------------------------------------
-    // -----------------------------------------------------------------------
+    //  ====================================================================================
+    //  ====================================================================================
+    //  ====================================================================================
     visible: true
 
     title: qsTr("Paint")
@@ -207,6 +191,7 @@ ApplicationWindow
             statusBar.text = fileUrl.toString()
             fileUrlLoad = fileUrl.toString()
             console.log('File added')
+            // fileAdded()  //  signal, waiting for request from Core to draw all elements
         }
 
     }
@@ -296,14 +281,14 @@ ApplicationWindow
                             horizontalAlignment: Text.AlignHCenter
                             verticalAlignment: Text.AlignVCenter
 
-                            text: "Section"
+                            text: "Segment"
                             color: 'white'
                         }
 
                         onClicked:
                         {
                             n = 2
-                            console.log("toolBar -> Section");
+                            console.log("toolBar -> Segment");
                         }
                     }
 
@@ -331,14 +316,14 @@ ApplicationWindow
                             horizontalAlignment: Text.AlignHCenter
                             verticalAlignment: Text.AlignVCenter
 
-                            text: "Arc"
+                            text: "Circle"
                             color: 'white'
                         }
 
                         onClicked:
                         {
                             n = 3
-                            console.log("toolBar -> Arc");
+                            console.log("toolBar -> Circle");
                         }
                     }
                 }
@@ -368,16 +353,26 @@ ApplicationWindow
                     onPaint:
                     {
                         var ctx = getContext('2d')
-                        switch (k)
+
+                        if (n == 1)
                         {
-                        case 1:
                             drawPoint(ctx, lastX, lastY)
-                        case 2:
-                            drawSection(ctx, firstX, firstY, lastX, lastY)
-                        case 3:
+                        }
+                        else if (n == 2)
+                        {
+                            if (usingFirstCoords == true)
+                            {
+                                drawPoint(ctx, firstX, firstY)
+                            }
+                            else
+                            {
+                                drawLine(ctx, firstX, firstY, lastX, lastY)
+                                drawPoint(ctx, lastX, lastY)
+                            }
+                        }
+                        else if (n == 3)
+                        {
                             //  drawEllipse(ctx)
-                        default:
-                            console.log("k is undefined")
                         }
                     }
 
@@ -391,33 +386,44 @@ ApplicationWindow
 
                         onPressed:
                         {
-                            lastX = parseInt(mouseX, 10)
-                            lastY = parseInt(mouseY, 10)
-
                             if(!((n == 1) || (n == 2) || (n == 3)))
                             {
                                 n = 1
-                                usingFirstCoords = false
                             }
 
+                            lastX = parseInt(mouseX, 10)
+                            lastY = parseInt(mouseY, 10)
+
                             if (n == 1)
-                                draw(n);
-                            else
                             {
-                                firstX = parseInt(mouseX, 10)
-                                firstY = parseInt(mouseY, 10)
-                                usingFirstCoords = true
-                                console.log('firstX = ' + firstX)
-                                console.log('firstY = ' + firstY)
+                                addNewPoint(lastX, lastY)
+                                newPointAdded(lastX, lastY)
+                            }
+                            else if (n == 2)
+                            {
+                                if (usingFirstCoords != true)
+                                {
+                                    firstX = parseInt(mouseX, 10)
+                                    firstY = parseInt(mouseY, 10)
+                                    addNewPoint(firstX, firstY)
+                                    usingFirstCoords = true
+                                }
+                                else
+                                {
+                                    addNewSegment(firstX, firstY, lastX, lastY)
+                                    newSegmentAdded(firstX, firstY, lastX, lastY)
+                                    usingFirstCoords = false
+                                }
+                            }
+                            else if (n == 3)
+                            {
+                                //
                             }
                         }
 
                         onPositionChanged:
                         {
                             positionInfo.text = "x: " + parseInt(mouseX, 10) + "\n" + "y: " + parseInt(mouseY, 10)
-
-                            if (n == 2 && usingFirstCoords)
-                                draw(n);
                         }
                     }
 
@@ -473,48 +479,72 @@ ApplicationWindow
                     {
                         role: "id"
                         title: "id"
+
+                        movable: false
+
                         width: 50
                     }
                     TableViewColumn
                     {
                         role: "type"
                         title: "Type"
+
+                        movable: false
+
                         width: 75
                     }
                     TableViewColumn
                     {
                         role: "x1"
                         title: "X1"
+
+                        movable: false
+
                         width: 60
                     }
                     TableViewColumn
                     {
                         role: "y1"
                         title: "Y1"
+
+                        movable: false
+
                         width: 60
                     }
                     TableViewColumn
                     {
                         role: "x2"
                         title: "X2"
+
+                        movable: false
+
                         width: 60
                     }
                     TableViewColumn
                     {
                         role: "y2"
                         title: "Y2"
+
+                        movable: false
+
                         width: 60
                     }
                     TableViewColumn
                     {
                         role: "radius"
                         title: "Radius"
+
+                        movable: false
+
                         width: 75
                     }
                     TableViewColumn
                     {
                         role: "color"
                         title: "Color"
+
+                        movable: false
+
                         width: 60
                     }
                 }

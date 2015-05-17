@@ -42,9 +42,10 @@ int main(int argc, char *argv[])
     QObject *topLevel = component -> create();
     QQuickWindow *window = qobject_cast<QQuickWindow *>(topLevel);
 
-    QObject::connect(window, SIGNAL(newPointAdded(double, double)),                           &gui, SLOT(setNewPoint(double, double)));
-    QObject::connect(&gui,   SIGNAL(newPointAdded(QVariant, QVariant)),                       window, SLOT(addNewPoint(QVariant, QVariant)));
-    QObject::connect(&gui,   SIGNAL(newSectionAdded(QVariant, QVariant, QVariant, QVariant)), window, SLOT(addNewSection(QVariant, QVariant, QVariant, QVariant)));
+    QObject::connect(window, SIGNAL(newPointAdded(double, double)),                   &gui, SLOT(setNewPoint(double, double)));
+    QObject::connect(window, SIGNAL(newSegmentAdded(double, double, double, double)), &gui, SLOT(setNewSegment(double, double, double, double)));
+    QObject::connect(&gui,   SIGNAL(newPointAdded(double, double)),                   window, SLOT(addNewPoint(double, double)));
+    QObject::connect(&gui,   SIGNAL(newSegmentAdded(double, double, double, double)), window, SLOT(addNewSegment(double, double, double, double)));
 
     QSurfaceFormat surfaceFormat = window -> requestedFormat();
     window -> setFormat(surfaceFormat);
@@ -61,9 +62,9 @@ int main(int argc, char *argv[])
     P1.Y = 400;
 
     Point P2;
-    P2.X = 600;
-    P2.Y = 600;
-    gui.addNewSection(P1.X, P1.Y, P2.X, P2.Y);
+    P2.X = 500;
+    P2.Y = 500;
+    gui.addNewSegment(P1.X, P1.Y, P2.X, P2.Y);
     //------------------
 
     rc = app.exec();

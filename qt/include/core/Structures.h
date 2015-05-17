@@ -15,7 +15,7 @@ struct Point    //  Точка
     double Y;
 };
 
-struct Section  //  Отрезок
+struct Segment  //  Отрезок
 {
     Point A;  //  Начальная точка
     Point B;  //  Конечная точка

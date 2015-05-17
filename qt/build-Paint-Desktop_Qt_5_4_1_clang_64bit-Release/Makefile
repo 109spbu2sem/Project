@@ -576,8 +576,6 @@ moc_GUI.cpp: /Users/nikitapopov/Qt/5.4/clang_64/lib/QtQml.framework/Versions/5/H
 		/Users/nikitapopov/Qt/5.4/clang_64/lib/QtCore.framework/Versions/5/Headers/QObject \
 		/Users/nikitapopov/Qt/5.4/clang_64/lib/QtCore.framework/Versions/5/Headers/qobject.h \
 		../include/core/Structures.h \
-		../include/core/LinkedList_Template.h \
-		../include/gui/GUI.h \
 		../include/gui/GUI.h
 	/Users/nikitapopov/Qt/5.4/clang_64/bin/moc $(DEFINES) -D__APPLE__ -D__GNUC__=4 -I/Users/nikitapopov/Qt/5.4/clang_64/mkspecs/macx-clang -I/Users/nikitapopov/Documents/XCode/Project_2Sem/Project_2Sem -I/Users/nikitapopov/Qt/5.4/clang_64/lib/QtQuick.framework/Headers -I/Users/nikitapopov/Qt/5.4/clang_64/lib/QtGui.framework/Headers -I/Users/nikitapopov/Qt/5.4/clang_64/lib/QtQml.framework/Headers -I/Users/nikitapopov/Qt/5.4/clang_64/lib/QtNetwork.framework/Headers -I/Users/nikitapopov/Qt/5.4/clang_64/lib/QtCore.framework/Headers -I. -F/Users/nikitapopov/Qt/5.4/clang_64/lib ../include/gui/GUI.h -o moc_GUI.cpp
 
@@ -621,7 +619,6 @@ main.o: ../main.cpp /Users/nikitapopov/Qt/5.4/clang_64/lib/QtGui.framework/Versi
 		/Users/nikitapopov/Qt/5.4/clang_64/lib/QtCore.framework/Versions/5/Headers/qobjectdefs.h \
 		../include/gui/GUI.h \
 		../include/core/Structures.h \
-		../include/core/LinkedList_Template.h \
 		../src/gui/GUI.cpp
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o main.o ../main.cpp
 

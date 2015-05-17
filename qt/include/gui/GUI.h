@@ -16,7 +16,6 @@
 #include <QObject>
 //  Custom
 #include "./include/core/Structures.h"
-#include "./include/core/LinkedList_Template.h"
 
 class GUI : public QObject
 {
@@ -34,16 +33,19 @@ public slots:
     const Point newPoint();
     void setNewPoint(double x, double y);
     void addNewPoint(double x, double y);
-    void addNewSection(double a_x, double a_y, double b_x, double b_y);
+    const Segment newSegment();
+    void setNewSegment(double a_x, double a_y, double b_x, double b_y);
+    void addNewSegment(double a_x, double a_y, double b_x, double b_y);
 
     signals:
     void statusBarChanged();
-    void newPointAdded(QVariant x, QVariant y);
-    void newSectionAdded(QVariant a_x, QVariant a_y, QVariant b_x, QVariant b_y);
+    void newPointAdded(double x, double y);
+    void newSegmentAdded(double a_x, double a_y, double b_x, double b_y);
 
 private:
     QVariant _statusBar;
     Point _newPoint;
+    Segment _newSegment;
 };
 
 
