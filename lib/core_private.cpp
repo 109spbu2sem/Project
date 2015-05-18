@@ -1,6 +1,6 @@
 #include "core.h"
 #include "gui.h"
-#include "constraints/Collector.h"
+#include "constraints\Collector.h"
 #include <fstream>
 #include <string>
 #include <ctime>
@@ -10,9 +10,6 @@
 CORE::CORE()
 {
 	mygui = 0;
-	WORKSTRING = "Working";
-	DONESTRING = "Done";
-	EMPTYSTRING = "";
 	Settings::SettingsLoader::setupSettings(&mysettings);
 	if (mysettings.WritelogMode() >= 1)
 	{
@@ -31,9 +28,6 @@ CORE::CORE()
 CORE::CORE(GraphicsInterface* gui)
 {
 	mygui = gui;
-	WORKSTRING = "Working";
-	DONESTRING = "Done";
-	EMPTYSTRING = "";
 	Settings::SettingsLoader::setupSettings(&mysettings);
 	if (mysettings.WritelogMode() >= 1)
 	{
@@ -485,7 +479,7 @@ void CORE::writeToLog(double value, std::string s, unsigned mode)
 }
 // Description:
 // add current time in format (1996-03-15)[23_59_59] between 2 strings
-std::string CORE::GenerateTimeString(const char* first_str, const char* last_str)
+std::string CORE::GenerateTimeString(char* first_str, char* last_str)
 {
 	std::string output_str(first_str);
 	time_t current_time = time(0);

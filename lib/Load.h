@@ -6,7 +6,7 @@
 #include <fstream>
 #include <QFile>
 #include <QXmlStreamReader>
-#include "storages/storage_list.h"
+#include "storages\storage_list.h"
 #include "core.h"
 using namespace std;
 
@@ -23,6 +23,7 @@ public:
 	void point();
 	void segment();
 	void circle();
+	void constraint();
 };
 
 #endif //LOAD_H

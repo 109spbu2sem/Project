@@ -1,8 +1,8 @@
 #ifndef CORE_H
 #define CORE_H
 #include "structures.h"
-#include "storages/storage_list.h"
-#include "storages/storage_array.h"
+#include "storages\storage_list.h"
+#include "storages\storage_array.h"
 #include "global.h"
 #include "gui.h"
 #include "Save.h"
@@ -12,8 +12,8 @@
 #include <fstream>
 #include "settings.h"
 #include <ctime>
-#include "storages/heshtable.h"
-#include "storages/AVL_tree.h"
+#include "storages\heshtable.h"
+#include "storages\AVL_tree.h"
 #include "storageofobjects.h"
 #include "enums.h"
 #include "storageofconstraints.h"
@@ -43,7 +43,7 @@ private:
 	Settings mysettings;
 	std::fstream _logfile;
 
-	std::string GenerateTimeString(const char*, const char*);
+	std::string GenerateTimeString(char*, char*);
 
 	bool addc_p2pdist(double);
 	bool addc_p2sdist(double);
@@ -57,9 +57,9 @@ private:
 	bool addc_parallelism();
 	bool addc_orthogonality();
 	
-	const char* DONESTRING;
-	const char* WORKSTRING;
-	const char* EMPTYSTRING;
+	const char* DONESTRING = "Done";
+	const char* WORKSTRING = "Work";
+	const char* EMPTYSTRING = "";
 
 public:
 	CORE();

@@ -1,6 +1,6 @@
 #ifndef THREE_POINTS_LINE_H
 #define THREE_POINTS_LINE_H
-#include "../global.h"
+#include "..\global.h"
 #include <cmath>
 
 // (c) Alena // type CONSTR_3PONLINE

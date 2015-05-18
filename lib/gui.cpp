@@ -2,12 +2,12 @@
 #include "global.h"
 #include "ui_gui.h"
 #include "objectpropertieswindow.h"
-#include "QtWidgets/qgraphicssceneevent.h"
+#include "QtWidgets\qgraphicssceneevent.h"
 #include "mycanvas.h"
 #include "QtWidgets\qmessagebox.h"
 #include <QString>
-#include "QtWidgets/qfiledialog.h"
-#include "QtWidgets/qlistview.h"
+#include "QtWidgets\qfiledialog.h"
+#include "QtWidgets\qlistview.h"
 #include "qlist.h"
 #include <QList>
 
@@ -47,7 +47,7 @@ GUI::~GUI()
 	delete doubvalid;
 }
 
-const char* GUI::ConstrTypeToString(CONSTR_TYPE type)
+char* GUI::ConstrTypeToString(CONSTR_TYPE type)
 {
 	switch (type)
 	{
@@ -258,9 +258,12 @@ void GUI::on_actionSave_triggered()
 		QString filename = QFileDialog::getSaveFileName(
 			this, tr("Open File"),
 			"C://",
-			"Text File (*.txt);; Xml File (*.xml)");
+			"Text File (*.xml);; Xml File (*.txt)");
+		if (filename == "")
+			return;
 		mycore->IWantSaveAs(filename);
 		flag = true;
+		return;
 	}
 	mycore->IWantSave();
 }
@@ -270,7 +273,9 @@ void GUI::on_actionSave_As_triggered()
 	QString filename = QFileDialog::getSaveFileName(
 		this, tr("Open File"),
 		"C://",
-		"Text File (*.txt);; Xml File (*.xml)");
+		"Text File (*.xml);; Xml File (*.txt)");
+	if (filename == "")
+		return;
 	flag = true;
 	mycore->IWantSaveAs(filename);
 }
@@ -318,7 +323,7 @@ void GUI::on_actionLoad_triggered()
 	QString filename = QFileDialog::getOpenFileName(
 		this, tr("Open File"),
 		"C://",
-		"Text File (*.txt);; Xml File (*.xml)");
+		"Text File (*.xml);; Xml File (*.txt)");
 	if (filename == "")
 		return;
 	mycore->IWantLoad(filename);

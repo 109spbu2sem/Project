@@ -289,6 +289,7 @@ void CORE::IWantSave()
 {
 	Save mysave(_fileWay);
 	StorageOfObjects::viewer i(_storage_of_objects);
+	StorageOfConstraints::viewer j(_storage_of_constraints);
 	while (i.canMoveNext())
 	{
 		if (i.key().getID() == 0)
@@ -316,6 +317,44 @@ void CORE::IWantSave()
 			Circle* v = dynamic_cast<Circle*>(i.value());
 			mysave.DrawCircle(v->id.getID(), v->p->id.getID(), *v->r, v->color.getColor(), 0);
 			i.moveNext();
+			continue;
+		}
+	}
+	while (j.canMoveNext()) {
+		if (j.constraint()->type() == CONSTR_COLLECTOR) {
+			j.moveNext();
+			continue;
+		}
+		if (j.constraint()->type() == CONSTR_EXCONTACT || j.constraint()->type() == CONSTR_INCONTACT ||
+			j.constraint()->type() == CONSTR_ORTHOGONALITY || j.constraint()->type() == CONSTR_PARALLELISM) {
+			mysave.DrawRule(j.constraint()->type(), j.objects().front()->id.getID(), j.objects().back()->id.getID());
+			j.moveNext();
+			continue;
+		}
+		if (j.constraint()->type() == CONSTR_P2PDIST || j.constraint()->type() == CONSTR_P2SECTDIST ||
+			j.constraint()->type() == CONSTR_P2LINEDIST || j.constraint()->type() == CONSTR_L2LANGLE ||
+			j.constraint()->type() == CONSTR_SPRATIO) {
+			mysave.DrawRule(j.constraint()->type(), j.objects().front()->id.getID(), j.objects().back()->id.getID(),
+				j.constraint()->value());
+			j.moveNext();
+			continue;
+		}
+		if (j.constraint()->type() == CONSTR_3PRATIO) {
+			std::list<ObjectBase*>::iterator i = j.objects().begin();
+			unsigned id1 = (*i)->id.getID(); ++i;
+			unsigned id2 = (*i)->id.getID(); ++i;
+			unsigned id3 = (*i)->id.getID();
+			mysave.DrawRule(j.constraint()->type(), id1, id2, id3, j.constraint()->value());
+			j.moveNext();
+			continue;
+		}
+		if (j.constraint()->type() == CONSTR_3PONLINE) {
+			std::list<ObjectBase*>::iterator i = j.objects().begin();
+			unsigned id1 = (*i)->id.getID(); ++i;
+			unsigned id2 = (*i)->id.getID(); ++i;
+			unsigned id3 = (*i)->id.getID();
+			mysave.DrawRule(j.constraint()->type(), id1, id2, id3);
+			j.moveNext();
 			continue;
 		}
 	}
@@ -323,43 +362,13 @@ void CORE::IWantSave()
 
 void CORE::IWantSaveAs(QString way) {
 	_fileWay = way;
-	Save mysave(way);
-	StorageOfObjects::viewer i(_storage_of_objects);
-	while (i.canMoveNext())
-	{
-		if (i.key().getID() == 0)
-		{
-			i.moveNext();
-			continue;
-		}
-		if (i.value()->objectType() == PRIMITIVE_POINT)
-		{
-			Point* v = dynamic_cast<Point*>(i.value());
-			mysave.DrawPoint(v->id.getID(), *v->x, *v->y, v->color.getColor(), 0);
-			i.moveNext();
-			continue;
-		}
-		if (i.value()->objectType() == PRIMITIVE_SEGMENT)
-		{
-			Segment* v = dynamic_cast<Segment*>(i.value());
-			mysave.DrawSegment(v->id.getID(), v->p1->id.getID(), v->p2->id.getID(), v->color.getColor(), 0);
-			i.moveNext();
-			continue;
-
-		}
-		if (i.value()->objectType() == PRIMITIVE_CIRCLE)
-		{
-			Circle* v = dynamic_cast<Circle*>(i.value());
-			mysave.DrawCircle(v->id.getID(), v->p->id.getID(), *v->r, v->color.getColor(), 0);
-			i.moveNext();
-			continue;
-		}
-	}
+	IWantSave();
 }
 
 void CORE::IWantLoad(QString way)
 {
-	Load myload(this, way);
+	_fileWay = way;
+	Load myload(this, _fileWay);
 	myload.begin();
 }
 

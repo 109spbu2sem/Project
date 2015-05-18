@@ -2,11 +2,11 @@
 #define GUI_H
 
 #include "core.h"
-#include "QtWidgets/qmainwindow.h"
-#include "QtWidgets/qgraphicsscene.h"
+#include "QtWidgets\qmainwindow.h"
+#include "QtWidgets\qgraphicsscene.h"
 #include "mycanvas.h"
-#include "QtWidgets/qbuttongroup.h"
-#include "QtWidgets/qaction.h"
+#include "QtWidgets\qbuttongroup.h"
+#include "QtWidgets\qaction.h"
 #include "enums.h"
 #include "qregexp.h"
 #include "qvalidator.h"
@@ -109,7 +109,7 @@ private:
 	QButtonGroup* toolsbuttons;
 	QRegExpValidator *doubvalid;
 	
-	const char* ConstrTypeToString(CONSTR_TYPE);
+	char* ConstrTypeToString(CONSTR_TYPE);
 	unsigned selectedRuleId;
 };
 

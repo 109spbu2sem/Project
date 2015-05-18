@@ -1,6 +1,6 @@
 #ifndef ASPECT_RATIO_H
 #define ASPECT_RATIO_H
-#include "../global.h"
+#include "..\global.h"
 #include <cmath>
 
 // (c) Alena // type CONSTR_3PRATIO

@@ -8,7 +8,7 @@ Save::Save(){
 };
 Save::Save(QString way) {
 	_way = way.toStdString();
-	_save.open(_way, ios_base::out | ios_base::trunc);
+	_save.open(_way.c_str(), ios_base::out | ios_base::trunc);
 	_save << "<?xml version=\"1.0\" encoding=\"UTF-8\" ?>\n";
 	_save << "<list>\n";
 }
@@ -48,5 +48,45 @@ bool Save::DrawCircle(unsigned id, unsigned id1, double r, Color c, bool mode)
 	_save << "		<radius>" << r << "</radius>\n";
 	_save << "		<color>" << c.getColor() << "</color>\n";
 	_save << "	</circle>\n";
+	return true;
+}
+
+bool Save::DrawRule(CONSTR_TYPE type, unsigned id1, unsigned id2) {
+	_save << "	<constraint>\n";
+	_save << "		<type>" << type << "</type>\n";
+	_save << "		<id1>" << id1 << "</id1>\n";
+	_save << "		<id2>" << id2 << "</id2>\n";
+	_save << "	</constraint>\n";
+	return true;
+}
+
+bool Save::DrawRule(CONSTR_TYPE type, unsigned id1, unsigned id2, double value) {
+	_save << "	<constraint>\n";
+	_save << "		<type>" << type << "</type>\n";
+	_save << "		<id1>" << id1 << "</id1>\n";
+	_save << "		<id2>" << id2 << "</id2>\n";
+	_save << "		<value>" << value << "</value>\n";
+	_save << "	</constraint>\n";
+	return true;
+}
+
+bool Save::DrawRule(CONSTR_TYPE type, unsigned id1, unsigned id2, unsigned id3, double value) {
+	_save << "	<constraint>\n";
+	_save << "		<type>" << type << "</type>\n";
+	_save << "		<id1>" << id1 << "</id1>\n";
+	_save << "		<id2>" << id2 << "</id2>\n";
+	_save << "		<id3>" << id3 << "</id3>\n";
+	_save << "		<value>" << value << "</value>\n";
+	_save << "	</constraint>\n";
+	return true;
+}
+
+bool Save::DrawRule(CONSTR_TYPE type, unsigned id1, unsigned id2, unsigned id3) {
+	_save << "	<constraint>\n";
+	_save << "		<type>" << type << "</type>\n";
+	_save << "		<id1>" << id1 << "</id1>\n";
+	_save << "		<id2>" << id2 << "</id2>\n";
+	_save << "		<id3>" << id3 << "</id3>\n";
+	_save << "	</constraint>\n";
 	return true;
 }

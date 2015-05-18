@@ -1,7 +1,7 @@
 #ifndef OBJECTPROPERTIESWINDOW_H
 #define OBJECTPROPERTIESWINDOW_H
 
-#include "QtWidgets/qdialog.h"
+#include "QtWidgets\qdialog.h"
 #include "global.h"
 #include <QColor>
 #include "core.h"

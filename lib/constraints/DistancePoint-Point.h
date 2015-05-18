@@ -1,6 +1,6 @@
 #ifndef DISTANCE_POINT_POINT_H
 #define DISTANCE_POINT_POINT_H
-#include "../global.h"
+#include "..\global.h"
 
 // (c) Alena // type CONSTR_P2PDIST
 
