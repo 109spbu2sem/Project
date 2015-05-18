@@ -43,7 +43,7 @@ private:
 	Settings mysettings;
 	std::fstream _logfile;
 
-	std::string GenerateTimeString(char*, char*);
+	std::string GenerateTimeString(const char*, const char*);
 
 	bool addc_p2pdist(double);
 	bool addc_p2sdist(double);

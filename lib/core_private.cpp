@@ -306,6 +306,7 @@ void CORE::BuildFigureGoldMethod(IConstraint *constr, Storage_Array<double*>* pa
 		// ratio of the golden section
 		const double gold = 0.5 + sqrt(5.0 / 4);
 		double a0 = 0;
+		double f_a0 = f_prev;
 		double aleft = a1 - (a1 - a0) / gold;
 		double aright = a0 + (a1 - a0) / gold;
 		for (unsigned k = 0; k < parameters->size(); k++)
@@ -484,7 +485,7 @@ void CORE::writeToLog(double value, std::string s, unsigned mode)
 }
 // Description:
 // add current time in format (1996-03-15)[23_59_59] between 2 strings
-std::string CORE::GenerateTimeString(char* first_str, char* last_str)
+std::string CORE::GenerateTimeString(const char* first_str, const char* last_str)
 {
 	std::string output_str(first_str);
 	time_t current_time = time(0);

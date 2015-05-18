@@ -109,7 +109,7 @@ private:
 	QButtonGroup* toolsbuttons;
 	QRegExpValidator *doubvalid;
 	
-	char* ConstrTypeToString(CONSTR_TYPE);
+	const char* ConstrTypeToString(CONSTR_TYPE);
 	unsigned selectedRuleId;
 };
 

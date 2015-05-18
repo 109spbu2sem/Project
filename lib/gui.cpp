@@ -47,7 +47,7 @@ GUI::~GUI()
 	delete doubvalid;
 }
 
-char* GUI::ConstrTypeToString(CONSTR_TYPE type)
+const char* GUI::ConstrTypeToString(CONSTR_TYPE type)
 {
 	switch (type)
 	{
