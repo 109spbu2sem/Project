@@ -11,6 +11,13 @@ ApplicationWindow
     signal newPointAdded(double x, double y)
     signal newSegmentAdded(double a_x, double a_y, double b_x, double b_y)
 
+    property double x
+    property double y
+    property double a_x
+    property double a_y
+    property double b_x
+    property double b_y
+
     property double lastX
     property double lastY
 
@@ -66,6 +73,24 @@ ApplicationWindow
         ctx.stroke()
         console.log("drawSegment()")
     }
+
+    //  Delete  ================================================================================================================
+    function deletePoint(ctx, lastX, lastY)
+    {
+        //  now works as Eraser, should delete selected element and redraw() whole mainCanvas
+        ctx.beginPath()
+        ctx.clearRect(lastX - 1, lastY - 1, 6, 6)
+        ctx.stroke()
+    }
+
+    //  Connections  ===========================================================================================================
+    Connections
+    {
+        target: gui
+        onNewPointAdded: addNewPoint(x, y)
+        onNewSegmentAdded: addNewSegment(a_x, a_y, b_x, b_y)
+    }
+
 
     //  ====================================================================================
     //  ====================================================================================
@@ -140,6 +165,36 @@ ApplicationWindow
                     {
                         statusBar.text = qsTr('<font color="black">Project closed<font>')
                         console.log("Close action triggered")
+                    }
+                }
+            }
+
+            Menu
+            {
+                title: qsTr("Edit")
+
+                MenuItem
+                {
+                    text: qsTr("&Undo")
+                    shortcut: "Ctrl+Z"
+                }
+
+                MenuItem
+                {
+                    text: qsTr("&Redo")
+                    shortcut: "Ctrl+Shift+Z"
+                }
+
+                MenuSeparator{}
+
+                Menu
+                {
+                    title: qsTr("Additional")
+
+                    MenuItem
+                    {
+                        text: qsTr("&empty")
+                        enabled: false
                     }
                 }
             }
@@ -229,6 +284,8 @@ ApplicationWindow
                         width: 40
                         height: 40
 
+                        activeFocusOnPress: true
+
                         Rectangle
                         {
                             width: parent.width
@@ -253,16 +310,19 @@ ApplicationWindow
                         onClicked:
                         {
                             n = 1
+
                             console.log("toolBar -> Point");
                         }
                     }
 
                     ToolButton
                     {
-                        id: sectionAddObjectDialogButton
+                        id: segmentAddObjectDialogButton
 
                         width: 40
                         height: 40
+
+                        activeFocusOnPress: true
 
                         Rectangle
                         {
@@ -274,7 +334,7 @@ ApplicationWindow
 
                         Text
                         {
-                            id: textSection
+                            id: textSegment
 
                             y: 10
                             width: parent.width
@@ -294,10 +354,12 @@ ApplicationWindow
 
                     ToolButton
                     {
-                        id: arcAddObjectDialogButton
+                        id: circleAddObjectDialogButton
 
                         width: 40
                         height: 40
+
+                        activeFocusOnPress: true
 
                         Rectangle
                         {
@@ -309,7 +371,7 @@ ApplicationWindow
 
                         Text
                         {
-                            id: textArc
+                            id: textCircle
 
                             y: 10
                             width: parent.width
@@ -324,6 +386,43 @@ ApplicationWindow
                         {
                             n = 3
                             console.log("toolBar -> Circle");
+                        }
+                    }
+
+                    ToolButton
+                    {
+                        id: deletePointButton
+
+                        width: 40
+                        height: 40
+
+                        activeFocusOnPress: true
+
+                        Rectangle
+                        {
+                            width: parent.width
+                            height: parent.height
+
+                            color: "orange"
+                        }
+
+                        Text
+                        {
+                            id: textDelete
+
+                            y: 10
+                            width: parent.width
+                            horizontalAlignment: Text.AlignHCenter
+                            verticalAlignment: Text.AlignVCenter
+
+                            text: "Delete"
+                            color: 'white'
+                        }
+
+                        onClicked:
+                        {
+                            n = 4
+                            console.log("toolBar -> Delete");
                         }
                     }
                 }
@@ -374,6 +473,10 @@ ApplicationWindow
                         {
                             //  drawEllipse(ctx)
                         }
+                        else if (n == 4)
+                        {
+                            deletePoint(ctx, lastX, lastY)
+                        }
                     }
 
                     MouseArea
@@ -386,9 +489,9 @@ ApplicationWindow
 
                         onPressed:
                         {
-                            if(!((n == 1) || (n == 2) || (n == 3)))
+                            if(!((n == 1) || (n == 2) || (n == 3) || (n == 4)))
                             {
-                                n = 1
+                                pointAddObjectDialogButton.clicked()
                             }
 
                             lastX = parseInt(mouseX, 10)
@@ -419,10 +522,23 @@ ApplicationWindow
                             {
                                 //
                             }
+                            else if (n == 4)
+                            {
+                                mainCanvas.requestPaint()
+                            }
                         }
 
                         onPositionChanged:
                         {
+                            if (mouseArea.pressed)
+                            {
+                                if (n == 4)
+                                {
+                                    lastX = parseInt(mouseX, 10)
+                                    lastY = parseInt(mouseY, 10)
+                                    mainCanvas.requestPaint()
+                                }
+                            }
                             positionInfo.text = "x: " + parseInt(mouseX, 10) + "\n" + "y: " + parseInt(mouseY, 10)
                         }
                     }
@@ -460,7 +576,7 @@ ApplicationWindow
                     anchors.fill: parent
 
                     model:
-                        XmlListModel
+                        XmlListModel  //  Not actual for this moment
                         {
                             id: projectModel
                             source: fileUrlLoad

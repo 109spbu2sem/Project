@@ -44,8 +44,8 @@ int main(int argc, char *argv[])
 
     QObject::connect(window, SIGNAL(newPointAdded(double, double)),                   &gui, SLOT(setNewPoint(double, double)));
     QObject::connect(window, SIGNAL(newSegmentAdded(double, double, double, double)), &gui, SLOT(setNewSegment(double, double, double, double)));
-    QObject::connect(&gui,   SIGNAL(newPointAdded(double, double)),                   window, SLOT(addNewPoint(double, double)));
-    QObject::connect(&gui,   SIGNAL(newSegmentAdded(double, double, double, double)), window, SLOT(addNewSegment(double, double, double, double)));
+//    QObject::connect(&gui,   SIGNAL(newPointAdded(double, double)),                   window, SLOT(addNewPoint(double, double)));
+//    QObject::connect(&gui,   SIGNAL(newSegmentAdded(double, double, double, double)), window, SLOT(addNewSegment(double, double, double, double)));
 
     QSurfaceFormat surfaceFormat = window -> requestedFormat();
     window -> setFormat(surfaceFormat);

@@ -40,6 +40,7 @@ void GUI::setNewPoint(double x, double y)
 
 void GUI::addNewPoint(double x, double y)
 {
+    std::cout << "emited newPointAdded()" << std::endl;
     emit newPointAdded(x, y);
 }
 
@@ -61,5 +62,6 @@ void GUI::setNewSegment(double a_x, double a_y, double b_x, double b_y)
 
 void GUI::addNewSegment(double a_x, double a_y, double b_x, double b_y)
 {
+    std::cout << "emited newSegmentAdded()" << std::endl;
     emit newSegmentAdded(a_x, a_y, b_x, b_y);
 }
