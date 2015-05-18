@@ -1,6 +1,6 @@
 #ifndef ORTHOGONAL_LINES_H
 #define ORTHOGONAL_LINES_H
-#include "..\global.h"
+#include "../global.h"
 
 // (c) Alena // type CONSTR_ORTHOGONALITY
 

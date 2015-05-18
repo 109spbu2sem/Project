@@ -1,7 +1,7 @@
 #ifndef OBJECTPROPERTIESWINDOW_H
 #define OBJECTPROPERTIESWINDOW_H
 
-#include "QtWidgets\qdialog.h"
+#include "QtWidgets/qdialog.h"
 #include "global.h"
 #include <QColor>
 #include "core.h"
@@ -42,6 +42,8 @@ private:
 	QRegExpValidator *doubvalid;
 	QRegExpValidator *unsvalid;
 	unsigned flag;
+
+	void setupIconsForVS();
 };
 
 #endif // OBJECTPROPERTIESWINDOW_H

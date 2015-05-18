@@ -42,7 +42,7 @@ public:
 	}
 };
 
-template <typename FirstType, typename SecondType> class HashViewer;
+template <typename FirstType, typename SecondType, typename HashType = HashRs<FirstType> > class HashViewer;
 
 template <typename FirstType, typename SecondType, typename HashType = HashRs<FirstType> > class HashTable
 {
@@ -142,19 +142,19 @@ public:
 	}
 };
 
-template <typename FirstType, typename SecondType> class HashViewer
+template <typename FirstType, typename SecondType, typename HashType > class HashViewer
 {
 private:
-	Storage_List < typename HashTable<FirstType, SecondType>::ABstruct >* _topViewer;
-	Storage_List < typename HashTable<FirstType, SecondType>::ABstruct >* _end;
-	ListViewer < typename HashTable<FirstType, SecondType>::ABstruct > _bottomViewer;
+	Storage_List < typename HashTable<FirstType, SecondType, HashType>::ABstruct >* _topViewer;
+	Storage_List < typename HashTable<FirstType, SecondType, HashType>::ABstruct >* _end;
+	ListViewer < typename HashTable<FirstType, SecondType, HashType>::ABstruct > _bottomViewer;
 public:
-	friend class HashTable < FirstType, SecondType > ;
+	friend class HashTable < FirstType, SecondType, HashType >;
 	HashViewer();
-    HashViewer(HashTable<FirstType, SecondType>& table)
+	HashViewer(HashTable<FirstType, SecondType, HashType>& table)
 	{
 		_topViewer = table._table;
-		_end = &(_topViewer[HashTable<FirstType, SecondType>::_TABLERATIO - 1]);
+		_end = &(_topViewer[HashTable<FirstType, SecondType, HashType>::_TABLERATIO - 1]);
 		_bottomViewer = _topViewer->getIterator();
 		while (!_bottomViewer.canMoveNext() && _topViewer != _end )
 		{

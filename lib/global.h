@@ -6,17 +6,13 @@
 #define COLORSELECTED 0x3560d6
 #define COLORDEF 0x000000
 
-#define POINT 0
-#define SEGMENT 1
-#define CIRCLE 2
-
 double length(double, double, double, double);
 
 double min(double, double);
 
-enum CONSTR_TYPE
+enum CONSTR_TYPE : unsigned
 {
-	CONSTR_COLLECTOR,
+	CONSTR_COLLECTOR = 0,
 	CONSTR_P2PDIST,
 	CONSTR_P2SECTDIST,
 	CONSTR_P2LINEDIST,

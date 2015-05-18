@@ -169,9 +169,9 @@ bool CORE::Select(unsigned id)
 	return false;
 }
 
-void CORE::Select(double x1, double y1, double x2, double y2)
+/*void CORE::Select(double x1, double y1, double x2, double y2)
 {
-	/*// select points
+	// select points
 	unsigned size = _storage_of_points.size();
 	for (ListViewer<Point> i(_storage_of_points); i.canMoveNext(); i.moveNext())
 	{
@@ -206,8 +206,8 @@ void CORE::Select(double x1, double y1, double x2, double y2)
 		}
 	}
 	Redraw();
-	return;*/
-}
+	return;
+}*/
 
 void CORE::ClearSelection()
 {
@@ -249,22 +249,31 @@ void CORE::DeleteSelectedObjects()
 	{
 		if (_storage_of_constraints.has(i.getValue()))
 			cantdelete++;
-		else
+		else 
 		{
 			switch (i.getValue()->objectType())
 			{
 				case PRIMITIVE_POINT:
 				{
 					Point* p = dynamic_cast<Point*>(i.getValue());
-					_parameters.remove(p->x);
-					_parameters.remove(p->y);
-					delete p->x;
-					delete p->y;
+					if (_storage_of_objects.has_SorC_with_P(p))
+						cantdelete++;
+					else
+					{
+						_parameters.remove(p->x);
+						_parameters.remove(p->y);
+						delete p->x;
+						delete p->y;
+						_storage_of_objects.remove(i.getValue()->id);
+						delete i.getValue();
+					}
 					break;
 				}
 				case PRIMITIVE_SEGMENT:
 				{
 					//Segment* s = dynamic_cast<Segment*>(i.getValue());
+					_storage_of_objects.remove(i.getValue()->id);
+					delete i.getValue();
 					break;
 				}
 				case PRIMITIVE_CIRCLE:
@@ -272,17 +281,18 @@ void CORE::DeleteSelectedObjects()
 					Circle* c = dynamic_cast<Circle*>(i.getValue());
 					_parameters.remove(c->r);
 					delete c->r;
+					_storage_of_objects.remove(i.getValue()->id);
+					delete i.getValue();
 					break;
 				}	
 			}
-			_storage_of_objects.remove(i.getValue()->id);
-			delete i.getValue();
 		}
 	}
 	_selected_objects.clear();
 	Redraw(mygui);
+	mygui->Clear_properties();
 	if (cantdelete)
-		mygui->WriteError("First delete all constraints wich associates with these objects");
+		mygui->WriteError("First, delete all constraints and objects wich associates with these objects.");
 }
 
 void CORE::IWantSave()
@@ -385,7 +395,9 @@ bool CORE::DeleteRule(unsigned id)
 		_storage_of_constraints.remove(id);
 		Redraw(mygui);
 		TransmitRules(mygui);
+		mygui->WriteText(DONESTRING,"Rule deleted");
 		return true;
 	}
+	mygui->WriteError("FATAL ERROR\nPlease, restart program or click on button \"Clear all\".");
 	return false;
 }

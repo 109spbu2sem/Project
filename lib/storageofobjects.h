@@ -2,9 +2,8 @@
 #define STORAGE_OF_OBJECTS_H
 
 #include "global.h"
-#include "Id.h"
-#include "ObjectBase.h"
-#include "storages\AVL_tree.h"
+#include "storages/AVL_tree.h"
+#include "structures.h"
 
 class StorageOfObjects
 {
@@ -26,6 +25,7 @@ public:
 	bool remove(ID&);
 	ObjectBase* get(ID&);
 	ObjectBase* get(unsigned);
+	bool has_SorC_with_P(Point*);
 
 	void clear();
 

@@ -87,8 +87,8 @@
          <string>Point</string>
         </property>
         <property name="icon">
-         <iconset>
-          <normaloff>icons/pointbtn.png</normaloff>icons/pointbtn.png</iconset>
+         <iconset resource="icons.qrc">
+          <normaloff>:/icons/icons/pointbtn.png</normaloff>:/icons/icons/pointbtn.png</iconset>
         </property>
        </item>
        <item>
@@ -96,8 +96,8 @@
          <string>Segment</string>
         </property>
         <property name="icon">
-         <iconset>
-          <normaloff>icons/segmentbtn.png</normaloff>icons/segmentbtn.png</iconset>
+         <iconset resource="icons.qrc">
+          <normaloff>:/icons/icons/segmentbtn.png</normaloff>:/icons/icons/segmentbtn.png</iconset>
         </property>
        </item>
        <item>
@@ -105,8 +105,8 @@
          <string>Circle</string>
         </property>
         <property name="icon">
-         <iconset>
-          <normaloff>icons/circlebtn.png</normaloff>icons/circlebtn.png</iconset>
+         <iconset resource="icons.qrc">
+          <normaloff>:/icons/icons/circlebtn.png</normaloff>:/icons/icons/circlebtn.png</iconset>
         </property>
        </item>
       </widget>
@@ -364,8 +364,8 @@
            <string/>
           </property>
           <property name="icon">
-           <iconset>
-            <normaloff>icons/lock.png</normaloff>icons/lock.png</iconset>
+           <iconset resource="icons.qrc">
+            <normaloff>:/icons/icons/lock.png</normaloff>:/icons/icons/lock.png</iconset>
           </property>
           <property name="iconSize">
            <size>
@@ -430,8 +430,8 @@
            <string/>
           </property>
           <property name="icon">
-           <iconset>
-            <normaloff>icons/lock.png</normaloff>icons/lock.png</iconset>
+           <iconset resource="icons.qrc">
+            <normaloff>:/icons/icons/lock.png</normaloff>:/icons/icons/lock.png</iconset>
           </property>
           <property name="iconSize">
            <size>
@@ -496,8 +496,8 @@
            <string/>
           </property>
           <property name="icon">
-           <iconset>
-            <normaloff>icons/lock.png</normaloff>icons/lock.png</iconset>
+           <iconset resource="icons.qrc">
+            <normaloff>:/icons/icons/lock.png</normaloff>:/icons/icons/lock.png</iconset>
           </property>
           <property name="iconSize">
            <size>
@@ -559,8 +559,8 @@
            <string/>
           </property>
           <property name="icon">
-           <iconset>
-            <normaloff>icons/lock.png</normaloff>icons/lock.png</iconset>
+           <iconset resource="icons.qrc">
+            <normaloff>:/icons/icons/lock.png</normaloff>:/icons/icons/lock.png</iconset>
           </property>
           <property name="iconSize">
            <size>
@@ -611,7 +611,9 @@
   <tabstop>editB</tabstop>
   <tabstop>editID</tabstop>
  </tabstops>
- <resources/>
+ <resources>
+  <include location="icons.qrc"/>
+ </resources>
  <connections>
   <connection>
    <sender>buttonBox</sender>

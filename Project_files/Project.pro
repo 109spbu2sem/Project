@@ -6,12 +6,15 @@ TARGET = Project
 DESTDIR = ./debug
 QT += core widgets gui
 CONFIG += debug
+CONFIG += c++11
 DEFINES += _WINDOWS QT_WIDGETS_LIB
 INCLUDEPATH += . \
     ./debug \
     . \
     $(QTDIR)/mkspecs/win32-msvc2013 \
-    ./GeneratedFiles
+    ./GeneratedFiles \
+    ../lib \
+    ../lib/QTforms
 LIBS += -lshell32
 DEPENDPATH += .
 MOC_DIR += debug
@@ -76,3 +79,6 @@ SOURCES += \
 FORMS += \
     ../lib/QTforms/gui.ui \
     ../lib/QTforms/objectpropertieswindow.ui
+
+RESOURCES += \
+    ../lib/QTforms/icons.qrc

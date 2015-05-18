@@ -1,0 +1,18 @@
+<RCC>
+    <qresource prefix="/icons">
+        <file>icons/addbtn.png</file>
+        <file>icons/changebtn.png</file>
+        <file>icons/circlebtn.png</file>
+        <file>icons/clearallbtn.png</file>
+        <file>icons/closebtn.png</file>
+        <file>icons/deletebtn.png</file>
+        <file>icons/lock.png</file>
+        <file>icons/openbtn.png</file>
+        <file>icons/pointbtn.png</file>
+        <file>icons/redrawbtn.png</file>
+        <file>icons/savebtn.png</file>
+        <file>icons/segmentbtn.png</file>
+        <file>icons/selectbtn.png</file>
+        <file>icons/zoombtn.png</file>
+    </qresource>
+</RCC>

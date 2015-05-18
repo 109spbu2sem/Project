@@ -88,8 +88,8 @@
             <string>Open</string>
            </property>
            <property name="icon">
-            <iconset>
-             <normaloff>icons/openbtn.png</normaloff>icons/openbtn.png</iconset>
+            <iconset resource="icons.qrc">
+             <normaloff>:/icons/icons/openbtn.png</normaloff>:/icons/icons/openbtn.png</iconset>
            </property>
           </widget>
          </item>
@@ -110,8 +110,8 @@
             <string>Save</string>
            </property>
            <property name="icon">
-            <iconset>
-             <normaloff>icons/savebtn.png</normaloff>icons/savebtn.png</iconset>
+            <iconset resource="icons.qrc">
+             <normaloff>:/icons/icons/savebtn.png</normaloff>:/icons/icons/savebtn.png</iconset>
            </property>
           </widget>
          </item>
@@ -174,8 +174,8 @@
             <string>Create segment</string>
            </property>
            <property name="icon">
-            <iconset>
-             <normaloff>icons/segmentbtn.png</normaloff>icons/segmentbtn.png</iconset>
+            <iconset resource="icons.qrc">
+             <normaloff>:/icons/icons/segmentbtn.png</normaloff>:/icons/icons/segmentbtn.png</iconset>
            </property>
           </widget>
          </item>
@@ -196,8 +196,8 @@
             <string>Create circle</string>
            </property>
            <property name="icon">
-            <iconset>
-             <normaloff>icons/circlebtn.png</normaloff>icons/circlebtn.png</iconset>
+            <iconset resource="icons.qrc">
+             <normaloff>:/icons/icons/circlebtn.png</normaloff>:/icons/icons/circlebtn.png</iconset>
            </property>
           </widget>
          </item>
@@ -238,8 +238,8 @@
               <string/>
              </property>
              <property name="icon">
-              <iconset>
-               <normaloff>icons/lock.png</normaloff>icons/lock.png</iconset>
+              <iconset resource="icons.qrc">
+               <normaloff>:/icons/icons/lock.png</normaloff>:/icons/icons/lock.png</iconset>
              </property>
              <property name="checked">
               <bool>true</bool>
@@ -315,22 +315,22 @@
            </item>
            <item>
             <property name="text">
-             <string>Distance from point to line</string>
+             <string>Distance from point to line (didn't work)</string>
             </property>
            </item>
            <item>
             <property name="text">
-             <string>Three points on line</string>
+             <string>Three points on line (not correctly)</string>
             </property>
            </item>
            <item>
             <property name="text">
-             <string>Ratio between three points</string>
+             <string>Ratio between three points (didn't work)</string>
             </property>
            </item>
            <item>
             <property name="text">
-             <string>Angle between segments</string>
+             <string>Angle between segments (not always correctly)</string>
             </property>
            </item>
            <item>
@@ -345,12 +345,12 @@
            </item>
            <item>
             <property name="text">
-             <string>Distance from point to segment</string>
+             <string>Distance from point to segment (didn't work)</string>
             </property>
            </item>
            <item>
             <property name="text">
-             <string>Ratio between point and segment</string>
+             <string>Ratio between point and segment (didn't work)</string>
             </property>
            </item>
            <item>
@@ -405,8 +405,8 @@
               <string>Add rule</string>
              </property>
              <property name="icon">
-              <iconset>
-               <normaloff>icons/addbtn.png</normaloff>icons/addbtn.png</iconset>
+              <iconset resource="icons.qrc">
+               <normaloff>:/icons/icons/addbtn.png</normaloff>:/icons/icons/addbtn.png</iconset>
              </property>
             </widget>
            </item>
@@ -459,8 +459,8 @@
             <string/>
            </property>
            <property name="icon">
-            <iconset>
-             <normaloff>icons/redrawbtn.png</normaloff>icons/redrawbtn.png</iconset>
+            <iconset resource="icons.qrc">
+             <normaloff>:/icons/icons/redrawbtn.png</normaloff>:/icons/icons/redrawbtn.png</iconset>
            </property>
            <property name="iconSize">
             <size>
@@ -496,8 +496,8 @@
             <string/>
            </property>
            <property name="icon">
-            <iconset>
-             <normaloff>icons/clearallbtn.png</normaloff>icons/clearallbtn.png</iconset>
+            <iconset resource="icons.qrc">
+             <normaloff>:/icons/icons/clearallbtn.png</normaloff>:/icons/icons/clearallbtn.png</iconset>
            </property>
            <property name="iconSize">
             <size>
@@ -541,8 +541,8 @@
          <string/>
         </property>
         <property name="icon">
-         <iconset>
-          <normaloff>icons/closebtn.png</normaloff>icons/closebtn.png</iconset>
+         <iconset resource="icons.qrc">
+          <normaloff>:/icons/icons/closebtn.png</normaloff>:/icons/icons/closebtn.png</iconset>
         </property>
         <property name="iconSize">
          <size>
@@ -619,8 +619,8 @@
             <string/>
            </property>
            <property name="icon">
-            <iconset>
-             <normaloff>icons/selectbtn.png</normaloff>icons/selectbtn.png</iconset>
+            <iconset resource="icons.qrc">
+             <normaloff>:/icons/icons/selectbtn.png</normaloff>:/icons/icons/selectbtn.png</iconset>
            </property>
            <property name="iconSize">
             <size>
@@ -669,8 +669,8 @@
             <string/>
            </property>
            <property name="icon">
-            <iconset>
-             <normaloff>icons/pointbtn.png</normaloff>icons/pointbtn.png</iconset>
+            <iconset resource="icons.qrc">
+             <normaloff>:/icons/icons/pointbtn.png</normaloff>:/icons/icons/pointbtn.png</iconset>
            </property>
            <property name="iconSize">
             <size>
@@ -716,8 +716,8 @@
             <string/>
            </property>
            <property name="icon">
-            <iconset>
-             <normaloff>icons/zoombtn.png</normaloff>icons/zoombtn.png</iconset>
+            <iconset resource="icons.qrc">
+             <normaloff>:/icons/icons/zoombtn.png</normaloff>:/icons/icons/zoombtn.png</iconset>
            </property>
            <property name="iconSize">
             <size>
@@ -764,8 +764,14 @@
            <property name="statusTip">
             <string>Display grid?</string>
            </property>
+           <property name="styleSheet">
+            <string notr="true">color: rgb(68, 68, 68);</string>
+           </property>
            <property name="text">
             <string>#</string>
+           </property>
+           <property name="shortcut">
+            <string>Ctrl+G</string>
            </property>
            <property name="checkable">
             <bool>true</bool>
@@ -885,8 +891,8 @@
                  <string>Change object</string>
                 </property>
                 <property name="icon">
-                 <iconset>
-                  <normaloff>icons/changebtn.png</normaloff>icons/changebtn.png</iconset>
+                 <iconset resource="icons.qrc">
+                  <normaloff>:/icons/icons/changebtn.png</normaloff>:/icons/icons/changebtn.png</iconset>
                 </property>
                </widget>
               </item>
@@ -955,8 +961,8 @@
                  <string>Add object</string>
                 </property>
                 <property name="icon">
-                 <iconset>
-                  <normaloff>icons/addbtn.png</normaloff>icons/addbtn.png</iconset>
+                 <iconset resource="icons.qrc">
+                  <normaloff>:/icons/icons/addbtn.png</normaloff>:/icons/icons/addbtn.png</iconset>
                 </property>
                </widget>
               </item>
@@ -977,8 +983,8 @@
                  <string>Delete objects</string>
                 </property>
                 <property name="icon">
-                 <iconset>
-                  <normaloff>icons/deletebtn.png</normaloff>icons/deletebtn.png</iconset>
+                 <iconset resource="icons.qrc">
+                  <normaloff>:/icons/icons/deletebtn.png</normaloff>:/icons/icons/deletebtn.png</iconset>
                 </property>
                </widget>
               </item>
@@ -1044,8 +1050,8 @@
                  <string>Delete rule</string>
                 </property>
                 <property name="icon">
-                 <iconset>
-                  <normaloff>icons/deletebtn.png</normaloff>icons/deletebtn.png</iconset>
+                 <iconset resource="icons.qrc">
+                  <normaloff>:/icons/icons/deletebtn.png</normaloff>:/icons/icons/deletebtn.png</iconset>
                 </property>
                </widget>
               </item>
@@ -1302,8 +1308,8 @@ color: rgb(255, 255, 255);</string>
   </widget>
   <action name="actionLoad">
    <property name="icon">
-    <iconset>
-     <normaloff>icons/openbtn.png</normaloff>icons/openbtn.png</iconset>
+    <iconset resource="icons.qrc">
+     <normaloff>:/icons/icons/openbtn.png</normaloff>:/icons/icons/openbtn.png</iconset>
    </property>
    <property name="text">
     <string>Open</string>
@@ -1311,8 +1317,8 @@ color: rgb(255, 255, 255);</string>
   </action>
   <action name="actionSave">
    <property name="icon">
-    <iconset>
-     <normaloff>icons/savebtn.png</normaloff>icons/savebtn.png</iconset>
+    <iconset resource="icons.qrc">
+     <normaloff>:/icons/icons/savebtn.png</normaloff>:/icons/icons/savebtn.png</iconset>
    </property>
    <property name="text">
     <string>Save</string>
@@ -1325,8 +1331,8 @@ color: rgb(255, 255, 255);</string>
   </action>
   <action name="actionClose">
    <property name="icon">
-    <iconset>
-     <normaloff>icons/closebtn.png</normaloff>icons/closebtn.png</iconset>
+    <iconset resource="icons.qrc">
+     <normaloff>:/icons/icons/closebtn.png</normaloff>:/icons/icons/closebtn.png</iconset>
    </property>
    <property name="text">
     <string>Close</string>
@@ -1334,8 +1340,8 @@ color: rgb(255, 255, 255);</string>
   </action>
   <action name="actionRedraw_all">
    <property name="icon">
-    <iconset>
-     <normaloff>icons/redrawbtn.png</normaloff>icons/redrawbtn.png</iconset>
+    <iconset resource="icons.qrc">
+     <normaloff>:/icons/icons/redrawbtn.png</normaloff>:/icons/icons/redrawbtn.png</iconset>
    </property>
    <property name="text">
     <string>Redraw all</string>
@@ -1343,8 +1349,8 @@ color: rgb(255, 255, 255);</string>
   </action>
   <action name="actionClear_all">
    <property name="icon">
-    <iconset>
-     <normaloff>icons/clearallbtn.png</normaloff>icons/clearallbtn.png</iconset>
+    <iconset resource="icons.qrc">
+     <normaloff>:/icons/icons/clearallbtn.png</normaloff>:/icons/icons/clearallbtn.png</iconset>
    </property>
    <property name="text">
     <string>Clear all</string>
@@ -1363,7 +1369,9 @@ color: rgb(255, 255, 255);</string>
    </slots>
   </customwidget>
  </customwidgets>
- <resources/>
+ <resources>
+  <include location="icons.qrc"/>
+ </resources>
  <connections>
   <connection>
    <sender>myCanvas</sender>

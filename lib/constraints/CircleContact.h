@@ -1,6 +1,6 @@
 #ifndef CIRCLECONTACT_H
 #define CIRCLECONTACT_H
-#include "..\global.h"
+#include "../global.h"
 #include <cmath>
 
 // (c) Daria // type CONSTR_EXCONTACT CONSTR_INTCONTACT

@@ -2,12 +2,12 @@
 #include "global.h"
 #include "ui_gui.h"
 #include "objectpropertieswindow.h"
-#include "QtWidgets\qgraphicssceneevent.h"
+#include "QtWidgets/qgraphicssceneevent.h"
 #include "mycanvas.h"
-#include "QtWidgets\qmessagebox.h"
+#include "QtWidgets/qmessagebox.h"
 #include <QString>
-#include "QtWidgets\qfiledialog.h"
-#include "QtWidgets\qlistview.h"
+#include "QtWidgets/qfiledialog.h"
+#include "QtWidgets/qlistview.h"
 #include "qlist.h"
 #include <QList>
 
@@ -57,7 +57,7 @@ bool GUI::Set_properties_of_point(unsigned id, double x, double y, Color c)
 	QListWidgetItem* item = new QListWidgetItem;
 
 	item->setText("Point");
-	item->setData(17, static_cast<unsigned>(POINT));
+	item->setData(17, PRIMITIVE_POINT);
 	ui->propertiesList->addItem(item);
 
 	item = new QListWidgetItem;
@@ -93,7 +93,7 @@ bool GUI::Set_properties_of_segment(unsigned id, double x1, double y1, double x2
 	QListWidgetItem* item = new QListWidgetItem;
 
 	item->setText("Segment");
-	item->setData(17, static_cast<unsigned>(SEGMENT));
+	item->setData(17, PRIMITIVE_SEGMENT);
 	ui->propertiesList->addItem(item);
 
 	item = new QListWidgetItem;
@@ -145,7 +145,7 @@ bool GUI::Set_properties_of_circle(unsigned id, double x, double y, double r, Co
 	QListWidgetItem* item = new QListWidgetItem;
 
 	item->setText("Circle");
-	item->setData(17, static_cast<unsigned>(CIRCLE));
+	item->setData(17, PRIMITIVE_CIRCLE);
 	ui->propertiesList->addItem(item);
 
 	item = new QListWidgetItem;

@@ -1,6 +1,6 @@
 #include "core.h"
 #include "gui.h"
-#include "constraints\Collector.h"
+#include "constraints/Collector.h"
 #include <fstream>
 #include <string>
 #include <ctime>
@@ -10,6 +10,9 @@
 CORE::CORE()
 {
 	mygui = 0;
+	DONESTRING = "Done";
+	WORKSTRING = "Working...";
+	EMPTYSTRING = "";
 	Settings::SettingsLoader::setupSettings(&mysettings);
 	if (mysettings.WritelogMode() >= 1)
 	{
@@ -18,16 +21,19 @@ CORE::CORE()
 		if (!_logfile.is_open()) mysettings.setWritelogMode(0);
 	}
 	writeToLog("--------------------------------------\nOPEN at ");
-	writeToLog(GenerateTimeString(const_cast<char*>(EMPTYSTRING), const_cast<char*>(EMPTYSTRING)).c_str());
+	writeToLog(GenerateTimeString(EMPTYSTRING, EMPTYSTRING).c_str());
 	writeToLog("--------------------------------------");
 	writeToLog("Settings = ok", 2);
-	writeToLog(mysettings.WritelogMode(), "Logfile level");
+	writeToLog(mysettings.WritelogMode(), "Logfile level= ");
 	writeToLog("GUI was not connected to CORE", 2);
 }
 
 CORE::CORE(GraphicsInterface* gui)
 {
 	mygui = gui;
+	DONESTRING = "Done";
+	WORKSTRING = "Working...";
+	EMPTYSTRING = "";
 	Settings::SettingsLoader::setupSettings(&mysettings);
 	if (mysettings.WritelogMode() >= 1)
 	{
@@ -36,17 +42,17 @@ CORE::CORE(GraphicsInterface* gui)
 		if (!_logfile.is_open()) mysettings.setWritelogMode(0);
 	}
 	writeToLog("--------------------------------------\nOPEN at ");
-	writeToLog(GenerateTimeString(const_cast<char*>(EMPTYSTRING), const_cast<char*>(EMPTYSTRING)).c_str());
+	writeToLog(GenerateTimeString(EMPTYSTRING, EMPTYSTRING).c_str());
 	writeToLog("--------------------------------------");
 	writeToLog("Settings = ok", 2);
-	writeToLog(mysettings.WritelogMode(), "Logfile level");
+	writeToLog(mysettings.WritelogMode(), "Logfile level= ");
 	writeToLog("GUI connected to CORE", 2);
 }
 
 CORE::~CORE()
 {
 	writeToLog("--------------------------------------\n CLOSE at ");
-	writeToLog(GenerateTimeString(const_cast<char*>(EMPTYSTRING), const_cast<char*>(EMPTYSTRING)).c_str());
+	writeToLog(GenerateTimeString(EMPTYSTRING, EMPTYSTRING).c_str());
 	writeToLog("--------------------------------------");
 	if (mysettings.WritelogMode() >= 1)
 		_logfile.close();
@@ -479,7 +485,7 @@ void CORE::writeToLog(double value, std::string s, unsigned mode)
 }
 // Description:
 // add current time in format (1996-03-15)[23_59_59] between 2 strings
-std::string CORE::GenerateTimeString(char* first_str, char* last_str)
+std::string CORE::GenerateTimeString(const char* first_str,  const char* last_str)
 {
 	std::string output_str(first_str);
 	time_t current_time = time(0);

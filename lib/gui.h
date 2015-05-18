@@ -2,14 +2,15 @@
 #define GUI_H
 
 #include "core.h"
-#include "QtWidgets\qmainwindow.h"
-#include "QtWidgets\qgraphicsscene.h"
+#include "QtWidgets/qmainwindow.h"
+#include "QtWidgets/qgraphicsscene.h"
 #include "mycanvas.h"
-#include "QtWidgets\qbuttongroup.h"
-#include "QtWidgets\qaction.h"
+#include "QtWidgets/qbuttongroup.h"
+#include "QtWidgets/qaction.h"
 #include "enums.h"
 #include "qregexp.h"
 #include "qvalidator.h"
+#include "qresource.h"
 
 class CORE;
 
@@ -108,8 +109,10 @@ private:
 	QGraphicsScene* mainscene;
 	QButtonGroup* toolsbuttons;
 	QRegExpValidator *doubvalid;
+	QResource resourse;
 	
-	char* ConstrTypeToString(CONSTR_TYPE);
+	const char* ConstrTypeToString(CONSTR_TYPE);
+	void setupIconsForVS();
 	unsigned selectedRuleId;
 };
 

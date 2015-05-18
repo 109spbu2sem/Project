@@ -1,6 +1,6 @@
 #ifndef PARALLEL_LINES_H
 #define PARALLEL_LINES_H
-#include "..\global.h"
+#include "../global.h"
 
 // (c) Alena // type CONSTR_PARALLELISM
 

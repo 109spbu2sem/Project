@@ -2,14 +2,17 @@
 #include "global.h"
 #include "ui_gui.h"
 #include "objectpropertieswindow.h"
-#include "QtWidgets\qgraphicssceneevent.h"
+#include "QtWidgets/qgraphicssceneevent.h"
 #include "mycanvas.h"
-#include "QtWidgets\qmessagebox.h"
+#include "QtWidgets/qmessagebox.h"
 #include <QString>
-#include "QtWidgets\qfiledialog.h"
-#include "QtWidgets\qlistview.h"
+#include "QtWidgets/qfiledialog.h"
+#include "QtWidgets/qlistview.h"
 #include "qlist.h"
 #include <QList>
+#include "QtWidgets/qscrollbar.h"
+#include "QtWidgets/qmainwindow.h"
+#include "qresource.h"
 
 GUI::GUI(QWidget *parent) :
 	QMainWindow(parent),
@@ -21,11 +24,9 @@ GUI::GUI(QWidget *parent) :
 	QRegExp doub("[0-9]{1,8}\\.[0-9]{0,8}");
 	doubvalid = new QRegExpValidator(doub, this);
 	ui->ruleValueEdit->setValidator(doubvalid);
+	ui->radiusEdit->setValidator(doubvalid);
 	mainscene = ui->myCanvas->getScene();
 	ui->myCanvas->connectCORECanvas(mycore);
-	ui->pointBTNTool->setIcon(QIcon("icons/pointbtn.png"));
-	ui->selectBTNTool->setIcon(QIcon("icons/selectbtn.png"));
-	ui->ZoomBTNTool->setIcon(QIcon("icons/zoombtn.png"));
 	toolsbuttons = new QButtonGroup;
 	toolsbuttons->addButton(ui->selectBTNTool);
 	toolsbuttons->addButton(ui->pointBTNTool);
@@ -47,7 +48,7 @@ GUI::~GUI()
 	delete doubvalid;
 }
 
-char* GUI::ConstrTypeToString(CONSTR_TYPE type)
+const char* GUI::ConstrTypeToString(CONSTR_TYPE type)
 {
 	switch (type)
 	{
@@ -283,6 +284,8 @@ void GUI::on_actionSave_As_triggered()
 void GUI::on_actionClear_all_triggered()
 {
 	mycore->DeleteAll();
+	ui->myCanvas->horizontalScrollBar()->setSliderPosition(50);
+	ui->myCanvas->verticalScrollBar()->setSliderPosition(50);
 }
 
 void GUI::on_saveBTN_clicked()
@@ -335,8 +338,11 @@ void GUI::on_objectsList_clicked(const QModelIndex &index)
 
 void GUI::on_rulesList_clicked(const QModelIndex &index)
 {
-	ui->propertiesList->clear();
 	mycore->ClearSelection();
+	mycore->Select(index.data(19).toUInt());
+	mycore->Select(index.data(20).toUInt());
+	mycore->Select(index.data(21).toUInt());
+	ui->propertiesList->clear();
 	selectedRuleId = index.data(22).toUInt();
 	QString s;
 
@@ -353,19 +359,16 @@ void GUI::on_rulesList_clicked(const QModelIndex &index)
 	s.setNum(index.data(19).toUInt());
 	item->setText("object's id:\t" + s);
 	ui->propertiesList->addItem(item);
-	mycore->Select(index.data(19).toUInt());
 
 	item = new QListWidgetItem;
 	s.setNum(index.data(20).toUInt());
 	item->setText("object's id:\t" + s);
 	ui->propertiesList->addItem(item);
-	mycore->Select(index.data(20).toUInt());
 
 	item = new QListWidgetItem;
 	s.setNum(index.data(21).toUInt());
 	item->setText("object's id:\t" + s);
 	ui->propertiesList->addItem(item);
-	mycore->Select(index.data(21).toUInt());
 }
 
 void GUI::on_openChangingDialog_clicked()

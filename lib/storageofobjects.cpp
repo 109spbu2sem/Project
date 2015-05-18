@@ -1,5 +1,6 @@
 #include "global.h"
 #include "storageofobjects.h"
+#include "structures.h"
 
 ID StorageOfObjects::generateID()
 {
@@ -17,6 +18,32 @@ ID StorageOfObjects::add(ObjectBase* object, ID& objid)
 	object->id = objid;
 	_shelf.add(objid.getID(), object);
 	return objid;
+}
+
+bool StorageOfObjects::has_SorC_with_P(Point* object)
+{
+	for (AVLVeiwer<unsigned, ObjectBase*> iter(_shelf); iter.canMoveNext(); iter.moveNext())
+	{
+		if (iter.getValue().key == 0) continue;
+		switch (iter.getValue().value->objectType())
+		{
+			case PRIMITIVE_SEGMENT:
+			{
+				Segment* s = dynamic_cast<Segment*>(iter.getValue().value);
+				if (s->p1 == object || s->p2 == object) return true;
+				break;
+			}
+			case PRIMITIVE_CIRCLE:
+			{
+				Circle* c = dynamic_cast<Circle*>(iter.getValue().value);
+				if (c->p == object) return true;
+				break;
+			}
+			default:
+				break;
+		}
+	}
+	return false;
 }
 
 ID StorageOfObjects::add(ObjectBase* object, unsigned objid)

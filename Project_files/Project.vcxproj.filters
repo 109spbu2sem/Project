@@ -45,6 +45,11 @@
       <Extensions>cpp;moc</Extensions>
       <SourceControlFiles>False</SourceControlFiles>
     </Filter>
+    <Filter Include="Resource Files">
+      <UniqueIdentifier>{D9D6E242-F8AF-46E4-B9FD-80ECBC20BA3E}</UniqueIdentifier>
+      <Extensions>qrc;*</Extensions>
+      <ParseFiles>false</ParseFiles>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\lib\Color.cpp">
@@ -118,6 +123,9 @@
     </ClCompile>
     <ClCompile Include="..\lib\storageofconstraints.cpp">
       <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\qrc_icons.cpp">
+      <Filter>Generated Files</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -225,5 +233,52 @@
     <CustomBuild Include="..\lib\QTforms\objectpropertieswindow.ui">
       <Filter>Form Files</Filter>
     </CustomBuild>
+    <CustomBuild Include="..\lib\QTforms\icons.qrc">
+      <Filter>Resource Files</Filter>
+    </CustomBuild>
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="..\lib\QTforms\icons\addbtn.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="..\lib\QTforms\icons\changebtn.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="..\lib\QTforms\icons\circlebtn.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="..\lib\QTforms\icons\clearallbtn.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="..\lib\QTforms\icons\closebtn.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="..\lib\QTforms\icons\deletebtn.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="..\lib\QTforms\icons\lock.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="..\lib\QTforms\icons\openbtn.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="..\lib\QTforms\icons\pointbtn.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="..\lib\QTforms\icons\redrawbtn.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="..\lib\QTforms\icons\savebtn.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="..\lib\QTforms\icons\segmentbtn.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="..\lib\QTforms\icons\selectbtn.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="..\lib\QTforms\icons\zoombtn.png">
+      <Filter>Resource Files</Filter>
+    </Image>
   </ItemGroup>
 </Project>

@@ -1,6 +1,6 @@
 #ifndef DISTANCETOTHELINE_H
 #define DISTANCETOTHELINE_H
-#include "..\global.h"
+#include "../global.h"
 #include <cmath>
 
 // (c) Anton // type CONSTR_P2LINEDIST
