@@ -48,8 +48,6 @@ public:
 	virtual void Clear_properties();
 
 	virtual void WriteError(const char* Text);
-	virtual void WriteStatus(const char* Text);
-	virtual void WriteMessage(const char* Text);
 	virtual void WriteText(const char* Short, const char* Long);
 
 private slots:

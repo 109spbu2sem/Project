@@ -89,8 +89,6 @@ public:
 	virtual void Clear_properties() = 0;
 
 	virtual void WriteError(const char* Text) = 0;
-	virtual void WriteStatus(const char* Text) = 0;
-	virtual void WriteMessage(const char* Text) = 0;
 	virtual void WriteText(const char* Short, const char* Long) = 0;
 
 	virtual bool WriteRule(unsigned, unsigned, unsigned, CONSTR_TYPE) = 0;

@@ -19,7 +19,6 @@ bool GUI::SetNameOfWindow(std::string header)
 
 void GUI::WriteError(const char* Text)
 {
-	ui->statusBar->setText("Error");
 	ui->bottonBar->setStyleSheet(QLatin1String("background-color: rgb(202, 81, 0); color: rgb(255, 255, 255);}"));
 	this->repaint();
 	QMessageBox b;
@@ -29,19 +28,6 @@ void GUI::WriteError(const char* Text)
 	return;
 }
 
-void GUI::WriteStatus(const char* Text)
-{
-	ui->statusBar->setText(Text);
-	this->repaint();
-	return;
-}
-
-void GUI::WriteMessage(const char* Text)
-{
-	ui->messageBar->setText(Text);
-	this->repaint();
-	return;
-}
 // Write Short to status bar, Long to message bar
 void GUI::WriteText(const char* Short, const char* Long)
 {

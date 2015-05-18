@@ -125,7 +125,7 @@ void GUI::on_pushButton_clicked()
 				mycore->Calculate();
 			}
 			else
-				WriteStatus("Need value");
+				WriteText("Need value","");
 			break;
 		}
 		case 1:
@@ -136,7 +136,7 @@ void GUI::on_pushButton_clicked()
 				mycore->Calculate();
 			}
 			else
-				WriteStatus("Need value");
+				WriteText("Need value", "");
 			break;
 		}
 		case 2:
@@ -153,7 +153,7 @@ void GUI::on_pushButton_clicked()
 				mycore->Calculate();
 			}
 			else
-				WriteStatus("Need value");
+				WriteText("Need value", "");
 			break;
 		}
 		case 4:
@@ -164,7 +164,7 @@ void GUI::on_pushButton_clicked()
 				mycore->Calculate();
 			}
 			else
-				WriteStatus("Need value");
+				WriteText("Need value", "");
 			break;
 		}
 		case 5:
@@ -187,7 +187,7 @@ void GUI::on_pushButton_clicked()
 				mycore->Calculate();
 			}
 			else
-				WriteStatus("Need value");
+				WriteText("Need value", "");
 			break;
 		}
 		case 8:
@@ -198,7 +198,7 @@ void GUI::on_pushButton_clicked()
 				mycore->Calculate();
 			}
 			else
-				WriteStatus("Need value");
+				WriteText("Need value", "");
 			break;
 		}
 		case 9:

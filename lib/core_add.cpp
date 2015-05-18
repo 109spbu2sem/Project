@@ -23,8 +23,7 @@ unsigned CORE::AddObject(double point_x, bool isconstx, double point_y, bool isc
 	Point* p = new Point(x, y);
 	p->color.setColor(color);
 	ID newid = _storage_of_objects.add(p, id);
-	mygui->WriteStatus(DONESTRING);
-	mygui->WriteMessage("Point added");
+	mygui->WriteText(DONESTRING, "Point added");
 	writeToLog("< add > Point", 2);
 	writeToLog(point_x, "x= ", 2);
 	writeToLog(point_y, "y= ", 2);
@@ -46,8 +45,7 @@ unsigned CORE::AddObject(unsigned id1, unsigned id2, Color color, unsigned id, b
 			Segment* s = new Segment(p1, p2);
 			s->color.setColor(color);
 			ID newid = _storage_of_objects.add(s, id);
-			mygui->WriteStatus(DONESTRING);
-			mygui->WriteMessage("Segment added");
+			mygui->WriteText(DONESTRING, "Segment added");
 			writeToLog("< add > Segment", 2);
 			writeToLog(id1, "point 1 id= ", 2);
 			writeToLog(id2, "point 2 id= ", 2);
@@ -77,8 +75,7 @@ unsigned CORE::AddObject(unsigned pointid, double radius, bool isconst, Color co
 		_parameters.add(r, isconst);
 		c->color.setColor(color);
 		ID newid = _storage_of_objects.add(c, id);
-		mygui->WriteStatus(DONESTRING);
-		mygui->WriteMessage("Circle added");
+		mygui->WriteText(DONESTRING, "Circle added");
 		writeToLog("< add > Circle", 2);
 		writeToLog(pointid, "point id= ", 2);
 		writeToLog(radius, "radius= ", 2);
@@ -155,13 +152,11 @@ void CORE::AddRule(unsigned type, double value)
 		{
 			if (addc_p2pdist(value))
 			{
-				mygui->WriteStatus(DONESTRING);
-				mygui->WriteMessage("Rule added");
+				mygui->WriteText(DONESTRING, "Rule added");
 			}
 			else
 			{
-				mygui->WriteStatus("Error");
-				mygui->WriteMessage("Can't add rule to these objects.");
+				mygui->WriteText("Error", "Can't add rule to these objects.");
 				mygui->WriteError("Can't add rule to these objects.");
 				return;
 			}
@@ -171,13 +166,11 @@ void CORE::AddRule(unsigned type, double value)
 		{
 			if (addc_p2sdist(value))
 			{
-				mygui->WriteStatus(DONESTRING);
-				mygui->WriteMessage("Rule added");
+				mygui->WriteText(DONESTRING, "Rule added");
 			}
 			else
 			{
-				mygui->WriteStatus("Error");
-				mygui->WriteMessage("Can't add rule to these objects.");
+				mygui->WriteText("Error", "Can't add rule to these objects.");
 				mygui->WriteError("Can't add rule to these objects.");
 				return;
 			}
@@ -187,13 +180,11 @@ void CORE::AddRule(unsigned type, double value)
 		{
 			if (addc_p2ldist(value))
 			{
-				mygui->WriteStatus(DONESTRING);
-				mygui->WriteMessage("Rule added");
+				mygui->WriteText(DONESTRING, "Rule added");
 			}
 			else
 			{
-				mygui->WriteStatus("Error");
-				mygui->WriteMessage("Can't add rule to these objects.");
+				mygui->WriteText("Error", "Can't add rule to these objects.");
 				mygui->WriteError("Can't add rule to these objects.");
 				return;
 			}
@@ -203,13 +194,11 @@ void CORE::AddRule(unsigned type, double value)
 		{
 			if (addc_l2langle(value))
 			{
-				mygui->WriteStatus(DONESTRING);
-				mygui->WriteMessage("Rule added");
+				mygui->WriteText(DONESTRING, "Rule added");
 			}
 			else
 			{
-				mygui->WriteStatus("Error");
-				mygui->WriteMessage("Can't add rule to these objects.");
+				mygui->WriteText("Error", "Can't add rule to these objects.");
 				mygui->WriteError("Can't add rule to these objects.");
 				return;
 			}
@@ -219,13 +208,11 @@ void CORE::AddRule(unsigned type, double value)
 		{
 			if (addc_3pratio(value))
 			{
-				mygui->WriteStatus(DONESTRING);
-				mygui->WriteMessage("Rule added");
+				mygui->WriteText(DONESTRING, "Rule added");
 			}
 			else
 			{
-				mygui->WriteStatus("Error");
-				mygui->WriteMessage("Can't add rule to these objects.");
+				mygui->WriteText("Error", "Can't add rule to these objects.");
 				mygui->WriteError("Can't add rule to these objects.");
 				return;
 			}
@@ -235,13 +222,11 @@ void CORE::AddRule(unsigned type, double value)
 		{
 			if (addc_3ponline())
 			{
-				mygui->WriteStatus(DONESTRING);
-				mygui->WriteMessage("Rule added");
+				mygui->WriteText(DONESTRING, "Rule added");
 			}
 			else
 			{
-				mygui->WriteStatus("Error");
-				mygui->WriteMessage("Can't add rule to these objects.");
+				mygui->WriteText("Error", "Can't add rule to these objects.");
 				mygui->WriteError("Can't add rule to these objects.");
 				return;
 			}
@@ -251,13 +236,11 @@ void CORE::AddRule(unsigned type, double value)
 		{
 			if (addc_excontact())
 			{
-				mygui->WriteStatus(DONESTRING);
-				mygui->WriteMessage("Rule added");
+				mygui->WriteText(DONESTRING, "Rule added");
 			}
 			else
 			{
-				mygui->WriteStatus("Error");
-				mygui->WriteMessage("Can't add rule to these objects.");
+				mygui->WriteText("Error", "Can't add rule to these objects.");
 				mygui->WriteError("Can't add rule to these objects.");
 				return;
 			}
@@ -267,13 +250,11 @@ void CORE::AddRule(unsigned type, double value)
 		{
 			if (addc_incontact())
 			{
-				mygui->WriteStatus(DONESTRING);
-				mygui->WriteMessage("Rule added");
+				mygui->WriteText(DONESTRING, "Rule added");
 			}
 			else
 			{
-				mygui->WriteStatus("Error");
-				mygui->WriteMessage("Can't add rule to these objects.");
+				mygui->WriteText("Error", "Can't add rule to these objects.");
 				mygui->WriteError("Can't add rule to these objects.");
 				return;
 			}
@@ -283,13 +264,11 @@ void CORE::AddRule(unsigned type, double value)
 		{
 			if (addc_spratio(value))
 			{
-				mygui->WriteStatus(DONESTRING);
-				mygui->WriteMessage("Rule added");
+				mygui->WriteText(DONESTRING, "Rule added");
 			}
 			else
 			{
-				mygui->WriteStatus("Error");
-				mygui->WriteMessage("Can't add rule to these objects.");
+				mygui->WriteText("Error", "Can't add rule to these objects.");
 				mygui->WriteError("Can't add rule to these objects.");
 				return;
 			}
@@ -299,13 +278,11 @@ void CORE::AddRule(unsigned type, double value)
 		{
 			if (addc_parallelism())
 			{
-				mygui->WriteStatus(DONESTRING);
-				mygui->WriteMessage("Rule added");
+				mygui->WriteText(DONESTRING, "Rule added");
 			}
 			else
 			{
-				mygui->WriteStatus("Error");
-				mygui->WriteMessage("Can't add rule to these objects.");
+				mygui->WriteText("Error", "Can't add rule to these objects.");
 				mygui->WriteError("Can't add rule to these objects.");
 				return;
 			}
@@ -315,13 +292,11 @@ void CORE::AddRule(unsigned type, double value)
 		{
 			if (addc_orthogonality())
 			{
-				mygui->WriteStatus(DONESTRING);
-				mygui->WriteMessage("Rule added");
+				mygui->WriteText(DONESTRING, "Rule added");
 			}
 			else
 			{
-				mygui->WriteStatus("Error");
-				mygui->WriteMessage("Can't add rule to these objects.");
+				mygui->WriteText("Error", "Can't add rule to these objects.");
 				mygui->WriteError("Can't add rule to these objects.");
 				return;
 			}
@@ -329,8 +304,7 @@ void CORE::AddRule(unsigned type, double value)
 		}
 		default:
 		{
-			mygui->WriteStatus("FATAL ERROR");
-			mygui->WriteMessage("Wrong type of rule.");
+			mygui->WriteText("FATAL ERROR", "Wrong type of rule.");
 			mygui->WriteError("FATAL ERROR: Wrong type of rule");
 			return;
 		}

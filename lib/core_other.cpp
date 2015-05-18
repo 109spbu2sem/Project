@@ -219,22 +219,21 @@ void CORE::ClearSelection()
 	writeToLog("Select was cleared", 2);
 	Redraw(mygui);
 	mygui->Clear_properties();
-	mygui->WriteStatus(DONESTRING);
+	mygui->WriteText(DONESTRING, EMPTYSTRING);
 }
 
 void CORE::DeleteAll()
 {
-	mygui->WriteStatus("Cleaning...");
-	mygui->WriteMessage("");
+	mygui->WriteText("Cleaning...", EMPTYSTRING);
 	_selected_objects.clear();
 	_storage_of_constraints.clear();
-	mygui->WriteMessage("All rules were deleted");
+	mygui->WriteText("Cleaning...", "All rules were deleted");
 	writeToLog("All rules were deleted");
 	_storage_of_objects.clear();
-	mygui->WriteMessage("All objects were deleted");
+	mygui->WriteText("Cleaning...", "All objects were deleted");
 	writeToLog("All objects were deleted");
 	_parameters.clear();
-	mygui->WriteMessage("All parameters were deleted");
+	mygui->WriteText("Cleaning...", "All parameters were deleted");
 	writeToLog("All parameters were deleted");
 	writeToLog("All clear");
 	mygui->Clear();
@@ -291,6 +290,7 @@ void CORE::DeleteSelectedObjects()
 	_selected_objects.clear();
 	Redraw(mygui);
 	mygui->Clear_properties();
+	mygui->WriteText(DONESTRING, EMPTYSTRING);
 	if (cantdelete)
 		mygui->WriteError("First, delete all constraints and objects wich associates with these objects.");
 }

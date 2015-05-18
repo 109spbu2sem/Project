@@ -12,7 +12,6 @@
 #include <fstream>
 #include "settings.h"
 #include <ctime>
-#include "storages/heshtable.h"
 #include "storages/AVL_tree.h"
 #include "storageofobjects.h"
 #include "enums.h"
