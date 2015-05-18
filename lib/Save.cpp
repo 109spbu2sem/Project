@@ -18,12 +18,14 @@ Save::~Save(){
 	_save.close();
 }
 
-bool Save::DrawPoint(unsigned id, double x, double y, Color c, bool mode)
+bool Save::DrawPoint(unsigned id, double x, bool isconstx, double y, bool isconsty, Color c, bool mode)
 {
 	_save << "	<point>\n";
 	_save << "		<id>" << id << "</id>\n";
 	_save << "		<x>" << x << "</x>\n";
+	_save << "		<isconstx>" << isconstx << "</isconstx>\n";
 	_save << "		<y>" << y << "</y>\n";
+	_save << "		<isconsty>" << isconsty << "</isconsty>\n";
 	_save << "		<color>" << c.getColor() << "</color>\n";
 	_save << "	</point>\n";
 	return true;
@@ -40,12 +42,13 @@ bool Save::DrawSegment(unsigned id, unsigned id1, unsigned id2, Color c, bool mo
 	return true;
 }
 
-bool Save::DrawCircle(unsigned id, unsigned id1, double r, Color c, bool mode)
+bool Save::DrawCircle(unsigned id, unsigned id1, double r, bool isconstr, Color c, bool mode)
 {
 	_save << "	<circle>\n";
 	_save << "		<id>" << id << "</id>\n";
 	_save << "		<id1>" << id1 << "</id1>\n";
 	_save << "		<radius>" << r << "</radius>\n";
+	_save << "		<isconstr>" << isconstr << "</isconstr>\n";
 	_save << "		<color>" << c.getColor() << "</color>\n";
 	_save << "	</circle>\n";
 	return true;

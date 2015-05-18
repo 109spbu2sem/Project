@@ -35,6 +35,8 @@ void Load::point() {
 	double x;
 	double y;
 	double c;
+	bool isconstx;
+	bool isconsty;
 	while (_xml.name() != "id") {
 		_xml.readNext();
 		if (_xml.atEnd())
@@ -46,16 +48,24 @@ void Load::point() {
 		_xml.readNext();
 	_xml.readNext();
 	x = _xml.text().toDouble();
+	while (_xml.name() != "isconstx")
+		_xml.readNext();
+	_xml.readNext();
+	isconstx = _xml.text().toInt();
 	while (_xml.name() != "y")
 		_xml.readNext();
 	_xml.readNext();
 	y = _xml.text().toDouble();
+	while (_xml.name() != "isconsty")
+		_xml.readNext();
+	_xml.readNext();
+	isconsty = _xml.text().toInt();
 	while (_xml.name() != "color")
 		_xml.readNext();
 	_xml.readNext();
 	c = _xml.text().toDouble();
 	Color c1(c);
-	_action->AddObject(x, 0, y, 0, c1, id, 0);
+	_action->AddObject(x, isconstx, y, isconsty, c1, id, 0);
 	while (_xml.name() != "point" && _xml.name() != "segment" && _xml.name() != "circle" && _xml.name() != "constraint" && !_xml.atEnd())
 		_xml.readNext();
 	_xml.readNext();
@@ -121,6 +131,7 @@ void Load::circle() {
 	unsigned id1;
 	double r;
 	double c;
+	bool isconstr;
 	while (_xml.name() != "id") {
 		_xml.readNext();
 		if (_xml.atEnd())
@@ -136,12 +147,16 @@ void Load::circle() {
 		_xml.readNext();
 	_xml.readNext();
 	r = _xml.text().toDouble();
+	while (_xml.name() != "isconstr")
+		_xml.readNext();
+	_xml.readNext();
+	isconstr = _xml.text().toInt();
 	while (_xml.name() != "color")
 		_xml.readNext();
 	_xml.readNext();
 	c = _xml.text().toDouble();
 	Color c1(c);
-	_action->AddObject(id1, r, 0, c1, id, 0);
+	_action->AddObject(id1, r, isconstr, c1, id, 0);
 	while (_xml.name() != "point" && _xml.name() != "segment" && _xml.name() != "circle" && _xml.name() != "constraint" && !_xml.atEnd())
 		_xml.readNext();
 	_xml.readNext();
@@ -160,8 +175,6 @@ void Load::circle() {
 }
 
 void Load::constraint() {
-	CONSTR_TYPE type;
-	unsigned helpType;
 	unsigned id1;
 	unsigned id2;
 	unsigned id3;
@@ -172,42 +185,7 @@ void Load::constraint() {
 			return;
 	}
 	_xml.readNext();
-	helpType = _xml.text().toInt();
-	switch (helpType) {
-	case 1:
-		type = CONSTR_P2PDIST;
-		break;
-	case 2:
-		type = CONSTR_P2SECTDIST;
-		break;
-	case 3:
-		type = CONSTR_P2LINEDIST;
-		break;
-	case 4:
-		type = CONSTR_3PONLINE;
-		break;
-	case 5:
-		type = CONSTR_L2LANGLE;
-		break;
-	case 6:
-		type = CONSTR_3PRATIO;
-		break;
-	case 7:
-		type = CONSTR_EXCONTACT;
-		break;
-	case 8:
-		type = CONSTR_INCONTACT;
-		break;
-	case 9:
-		type = CONSTR_SPRATIO;
-		break;
-	case 10:
-		type = CONSTR_PARALLELISM;
-		break;
-	case 11:
-		type = CONSTR_ORTHOGONALITY;
-		break;
-	}
+	CONSTR_TYPE type = static_cast<CONSTR_TYPE>(_xml.text().toUInt());
 	if (type == CONSTR_EXCONTACT || type == CONSTR_INCONTACT ||
 		type == CONSTR_ORTHOGONALITY || type == CONSTR_PARALLELISM) {
 		while (_xml.name() != "id1")

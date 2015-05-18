@@ -18,12 +18,12 @@ public:
 	Save();
 	Save(QString);
 	~Save();
-	bool DrawPoint(unsigned, double, double, Color, bool);
+	bool DrawPoint(unsigned, double, bool, double, bool, Color, bool);
 	bool DrawSegment(unsigned, unsigned, unsigned, Color, bool);
-	bool DrawCircle(unsigned, unsigned, double, Color, bool);
+	bool DrawCircle(unsigned, unsigned, double, bool, Color, bool);
 	bool DrawRule(CONSTR_TYPE, unsigned, unsigned);
 	bool DrawRule(CONSTR_TYPE, unsigned, unsigned, double);
 	bool DrawRule(CONSTR_TYPE, unsigned, unsigned, unsigned, double);
 	bool DrawRule(CONSTR_TYPE, unsigned, unsigned, unsigned);
 };
-#endif // SAVE_H 
+#endif // SAVE_H

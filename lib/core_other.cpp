@@ -310,7 +310,8 @@ void CORE::IWantSave()
 		if (i.value()->objectType() == PRIMITIVE_POINT)
 		{
 			Point* v = dynamic_cast<Point*>(i.value());
-			mysave.DrawPoint(v->id.getID(), *v->x, *v->y, v->color.getColor(), 0);
+			mysave.DrawPoint(v->id.getID(), *v->x, _parameters.getValuebyKey(v->x), *v->y,
+				_parameters.getValuebyKey(v->y), v->color.getColor(), 0);
 			i.moveNext();
 			continue;
 		}
@@ -325,7 +326,7 @@ void CORE::IWantSave()
 		if (i.value()->objectType() == PRIMITIVE_CIRCLE)
 		{
 			Circle* v = dynamic_cast<Circle*>(i.value());
-			mysave.DrawCircle(v->id.getID(), v->p->id.getID(), *v->r, v->color.getColor(), 0);
+			mysave.DrawCircle(v->id.getID(), v->p->id.getID(), *v->r, _parameters.getValuebyKey(v->r), v->color.getColor(), 0);
 			i.moveNext();
 			continue;
 		}
