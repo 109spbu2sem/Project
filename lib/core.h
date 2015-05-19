@@ -29,7 +29,7 @@ private:
 
 	Storage_AVL<double*, bool> _parameters;
 	StorageOfConstraints _storage_of_constraints;
-	Storage_List<ObjectBase*> _selected_objects;
+	Storage_AVL<unsigned, ObjectBase*> _selected_objects;
 	StorageOfObjects _storage_of_objects;
 
 	bool isInArea(double x, double y, double x1, double y1, double x2, double y2);

@@ -71,7 +71,7 @@ void CORE::Select(double x, double y)
 			object->changeSelect();
 			if (object->isSelected())
 			{
-				_selected_objects.add(object);
+				_selected_objects.add(object->id.getID(), object);
 				switch (object->objectType())
 				{
 					case PRIMITIVE_POINT:
@@ -96,14 +96,7 @@ void CORE::Select(double x, double y)
 			}
 			else
 			{
-				for (ListViewer<ObjectBase*> j(_selected_objects); j.canMoveNext(); j.moveNext())
-				{
-					if (object == j.getValue())
-					{
-						_selected_objects.remove(&j);
-						break;
-					}
-				}
+				_selected_objects.remove(object->id.getID());
 			}
 			writeToLog(min_id, "selection was changed for (ID) ", 2);
 			Redraw(mygui);
@@ -127,7 +120,7 @@ bool CORE::Select(unsigned id)
 			object->changeSelect();
 			if (object->isSelected())
 			{
-				_selected_objects.add(object);
+				_selected_objects.add(object->id.getID(), object);
 				switch (object->objectType())
 				{
 					case PRIMITIVE_POINT:
@@ -152,14 +145,7 @@ bool CORE::Select(unsigned id)
 			}
 			else
 			{
-				for (ListViewer<ObjectBase*> j(_selected_objects); j.canMoveNext(); j.moveNext())
-				{
-					if (object == j.getValue())
-					{
-						_selected_objects.remove(&j);
-						break;
-					}
-				}
+				_selected_objects.remove(object->id.getID());
 			}
 			writeToLog(id, "selection was changed for (ID) ", 2);
 			Redraw(mygui);
@@ -211,9 +197,9 @@ bool CORE::Select(unsigned id)
 
 void CORE::ClearSelection()
 {
-	for (ListViewer< ObjectBase* > i(_selected_objects); i.canMoveNext(); i.moveNext())
+	for (AVLVeiwer<unsigned, ObjectBase*> i(_selected_objects); i.canMoveNext(); i.moveNext())
 	{
-		i.getValue()->changeSelect(false);
+		i.getValue().value->changeSelect(false);
 	}
 	_selected_objects.clear();
 	writeToLog("Select was cleared", 2);
@@ -244,17 +230,17 @@ void CORE::DeleteAll()
 void CORE::DeleteSelectedObjects()
 {
 	unsigned cantdelete = 0;
-	for (ListViewer< ObjectBase* > i(_selected_objects); i.canMoveNext(); i.moveNext())
+	for (AVLVeiwer<unsigned, ObjectBase*> i(_selected_objects); i.canMoveNext(); i.moveNext())
 	{
-		if (_storage_of_constraints.has(i.getValue()))
+		if (_storage_of_constraints.has(i.getValue().value))
 			cantdelete++;
 		else 
 		{
-			switch (i.getValue()->objectType())
+			switch (i.getValue().value->objectType())
 			{
 				case PRIMITIVE_POINT:
 				{
-					Point* p = dynamic_cast<Point*>(i.getValue());
+					Point* p = dynamic_cast<Point*>(i.getValue().value);
 					if (_storage_of_objects.has_SorC_with_P(p))
 						cantdelete++;
 					else
@@ -263,25 +249,25 @@ void CORE::DeleteSelectedObjects()
 						_parameters.remove(p->y);
 						delete p->x;
 						delete p->y;
-						_storage_of_objects.remove(i.getValue()->id);
-						delete i.getValue();
+						_storage_of_objects.remove(i.getValue().value->id);
+						delete i.getValue().value;
 					}
 					break;
 				}
 				case PRIMITIVE_SEGMENT:
 				{
 					//Segment* s = dynamic_cast<Segment*>(i.getValue());
-					_storage_of_objects.remove(i.getValue()->id);
-					delete i.getValue();
+					_storage_of_objects.remove(i.getValue().value->id);
+					delete i.getValue().value;
 					break;
 				}
 				case PRIMITIVE_CIRCLE:
 				{
-					Circle* c = dynamic_cast<Circle*>(i.getValue());
+					Circle* c = dynamic_cast<Circle*>(i.getValue().value);
 					_parameters.remove(c->r);
 					delete c->r;
-					_storage_of_objects.remove(i.getValue()->id);
-					delete i.getValue();
+					_storage_of_objects.remove(i.getValue().value->id);
+					delete i.getValue().value;
 					break;
 				}	
 			}

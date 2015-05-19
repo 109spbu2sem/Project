@@ -96,10 +96,10 @@ void CORE::CreateSegment()
 {
 	if (_selected_objects.size() == 2)
 	{
-		ListViewer<ObjectBase*> k(_selected_objects);
-		Point* obj = dynamic_cast<Point*>(k.getValue());
+		AVLVeiwer<unsigned, ObjectBase*> k(_selected_objects);
+		Point* obj = dynamic_cast<Point*>(k.getValue().value);
 		k.moveNext();
-		Point* obj1 = dynamic_cast<Point*>(k.getValue());
+		Point* obj1 = dynamic_cast<Point*>(k.getValue().value);
 		if (obj && obj1)
 		{
 			Segment* s = new Segment(obj, obj1);
@@ -124,8 +124,8 @@ void CORE::CreateCircle(double value, bool isconst)
 {
 	if (_selected_objects.size() == 1)
 	{
-		ListViewer<ObjectBase*> k(_selected_objects);
-		Point* obj = dynamic_cast<Point*>(k.getValue());
+		AVLVeiwer<unsigned, ObjectBase*> k(_selected_objects);
+		Point* obj = dynamic_cast<Point*>(k.getValue().value);
 		if (obj)
 		{
 			double* val = new double;
@@ -712,10 +712,10 @@ bool CORE::addc_p2pdist(double value)
 {
 	if (_selected_objects.size() == 2)
 	{
-		ListViewer<ObjectBase*> k(_selected_objects);
-		Point* obj1 = dynamic_cast<Point*>(k.getValue());
+		AVLVeiwer<unsigned, ObjectBase*> k(_selected_objects);
+		Point* obj1 = dynamic_cast<Point*>(k.getValue().value);
 		k.moveNext();
-		Point* obj2 = dynamic_cast<Point*>(k.getValue());
+		Point* obj2 = dynamic_cast<Point*>(k.getValue().value);
 		if (obj1 && obj2)
 		{
 			double* val = new double;
@@ -736,12 +736,12 @@ bool CORE::addc_3ponline()
 {
 	if (_selected_objects.size() == 2)
 	{
-		ListViewer<ObjectBase*> k(_selected_objects);
-		Point* obj1 = dynamic_cast<Point*>(k.getValue());
+		AVLVeiwer<unsigned, ObjectBase*> k(_selected_objects);
+		Point* obj1 = dynamic_cast<Point*>(k.getValue().value);
 		if (obj1)
 		{
 			k.moveNext();
-			Segment* obj2 = dynamic_cast<Segment*>(k.getValue());
+			Segment* obj2 = dynamic_cast<Segment*>(k.getValue().value);
 			if (obj2)
 			{
 				ThreePoints* rule = new ThreePoints(obj1->x, obj1->y,
@@ -753,11 +753,11 @@ bool CORE::addc_3ponline()
 				return true;
 			}
 		}
-		Segment* ob2 = dynamic_cast<Segment*>(k.getValue());
+		Segment* ob2 = dynamic_cast<Segment*>(k.getValue().value);
 		if (ob2)
 		{
 			k.moveNext();
-			Point* ob1 = dynamic_cast<Point*>(k.getValue());
+			Point* ob1 = dynamic_cast<Point*>(k.getValue().value);
 			if (ob1)
 			{
 				ThreePoints* rule = new ThreePoints(ob1->x, ob1->y,
@@ -773,16 +773,16 @@ bool CORE::addc_3ponline()
 	}
 	else if (_selected_objects.size() == 3)
 	{
-		ListViewer<ObjectBase*> k(_selected_objects);
-		Point* o1 = dynamic_cast<Point*>(k.getValue());
+		AVLVeiwer<unsigned, ObjectBase*> k(_selected_objects);
+		Point* o1 = dynamic_cast<Point*>(k.getValue().value);
 		if (o1)
 		{
 			k.moveNext();
-			Point* o2 = dynamic_cast<Point*>(k.getValue());
+			Point* o2 = dynamic_cast<Point*>(k.getValue().value);
 			if (o2)
 			{
 				k.moveNext();
-				Point* o3 = dynamic_cast<Point*>(k.getValue());
+				Point* o3 = dynamic_cast<Point*>(k.getValue().value);
 				if (o3)
 				{
 					ThreePoints* rule = new ThreePoints(o1->x, o1->y,
@@ -804,16 +804,16 @@ bool CORE::addc_3pratio(double value)
 {
 	if (_selected_objects.size() == 3)
 	{
-		ListViewer<ObjectBase*> k(_selected_objects);
-		Point* o1 = dynamic_cast<Point*>(k.getValue());
+		AVLVeiwer<unsigned, ObjectBase*> k(_selected_objects);
+		Point* o1 = dynamic_cast<Point*>(k.getValue().value);
 		if (o1)
 		{
 			k.moveNext();
-			Point* o2 = dynamic_cast<Point*>(k.getValue());
+			Point* o2 = dynamic_cast<Point*>(k.getValue().value);
 			if (o2)
 			{
 				k.moveNext();
-				Point* o3 = dynamic_cast<Point*>(k.getValue());
+				Point* o3 = dynamic_cast<Point*>(k.getValue().value);
 				if (o3)
 				{
 					double* val = new double;
@@ -838,12 +838,12 @@ bool CORE::addc_excontact()
 {
 	if (_selected_objects.size() == 2)
 	{
-		ListViewer<ObjectBase*> k(_selected_objects);
-		Circle* o1 = dynamic_cast<Circle*>(k.getValue());
+		AVLVeiwer<unsigned, ObjectBase*> k(_selected_objects);
+		Circle* o1 = dynamic_cast<Circle*>(k.getValue().value);
 		if (o1)
 		{
 			k.moveNext();
-			Circle* o2 = dynamic_cast<Circle*>(k.getValue());
+			Circle* o2 = dynamic_cast<Circle*>(k.getValue().value);
 			if (o2)
 			{
 
@@ -863,12 +863,12 @@ bool CORE::addc_incontact()
 {
 	if (_selected_objects.size() == 2)
 	{
-		ListViewer<ObjectBase*> k(_selected_objects);
-		Circle* o1 = dynamic_cast<Circle*>(k.getValue());
+		AVLVeiwer<unsigned, ObjectBase*> k(_selected_objects);
+		Circle* o1 = dynamic_cast<Circle*>(k.getValue().value);
 		if (o1)
 		{
 			k.moveNext();
-			Circle* o2 = dynamic_cast<Circle*>(k.getValue());
+			Circle* o2 = dynamic_cast<Circle*>(k.getValue().value);
 			if (o2)
 			{
 
@@ -888,10 +888,10 @@ bool CORE::addc_l2langle(double value)
 {
 	if (_selected_objects.size() == 2)
 	{
-		ListViewer<ObjectBase*> k(_selected_objects);
-		Segment* obj1 = dynamic_cast<Segment*>(k.getValue());
+		AVLVeiwer<unsigned, ObjectBase*> k(_selected_objects);
+		Segment* obj1 = dynamic_cast<Segment*>(k.getValue().value);
 		k.moveNext();
-		Segment* obj2 = dynamic_cast<Segment*>(k.getValue());
+		Segment* obj2 = dynamic_cast<Segment*>(k.getValue().value);
 		if (obj1 && obj2)
 		{
 			double* val = new double;
@@ -914,12 +914,12 @@ bool CORE::addc_p2ldist(double value)
 {
 	if (_selected_objects.size() == 2)
 	{
-		ListViewer<ObjectBase*> k(_selected_objects);
-		Point* obj1 = dynamic_cast<Point*>(k.getValue());
+		AVLVeiwer<unsigned, ObjectBase*> k(_selected_objects);
+		Point* obj1 = dynamic_cast<Point*>(k.getValue().value);
 		if (obj1)
 		{
 			k.moveNext();
-			Segment* obj2 = dynamic_cast<Segment*>(k.getValue());
+			Segment* obj2 = dynamic_cast<Segment*>(k.getValue().value);
 			if (obj2)
 			{
 				double* val = new double;
@@ -936,11 +936,11 @@ bool CORE::addc_p2ldist(double value)
 			}
 			return false;
 		}
-		Segment* ob2 = dynamic_cast<Segment*>(k.getValue());
+		Segment* ob2 = dynamic_cast<Segment*>(k.getValue().value);
 		if (ob2)
 		{
 			k.moveNext();
-			Point* ob1 = dynamic_cast<Point*>(k.getValue());
+			Point* ob1 = dynamic_cast<Point*>(k.getValue().value);
 			if (ob1)
 			{
 				double* val = new double;
@@ -963,12 +963,12 @@ bool CORE::addc_p2sdist(double value)
 {
 	if (_selected_objects.size() == 2)
 	{
-		ListViewer<ObjectBase*> k(_selected_objects);
-		Point* obj1 = dynamic_cast<Point*>(k.getValue());
+		AVLVeiwer<unsigned, ObjectBase*> k(_selected_objects);
+		Point* obj1 = dynamic_cast<Point*>(k.getValue().value);
 		if (obj1)
 		{
 			k.moveNext();
-			Segment* obj2 = dynamic_cast<Segment*>(k.getValue());
+			Segment* obj2 = dynamic_cast<Segment*>(k.getValue().value);
 			if (obj2)
 			{
 				double* val = new double;
@@ -985,11 +985,11 @@ bool CORE::addc_p2sdist(double value)
 			}
 			return false;
 		}
-		Segment* ob2 = dynamic_cast<Segment*>(k.getValue());
+		Segment* ob2 = dynamic_cast<Segment*>(k.getValue().value);
 		if (ob2)
 		{
 			k.moveNext();
-			Point* ob1 = dynamic_cast<Point*>(k.getValue());
+			Point* ob1 = dynamic_cast<Point*>(k.getValue().value);
 			if (ob1)
 			{
 				double* val = new double;
@@ -1012,12 +1012,12 @@ bool CORE::addc_spratio(double value)
 {
 	if (_selected_objects.size() == 2)
 	{
-		ListViewer<ObjectBase*> k(_selected_objects);
-		Point* obj1 = dynamic_cast<Point*>(k.getValue());
+		AVLVeiwer<unsigned, ObjectBase*> k(_selected_objects);
+		Point* obj1 = dynamic_cast<Point*>(k.getValue().value);
 		if (obj1)
 		{
 			k.moveNext();
-			Segment* obj2 = dynamic_cast<Segment*>(k.getValue());
+			Segment* obj2 = dynamic_cast<Segment*>(k.getValue().value);
 			if (obj2)
 			{
 				double* val = new double;
@@ -1034,11 +1034,11 @@ bool CORE::addc_spratio(double value)
 				return true;
 			}
 		}
-		Segment* ob2 = dynamic_cast<Segment*>(k.getValue());
+		Segment* ob2 = dynamic_cast<Segment*>(k.getValue().value);
 		if (ob2)
 		{
 			k.moveNext();
-			Point* ob1 = dynamic_cast<Point*>(k.getValue());
+			Point* ob1 = dynamic_cast<Point*>(k.getValue().value);
 			if (ob1)
 			{
 				double* val = new double;
@@ -1061,10 +1061,10 @@ bool CORE::addc_parallelism()
 {
 	if (_selected_objects.size() == 2)
 	{
-		ListViewer<ObjectBase*> k(_selected_objects);
-		Segment* obj1 = dynamic_cast<Segment*>(k.getValue());
+		AVLVeiwer<unsigned, ObjectBase*> k(_selected_objects);
+		Segment* obj1 = dynamic_cast<Segment*>(k.getValue().value);
 		k.moveNext();
-		Segment* obj2 = dynamic_cast<Segment*>(k.getValue());
+		Segment* obj2 = dynamic_cast<Segment*>(k.getValue().value);
 		if (obj1 && obj2)
 		{
 			ParallelLines* rule = new ParallelLines(obj1->p1->x, obj1->p1->y,
@@ -1083,10 +1083,10 @@ bool CORE::addc_orthogonality()
 {
 	if (_selected_objects.size() == 2)
 	{
-		ListViewer<ObjectBase*> k(_selected_objects);
-		Segment* obj1 = dynamic_cast<Segment*>(k.getValue());
+		AVLVeiwer<unsigned, ObjectBase*> k(_selected_objects);
+		Segment* obj1 = dynamic_cast<Segment*>(k.getValue().value);
 		k.moveNext();
-		Segment* obj2 = dynamic_cast<Segment*>(k.getValue());
+		Segment* obj2 = dynamic_cast<Segment*>(k.getValue().value);
 		if (obj1 && obj2)
 		{
 			OrthogonalLines* rule = new OrthogonalLines(obj1->p1->x, obj1->p1->y,
