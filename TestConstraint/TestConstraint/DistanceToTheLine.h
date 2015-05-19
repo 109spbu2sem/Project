@@ -34,6 +34,7 @@ public:
 		_XX = GetX(*_x, *_y, *_x1, *_y1, *_x2, *_y2);
 		_YY = GetY(*_x, *_y, *_x1, *_y1, *_x2, *_y2);
 		_STARTING_ERROR = err;
+		//err = abs((*_y2 - *_y1)*(*_x) + (*_x1 - *_x2)*(*_y) + (*_x2*(*_y1) - *_x1*(*_y2))) / sqrt(((*_y2 - *_y1)*(*_y2 - *_y1)) + (*_x1 - *_x2)*(*_x1 - *_x2));
 		return (err - *_d)*(err - *_d);
 	};
 
