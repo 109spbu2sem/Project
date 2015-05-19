@@ -32,32 +32,21 @@ public:
 	double error()
 	{
 		double err = DistPointLine(*_x, *_y, *_x1, *_y1, *_x2, *_y2);
+		_XX = GetX(*_x, *_y, *_x1, *_y1, *_x2, *_y2);
+		_YY = GetY(*_x, *_y, *_x1, *_y1, *_x2, *_y2);
 		_STARTING_ERROR = err;
 		return (err - *_d)*(err - *_d);
 	};
 
 	double diff(double *par)
-	{
-		if (*_d <= _STARTING_ERROR)
-		{
-			if (par == _x) return abs(2 * (*_d - (sqrt(error()) + *_d))*(*_x - (GetX(*_x, *_y, *_x1, *_y1, *_x2, *_y2))) / sqrt((sqrt(error()) + *_d)));
-			if (par == _y) return abs(2 * (*_d - (sqrt(error()) + *_d))*(*_y - (GetY(*_x, *_y, *_x1, *_y1, *_x2, *_y2))) / sqrt((sqrt(error()) + *_d)));
-			if (par == _x1) return abs(2 * (*_d - (sqrt(error()) + *_d))*(*_x1 - (GetX(*_x, *_y, *_x1, *_y1, *_x2, *_y2))) / sqrt((sqrt(error()) + *_d)));
-			if (par == _y1) return abs(2 * (*_d - (sqrt(error()) + *_d))*(*_y1 - (GetY(*_x, *_y, *_x1, *_y1, *_x2, *_y2))) / sqrt((sqrt(error()) + *_d)));
-			if (par == _x2) return abs(2 * (*_d - (sqrt(error()) + *_d))*(*_x2 - (GetX(*_x, *_y, *_x1, *_y1, *_x2, *_y2))) / sqrt((sqrt(error()) + *_d)));
-			if (par == _y2) return abs(2 * (*_d - (sqrt(error()) + *_d))*(*_y2 - (GetY(*_x, *_y, *_x1, *_y1, *_x2, *_y2))) / sqrt((sqrt(error()) + *_d)));
-			if (par == _d) return abs(2 * (*_d - (sqrt(error()) + *_d)));
-		}
-		else
-		{
-			if (par == _x) return 2 * (*_d - (sqrt(error()) + *_d))*(*_x - (GetX(*_x, *_y, *_x1, *_y1, *_x2, *_y2))) / sqrt((sqrt(error()) + *_d));
-			if (par == _y) return 2 * (*_d - (sqrt(error()) + *_d))*(*_y - (GetY(*_x, *_y, *_x1, *_y1, *_x2, *_y2))) / sqrt((sqrt(error()) + *_d));
-			if (par == _x1) return 2 * (*_d - (sqrt(error()) + *_d))*(*_x1 - (GetX(*_x, *_y, *_x1, *_y1, *_x2, *_y2))) / sqrt((sqrt(error()) + *_d));
-			if (par == _y1) return 2 * (*_d - (sqrt(error()) + *_d))*(*_y1 - (GetY(*_x, *_y, *_x1, *_y1, *_x2, *_y2))) / sqrt((sqrt(error()) + *_d));
-			if (par == _x2) return 2 * (*_d - (sqrt(error()) + *_d))*(*_x2 - (GetX(*_x, *_y, *_x1, *_y1, *_x2, *_y2))) / sqrt((sqrt(error()) + *_d));
-			if (par == _y2) return 2 * (*_d - (sqrt(error()) + *_d))*(*_y2 - (GetY(*_x, *_y, *_x1, *_y1, *_x2, *_y2))) / sqrt((sqrt(error()) + *_d));
-			if (par == _d) return 2 * (*_d - (sqrt(error()) + *_d));
-		}
+	{		
+		if (par == _x) return 2 * (*_d - _STARTING_ERROR)*(_XX - *_x) / _STARTING_ERROR;
+		if (par == _y) return 2 * (*_d - _STARTING_ERROR)*(_YY - *_y) / _STARTING_ERROR;
+		if (par == _x1) return 0;
+		if (par == _y1) return 0;
+		if (par == _x2) return 0;
+		if (par == _y2) return 0;
+		if (par == _d) return 2 * (*_d - _STARTING_ERROR);
 		return 0;
 	};
 
