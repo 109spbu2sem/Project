@@ -3,7 +3,7 @@
 #include "global.h"
 #include <cmath>
 
-// (c) Anton // err = abs((y2 - y1)*x + (x1 - x2)*(y) + (x2*y1) - x1*y2) / sqrt((y2 - y1)*(y2 - y1) + (x1 - x2)*(x1 - x2));
+// (c) Anton //
 
 class DistanceToTheLine :public IConstraint
 {
@@ -26,7 +26,7 @@ public:
 		_d = d;
 	}
 
-	
+	//err = abs((y2 - y1)*x + (x1 - x2)*(y) + (x2*y1) - x1*y2) / sqrt((y2 - y1)*(y2 - y1) + (x1 - x2)*(x1 - x2));
 
 	double error()
 	{
