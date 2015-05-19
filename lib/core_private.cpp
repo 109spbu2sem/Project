@@ -245,9 +245,17 @@ void CORE::Calculate()
 	}
 	for (AVLVeiwer< double*, bool > i(_parameters); i.canMoveNext(); i.moveNext())
 	{
-		if (!i.getValue().value)
+		try
 		{
-			parameters.add(i.getValue().key);
+			if (!i.getValue().value)
+			{
+				parameters.add(i.getValue().key);
+			}
+		}
+		catch (...)
+		{
+			writeToLog("End of parameters or viewer damaged", 1);
+			break;
 		}
 	}
 	//BuildFigure(&collector, &parameters);

@@ -330,6 +330,7 @@ void GUI::on_actionLoad_triggered()
 	if (filename == "")
 		return;
 	mycore->IWantLoad(filename);
+	mycore->Calculate();
 }
 void GUI::on_objectsList_clicked(const QModelIndex &index)
 {
@@ -382,7 +383,7 @@ void GUI::on_openChangingDialog_clicked()
 		unsigned SWITCH = ui->propertiesList->item(0)->data(17).toUInt();
 		switch (SWITCH)
 		{
-			case 0:
+			case PRIMITIVE_POINT:
 			{
 				ow.setupPointProperties(ui->propertiesList->item(1)->data(17).toUInt(),
 												ui->propertiesList->item(2)->data(17).toDouble(),
@@ -392,7 +393,7 @@ void GUI::on_openChangingDialog_clicked()
 												Color(ui->propertiesList->item(4)->data(17).toUInt()));
 				break;
 			}
-			case 1:
+			case PRIMITIVE_SEGMENT:
 			{
 				ow.setupSegmentProperties(ui->propertiesList->item(1)->data(17).toUInt(),
 												  ui->propertiesList->item(2)->data(17).toDouble(),
@@ -406,7 +407,7 @@ void GUI::on_openChangingDialog_clicked()
 												  Color(ui->propertiesList->item(6)->data(17).toUInt()));
 				break;
 			}
-			case 2:
+			case PRIMITIVE_CIRCLE:
 			{
 				ow.setupCircleProperties(ui->propertiesList->item(1)->data(17).toUInt(),
 												 ui->propertiesList->item(2)->data(17).toDouble(),
