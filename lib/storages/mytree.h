@@ -4,6 +4,14 @@
 
 template<typename key_type, typename item_type> class myavltree
 {
+private:
+	struct cell
+	{
+		cell *left;
+		cell *right;
+		cell *parent;
+		tuple data;
+	};
 public:
 
 	struct tuple
@@ -120,78 +128,83 @@ public:
 
 	// begin iterator
 
-	template<typename key_type, typename item_type> class myiterator
+	class myiterator
 	{
-		typename myavltree<key_type, item_type>::cell *_cur;
+		cell *_current;
 	public:
 		myiterator()
 		{
-			_cur = 0;
+			_current = 0;
 		}
-		myiterator(myavltree<key_type, item_type>& s)
+		myiterator(const cell& c)
 		{
-			_cur = s._root;
-			if (_cur)
-				while (_cur->left)
-					_cur = _cur->left;
+			_current = c;
 		}
 
-		typename myavltree<key_type, item_type>::tuple & getValue()
+		myiterator(const myavltree& s)
 		{
-			if (_cur) return _cur->data;
-			throw std::runtime_error("Invalid viewer");
+			_current = s._root;
+			if (_current)
+				while (_current->left)
+					_current = _current->left;
+		}
+
+		void operator=(const myiterator& iter)
+		{
+			_current = iter._current;
+		}
+
+		tuple& operator*() const
+		{
+			if (_current) return _cur->data;
+			throw std::out_of_range("Zero iterator");
 		};
 
-		void moveNext()
+		myiterator operator++(int)
 		{
-			if (_cur->right != 0)
+			if (_current->right != 0)
 			{
-				_cur = _cur->right;
-				while (_cur->left)
-					_cur = _cur->left;
+				_current = _current->right;
+				while (_current->left)
+					_current = _current->left;
 			}
 			else
 			{
-				if (_cur->parent)
+				if (_current->parent)
 				{
-					if (_cur->parent->left == _cur)
-						_cur = _cur->parent;
+					if (_current->parent->left == _current)
+						_current = _current->parent;
 					else
 					{
-						while (_cur->parent && _cur == _cur->parent->right)
-							_cur = _cur->parent;
-						_cur = _cur->parent;
+						while (_current->parent && _current == _current->parent->right)
+							_current = _current->parent;
+						_current = _current->parent;
 					}
 				}
-				else _cur = _cur->parent;
+				else _current = _current->parent;
 			}
+			return myiterator(_current);
 
 		};
-		bool canMoveNext()
+		bool valid()
 		{
-			if (_cur == 0) return false;
-			return true;
+			return _current ? true : false;
 		};
 	};
 
 	// end iterator
 
-	myiterator<key_type, item_type> getIterator()
+	myiterator begin() const
 	{
-		myiterator<key_type, item_type> v(*this);
-		return v;
+		return myiterator(*this);
 	}
 
 private:
-	struct cell
-	{
-		cell *left;
-		cell *right;
-		cell *parent;
-		tuple data;
-	};
+
 	cell *_root;
 	unsigned _size;
+
+
 	int _heightdiff(cell *);
 	int _height(cell *);
 	void _rotCCW(cell *);
