@@ -76,7 +76,7 @@ public:
 
 	}
 
-	bool hasKey(const key_type& a)
+	bool find(const key_type& a)
 	{
 		cell *cur = _root;
 		while (cur)
@@ -88,9 +88,21 @@ public:
 		return false;
 	}
 
-	item_type& getValuebyKey(const key_type& a)
+	item_type& at(const key_type& a)
 	{
 		cell *cur = _root;
+		while (cur)
+		{
+			if (cur->data.key == a) return cur->data.value;
+			if (cur->data.key < a) cur = cur->right;
+			else cur = cur->left;
+		}
+		throw std::logic_error("No such item");
+	}
+	
+	item_type& operator[](const key_type& a)
+	{
+		cell* current = _root;
 		while (cur)
 		{
 			if (cur->data.key == a) return cur->data.value;
@@ -158,7 +170,7 @@ public:
 		{
 			if (_current) return _cur->data;
 			throw std::out_of_range("Zero iterator");
-		};
+		}
 
 		myiterator operator++(int)
 		{
@@ -185,18 +197,117 @@ public:
 			}
 			return myiterator(_current);
 
-		};
+		}
+		myiterator operator++()
+		{
+			if (_current->right != 0)
+			{
+				_current = _current->right;
+				while (_current->left)
+					_current = _current->left;
+			}
+			else
+			{
+				if (_current->parent)
+				{
+					if (_current->parent->left == _current)
+						_current = _current->parent;
+					else
+					{
+						while (_current->parent && _current == _current->parent->right)
+							_current = _current->parent;
+						_current = _current->parent;
+					}
+				}
+				else _current = _current->parent;
+			}
+			return myiterator(_current);
+
+		}
+		myiterator operator--(int)
+		{
+			if (_current->left != 0)
+			{
+				_current = _current->left;
+				while (_current->right)
+					_current = _current->right;
+			}
+			else
+			{
+				if (_current->parent)
+				{
+					if (_current->parent->right == _current)
+						_current = _current->parent;
+					else
+					{
+						while (_current->parent && _current == _current->parent->left)
+							_current = _current->parent;
+						_current = _current->parent;
+					}
+				}
+				else _current = _current->parent;
+			}
+			return myiterator(_current);
+
+		}
+		myiterator operator--()
+		{
+			if (_current->left != 0)
+			{
+				_current = _current->left;
+				while (_current->right)
+					_current = _current->right;
+			}
+			else
+			{
+				if (_current->parent)
+				{
+					if (_current->parent->right == _current)
+						_current = _current->parent;
+					else
+					{
+						while (_current->parent && _current == _current->parent->left)
+							_current = _current->parent;
+						_current = _current->parent;
+					}
+				}
+				else _current = _current->parent;
+			}
+			return myiterator(_current);
+
+		}
 		bool valid()
 		{
 			return _current ? true : false;
-		};
+		}
 	};
 
 	// end iterator
 
 	myiterator begin() const
 	{
-		return myiterator(*this);
+		cell* _current = _root;
+		if (_current)
+		{
+			while (_current->left)
+			{
+				_current = _current->left;
+			}
+		}
+		return myiterator(_current);
+	}
+	
+	myiterator end() const
+	{
+		cell* _current = _root;
+		if (_current)
+		{
+			while (_current->right)
+			{
+				_current = _current->right;
+			}
+		}
+		return myiterator(_current);
 	}
 
 private:
