@@ -325,7 +325,12 @@ void CORE::IWantLoad(QString way)
 {
 	_fileWay = way;
 	Load myload(this, _fileWay);
-	myload.begin();
+	myload.testPoints();
+	myload.testBegin();
+	if (myload.isCorrect())
+		myload.begin();
+	else
+		mygui->WriteError("Incorrect file.");
 }
 
 bool CORE::DeleteRule(unsigned id)
