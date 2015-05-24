@@ -31,22 +31,22 @@ public:
 
 	double error()
 	{
-		double err = DistPointLine(*_x, *_y, *_x1, *_y1, *_x2, *_y2);
+		/*double err = DistPointLine(*_x, *_y, *_x1, *_y1, *_x2, *_y2);
 		_XX = GetX(*_x, *_y, *_x1, *_y1, *_x2, *_y2);
 		_YY = GetY(*_x, *_y, *_x1, *_y1, *_x2, *_y2);
-		_STARTING_ERROR = err;
-		return (err - *_d)*(err - *_d);
+		_STARTING_ERROR = err;*/
+		return 0;//(err - *_d)*(err - *_d);
 	};
 
 	double diff(double *par)
 	{		
-		if (par == _x) return 2 * (*_d - _STARTING_ERROR)*(_XX - *_x) / _STARTING_ERROR;
+		/*if (par == _x) return 2 * (*_d - _STARTING_ERROR)*(_XX - *_x) / _STARTING_ERROR;
 		if (par == _y) return 2 * (*_d - _STARTING_ERROR)*(_YY - *_y) / _STARTING_ERROR;
 		if (par == _x1) return 0;
 		if (par == _y1) return 0;
 		if (par == _x2) return 0;
 		if (par == _y2) return 0;
-		if (par == _d) return 2 * (*_d - _STARTING_ERROR);
+		if (par == _d) return 2 * (*_d - _STARTING_ERROR);*/
 		return 0;
 	};
 

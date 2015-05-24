@@ -15,9 +15,9 @@
 unsigned CORE::AddObject(double point_x, bool isconstx, double point_y, bool isconsty, Color color, unsigned id, bool wait)
 {
 	double* x = new double;
-	_parameters.add(x, isconstx);
+	_parameters.insert(x, isconstx);
 	double* y = new double;
-	_parameters.add(y, isconsty);
+	_parameters.insert(y, isconsty);
 	*x = point_x;
 	*y = point_y;
 	Point* p = new Point(x, y);
@@ -72,7 +72,7 @@ unsigned CORE::AddObject(unsigned pointid, double radius, bool isconst, Color co
 		double *r = new double;
 		*r = radius;
 		Circle* c = new Circle(p, r);
-		_parameters.add(r, isconst);
+		_parameters.insert(r, isconst);
 		c->color.setColor(color);
 		ID newid = _storage_of_objects.add(c, id);
 		mygui->WriteText(DONESTRING, "Circle added");
@@ -96,10 +96,10 @@ void CORE::CreateSegment()
 {
 	if (_selected_objects.size() == 2)
 	{
-		AVLVeiwer<unsigned, ObjectBase*> k(_selected_objects);
-		Point* obj = dynamic_cast<Point*>(k.getValue().value);
-		k.moveNext();
-		Point* obj1 = dynamic_cast<Point*>(k.getValue().value);
+		myavltree<unsigned, ObjectBase*>::myiterator k(_selected_objects);
+		Point* obj = dynamic_cast<Point*>(k.value());
+		k++;
+		Point* obj1 = dynamic_cast<Point*>(k.value());
 		if (obj && obj1)
 		{
 			Segment* s = new Segment(obj, obj1);
@@ -124,13 +124,13 @@ void CORE::CreateCircle(double value, bool isconst)
 {
 	if (_selected_objects.size() == 1)
 	{
-		AVLVeiwer<unsigned, ObjectBase*> k(_selected_objects);
-		Point* obj = dynamic_cast<Point*>(k.getValue().value);
+		myavltree<unsigned, ObjectBase*>::myiterator k(_selected_objects);
+		Point* obj = dynamic_cast<Point*>(k.value());
 		if (obj)
 		{
 			double* val = new double;
 			*val = value;
-			_parameters.add(val, isconst);
+			_parameters.insert(val, isconst);
 			Circle* c = new Circle(obj, val);
 			c->color.setColor(COLORDEF);
 			_storage_of_objects.add(c);
@@ -406,7 +406,7 @@ bool CORE::AddRule(CONSTR_TYPE type, unsigned id1, unsigned id2, double value)
 			{
 				double* val = new double;
 				*val = value;
-				_parameters.add(val, true);
+				_parameters.insert(val, true);
 				Point2Point* rule = new Point2Point(obj1->x, obj1->y,
 																obj2->x, obj2->y,
 																val);
@@ -427,7 +427,7 @@ bool CORE::AddRule(CONSTR_TYPE type, unsigned id1, unsigned id2, double value)
 				{
 					double* val = new double;
 					*val = value;
-					_parameters.add(val, true);
+					_parameters.insert(val, true);
 					DistanceFromPointToSection* rule = new DistanceFromPointToSection(obj1->x, obj1->y,
 																											obj2->p1->x, obj2->p1->y,
 																											obj2->p2->x, obj2->p2->y,
@@ -447,7 +447,7 @@ bool CORE::AddRule(CONSTR_TYPE type, unsigned id1, unsigned id2, double value)
 				{
 					double* val = new double;
 					*val = value;
-					_parameters.add(val, true);
+					_parameters.insert(val, true);
 					DistanceFromPointToSection* rule = new DistanceFromPointToSection(ob1->x, ob1->y,
 																											ob2->p1->x, ob2->p1->y,
 																											ob2->p2->x, ob2->p2->y,
@@ -470,7 +470,7 @@ bool CORE::AddRule(CONSTR_TYPE type, unsigned id1, unsigned id2, double value)
 				{
 					double* val = new double;
 					*val = value;
-					_parameters.add(val, true);
+					_parameters.insert(val, true);
 					DistanceToTheLine* rule = new DistanceToTheLine(obj1->x, obj1->y,
 																					obj2->p1->x, obj2->p1->y,
 																					obj2->p2->x, obj2->p2->y,
@@ -490,7 +490,7 @@ bool CORE::AddRule(CONSTR_TYPE type, unsigned id1, unsigned id2, double value)
 				{
 					double* val = new double;
 					*val = value;
-					_parameters.add(val, true);
+					_parameters.insert(val, true);
 					DistanceToTheLine* rule = new DistanceToTheLine(ob1->x, ob1->y,
 																					ob2->p1->x, ob2->p1->y,
 																					ob2->p2->x, ob2->p2->y,
@@ -511,7 +511,7 @@ bool CORE::AddRule(CONSTR_TYPE type, unsigned id1, unsigned id2, double value)
 			{
 				double* val = new double;
 				*val = value;
-				_parameters.add(val, true);
+				_parameters.insert(val, true);
 				AngleSegmentSegment* rule = new AngleSegmentSegment(obj1->p1->x, obj1->p1->y,
 																					 obj1->p2->x, obj1->p2->y,
 																					 obj2->p1->x, obj2->p1->y,
@@ -534,7 +534,7 @@ bool CORE::AddRule(CONSTR_TYPE type, unsigned id1, unsigned id2, double value)
 				{
 					double* val = new double;
 					*val = value;
-					_parameters.add(val, true);
+					_parameters.insert(val, true);
 					AspectRatio* rule = new AspectRatio(obj2->p1->x, obj2->p1->y,
 																	obj1->x, obj1->y,
 																	obj2->p2->x, obj2->p2->y,
@@ -553,7 +553,7 @@ bool CORE::AddRule(CONSTR_TYPE type, unsigned id1, unsigned id2, double value)
 				{
 					double* val = new double;
 					*val = value;
-					_parameters.add(val, true);
+					_parameters.insert(val, true);
 					AspectRatio* rule = new AspectRatio(ob2->p1->x, ob2->p1->y,
 																	ob1->x, ob1->y,
 																	ob2->p2->x, ob2->p2->y,
@@ -587,7 +587,7 @@ bool CORE::AddRule(CONSTR_TYPE type, unsigned id1, unsigned id2, unsigned id3, d
 					{
 						double* val = new double;
 						*val = value;
-						_parameters.add(val, true);
+						_parameters.insert(val, true);
 						AspectRatio* rule = new AspectRatio(o1->x, o1->y,
 																		o2->x, o2->y,
 																		o3->x, o3->y,
@@ -650,8 +650,8 @@ bool CORE::ChangePoint(unsigned id,
 		writeToLog(id, "Change point properties ", 2);
 		*p->x = point_x;
 		*p->y = point_y;
-		_parameters.getValuebyKey(p->x) = isconstx;
-		_parameters.getValuebyKey(p->y) = isconsty;
+		_parameters.get(p->x) = isconstx;
+		_parameters.get(p->y) = isconsty;
 		p->color = color;
 		Redraw(mygui);
 		return true;
@@ -674,10 +674,10 @@ bool CORE::ChangeSegment(unsigned id,
 		*s->p1->y = point_y1;
 		*s->p2->x = point_x2;
 		*s->p2->y = point_y2;
-		_parameters.getValuebyKey(s->p1->x) = isconstx1;
-		_parameters.getValuebyKey(s->p1->y) = isconsty1;
-		_parameters.getValuebyKey(s->p2->x) = isconstx2;
-		_parameters.getValuebyKey(s->p2->y) = isconsty2;
+		_parameters.get(s->p1->x) = isconstx1;
+		_parameters.get(s->p1->y) = isconsty1;
+		_parameters.get(s->p2->x) = isconstx2;
+		_parameters.get(s->p2->y) = isconsty2;
 		s->color = color;
 		Redraw(mygui);
 		return true;
@@ -698,9 +698,9 @@ bool CORE::ChangeCircle(unsigned id,
 		*c->p->x = point_x;
 		*c->p->y = point_y;
 		*c->r = radius;
-		_parameters.getValuebyKey(c->p->x) = isconstx;
-		_parameters.getValuebyKey(c->p->y) = isconsty;
-		_parameters.getValuebyKey(c->r) = isconst;
+		_parameters.get(c->p->x) = isconstx;
+		_parameters.get(c->p->y) = isconsty;
+		_parameters.get(c->r) = isconst;
 		c->color = color;
 		Redraw(mygui);
 		return true;
@@ -712,15 +712,15 @@ bool CORE::addc_p2pdist(double value)
 {
 	if (_selected_objects.size() == 2)
 	{
-		AVLVeiwer<unsigned, ObjectBase*> k(_selected_objects);
-		Point* obj1 = dynamic_cast<Point*>(k.getValue().value);
-		k.moveNext();
-		Point* obj2 = dynamic_cast<Point*>(k.getValue().value);
+		myavltree<unsigned, ObjectBase*>::myiterator k(_selected_objects);
+		Point* obj1 = dynamic_cast<Point*>(k.value());
+		k++;
+		Point* obj2 = dynamic_cast<Point*>(k.value());
 		if (obj1 && obj2)
 		{
 			double* val = new double;
 			*val = value;
-			_parameters.add(val, true);
+			_parameters.insert(val, true);
 			Point2Point* rule = new Point2Point(obj1->x, obj1->y, 
 															obj2->x, obj2->y,
 															val);
@@ -736,12 +736,12 @@ bool CORE::addc_3ponline()
 {
 	if (_selected_objects.size() == 2)
 	{
-		AVLVeiwer<unsigned, ObjectBase*> k(_selected_objects);
-		Point* obj1 = dynamic_cast<Point*>(k.getValue().value);
+		myavltree<unsigned, ObjectBase*>::myiterator k(_selected_objects);
+		Point* obj1 = dynamic_cast<Point*>(k.value());
 		if (obj1)
 		{
-			k.moveNext();
-			Segment* obj2 = dynamic_cast<Segment*>(k.getValue().value);
+			k++;
+			Segment* obj2 = dynamic_cast<Segment*>(k.value());
 			if (obj2)
 			{
 				ThreePoints* rule = new ThreePoints(obj1->x, obj1->y,
@@ -753,11 +753,11 @@ bool CORE::addc_3ponline()
 				return true;
 			}
 		}
-		Segment* ob2 = dynamic_cast<Segment*>(k.getValue().value);
+		Segment* ob2 = dynamic_cast<Segment*>(k.value());
 		if (ob2)
 		{
-			k.moveNext();
-			Point* ob1 = dynamic_cast<Point*>(k.getValue().value);
+			k++;
+			Point* ob1 = dynamic_cast<Point*>(k.value());
 			if (ob1)
 			{
 				ThreePoints* rule = new ThreePoints(ob1->x, ob1->y,
@@ -773,16 +773,16 @@ bool CORE::addc_3ponline()
 	}
 	else if (_selected_objects.size() == 3)
 	{
-		AVLVeiwer<unsigned, ObjectBase*> k(_selected_objects);
-		Point* o1 = dynamic_cast<Point*>(k.getValue().value);
+		myavltree<unsigned, ObjectBase*>::myiterator k(_selected_objects);
+		Point* o1 = dynamic_cast<Point*>(k.value());
 		if (o1)
 		{
-			k.moveNext();
-			Point* o2 = dynamic_cast<Point*>(k.getValue().value);
+			k++;
+			Point* o2 = dynamic_cast<Point*>(k.value());
 			if (o2)
 			{
-				k.moveNext();
-				Point* o3 = dynamic_cast<Point*>(k.getValue().value);
+				k++;
+				Point* o3 = dynamic_cast<Point*>(k.value());
 				if (o3)
 				{
 					ThreePoints* rule = new ThreePoints(o1->x, o1->y,
@@ -804,21 +804,21 @@ bool CORE::addc_3pratio(double value)
 {
 	if (_selected_objects.size() == 3)
 	{
-		AVLVeiwer<unsigned, ObjectBase*> k(_selected_objects);
-		Point* o1 = dynamic_cast<Point*>(k.getValue().value);
+		myavltree<unsigned, ObjectBase*>::myiterator k(_selected_objects);
+		Point* o1 = dynamic_cast<Point*>(k.value());
 		if (o1)
 		{
-			k.moveNext();
-			Point* o2 = dynamic_cast<Point*>(k.getValue().value);
+			k++;
+			Point* o2 = dynamic_cast<Point*>(k.value());
 			if (o2)
 			{
-				k.moveNext();
-				Point* o3 = dynamic_cast<Point*>(k.getValue().value);
+				k++;
+				Point* o3 = dynamic_cast<Point*>(k.value());
 				if (o3)
 				{
 					double* val = new double;
 					*val = value;
-					_parameters.add(val, true);
+					_parameters.insert(val, true);
 					AspectRatio* rule = new AspectRatio(o1->x, o1->y,
 																	o2->x, o2->y,
 																	o3->x, o3->y,
@@ -838,12 +838,12 @@ bool CORE::addc_excontact()
 {
 	if (_selected_objects.size() == 2)
 	{
-		AVLVeiwer<unsigned, ObjectBase*> k(_selected_objects);
-		Circle* o1 = dynamic_cast<Circle*>(k.getValue().value);
+		myavltree<unsigned, ObjectBase*>::myiterator k(_selected_objects);
+		Circle* o1 = dynamic_cast<Circle*>(k.value());
 		if (o1)
 		{
-			k.moveNext();
-			Circle* o2 = dynamic_cast<Circle*>(k.getValue().value);
+			k++;
+			Circle* o2 = dynamic_cast<Circle*>(k.value());
 			if (o2)
 			{
 
@@ -863,12 +863,12 @@ bool CORE::addc_incontact()
 {
 	if (_selected_objects.size() == 2)
 	{
-		AVLVeiwer<unsigned, ObjectBase*> k(_selected_objects);
-		Circle* o1 = dynamic_cast<Circle*>(k.getValue().value);
+		myavltree<unsigned, ObjectBase*>::myiterator k(_selected_objects);
+		Circle* o1 = dynamic_cast<Circle*>(k.value());
 		if (o1)
 		{
-			k.moveNext();
-			Circle* o2 = dynamic_cast<Circle*>(k.getValue().value);
+			k++;
+			Circle* o2 = dynamic_cast<Circle*>(k.value());
 			if (o2)
 			{
 
@@ -888,15 +888,15 @@ bool CORE::addc_l2langle(double value)
 {
 	if (_selected_objects.size() == 2)
 	{
-		AVLVeiwer<unsigned, ObjectBase*> k(_selected_objects);
-		Segment* obj1 = dynamic_cast<Segment*>(k.getValue().value);
-		k.moveNext();
-		Segment* obj2 = dynamic_cast<Segment*>(k.getValue().value);
+		myavltree<unsigned, ObjectBase*>::myiterator k(_selected_objects);
+		Segment* obj1 = dynamic_cast<Segment*>(k.value());
+		k++;
+		Segment* obj2 = dynamic_cast<Segment*>(k.value());
 		if (obj1 && obj2)
 		{
 			double* val = new double;
 			*val = value;
-			_parameters.add(val, true);
+			_parameters.insert(val, true);
 			AngleSegmentSegment* rule = new AngleSegmentSegment(obj1->p1->x, obj1->p1->y,
 																				 obj1->p2->x, obj1->p2->y,
 																				 obj2->p1->x, obj2->p1->y,
@@ -914,17 +914,17 @@ bool CORE::addc_p2ldist(double value)
 {
 	if (_selected_objects.size() == 2)
 	{
-		AVLVeiwer<unsigned, ObjectBase*> k(_selected_objects);
-		Point* obj1 = dynamic_cast<Point*>(k.getValue().value);
+		myavltree<unsigned, ObjectBase*>::myiterator k(_selected_objects);
+		Point* obj1 = dynamic_cast<Point*>(k.value());
 		if (obj1)
 		{
-			k.moveNext();
-			Segment* obj2 = dynamic_cast<Segment*>(k.getValue().value);
+			k++;
+			Segment* obj2 = dynamic_cast<Segment*>(k.value());
 			if (obj2)
 			{
 				double* val = new double;
 				*val = value;
-				_parameters.add(val, true);
+				_parameters.insert(val, true);
 				DistanceToTheLine* rule = new DistanceToTheLine(obj1->x, obj1->y,
 																				obj2->p1->x, obj2->p1->y,
 																				obj2->p2->x, obj2->p2->y,
@@ -936,16 +936,16 @@ bool CORE::addc_p2ldist(double value)
 			}
 			return false;
 		}
-		Segment* ob2 = dynamic_cast<Segment*>(k.getValue().value);
+		Segment* ob2 = dynamic_cast<Segment*>(k.value());
 		if (ob2)
 		{
-			k.moveNext();
-			Point* ob1 = dynamic_cast<Point*>(k.getValue().value);
+			k++;
+			Point* ob1 = dynamic_cast<Point*>(k.value());
 			if (ob1)
 			{
 				double* val = new double;
 				*val = value;
-				_parameters.add(val, true);
+				_parameters.insert(val, true);
 				DistanceToTheLine* rule = new DistanceToTheLine(ob1->x, ob1->y,
 																				ob2->p1->x, ob2->p1->y,
 																				ob2->p2->x, ob2->p2->y,
@@ -963,17 +963,17 @@ bool CORE::addc_p2sdist(double value)
 {
 	if (_selected_objects.size() == 2)
 	{
-		AVLVeiwer<unsigned, ObjectBase*> k(_selected_objects);
-		Point* obj1 = dynamic_cast<Point*>(k.getValue().value);
+		myavltree<unsigned, ObjectBase*>::myiterator k(_selected_objects);
+		Point* obj1 = dynamic_cast<Point*>(k.value());
 		if (obj1)
 		{
-			k.moveNext();
-			Segment* obj2 = dynamic_cast<Segment*>(k.getValue().value);
+			k++;
+			Segment* obj2 = dynamic_cast<Segment*>(k.value());
 			if (obj2)
 			{
 				double* val = new double;
 				*val = value;
-				_parameters.add(val, true);
+				_parameters.insert(val, true);
 				DistanceFromPointToSection* rule = new DistanceFromPointToSection(obj1->x, obj1->y,
 																										obj2->p1->x, obj2->p1->y,
 																										obj2->p2->x, obj2->p2->y,
@@ -985,16 +985,16 @@ bool CORE::addc_p2sdist(double value)
 			}
 			return false;
 		}
-		Segment* ob2 = dynamic_cast<Segment*>(k.getValue().value);
+		Segment* ob2 = dynamic_cast<Segment*>(k.value());
 		if (ob2)
 		{
-			k.moveNext();
-			Point* ob1 = dynamic_cast<Point*>(k.getValue().value);
+			k++;
+			Point* ob1 = dynamic_cast<Point*>(k.value());
 			if (ob1)
 			{
 				double* val = new double;
 				*val = value;
-				_parameters.add(val, true);
+				_parameters.insert(val, true);
 				DistanceFromPointToSection* rule = new DistanceFromPointToSection(ob1->x, ob1->y,
 																										ob2->p1->x, ob2->p1->y,
 																										ob2->p2->x, ob2->p2->y,
@@ -1012,17 +1012,17 @@ bool CORE::addc_spratio(double value)
 {
 	if (_selected_objects.size() == 2)
 	{
-		AVLVeiwer<unsigned, ObjectBase*> k(_selected_objects);
-		Point* obj1 = dynamic_cast<Point*>(k.getValue().value);
+		myavltree<unsigned, ObjectBase*>::myiterator k(_selected_objects);
+		Point* obj1 = dynamic_cast<Point*>(k.value());
 		if (obj1)
 		{
-			k.moveNext();
-			Segment* obj2 = dynamic_cast<Segment*>(k.getValue().value);
+			k++;
+			Segment* obj2 = dynamic_cast<Segment*>(k.value());
 			if (obj2)
 			{
 				double* val = new double;
 				*val = value;
-				_parameters.add(val, true);
+				_parameters.insert(val, true);
 				AspectRatio* rule = new AspectRatio(obj2->p1->x, obj2->p1->y,
 																obj1->x, obj1->y,
 																obj2->p2->x, obj2->p2->y,
@@ -1034,16 +1034,16 @@ bool CORE::addc_spratio(double value)
 				return true;
 			}
 		}
-		Segment* ob2 = dynamic_cast<Segment*>(k.getValue().value);
+		Segment* ob2 = dynamic_cast<Segment*>(k.value());
 		if (ob2)
 		{
-			k.moveNext();
-			Point* ob1 = dynamic_cast<Point*>(k.getValue().value);
+			k++;
+			Point* ob1 = dynamic_cast<Point*>(k.value());
 			if (ob1)
 			{
 				double* val = new double;
 				*val = value;
-				_parameters.add(val, true);
+				_parameters.insert(val, true);
 				AspectRatio* rule = new AspectRatio(ob2->p1->x, ob2->p1->y,
 																ob1->x, ob1->y,
 																ob2->p2->x, ob2->p2->y,
@@ -1061,10 +1061,10 @@ bool CORE::addc_parallelism()
 {
 	if (_selected_objects.size() == 2)
 	{
-		AVLVeiwer<unsigned, ObjectBase*> k(_selected_objects);
-		Segment* obj1 = dynamic_cast<Segment*>(k.getValue().value);
-		k.moveNext();
-		Segment* obj2 = dynamic_cast<Segment*>(k.getValue().value);
+		myavltree<unsigned, ObjectBase*>::myiterator k(_selected_objects);
+		Segment* obj1 = dynamic_cast<Segment*>(k.value());
+		k++;
+		Segment* obj2 = dynamic_cast<Segment*>(k.value());
 		if (obj1 && obj2)
 		{
 			ParallelLines* rule = new ParallelLines(obj1->p1->x, obj1->p1->y,
@@ -1083,10 +1083,10 @@ bool CORE::addc_orthogonality()
 {
 	if (_selected_objects.size() == 2)
 	{
-		AVLVeiwer<unsigned, ObjectBase*> k(_selected_objects);
-		Segment* obj1 = dynamic_cast<Segment*>(k.getValue().value);
-		k.moveNext();
-		Segment* obj2 = dynamic_cast<Segment*>(k.getValue().value);
+		myavltree<unsigned, ObjectBase*>::myiterator k(_selected_objects);
+		Segment* obj1 = dynamic_cast<Segment*>(k.value());
+		k++;
+		Segment* obj2 = dynamic_cast<Segment*>(k.value());
 		if (obj1 && obj2)
 		{
 			OrthogonalLines* rule = new OrthogonalLines(obj1->p1->x, obj1->p1->y,

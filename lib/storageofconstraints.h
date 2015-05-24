@@ -1,28 +1,28 @@
 #ifndef SOFCONSTR_H
 #define SOFCONSTR_H
 
-#include "storages/AVL_tree.h"
+#include "storages/mytree.h"
 #include "global.h"
 #include "ObjectBase.h"
-#include <list>
+#include "storages/mylist.h"
 
 class StorageOfConstraints
 {
 private:
-	Storage_AVL<ObjectBase*, std::list<IConstraint*> > _objects;
-	Storage_AVL<IConstraint*, std::list<ObjectBase*> > _constraints;
-	Storage_AVL<unsigned, IConstraint*> _ids;
+	myavltree<ObjectBase*, mylist<IConstraint*> > _objects;
+	myavltree<IConstraint*, mylist<ObjectBase*> > _constraints;
+	myavltree<unsigned, IConstraint*> _ids;
 	unsigned _last_id;
 
-	bool _findhere(std::list<IConstraint*>&, IConstraint*);
-	bool _findhere(std::list<ObjectBase*>&, ObjectBase*);
+	bool _findhere(mylist<IConstraint*>&, IConstraint*);
+	bool _findhere(mylist<ObjectBase*>&, ObjectBase*);
 	ID generateID();
 public:
 	friend class viewer;
 	StorageOfConstraints()
 	{
 		_last_id = 0;
-		_ids.add(0, 0);
+		_ids.insert(0, 0);
 	}
 	~StorageOfConstraints()
 	{
@@ -34,24 +34,25 @@ public:
 	bool has(ObjectBase*) const;
 	bool has(IConstraint*) const;
 	bool has(ID) const;
-	std::list<IConstraint*>& get(ObjectBase*);
-	std::list<ObjectBase*>& get(IConstraint*);
+	mylist<IConstraint*>& get(ObjectBase*);
+	mylist<ObjectBase*>& get(IConstraint*);
 	IConstraint* get(ID);
 	ID getid(IConstraint*);
 	class viewer
 	{
 	private:
-		AVLVeiwer<IConstraint*, std::list<ObjectBase*> > _viewer;
+		myavltree<IConstraint*, mylist<ObjectBase*> >::myiterator _viewer;
 	public:
 		viewer() { }
 		viewer(StorageOfConstraints& a)
 		{
-			_viewer = a._constraints.getIterator();
+			_viewer = a._constraints.begin();
 		}
-		std::list<ObjectBase*>& objects();
+		mylist<ObjectBase*>& objects();
 		IConstraint* constraint();
-		bool canMoveNext() const;
-		void moveNext();
+		bool valid() const;
+		void operator++();
+		void operator++(int);
 	};
 	void clear();
 	viewer getIterator()

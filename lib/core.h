@@ -1,8 +1,8 @@
 #ifndef CORE_H
 #define CORE_H
 #include "structures.h"
-#include "storages/storage_list.h"
-#include "storages/storage_array.h"
+#include "storages/mylist.h"
+#include "storages/myvector.h"
 #include "global.h"
 #include "gui.h"
 #include "Save.h"
@@ -12,7 +12,7 @@
 #include <fstream>
 #include "settings.h"
 #include <ctime>
-#include "storages/AVL_tree.h"
+#include "storages/mytree.h"
 #include "storageofobjects.h"
 #include "enums.h"
 #include "storageofconstraints.h"
@@ -27,15 +27,14 @@ private:
 	GraphicsInterface* mygui;
 	QString _fileWay;
 
-	Storage_AVL<double*, bool> _parameters;
+	myavltree<double*, bool> _parameters;
 	StorageOfConstraints _storage_of_constraints;
-	Storage_AVL<unsigned, ObjectBase*> _selected_objects;
+	myavltree<unsigned, ObjectBase*> _selected_objects;
 	StorageOfObjects _storage_of_objects;
 
 	bool isInArea(double x, double y, double x1, double y1, double x2, double y2);
-	void BuildFigure(IConstraint*, Storage_Array<double*>*);
-	void BuildFigureNewton(IConstraint*, Storage_Array<double*>*);
-	void BuildFigureGoldMethod(IConstraint*, Storage_Array < double* >*);
+	void BuildFigure(IConstraint*, myvector<double*>*);
+	void BuildFigureGoldMethod(IConstraint*, myvector < double* >*);
 	void Redraw(Interface*);
 	void TransmitRules(Interface*);
 	

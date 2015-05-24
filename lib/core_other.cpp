@@ -12,7 +12,7 @@ void CORE::Select(double x, double y)
 	writeToLog("< /clicking >", 3);
 	double min = 4;
 	unsigned min_id = 0;
-	for (StorageOfObjects::viewer i(_storage_of_objects); i.canMoveNext(); i.moveNext())
+	for (StorageOfObjects::viewer i(_storage_of_objects); i.valid(); i++)
 	{
 		if (i.key().getID())
 		{
@@ -71,7 +71,7 @@ void CORE::Select(double x, double y)
 			object->changeSelect();
 			if (object->isSelected())
 			{
-				_selected_objects.add(object->id.getID(), object);
+				_selected_objects.insert(object->id.getID(), object);
 				switch (object->objectType())
 				{
 					case PRIMITIVE_POINT:
@@ -96,7 +96,7 @@ void CORE::Select(double x, double y)
 			}
 			else
 			{
-				_selected_objects.remove(object->id.getID());
+				_selected_objects.erase(object->id.getID());
 			}
 			writeToLog(min_id, "selection was changed for (ID) ", 2);
 			Redraw(mygui);
@@ -120,7 +120,7 @@ bool CORE::Select(unsigned id)
 			object->changeSelect();
 			if (object->isSelected())
 			{
-				_selected_objects.add(object->id.getID(), object);
+				_selected_objects.insert(object->id.getID(), object);
 				switch (object->objectType())
 				{
 					case PRIMITIVE_POINT:
@@ -145,7 +145,7 @@ bool CORE::Select(unsigned id)
 			}
 			else
 			{
-				_selected_objects.remove(object->id.getID());
+				_selected_objects.erase(object->id.getID());
 			}
 			writeToLog(id, "selection was changed for (ID) ", 2);
 			Redraw(mygui);
@@ -159,35 +159,35 @@ bool CORE::Select(unsigned id)
 {
 	// select points
 	unsigned size = _storage_of_points.size();
-	for (ListViewer<Point> i(_storage_of_points); i.canMoveNext(); i.moveNext())
+	for (ListViewer<Point> i(_storage_of_points); i.valid(); i++)
 	{
-		if (isInArea(*i.getValue().x, *i.getValue().y, x1, y1, x2, y2))
+		if (isInArea(*i.x, *i.y, x1, y1, x2, y2))
 		{
-			i.getValue().changeSelect(true);
+			i.changeSelect(true);
 			_selected_objects.add(&i.getValue());
 		}
 	}
 
 	// select segments
 	size = _storage_of_segments.size();
-	for (ListViewer<Segment> i(_storage_of_segments); i.canMoveNext(); i.moveNext())
+	for (ListViewer<Segment> i(_storage_of_segments); i.valid(); i++)
 	{
-		if (isInArea(*i.getValue().p1->x, *i.getValue().p1->y, x1, y1, x2, y2) &&
-			isInArea(*i.getValue().p2->x, *i.getValue().p2->y, x1, y1, x2, y2))
+		if (isInArea(*i.p1->x, *i.p1->y, x1, y1, x2, y2) &&
+			isInArea(*i.p2->x, *i.p2->y, x1, y1, x2, y2))
 		{
-			i.getValue().changeSelect(true);
+			i.changeSelect(true);
 			_selected_objects.add(&i.getValue());
 		}
 	}
 	// select circles
 	size = _storage_of_circles.size();
-	for (ListViewer<Circle> i(_storage_of_circles); i.canMoveNext(); i.moveNext())
+	for (ListViewer<Circle> i(_storage_of_circles); i.valid(); i++)
 	{
-		if ((isInArea(*i.getValue().p->x, *i.getValue().p->y, x1, y1, x2, y2)) &&
-			(*i.getValue().p->x + *i.getValue().r) >= x1 && (*i.getValue().p->x + *i.getValue().r) <= x2 &&
-			(*i.getValue().p->y + *i.getValue().r) >= y1 && (*i.getValue().p->y + *i.getValue().r) <= y2)
+		if ((isInArea(*i.p->x, *i.p->y, x1, y1, x2, y2)) &&
+			(*i.p->x + *i.r) >= x1 && (*i.p->x + *i.r) <= x2 &&
+			(*i.p->y + *i.r) >= y1 && (*i.p->y + *i.r) <= y2)
 		{
-			i.getValue().changeSelect(true);
+			i.changeSelect(true);
 			_selected_objects.add(&i.getValue());
 		}
 	}
@@ -197,9 +197,9 @@ bool CORE::Select(unsigned id)
 
 void CORE::ClearSelection()
 {
-	for (AVLVeiwer<unsigned, ObjectBase*> i(_selected_objects); i.canMoveNext(); i.moveNext())
+	for (myavltree<unsigned, ObjectBase*>::myiterator i(_selected_objects); i.valid(); i++)
 	{
-		i.getValue().value->changeSelect(false);
+		i.value()->changeSelect(false);
 	}
 	_selected_objects.clear();
 	writeToLog("Select was cleared", 2);
@@ -230,44 +230,44 @@ void CORE::DeleteAll()
 void CORE::DeleteSelectedObjects()
 {
 	unsigned cantdelete = 0;
-	for (AVLVeiwer<unsigned, ObjectBase*> i(_selected_objects); i.canMoveNext(); i.moveNext())
+	for (myavltree<unsigned, ObjectBase*>::myiterator i(_selected_objects); i.valid(); i++)
 	{
-		if (_storage_of_constraints.has(i.getValue().value))
+		if (_storage_of_constraints.has(i.value()))
 			cantdelete++;
 		else 
 		{
-			switch (i.getValue().value->objectType())
+			switch (i.value()->objectType())
 			{
 				case PRIMITIVE_POINT:
 				{
-					Point* p = dynamic_cast<Point*>(i.getValue().value);
+					Point* p = dynamic_cast<Point*>(i.value());
 					if (_storage_of_objects.has_SorC_with_P(p))
 						cantdelete++;
 					else
 					{
-						_parameters.remove(p->x);
-						_parameters.remove(p->y);
+						_parameters.erase(p->x);
+						_parameters.erase(p->y);
 						delete p->x;
 						delete p->y;
-						_storage_of_objects.remove(i.getValue().value->id);
-						delete i.getValue().value;
+						_storage_of_objects.remove(i.value()->id);
+						delete i.value();
 					}
 					break;
 				}
 				case PRIMITIVE_SEGMENT:
 				{
 					//Segment* s = dynamic_cast<Segment*>(i.getValue());
-					_storage_of_objects.remove(i.getValue().value->id);
-					delete i.getValue().value;
+					_storage_of_objects.remove(i.value()->id);
+					delete i.value();
 					break;
 				}
 				case PRIMITIVE_CIRCLE:
 				{
-					Circle* c = dynamic_cast<Circle*>(i.getValue().value);
-					_parameters.remove(c->r);
+					Circle* c = dynamic_cast<Circle*>(i.value());
+					_parameters.erase(c->r);
 					delete c->r;
-					_storage_of_objects.remove(i.getValue().value->id);
-					delete i.getValue().value;
+					_storage_of_objects.remove(i.value()->id);
+					delete i.value();
 					break;
 				}	
 			}
@@ -286,46 +286,46 @@ void CORE::IWantSave()
 	Save mysave(_fileWay);
 	StorageOfObjects::viewer i(_storage_of_objects);
 	StorageOfConstraints::viewer j(_storage_of_constraints);
-	while (i.canMoveNext())
+	while (i.valid())
 	{
 		if (i.key().getID() == 0)
 		{
-			i.moveNext();
+			i++;
 			continue;
 		}
 		if (i.value()->objectType() == PRIMITIVE_POINT)
 		{
 			Point* v = dynamic_cast<Point*>(i.value());
-			mysave.DrawPoint(v->id.getID(), *v->x, _parameters.getValuebyKey(v->x), *v->y,
-				_parameters.getValuebyKey(v->y), v->color.getColor(), 0);
-			i.moveNext();
+			mysave.DrawPoint(v->id.getID(), *v->x, _parameters.get(v->x), *v->y,
+				_parameters.get(v->y), v->color.getColor(), 0);
+			i++;
 			continue;
 		}
 		if (i.value()->objectType() == PRIMITIVE_SEGMENT)
 		{
 			Segment* v = dynamic_cast<Segment*>(i.value());
 			mysave.DrawSegment(v->id.getID(), v->p1->id.getID(), v->p2->id.getID(), v->color.getColor(), 0);
-			i.moveNext();
+			i++;
 			continue;
 
 		}
 		if (i.value()->objectType() == PRIMITIVE_CIRCLE)
 		{
 			Circle* v = dynamic_cast<Circle*>(i.value());
-			mysave.DrawCircle(v->id.getID(), v->p->id.getID(), *v->r, _parameters.getValuebyKey(v->r), v->color.getColor(), 0);
-			i.moveNext();
+			mysave.DrawCircle(v->id.getID(), v->p->id.getID(), *v->r, _parameters.get(v->r), v->color.getColor(), 0);
+			i++;
 			continue;
 		}
 	}
-	while (j.canMoveNext()) {
+	while (j.valid()) {
 		if (j.constraint()->type() == CONSTR_COLLECTOR) {
-			j.moveNext();
+			j++;
 			continue;
 		}
 		if (j.constraint()->type() == CONSTR_EXCONTACT || j.constraint()->type() == CONSTR_INCONTACT ||
 			j.constraint()->type() == CONSTR_ORTHOGONALITY || j.constraint()->type() == CONSTR_PARALLELISM) {
 			mysave.DrawRule(j.constraint()->type(), j.objects().front()->id.getID(), j.objects().back()->id.getID());
-			j.moveNext();
+			j++;
 			continue;
 		}
 		if (j.constraint()->type() == CONSTR_P2PDIST || j.constraint()->type() == CONSTR_P2SECTDIST ||
@@ -333,25 +333,25 @@ void CORE::IWantSave()
 			j.constraint()->type() == CONSTR_SPRATIO) {
 			mysave.DrawRule(j.constraint()->type(), j.objects().front()->id.getID(), j.objects().back()->id.getID(),
 				j.constraint()->value());
-			j.moveNext();
+			j++;
 			continue;
 		}
 		if (j.constraint()->type() == CONSTR_3PRATIO) {
-			std::list<ObjectBase*>::iterator i = j.objects().begin();
+			mylist<ObjectBase*>::myiterator i = j.objects().begin();
 			unsigned id1 = (*i)->id.getID(); ++i;
 			unsigned id2 = (*i)->id.getID(); ++i;
 			unsigned id3 = (*i)->id.getID();
 			mysave.DrawRule(j.constraint()->type(), id1, id2, id3, j.constraint()->value());
-			j.moveNext();
+			j++;
 			continue;
 		}
 		if (j.constraint()->type() == CONSTR_3PONLINE) {
-			std::list<ObjectBase*>::iterator i = j.objects().begin();
+			mylist<ObjectBase*>::myiterator i = j.objects().begin();
 			unsigned id1 = (*i)->id.getID(); ++i;
 			unsigned id2 = (*i)->id.getID(); ++i;
 			unsigned id3 = (*i)->id.getID();
 			mysave.DrawRule(j.constraint()->type(), id1, id2, id3);
-			j.moveNext();
+			j++;
 			continue;
 		}
 	}
@@ -374,8 +374,8 @@ bool CORE::DeleteRule(unsigned id)
 	if (_storage_of_constraints.has(id))
 	{
 		IConstraint* constraint = _storage_of_constraints.get(id);
-		std::list<ObjectBase*> objlist = _storage_of_constraints.get(constraint);
-		for (std::list<ObjectBase*>::iterator iter = objlist.begin(); iter != objlist.end(); iter++)
+		mylist<ObjectBase*> objlist = _storage_of_constraints.get(constraint);
+		for (mylist<ObjectBase*>::myiterator iter = objlist.begin(); iter.valid(); iter++)
 		{
 			_storage_of_constraints.remove(*iter, constraint);
 		}

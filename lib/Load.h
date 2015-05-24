@@ -6,7 +6,7 @@
 #include <fstream>
 #include <QFile>
 #include <QXmlStreamReader>
-#include "storages/storage_list.h"
+#include "storages/mylist.h"
 #include "core.h"
 using namespace std;
 
