@@ -302,6 +302,20 @@ void CORE::AddRule(unsigned type, double value)
 			}
 			break;
 		}
+		case CONSTR_PONC:
+		{
+			if (addc_ponc())
+			{
+				mygui->WriteText(DONESTRING, "Rule added");
+			}
+			else
+			{
+				mygui->WriteText("Error", "Can't add rule to these objects.");
+				mygui->WriteError("Can't add rule to these objects.");
+				return;
+			}
+			break;
+		}
 		default:
 		{
 			mygui->WriteText("FATAL ERROR", "Wrong type of rule.");
@@ -315,6 +329,41 @@ bool CORE::AddRule(CONSTR_TYPE type, unsigned id1, unsigned id2)
 {
 	switch (type)
 	{
+		case CONSTR_PONC:
+		{
+			Circle* o1 = dynamic_cast<Circle*>(_storage_of_objects.get(id1));
+			if (o1)
+			{
+				Point* o2 = dynamic_cast<Point*>(_storage_of_objects.get(id2));
+				if (o2)
+				{
+
+					Point2Point* rule = new Point2Point(o1->p->x, o1->p->y,
+																	o2->x, o2->y,
+																	o1->r);
+
+					_storage_of_constraints.add(o1, rule);
+					_storage_of_constraints.add(o2, rule);
+					return true;
+				}
+			}
+			Point* p = dynamic_cast<Point*>(_storage_of_objects.get(id1));
+			if (p)
+			{
+				Circle* c = dynamic_cast<Circle*>(_storage_of_objects.get(id2));
+				if (c)
+				{
+					Point2Point* rule = new Point2Point(c->p->x, c->p->y,
+																	p->x, p->y,
+																	c->r);
+
+					_storage_of_constraints.add(p, rule);
+					_storage_of_constraints.add(c, rule);
+					return true;
+				}
+			}
+			break;
+		}
 		case CONSTR_EXCONTACT:
 		{
 			Circle* o1 = dynamic_cast<Circle*>(_storage_of_objects.get(id1));
@@ -1097,6 +1146,47 @@ bool CORE::addc_orthogonality()
 			_storage_of_constraints.add(obj1, rule);
 			_storage_of_constraints.add(obj2, rule);
 			return true;
+		}
+	}
+	return false;
+}
+bool CORE::addc_ponc()
+{
+	if (_selected_objects.size() == 2)
+	{
+		myavltree<unsigned, ObjectBase*>::myiterator k(_selected_objects);
+		Circle* o1 = dynamic_cast<Circle*>(k.value());
+		if (o1)
+		{
+			k++;
+			Point* o2 = dynamic_cast<Point*>(k.value());
+			if (o2)
+			{
+
+				Point2Point* rule = new Point2Point(o1->p->x, o1->p->y,
+																o2->x, o2->y,
+																o1->r);
+
+				_storage_of_constraints.add(o1, rule);
+				_storage_of_constraints.add(o2, rule);
+				return true;
+			}
+		}
+		Point* p = dynamic_cast<Point*>(k.value());
+		if (p)
+		{
+			k++;
+			Circle* c = dynamic_cast<Circle*>(k.value());
+			if (c)
+			{
+				Point2Point* rule = new Point2Point(c->p->x, c->p->y,
+																p->x, p->y,
+																c->r);
+
+				_storage_of_constraints.add(p, rule);
+				_storage_of_constraints.add(c, rule);
+				return true;
+			}
 		}
 	}
 	return false;

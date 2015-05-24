@@ -74,12 +74,19 @@ bool StorageOfConstraints::remove(ObjectBase* object, IConstraint* constraint)
 {
 	if (!_objects.check(object) || !_constraints.check(constraint)) return false;
 
-	_objects.get(object).erase(_objects.get(object).find(constraint));
-	if (_objects.get(object).size() == 0)
-		_objects.erase(object);
-	_constraints.get(constraint).erase(_constraints.get(constraint).find(object));
-	if (_constraints.get(constraint).size() == 0)
-		_constraints.erase(constraint);
+	try
+	{
+		_objects.get(object).erase(_objects.get(object).find(constraint));
+		if (_objects.get(object).size() == 0)
+			_objects.erase(object);
+		_constraints.get(constraint).erase(_constraints.get(constraint).find(object));
+		if (_constraints.get(constraint).size() == 0)
+			_constraints.erase(constraint);
+	}
+	catch (...)
+	{
+		return false;
+	}
 
 	return true;
 }

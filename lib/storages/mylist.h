@@ -330,7 +330,9 @@ template<typename item_type> void mylist<item_type>::erase(myiterator iter)
 		else
 		{
 			if (prev) prev->next = next;
+			else _first = _first->next;
 			if (next) next->prev = prev;
+			else _last = _last->prev;
 			delete iter._current;
 		}
 		_size--;

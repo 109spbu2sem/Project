@@ -244,7 +244,8 @@ template<typename item_type> void myvector<item_type>::push_back(const item_type
 {
 	if (_items == 0)
 	{
-		_items = new item_type(item);
+		_items = new item_type;
+		*_items = item;
 		_size = 1;
 		_memory = 0;
 	}

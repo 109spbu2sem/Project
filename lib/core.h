@@ -54,6 +54,7 @@ private:
 	bool addc_spratio(double);
 	bool addc_parallelism();
 	bool addc_orthogonality();
+	bool addc_ponc();
 	
 	const char* DONESTRING;
 	const char* WORKSTRING;

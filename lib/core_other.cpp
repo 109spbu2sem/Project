@@ -63,50 +63,7 @@ void CORE::Select(double x, double y)
 			}
 		}
 	}
-	if (min_id)
-	{
-		try
-		{
-			ObjectBase* object = _storage_of_objects.get(min_id);
-			object->changeSelect();
-			if (object->isSelected())
-			{
-				_selected_objects.insert(object->id.getID(), object);
-				switch (object->objectType())
-				{
-					case PRIMITIVE_POINT:
-					{
-						Point* p = dynamic_cast<Point*>(object);
-						mygui->Set_properties_of_point(p->id.getID(), *p->x, *p->y, p->color.getColor());
-						break;
-					}
-					case PRIMITIVE_SEGMENT:
-					{
-						Segment* s = dynamic_cast<Segment*>(object);
-						mygui->Set_properties_of_segment(s->id.getID(), *s->p1->x, *s->p1->y, *s->p2->x, *s->p2->y, s->color.getColor());
-						break;
-					}
-					case PRIMITIVE_CIRCLE:
-					{
-						Circle* c = dynamic_cast<Circle*>(object);
-						mygui->Set_properties_of_circle(c->id.getID(), *c->p->x, *c->p->y, *c->r, c->color.getColor());
-						break;
-					}
-				}
-			}
-			else
-			{
-				_selected_objects.erase(object->id.getID());
-			}
-			writeToLog(min_id, "selection was changed for (ID) ", 2);
-			Redraw(mygui);
-		}
-		catch (...)
-		{
-		}
-	}
-	else
-		ClearSelection();
+	Select(min_id);
 	return;
 }
 
@@ -152,6 +109,8 @@ bool CORE::Select(unsigned id)
 			return object->isSelected();
 		}
 	}
+	else
+		ClearSelection();
 	return false;
 }
 
@@ -377,7 +336,11 @@ bool CORE::DeleteRule(unsigned id)
 		mylist<ObjectBase*> objlist = _storage_of_constraints.get(constraint);
 		for (mylist<ObjectBase*>::myiterator iter = objlist.begin(); iter.valid(); iter++)
 		{
-			_storage_of_constraints.remove(*iter, constraint);
+			try
+			{
+				_storage_of_constraints.remove(*iter, constraint);
+			}
+			catch (...) { }
 		}
 		_storage_of_constraints.remove(id);
 		Redraw(mygui);

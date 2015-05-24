@@ -363,6 +363,11 @@
              <string>Orthogonal Lines</string>
             </property>
            </item>
+           <item>
+            <property name="text">
+             <string>Point on circle</string>
+            </property>
+           </item>
           </widget>
          </item>
          <item>
