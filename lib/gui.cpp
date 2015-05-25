@@ -58,22 +58,16 @@ const char* GUI::ConstrTypeToString(CONSTR_TYPE type)
 			return "Constraint collector";
 		case CONSTR_P2PDIST:
 			return "Distance from point to point";
-		case CONSTR_P2SECTDIST:
-			return "Distance from point to segment";
 		case CONSTR_P2LINEDIST:
 			return "Distance from point to line";
 		case CONSTR_3PONLINE:
 			return "Three points on line";
 		case CONSTR_L2LANGLE:
 			return "Angle between segments";
-		case CONSTR_3PRATIO:
-			return "Ratio between three points";
 		case CONSTR_EXCONTACT:
 			return "External circle contact";
 		case CONSTR_INCONTACT:
 			return "Internal circle contact";
-		case CONSTR_SPRATIO:
-			return "Ratio between point and segment";
 		case CONSTR_PARALLELISM:
 			return "Parallel lines";
 		case CONSTR_ORTHOGONALITY:
@@ -96,14 +90,14 @@ void GUI::on_openAddingBTN_clicked()
 
 void GUI::on_ruleBox_currentIndexChanged(int index)
 {
-	switch (index)
+	switch (index + 1)
 	{
-		case 5:
-		case 6:
-		case 9:
-		case 10:
-		case 11:
-		case 2:
+		case CONSTR_3PONLINE:
+		case CONSTR_EXCONTACT:
+		case CONSTR_INCONTACT:
+		case CONSTR_PARALLELISM:
+		case CONSTR_ORTHOGONALITY:
+		case CONSTR_PONC:
 		{
 			ui->ruleValueEdit->setEnabled(false);
 			break;
@@ -120,9 +114,9 @@ void GUI::on_ruleBox_currentIndexChanged(int index)
 
 void GUI::on_pushButton_clicked()
 {
-	switch (ui->ruleBox->currentIndex())
+	switch (ui->ruleBox->currentIndex() + 1)
 	{
-		case 0:
+		case CONSTR_P2PDIST:
 		{
 			if (!ui->ruleValueEdit->text().isEmpty())
 			{
@@ -133,7 +127,7 @@ void GUI::on_pushButton_clicked()
 				WriteText("Need value", "");
 			break;
 		}
-		case 1:
+		case CONSTR_P2LINEDIST:
 		{
 			if (!ui->ruleValueEdit->text().isEmpty())
 			{
@@ -144,24 +138,13 @@ void GUI::on_pushButton_clicked()
 				WriteText("Need value", "");
 			break;
 		}
-		case 2:
+		case CONSTR_3PONLINE:
 		{
 			mycore->AddRule(CONSTR_3PONLINE);
 			mycore->Calculate();
 			break;
 		}
-		case 3:
-		{
-			if (!ui->ruleValueEdit->text().isEmpty())
-			{
-				mycore->AddRule(CONSTR_3PRATIO, ui->ruleValueEdit->text().toDouble());
-				mycore->Calculate();
-			}
-			else
-				WriteText("Need value", "");
-			break;
-		}
-		case 4:
+		case CONSTR_L2LANGLE:
 		{
 			if (!ui->ruleValueEdit->text().isEmpty())
 			{
@@ -172,53 +155,31 @@ void GUI::on_pushButton_clicked()
 				WriteText("Need value", "");
 			break;
 		}
-		case 5:
+		case CONSTR_EXCONTACT:
 		{
 			mycore->AddRule(CONSTR_EXCONTACT);
 			mycore->Calculate();
 			break;
 		}
-		case 6:
+		case CONSTR_INCONTACT:
 		{
 			mycore->AddRule(CONSTR_INCONTACT);
 			mycore->Calculate();
 			break;
 		}
-		case 7:
-		{
-			if (!ui->ruleValueEdit->text().isEmpty())
-			{
-				mycore->AddRule(CONSTR_P2SECTDIST, ui->ruleValueEdit->text().toDouble());
-				mycore->Calculate();
-			}
-			else
-				WriteText("Need value", "");
-			break;
-		}
-		case 8:
-		{
-			if (!ui->ruleValueEdit->text().isEmpty())
-			{
-				mycore->AddRule(CONSTR_SPRATIO, ui->ruleValueEdit->text().toDouble());
-				mycore->Calculate();
-			}
-			else
-				WriteText("Need value", "");
-			break;
-		}
-		case 9:
+		case CONSTR_PARALLELISM:
 		{
 			mycore->AddRule(CONSTR_PARALLELISM);
 			mycore->Calculate();
 			break;
 		}
-		case 10:
+		case CONSTR_ORTHOGONALITY:
 		{
 			mycore->AddRule(CONSTR_ORTHOGONALITY);
 			mycore->Calculate();
 			break;
 		}
-		case 11:
+		case CONSTR_PONC:
 		{
 			mycore->AddRule(CONSTR_PONC);
 			mycore->Calculate();

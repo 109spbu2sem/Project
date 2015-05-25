@@ -289,20 +289,10 @@ void CORE::IWantSave()
 			j++;
 			continue;
 		}
-		if (j.constraint()->type() == CONSTR_P2PDIST || j.constraint()->type() == CONSTR_P2SECTDIST ||
-			j.constraint()->type() == CONSTR_P2LINEDIST || j.constraint()->type() == CONSTR_L2LANGLE ||
-			j.constraint()->type() == CONSTR_SPRATIO) {
+		if (j.constraint()->type() == CONSTR_P2PDIST ||
+			j.constraint()->type() == CONSTR_P2LINEDIST || j.constraint()->type() == CONSTR_L2LANGLE) {
 			mysave.DrawRule(j.constraint()->type(), j.objects().front()->id.getID(), j.objects().back()->id.getID(),
 				j.constraint()->value());
-			j++;
-			continue;
-		}
-		if (j.constraint()->type() == CONSTR_3PRATIO) {
-			mylist<ObjectBase*>::myiterator i = j.objects().begin();
-			unsigned id1 = (*i)->id.getID(); ++i;
-			unsigned id2 = (*i)->id.getID(); ++i;
-			unsigned id3 = (*i)->id.getID();
-			mysave.DrawRule(j.constraint()->type(), id1, id2, id3, j.constraint()->value());
 			j++;
 			continue;
 		}

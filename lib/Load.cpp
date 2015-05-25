@@ -210,9 +210,8 @@ void Load::testConstraint() {
 				_flag = 0;
 		}
 	}
-	if (type == CONSTR_P2PDIST || type == CONSTR_P2SECTDIST ||
-		type == CONSTR_P2LINEDIST || type == CONSTR_L2LANGLE ||
-		type == CONSTR_SPRATIO) {
+	if (type == CONSTR_P2PDIST ||
+		type == CONSTR_P2LINEDIST || type == CONSTR_L2LANGLE) {
 		if (_xml.name() == "id1") _xml.readNext();
 		else { _flag = 0; return; }
 		if (_xml.text().toInt() == 0) { _flag = 0; return; }
@@ -224,40 +223,6 @@ void Load::testConstraint() {
 		}
 		_xml.readNext(); _xml.readNext(); _xml.readNext();
 		if (_xml.name() == "id2") _xml.readNext();
-		else { _flag = 0; return; }
-		if (_xml.text().toInt() == 0) { _flag = 0; return; }
-		for (unsigned i = 0; i < _vector.size(); ++i) {
-			if (_vector[i] == _xml.text().toInt())
-				break;
-			if (i == _vector.size() - 1)
-				_flag = 0;
-		}
-		_xml.readNext(); _xml.readNext(); _xml.readNext();
-		if (_xml.name() == "value") _xml.readNext();
-		else { _flag = 0; return; }
-	}
-	if (type == CONSTR_3PRATIO) {
-		if (_xml.name() == "id1") _xml.readNext();
-		else { _flag = 0; return; }
-		if (_xml.text().toInt() == 0) { _flag = 0; return; }
-		for (unsigned i = 0; i < _vector.size(); ++i) {
-			if (_vector[i] == _xml.text().toInt())
-				break;
-			if (i == _vector.size() - 1)
-				_flag = 0;
-		}
-		_xml.readNext(); _xml.readNext(); _xml.readNext();
-		if (_xml.name() == "id2") _xml.readNext();
-		else { _flag = 0; return; }
-		if (_xml.text().toInt() == 0) { _flag = 0; return; }
-		for (unsigned i = 0; i < _vector.size(); ++i) {
-			if (_vector[i] == _xml.text().toInt())
-				break;
-			if (i == _vector.size() - 1)
-				_flag = 0;
-		}
-		_xml.readNext(); _xml.readNext(); _xml.readNext();
-		if (_xml.name() == "id3") _xml.readNext();
 		else { _flag = 0; return; }
 		if (_xml.text().toInt() == 0) { _flag = 0; return; }
 		for (unsigned i = 0; i < _vector.size(); ++i) {
@@ -461,9 +426,8 @@ void Load::constraint() {
 		id2 = _xml.text().toInt();
 		_action->AddRule(type, id1, id2);
 	}
-	if (type == CONSTR_P2PDIST || type == CONSTR_P2SECTDIST ||
-		type == CONSTR_P2LINEDIST || type == CONSTR_L2LANGLE ||
-		type == CONSTR_SPRATIO) {
+	if (type == CONSTR_P2PDIST ||
+		type == CONSTR_P2LINEDIST || type == CONSTR_L2LANGLE) {
 		_xml.readNext();
 		id1 = _xml.text().toInt();
 		_xml.readNext(); _xml.readNext(); _xml.readNext(); _xml.readNext();
@@ -471,17 +435,6 @@ void Load::constraint() {
 		_xml.readNext(); _xml.readNext(); _xml.readNext(); _xml.readNext();
 		value = _xml.text().toDouble();
 		_action->AddRule(type, id1, id2, value);
-	}
-	if (type == CONSTR_3PRATIO) {
-		_xml.readNext();
-		id1 = _xml.text().toInt();
-		_xml.readNext(); _xml.readNext(); _xml.readNext(); _xml.readNext();
-		id2 = _xml.text().toInt();
-		_xml.readNext(); _xml.readNext(); _xml.readNext(); _xml.readNext();
-		id3 = _xml.text().toInt();
-		_xml.readNext(); _xml.readNext(); _xml.readNext(); _xml.readNext();
-		value = _xml.text().toDouble();
-		_action->AddRule(type, id1, id2, id3, value);
 	}
 	if (type == CONSTR_3PONLINE) {
 		_xml.readNext();

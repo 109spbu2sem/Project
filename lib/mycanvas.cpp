@@ -8,9 +8,9 @@ MyCanvas::MyCanvas(QWidget *parent) : QGraphicsView(parent)
 {
 	mainscene = new QGraphicsScene();
 	setScene(mainscene);
-	//scale(2, 2);
+	scale(2, 2);
 	_tool = TOOL_Select;
-	setSceneRect(-1000, -1000, 2000, 2000);
+	setSceneRect(-5000, -5000, 10000, 10000);
 	_displaygrid = false;
 	NewCanvas();
 }
@@ -34,10 +34,10 @@ void MyCanvas::NewCanvas()
 		pen.setJoinStyle(Qt::RoundJoin);
 		const double r = 0.7;
 		pen.setWidthF(r - 0.3);
-		for (int x = -1000; x <= 1000; x += 100)
+		for (int x = -5000; x <= 5000; x += 100)
 		{
-			mainscene->addLine(x, -1000, x, 1000, pen);
-			mainscene->addLine(-1000, x, 1000, x, pen);
+			mainscene->addLine(x, -5000, x, 5000, pen);
+			mainscene->addLine(-5000, x, 5000, x, pen);
 		}
 		/*pen.setWidthF(0.8);
 		mainscene->addLine(0, -1000, 0, 1000, pen);
@@ -45,7 +45,7 @@ void MyCanvas::NewCanvas()
 		QPen pen1;
 		pen1.setWidthF(r + 0.4);
 		QBrush brush(Qt::SolidPattern);
-		for (int x = -1000; x <= 1000; x += 25)
+		for (int x = -5000; x <= 5000; x += 25)
 		{
 			mainscene->addEllipse(x - r / 2, -r / 2, r, r, pen1, brush);
 			mainscene->addEllipse(-r / 2, x - r / 2, r, r, pen1, brush);

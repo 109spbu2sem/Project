@@ -137,7 +137,6 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="..\lib\Color.cpp" />
-    <ClCompile Include="..\lib\constraints\DistancePoint-Section.cpp" />
     <ClCompile Include="..\lib\constraints\DistanceToTheLine.cpp" />
     <ClCompile Include="..\lib\core_add.cpp" />
     <ClCompile Include="..\lib\core_other.cpp" />
@@ -166,17 +165,15 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\lib\constraints\AngleSegment-Segment.h" />
-    <ClInclude Include="..\lib\constraints\AspectRatio.h" />
     <ClInclude Include="..\lib\constraints\CircleContact.h" />
     <ClInclude Include="..\lib\constraints\Collector.h" />
     <ClInclude Include="..\lib\constraints\DistancePoint-Point.h" />
-    <ClInclude Include="..\lib\constraints\DistancePoint-Section.h" />
     <ClInclude Include="..\lib\constraints\DistanceToTheLine.h" />
     <ClInclude Include="..\lib\constraints\OrthogonalLines.h" />
     <ClInclude Include="..\lib\constraints\ParallelLines.h" />
+    <ClInclude Include="..\lib\constraints\ThreePointsOnTheLine.h" />
     <ClInclude Include="..\lib\enums.h" />
     <ClInclude Include="..\lib\Id.h" />
-    <ClInclude Include="..\lib\constraints\ThreePointsOnTheLine.h" />
     <ClInclude Include="..\lib\core.h" />
     <ClInclude Include="..\lib\global.h" />
     <ClInclude Include="..\lib\ObjectBase.h" />

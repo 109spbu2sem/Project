@@ -55,9 +55,6 @@
     <ClCompile Include="..\lib\Color.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="..\lib\constraints\DistancePoint-Section.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="..\lib\constraints\DistanceToTheLine.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -132,25 +129,16 @@
     <ClInclude Include="..\lib\constraints\AngleSegment-Segment.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="..\lib\constraints\AspectRatio.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="..\lib\constraints\Collector.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="..\lib\constraints\DistancePoint-Point.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="..\lib\constraints\DistancePoint-Section.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="..\lib\constraints\DistanceToTheLine.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="..\lib\Id.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\lib\constraints\ThreePointsOnTheLine.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="..\lib\core.h">
@@ -223,6 +211,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="..\lib\storages\myvector.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\lib\constraints\ThreePointsOnTheLine.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
