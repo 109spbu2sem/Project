@@ -7,48 +7,79 @@
 
 class DistanceToTheLine :public IConstraint
 {
-	double*_x, *_y, *_x1, *_y1, *_x2, *_y2, *_d;
-
-	double GetX(double x, double y, double x1, double y1, double x2, double y2);
-	double GetY(double x, double y, double x1, double y1, double x2, double y2);
-
+	double *_p1x, *_p1y, *_p2x, *_p2y, *_p3x, *_p3y, *_d;
 public:
-	double DistPointLine(double x, double y, double x1, double y1, double x2, double y2);
-	DistanceToTheLine(double*x, double *y, double *x1, double *y1, double *x2, double *y2, double *d)
+	DistanceToTheLine(double *p1x, double *p1y, double *p2x, double *p2y, double *p3x, double *p3y, double *d)
 	{
-		_x = x;
-		_y = y;
-		_x1 = x1;
-		_y1 = y1;
-		_x2 = x2;
-		_y2 = y2;
+		_p1x = p1x;
+		_p1y = p1y;
+		_p2x = p2x;
+		_p2y = p2y;
+		_p3x = p3x;
+		_p3y = p3y;
 		_d = d;
 	}
 	virtual ~DistanceToTheLine()
 	{
 
 	}
-
-	double error()
+		virtual double error()
 	{
-		/*double err = DistPointLine(*_x, *_y, *_x1, *_y1, *_x2, *_y2);
-		_XX = GetX(*_x, *_y, *_x1, *_y1, *_x2, *_y2);
-		_YY = GetY(*_x, *_y, *_x1, *_y1, *_x2, *_y2);
-		_STARTING_ERROR = err;*/
-		return 0;//(err - *_d)*(err - *_d);
-	};
-
-	double diff(double *par)
-	{		
-		/*if (par == _x) return 2 * (*_d - _STARTING_ERROR)*(_XX - *_x) / _STARTING_ERROR;
-		if (par == _y) return 2 * (*_d - _STARTING_ERROR)*(_YY - *_y) / _STARTING_ERROR;
-		if (par == _x1) return 0;
-		if (par == _y1) return 0;
-		if (par == _x2) return 0;
-		if (par == _y2) return 0;
-		if (par == _d) return 2 * (*_d - _STARTING_ERROR);*/
+		return (*_d - abs(*_p1x*(*_p2y - *_p3y) + *_p1y*(*_p3x - *_p2x) + *_p3y * *_p2x - *_p2y * *_p3x) / length(*_p2x, *_p2y, *_p3x, *_p3y));
+	}
+	virtual double diff(double *par)
+	{
+		if (par == _d)
+			return 1;
+		if (*_p1x*(*_p2y - *_p3y) + *_p1y*(*_p3x - *_p2x) + *_p3y * *_p2x - *_p2y * *_p3x > 0)
+		{
+			if (par == _p1x)
+				return (*_p3y - *_p2y) / length(*_p2x, *_p2y, *_p3x, *_p3y);
+			if (par == _p1y)
+				return (*_p2x - *_p3x) / length(*_p2x, *_p2y, *_p3x, *_p3y);
+			if (par == _p2x)
+				return ((*_p1y - *_p3y)*length(*_p2x, *_p2y, *_p3x, *_p3y) + (*_p2x - *_p3x)*
+				abs(*_p1x*(*_p2y - *_p3y) + *_p1y*(*_p3x - *_p2x) + *_p3y * *_p2x - *_p2y * *_p3x) / length(*_p2x, *_p2y, *_p3x, *_p3y)) /
+				pow(length(*_p2x, *_p2y, *_p3x, *_p3y), 2);
+			if (par == _p2y)
+				return ((*_p3x - *_p1x)*length(*_p2x, *_p2y, *_p3x, *_p3y) + (*_p2y - *_p3y)*
+				abs(*_p1x*(*_p2y - *_p3y) + *_p1y*(*_p3x - *_p2x) + *_p3y * *_p2x - *_p2y * *_p3x) / length(*_p2x, *_p2y, *_p3x, *_p3y)) /
+				pow(length(*_p2x, *_p2y, *_p3x, *_p3y), 2);
+			if (par == _p3x)
+				return ((*_p2y - *_p1y)*length(*_p2x, *_p2y, *_p3x, *_p3y) + (*_p3x - *_p2x)*
+				abs(*_p1x*(*_p2y - *_p3y) + *_p1y*(*_p3x - *_p2x) + *_p3y * *_p2x - *_p2y * *_p3x) / length(*_p2x, *_p2y, *_p3x, *_p3y)) /
+				pow(length(*_p2x, *_p2y, *_p3x, *_p3y), 2);
+			if (par == _p3y)
+				return ((*_p1x - *_p2x)*length(*_p2x, *_p2y, *_p3x, *_p3y) + (*_p3y - *_p2y)*
+				abs(*_p1x*(*_p2y - *_p3y) + *_p1y*(*_p3x - *_p2x) + *_p3y * *_p2x - *_p2y * *_p3x) / length(*_p2x, *_p2y, *_p3x, *_p3y)) /
+				pow(length(*_p2x, *_p2y, *_p3x, *_p3y), 2);
+		}
+		else
+		if (*_p1x*(*_p2y - *_p3y) + *_p1y*(*_p3x - *_p2x) + *_p3y * *_p2x - *_p2y * *_p3x < 0)
+		{
+			if (par == _p1x)
+				return (-1)*(*_p3y - *_p2y) / length(*_p2x, *_p2y, *_p3x, *_p3y);
+			if (par == _p1y)
+				return (-1)*(*_p2x - *_p3x) / length(*_p2x, *_p2y, *_p3x, *_p3y);
+			if (par == _p2x)
+				return (-1)*((*_p1y - *_p3y)*length(*_p2x, *_p2y, *_p3x, *_p3y) + (*_p2x - *_p3x)*
+				abs(*_p1x*(*_p2y - *_p3y) + *_p1y*(*_p3x - *_p2x) + *_p3y * *_p2x - *_p2y * *_p3x) / length(*_p2x, *_p2y, *_p3x, *_p3y)) /
+				pow(length(*_p2x, *_p2y, *_p3x, *_p3y), 2);
+			if (par == _p2y)
+				return (-1)*((*_p3x - *_p1x)*length(*_p2x, *_p2y, *_p3x, *_p3y) + (*_p2y - *_p3y)*
+				abs(*_p1x*(*_p2y - *_p3y) + *_p1y*(*_p3x - *_p2x) + *_p3y * *_p2x - *_p2y * *_p3x) / length(*_p2x, *_p2y, *_p3x, *_p3y)) /
+				pow(length(*_p2x, *_p2y, *_p3x, *_p3y), 2);
+			if (par == _p3x)
+				return (-1)*((*_p2y - *_p1y)*length(*_p2x, *_p2y, *_p3x, *_p3y) + (*_p3x - *_p2x)*
+				abs(*_p1x*(*_p2y - *_p3y) + *_p1y*(*_p3x - *_p2x) + *_p3y * *_p2x - *_p2y * *_p3x) / length(*_p2x, *_p2y, *_p3x, *_p3y)) /
+				pow(length(*_p2x, *_p2y, *_p3x, *_p3y), 2);
+			if (par == _p3y)
+				return (-1)*((*_p1x - *_p2x)*length(*_p2x, *_p2y, *_p3x, *_p3y) + (*_p3y - *_p2y)*
+				abs(*_p1x*(*_p2y - *_p3y) + *_p1y*(*_p3x - *_p2x) + *_p3y * *_p2x - *_p2y * *_p3x) / length(*_p2x, *_p2y, *_p3x, *_p3y)) /
+				pow(length(*_p2x, *_p2y, *_p3x, *_p3y), 2);
+		}
 		return 0;
-	};
+	}
 
 	virtual CONSTR_TYPE type() const
 	{
