@@ -1,9 +1,7 @@
 #include "constraints/DistancePoint-Point.h"
-#include "constraints/DistancePoint-Section.h"
 #include "constraints/DistanceToTheLine.h"
 #include "constraints/AngleSegment-Segment.h"
 #include "constraints/ThreePointsOnTheLine.h"
-#include "constraints/AspectRatio.h"
 #include "constraints/Collector.h"
 #include "constraints/CircleContact.h"
 #include "constraints/ParallelLines.h"
@@ -162,20 +160,6 @@ void CORE::AddRule(unsigned type, double value)
 			}
 			break;
 		}
-		case CONSTR_P2SECTDIST:
-		{
-			if (addc_p2sdist(value))
-			{
-				mygui->WriteText(DONESTRING, "Rule added");
-			}
-			else
-			{
-				mygui->WriteText("Error", "Can't add rule to these objects.");
-				mygui->WriteError("Can't add rule to these objects.");
-				return;
-			}
-			break;
-		}
 		case CONSTR_P2LINEDIST:
 		{
 			if (addc_p2ldist(value))
@@ -193,20 +177,6 @@ void CORE::AddRule(unsigned type, double value)
 		case CONSTR_L2LANGLE:
 		{
 			if (addc_l2langle(value))
-			{
-				mygui->WriteText(DONESTRING, "Rule added");
-			}
-			else
-			{
-				mygui->WriteText("Error", "Can't add rule to these objects.");
-				mygui->WriteError("Can't add rule to these objects.");
-				return;
-			}
-			break;
-		}
-		case CONSTR_3PRATIO:
-		{
-			if (addc_3pratio(value))
 			{
 				mygui->WriteText(DONESTRING, "Rule added");
 			}
@@ -249,20 +219,6 @@ void CORE::AddRule(unsigned type, double value)
 		case CONSTR_INCONTACT:
 		{
 			if (addc_incontact())
-			{
-				mygui->WriteText(DONESTRING, "Rule added");
-			}
-			else
-			{
-				mygui->WriteText("Error", "Can't add rule to these objects.");
-				mygui->WriteError("Can't add rule to these objects.");
-				return;
-			}
-			break;
-		}
-		case CONSTR_SPRATIO:
-		{
-			if (addc_spratio(value))
 			{
 				mygui->WriteText(DONESTRING, "Rule added");
 			}
@@ -466,49 +422,6 @@ bool CORE::AddRule(CONSTR_TYPE type, unsigned id1, unsigned id2, double value)
 			}
 			break;
 		}
-		case CONSTR_P2SECTDIST:
-		{
-			Point* obj1 = dynamic_cast<Point*>(_storage_of_objects.get(id1));
-			if (obj1)
-			{
-				Segment* obj2 = dynamic_cast<Segment*>(_storage_of_objects.get(id2));
-				if (obj2)
-				{
-					double* val = new double;
-					*val = value;
-					_parameters.insert(val, true);
-					DistanceFromPointToSection* rule = new DistanceFromPointToSection(obj1->x, obj1->y,
-																											obj2->p1->x, obj2->p1->y,
-																											obj2->p2->x, obj2->p2->y,
-																											val);
-					
-					_storage_of_constraints.add(obj1, rule);
-					_storage_of_constraints.add(obj2, rule);
-					return true;
-				}
-				return false;
-			}
-			Segment* ob2 = dynamic_cast<Segment*>(_storage_of_objects.get(id1));
-			if (ob2)
-			{
-				Point* ob1 = dynamic_cast<Point*>(_storage_of_objects.get(id2));
-				if (ob1)
-				{
-					double* val = new double;
-					*val = value;
-					_parameters.insert(val, true);
-					DistanceFromPointToSection* rule = new DistanceFromPointToSection(ob1->x, ob1->y,
-																											ob2->p1->x, ob2->p1->y,
-																											ob2->p2->x, ob2->p2->y,
-																											val);
-					
-					_storage_of_constraints.add(ob1, rule);
-					_storage_of_constraints.add(ob2, rule);
-					return true;
-				}
-			}
-			break;
-		}
 		case CONSTR_P2LINEDIST:
 		{
 			Point* obj1 = dynamic_cast<Point*>(_storage_of_objects.get(id1));
@@ -570,84 +483,6 @@ bool CORE::AddRule(CONSTR_TYPE type, unsigned id1, unsigned id2, double value)
 				_storage_of_constraints.add(obj1, rule);
 				_storage_of_constraints.add(obj2, rule);
 				return true;
-			}
-			break;
-		}
-		case CONSTR_SPRATIO:
-		{
-			Point* obj1 = dynamic_cast<Point*>(_storage_of_objects.get(id1));
-			if (obj1)
-			{
-				Segment* obj2 = dynamic_cast<Segment*>(_storage_of_objects.get(id2));
-				if (obj2)
-				{
-					double* val = new double;
-					*val = value;
-					_parameters.insert(val, true);
-					AspectRatio* rule = new AspectRatio(obj2->p1->x, obj2->p1->y,
-																	obj1->x, obj1->y,
-																	obj2->p2->x, obj2->p2->y,
-																	val);
-					
-					_storage_of_constraints.add(obj1, rule);
-					_storage_of_constraints.add(obj2, rule);
-					return true;
-				}
-			}
-			Segment* ob2 = dynamic_cast<Segment*>(_storage_of_objects.get(id1));
-			if (ob2)
-			{
-				Point* ob1 = dynamic_cast<Point*>(_storage_of_objects.get(id2));
-				if (ob1)
-				{
-					double* val = new double;
-					*val = value;
-					_parameters.insert(val, true);
-					AspectRatio* rule = new AspectRatio(ob2->p1->x, ob2->p1->y,
-																	ob1->x, ob1->y,
-																	ob2->p2->x, ob2->p2->y,
-																	val);
-					
-					_storage_of_constraints.add(ob1, rule);
-					_storage_of_constraints.add(ob2, rule);
-					return true;
-				}
-			}
-			break;
-		}
-	}
-	return false;
-}
-
-bool CORE::AddRule(CONSTR_TYPE type, unsigned id1, unsigned id2, unsigned id3, double value)
-{
-	switch (type)
-	{
-		case CONSTR_3PRATIO:
-		{
-			Point* o1 = dynamic_cast<Point*>(_storage_of_objects.get(id1));
-			if (o1)
-			{
-				Point* o2 = dynamic_cast<Point*>(_storage_of_objects.get(id2));
-				if (o2)
-				{
-					Point* o3 = dynamic_cast<Point*>(_storage_of_objects.get(id3));
-					if (o3)
-					{
-						double* val = new double;
-						*val = value;
-						_parameters.insert(val, true);
-						AspectRatio* rule = new AspectRatio(o1->x, o1->y,
-																		o2->x, o2->y,
-																		o3->x, o3->y,
-																		val);
-						
-						_storage_of_constraints.add(o1, rule);
-						_storage_of_constraints.add(o2, rule);
-						_storage_of_constraints.add(o3, rule);
-						return true;
-					}
-				}
 			}
 			break;
 		}
@@ -793,10 +628,11 @@ bool CORE::addc_3ponline()
 			Segment* obj2 = dynamic_cast<Segment*>(k.value());
 			if (obj2)
 			{
-				ThreePoints* rule = new ThreePoints(obj1->x, obj1->y,
-																obj2->p1->x, obj2->p1->y,
-																obj2->p2->x, obj2->p2->y);
-				
+				ThreePointsOnLine* rule = new ThreePointsOnLine(obj2->p1->x, obj2->p1->y,
+																				obj1->x, obj1->y,
+																				obj1->x, obj1->y,
+																				obj2->p2->x, obj2->p2->y);
+
 				_storage_of_constraints.add(obj1, rule);
 				_storage_of_constraints.add(obj2, rule);
 				return true;
@@ -809,10 +645,11 @@ bool CORE::addc_3ponline()
 			Point* ob1 = dynamic_cast<Point*>(k.value());
 			if (ob1)
 			{
-				ThreePoints* rule = new ThreePoints(ob1->x, ob1->y,
-																ob2->p1->x, ob2->p1->y,
-																ob2->p2->x, ob2->p2->y);
-				
+				ThreePointsOnLine* rule = new ThreePointsOnLine(ob2->p1->x, ob2->p1->y,
+																				ob1->x, ob1->y,
+																				ob1->x, ob1->y,
+																				ob2->p2->x, ob2->p2->y);
+
 				_storage_of_constraints.add(ob1, rule);
 				_storage_of_constraints.add(ob2, rule);
 				return true;
@@ -834,11 +671,11 @@ bool CORE::addc_3ponline()
 				Point* o3 = dynamic_cast<Point*>(k.value());
 				if (o3)
 				{
-					ParallelLines* rule = new ParallelLines(o1->x, o1->y,
-																	o2->x, o2->y,
-																	o2->x, o2->y,
-																	o3->x, o3->y);
-					
+					ThreePointsOnLine* rule = new ThreePointsOnLine(o1->x, o1->y,
+																					o2->x, o2->y,
+																					o2->x, o2->y,
+																					o3->x, o3->y);
+
 					_storage_of_constraints.add(o1, rule);
 					_storage_of_constraints.add(o2, rule);
 					_storage_of_constraints.add(o3, rule);
@@ -846,40 +683,6 @@ bool CORE::addc_3ponline()
 				}
 			}
 
-		}
-	}
-	return false;
-}
-bool CORE::addc_3pratio(double value)
-{
-	if (_selected_objects.size() == 3)
-	{
-		myavltree<unsigned, ObjectBase*>::myiterator k(_selected_objects);
-		Point* o1 = dynamic_cast<Point*>(k.value());
-		if (o1)
-		{
-			k++;
-			Point* o2 = dynamic_cast<Point*>(k.value());
-			if (o2)
-			{
-				k++;
-				Point* o3 = dynamic_cast<Point*>(k.value());
-				if (o3)
-				{
-					double* val = new double;
-					*val = value;
-					_parameters.insert(val, true);
-					AspectRatio* rule = new AspectRatio(o1->x, o1->y,
-																	o2->x, o2->y,
-																	o3->x, o3->y,
-																	val);
-					
-					_storage_of_constraints.add(o1, rule);
-					_storage_of_constraints.add(o2, rule);
-					_storage_of_constraints.add(o3, rule);
-					return true;
-				}
-			}
 		}
 	}
 	return false;
@@ -979,7 +782,7 @@ bool CORE::addc_p2ldist(double value)
 																				obj2->p1->x, obj2->p1->y,
 																				obj2->p2->x, obj2->p2->y,
 																				val);
-				
+
 				_storage_of_constraints.add(obj1, rule);
 				_storage_of_constraints.add(obj2, rule);
 				return true;
@@ -1000,7 +803,7 @@ bool CORE::addc_p2ldist(double value)
 																				ob2->p1->x, ob2->p1->y,
 																				ob2->p2->x, ob2->p2->y,
 																				val);
-				
+
 				_storage_of_constraints.add(ob1, rule);
 				_storage_of_constraints.add(ob2, rule);
 				return true;
@@ -1008,104 +811,6 @@ bool CORE::addc_p2ldist(double value)
 		}
 	}
 	return false;
-}
-bool CORE::addc_p2sdist(double value)
-{
-	if (_selected_objects.size() == 2)
-	{
-		myavltree<unsigned, ObjectBase*>::myiterator k(_selected_objects);
-		Point* obj1 = dynamic_cast<Point*>(k.value());
-		if (obj1)
-		{
-			k++;
-			Segment* obj2 = dynamic_cast<Segment*>(k.value());
-			if (obj2)
-			{
-				double* val = new double;
-				*val = value;
-				_parameters.insert(val, true);
-				DistanceFromPointToSection* rule = new DistanceFromPointToSection(obj1->x, obj1->y,
-																										obj2->p1->x, obj2->p1->y,
-																										obj2->p2->x, obj2->p2->y,
-																										val);
-				
-				_storage_of_constraints.add(obj1, rule);
-				_storage_of_constraints.add(obj2, rule);
-				return true;
-			}
-			return false;
-		}
-		Segment* ob2 = dynamic_cast<Segment*>(k.value());
-		if (ob2)
-		{
-			k++;
-			Point* ob1 = dynamic_cast<Point*>(k.value());
-			if (ob1)
-			{
-				double* val = new double;
-				*val = value;
-				_parameters.insert(val, true);
-				DistanceFromPointToSection* rule = new DistanceFromPointToSection(ob1->x, ob1->y,
-																										ob2->p1->x, ob2->p1->y,
-																										ob2->p2->x, ob2->p2->y,
-																										val);
-				
-				_storage_of_constraints.add(ob1, rule);
-				_storage_of_constraints.add(ob2, rule);
-				return true;
-			}
-		}
-	}
-	return false;
-}
-bool CORE::addc_spratio(double value)
-{
-	if (_selected_objects.size() == 2)
-	{
-		myavltree<unsigned, ObjectBase*>::myiterator k(_selected_objects);
-		Point* obj1 = dynamic_cast<Point*>(k.value());
-		if (obj1)
-		{
-			k++;
-			Segment* obj2 = dynamic_cast<Segment*>(k.value());
-			if (obj2)
-			{
-				double* val = new double;
-				*val = value;
-				_parameters.insert(val, true);
-				AspectRatio* rule = new AspectRatio(obj2->p1->x, obj2->p1->y,
-																obj1->x, obj1->y,
-																obj2->p2->x, obj2->p2->y,
-																val);
-				
-				_storage_of_constraints.add(obj2->p1, rule);
-				_storage_of_constraints.add(obj1, rule);
-				_storage_of_constraints.add(obj2->p2, rule);
-				return true;
-			}
-		}
-		Segment* ob2 = dynamic_cast<Segment*>(k.value());
-		if (ob2)
-		{
-			k++;
-			Point* ob1 = dynamic_cast<Point*>(k.value());
-			if (ob1)
-			{
-				double* val = new double;
-				*val = value;
-				_parameters.insert(val, true);
-				AspectRatio* rule = new AspectRatio(ob2->p1->x, ob2->p1->y,
-																ob1->x, ob1->y,
-																ob2->p2->x, ob2->p2->y,
-																val);
-				
-				_storage_of_constraints.add(ob1, rule);
-				_storage_of_constraints.add(ob2, rule);
-				return true;
-			}
-		}	
-	}
-    return false;
 }
 bool CORE::addc_parallelism()
 {
@@ -1164,9 +869,9 @@ bool CORE::addc_ponc()
 			if (o2)
 			{
 
-				Point2Point* rule = new Point2Point(o1->p->x, o1->p->y,
-																o2->x, o2->y,
-																o1->r);
+				PointOnCircle* rule = new PointOnCircle(o1->p->x, o1->p->y,
+																	 o2->x, o2->y,
+																	 o1->r);
 
 				_storage_of_constraints.add(o1, rule);
 				_storage_of_constraints.add(o2, rule);
@@ -1180,9 +885,9 @@ bool CORE::addc_ponc()
 			Circle* c = dynamic_cast<Circle*>(k.value());
 			if (c)
 			{
-				Point2Point* rule = new Point2Point(c->p->x, c->p->y,
-																p->x, p->y,
-																c->r);
+				PointOnCircle* rule = new PointOnCircle(c->p->x, c->p->y,
+																	 p->x, p->y,
+																	 c->r);
 
 				_storage_of_constraints.add(p, rule);
 				_storage_of_constraints.add(c, rule);

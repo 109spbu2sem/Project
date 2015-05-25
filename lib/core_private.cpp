@@ -141,13 +141,6 @@ void CORE::TransmitRules(Interface* infa)
 										  iter.constraint()->type(), iter.constraint()->value());
 					break;
 				}
-				case CONSTR_P2SECTDIST:
-				{
-					mygui->WriteRule(_storage_of_constraints.getid(iter.constraint()).getID(),
-										  iter.objects().front()->id.getID(), iter.objects().back()->id.getID(),
-										  iter.constraint()->type(), iter.constraint()->value());
-					break;
-				}
 				case CONSTR_P2LINEDIST:
 				{
 					mygui->WriteRule(_storage_of_constraints.getid(iter.constraint()).getID(),
@@ -173,17 +166,6 @@ void CORE::TransmitRules(Interface* infa)
 										  iter.constraint()->type(), iter.constraint()->value());
 					break;
 				}
-				case CONSTR_3PRATIO:
-				{
-					mylist<ObjectBase*>::myiterator i = iter.objects().begin();
-					unsigned id1 = (*i)->id.getID(); i++;
-					unsigned id2 = (*i)->id.getID(); i++;
-					unsigned id3 = (*i)->id.getID();
-					mygui->WriteRule(_storage_of_constraints.getid(iter.constraint()).getID(),
-										  id1, id2, id3,
-										  iter.constraint()->type(), iter.constraint()->value());
-					break;
-				}
 				case CONSTR_EXCONTACT:
 				{
 					mygui->WriteRule(_storage_of_constraints.getid(iter.constraint()).getID(),
@@ -206,6 +188,13 @@ void CORE::TransmitRules(Interface* infa)
 					break;
 				}
 				case CONSTR_PARALLELISM:
+				{
+					mygui->WriteRule(_storage_of_constraints.getid(iter.constraint()).getID(),
+										  iter.objects().front()->id.getID(), iter.objects().back()->id.getID(),
+										  iter.constraint()->type(), iter.constraint()->value());
+					break;
+				}
+				case CONSTR_PONC:
 				{
 					mygui->WriteRule(_storage_of_constraints.getid(iter.constraint()).getID(),
 										  iter.objects().front()->id.getID(), iter.objects().back()->id.getID(),
@@ -278,10 +267,10 @@ void CORE::BuildFigureGoldMethod(IConstraint *constr, myvector<double*>* paramet
 		*start_para = *(*parameters)[i];
 	}
 	// small value
-	const double f_epsi = 1e-6;
+	const double f_epsi = 1e-9;
 	if (constr->error() < f_epsi) return;
 	// great value
-	const double f_Epsi = 1e+6;
+	const double f_Epsi = 1e+4;
 	// amount of iterations
 	unsigned f_count = 0;
 	// current value of function

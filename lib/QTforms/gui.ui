@@ -781,11 +781,6 @@
            </item>
            <item>
             <property name="text">
-             <string>Ratio between three points (didn't work)</string>
-            </property>
-           </item>
-           <item>
-            <property name="text">
              <string>Angle between segments</string>
             </property>
            </item>
@@ -797,16 +792,6 @@
            <item>
             <property name="text">
              <string>Internal circle contact</string>
-            </property>
-           </item>
-           <item>
-            <property name="text">
-             <string>Distance from point to segment (didn't work)</string>
-            </property>
-           </item>
-           <item>
-            <property name="text">
-             <string>Ratio between point and segment (didn't work)</string>
             </property>
            </item>
            <item>

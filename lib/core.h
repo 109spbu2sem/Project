@@ -49,14 +49,11 @@ private:
 
 	// add constraint functions
 	bool addc_p2pdist(double);
-	bool addc_p2sdist(double);
 	bool addc_p2ldist(double);
 	bool addc_l2langle(double);
-	bool addc_3pratio(double);
 	bool addc_3ponline();
 	bool addc_excontact();
 	bool addc_incontact();
-	bool addc_spratio(double);
 	bool addc_parallelism();
 	bool addc_orthogonality();
 	bool addc_ponc();
@@ -108,7 +105,6 @@ public:
 	bool AddRule(CONSTR_TYPE type, unsigned id1, unsigned id2);
 	bool AddRule(CONSTR_TYPE type, unsigned id1, unsigned id2, double value);
 	bool AddRule(CONSTR_TYPE type, unsigned id1, unsigned id2, unsigned id3);
-	bool AddRule(CONSTR_TYPE type, unsigned id1, unsigned id2, unsigned id3, double value);
 
 	// TODO flag instead bools
 	bool ChangePoint(unsigned id,
