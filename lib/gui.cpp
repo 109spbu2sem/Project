@@ -148,7 +148,7 @@ void GUI::on_pushButton_clicked()
 		{
 			if (!ui->ruleValueEdit->text().isEmpty())
 			{
-				mycore->AddRule(CONSTR_L2LANGLE, ui->ruleValueEdit->text().toDouble());
+				mycore->AddRule(CONSTR_L2LANGLE, ui->ruleValueEdit->text().toDouble() / 180.0 * PI);
 				mycore->Calculate();
 			}
 			else
