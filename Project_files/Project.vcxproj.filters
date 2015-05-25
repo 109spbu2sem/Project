@@ -174,12 +174,6 @@
     <CustomBuild Include="..\lib\objectpropertieswindow.h">
       <Filter>Header Files</Filter>
     </CustomBuild>
-    <ClInclude Include="..\lib\storages\storage_array.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\lib\storages\storage_list.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="..\lib\structures.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -207,9 +201,6 @@
     <ClInclude Include="..\lib\Load.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="..\lib\storages\AVL_tree.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="..\lib\enums.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -223,6 +214,15 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="..\lib\constraints\ParallelLines.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\lib\storages\mylist.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\lib\storages\mytree.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\lib\storages\myvector.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

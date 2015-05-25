@@ -1,7 +1,7 @@
 #ifndef COLLECTOR_H
 #define COLLECTOR_H
 #include "../global.h"
-#include "../Storages/storage_array.h"
+#include "../storages/myvector.h"
 
 // type CONSTR_COLLECTOR
 
@@ -9,28 +9,30 @@ class ConstraintCollector :public IConstraint
 {
 
 private:
-	Storage_Array<IConstraint*> _storage;
+	myvector<IConstraint*> _storage;
 public:
-	ConstraintCollector() {};
+	ConstraintCollector()
+	{
+	};
 	virtual ~ConstraintCollector()
 	{
 
 	}
 	void addConstraint(IConstraint *c)
 	{
-		if (c) _storage.add(c);
+		if (c) _storage.push_back(c);
 	}
 	virtual double error()
 	{
 		double err = 0;
-		for (unsigned k = 0; k< _storage.size(); ++k)
+		for (unsigned k = 0; k < _storage.size(); ++k)
 			err += _storage[k]->error();
 		return err;
 	};
 	virtual double diff(double *par)
 	{
 		double res = 0;
-		for (unsigned k = 0; k< _storage.size(); ++k)
+		for (unsigned k = 0; k < _storage.size(); ++k)
 			res += _storage[k]->diff(par);
 		return res;
 	}

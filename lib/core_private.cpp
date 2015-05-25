@@ -64,7 +64,7 @@ void CORE::Redraw(Interface* infa)
 	{
 		writeToLog("*******Redrawing*******");
 		infa->Clear();
-		for (StorageOfObjects::viewer i(_storage_of_objects); i.canMoveNext(); i.moveNext())
+		for (StorageOfObjects::viewer i(_storage_of_objects); i.valid(); i++)
 		{
 			if (i.key().getID() == 0) continue;
 			switch (i.value()->objectType())
@@ -126,7 +126,7 @@ void CORE::TransmitRules(Interface* infa)
 	if (infa)
 	{
 		infa->ClearRules();
-		for (StorageOfConstraints::viewer iter(_storage_of_constraints); iter.canMoveNext(); iter.moveNext())
+		for (StorageOfConstraints::viewer iter(_storage_of_constraints); iter.valid(); iter++)
 		{
 			switch (iter.constraint()->type())
 			{
@@ -157,7 +157,7 @@ void CORE::TransmitRules(Interface* infa)
 				}
 				case CONSTR_3PONLINE:
 				{
-					std::list<ObjectBase*>::iterator i = iter.objects().begin();
+					mylist<ObjectBase*>::myiterator i = iter.objects().begin();
 					unsigned id1 = (*i)->id.getID(); i++;
 					unsigned id2 = (*i)->id.getID(); i++;
 					unsigned id3 = (*i)->id.getID();
@@ -175,7 +175,7 @@ void CORE::TransmitRules(Interface* infa)
 				}
 				case CONSTR_3PRATIO:
 				{
-					std::list<ObjectBase*>::iterator i = iter.objects().begin();
+					mylist<ObjectBase*>::myiterator i = iter.objects().begin();
 					unsigned id1 = (*i)->id.getID(); i++;
 					unsigned id2 = (*i)->id.getID(); i++;
 					unsigned id3 = (*i)->id.getID();
@@ -226,12 +226,12 @@ void CORE::Calculate()
 	writeToLog("**********************Start calculating******************");
 	mygui->WriteText(EMPTYSTRING, "Start redrawing");
 	ConstraintCollector collector;
-	Storage_Array< double* > parameters;
+	myvector< double* > parameters;
 	writeToLog("Generating graphs");
 
 	/*Here place graph partition*/
 
-	for (StorageOfConstraints::viewer i(_storage_of_constraints); i.canMoveNext(); i.moveNext())
+	for (StorageOfConstraints::viewer i(_storage_of_constraints); i.valid(); i++)
 	{
 		try
 		{
@@ -243,11 +243,19 @@ void CORE::Calculate()
 			break;
 		}
 	}
-	for (AVLVeiwer< double*, bool > i(_parameters); i.canMoveNext(); i.moveNext())
+	for (myavltree< double*, bool >::myiterator i(_parameters); i.valid(); i++)
 	{
-		if (!i.getValue().value)
+		try
 		{
-			parameters.add(i.getValue().key);
+			if (!i.value())
+			{
+				parameters.push_back(i.key());
+			}
+		}
+		catch (...)
+		{
+			writeToLog("End of parameters or viewer damaged", 1);
+			break;
 		}
 	}
 	//BuildFigure(&collector, &parameters);
@@ -262,7 +270,7 @@ void CORE::Calculate()
 	return;
 }
 
-void CORE::BuildFigureGoldMethod(IConstraint *constr, Storage_Array<double*>* parameters)
+void CORE::BuildFigureGoldMethod(IConstraint *constr, myvector<double*>* parameters)
 {
 	// small value
 	const double f_epsi = 1e-6;
@@ -361,7 +369,7 @@ void CORE::BuildFigureGoldMethod(IConstraint *constr, Storage_Array<double*>* pa
 	delete[] old_para;
 }
 
-void CORE::BuildFigure(IConstraint* constraint, Storage_Array<double*>* parameters)
+void CORE::BuildFigure(IConstraint* constraint, myvector<double*>* parameters)
 {
 	if (!constraint || !parameters) return; // check for true work
 

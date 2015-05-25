@@ -2,14 +2,14 @@
 #define STORAGE_OF_OBJECTS_H
 
 #include "global.h"
-#include "storages/AVL_tree.h"
+#include "storages/mytree.h"
 #include "structures.h"
 
 class StorageOfObjects
 {
 private:
 	unsigned _last_id;
-	Storage_AVL<unsigned, ObjectBase*> _shelf;
+	myavltree<unsigned, ObjectBase*> _shelf;
 
 	ID generateID();
 public:
@@ -17,7 +17,7 @@ public:
 	StorageOfObjects()
 	{
 		_last_id = 0;
-		_shelf.add(0, 0);
+		_shelf.insert(0, 0);
 	}
 
 	ID add(ObjectBase*, ID& id);
@@ -32,17 +32,18 @@ public:
 	class viewer
 	{
 	private:
-		AVLVeiwer<unsigned, ObjectBase*> _current;
+		myavltree<unsigned, ObjectBase*>::myiterator _current;
 	public:
 		viewer() { }
 		viewer(StorageOfObjects& store)
 		{
-			_current = store._shelf.getIterator();
+			_current = store._shelf.begin();
 		}
 		ObjectBase* value();
 		ID key();
-		void moveNext();
-		bool canMoveNext() const;
+		void operator++();
+		void operator++(int);
+		bool valid() const;
 	};
 
 	viewer getIterator()

@@ -5,37 +5,37 @@
 ID StorageOfObjects::generateID()
 {
 	_last_id++;
-	while (_shelf.hasKey(_last_id)) { _last_id++; }
+	while (_shelf.check(_last_id)) { _last_id++; }
 	return ID(_last_id);
 }
 
 ID StorageOfObjects::add(ObjectBase* object, ID& objid)
 {
-	if (_shelf.hasKey(objid.getID()))
+	if (_shelf.check(objid.getID()))
 	{
 		objid = generateID();
 	}
 	object->id = objid;
-	_shelf.add(objid.getID(), object);
+	_shelf.insert(objid.getID(), object);
 	return objid;
 }
 
 bool StorageOfObjects::has_SorC_with_P(Point* object)
 {
-	for (AVLVeiwer<unsigned, ObjectBase*> iter(_shelf); iter.canMoveNext(); iter.moveNext())
+	for (myavltree<unsigned, ObjectBase*>::myiterator iter(_shelf); iter.valid(); iter++)
 	{
-		if (iter.getValue().key == 0) continue;
-		switch (iter.getValue().value->objectType())
+		if (iter.key() == 0) continue;
+		switch (iter.value()->objectType())
 		{
 			case PRIMITIVE_SEGMENT:
 			{
-				Segment* s = dynamic_cast<Segment*>(iter.getValue().value);
+				Segment* s = dynamic_cast<Segment*>(iter.value());
 				if (s->p1 == object || s->p2 == object) return true;
 				break;
 			}
 			case PRIMITIVE_CIRCLE:
 			{
-				Circle* c = dynamic_cast<Circle*>(iter.getValue().value);
+				Circle* c = dynamic_cast<Circle*>(iter.value());
 				if (c->p == object) return true;
 				break;
 			}
@@ -48,35 +48,35 @@ bool StorageOfObjects::has_SorC_with_P(Point* object)
 
 ID StorageOfObjects::add(ObjectBase* object, unsigned objid)
 {
-	if (_shelf.hasKey(objid))
+	if (_shelf.check(objid))
 	{
 		objid = generateID().getID();
 	}
 	object->id.setID(objid);
-	_shelf.add(objid, object);
+	_shelf.insert(objid, object);
 	return ID(objid);
 }
 
 void StorageOfObjects::clear()
 {
-	for (AVLVeiwer<unsigned, ObjectBase*> i(_shelf); i.canMoveNext(); i.moveNext())
+	for (myavltree<unsigned, ObjectBase*>::myiterator i(_shelf); i.valid(); i++)
 	{
-		if (i.getValue().key == 0) continue;
-		delete i.getValue().value;
+		if (i.key() == 0) continue;
+		delete i.value();
 	}
 	_shelf.clear();
 	_last_id = 0;
-	_shelf.add(0, 0);
+	_shelf.insert(0, 0);
 }
 
 bool StorageOfObjects::remove(ID& id)
 {
 	if (id.getID() == 0) return false;
-	if (_shelf.hasKey(id.getID()))
+	if (_shelf.check(id.getID()))
 	{
 		try
 		{
-			_shelf.remove(id.getID());
+			_shelf.erase(id.getID());
 		}
 		catch (...) { }
 		return true;
@@ -86,36 +86,41 @@ bool StorageOfObjects::remove(ID& id)
 
 ObjectBase* StorageOfObjects::viewer::value()
 {
-	return _current.getValue().value;
+	return _current.value();
 }
 
 ID StorageOfObjects::viewer::key()
 {
-	return ID(_current.getValue().key);
+	return ID(_current.key());
 }
 
-void StorageOfObjects::viewer::moveNext()
+void StorageOfObjects::viewer::operator++()
 {
-	_current.moveNext();
+	_current++;
 }
 
-bool StorageOfObjects::viewer::canMoveNext() const
+void StorageOfObjects::viewer::operator++(int)
 {
-	return _current.canMoveNext();
+	_current++;
+}
+
+bool StorageOfObjects::viewer::valid() const
+{
+	return _current.valid();
 };
 
 ObjectBase* StorageOfObjects::get(unsigned id)
 {
-	if (_shelf.hasKey(id))
-		return _shelf.getValuebyKey(id);
+	if (_shelf.check(id))
+		return _shelf.get(id);
 	else
 		return 0;
 }
 
 ObjectBase* StorageOfObjects::get(ID& id)
 {
-	if (_shelf.hasKey(id.getID()))
-		return _shelf.getValuebyKey(id.getID());
+	if (_shelf.check(id.getID()))
+		return _shelf.get(id.getID());
 	else
 		return 0;
 }

@@ -1,17 +1,17 @@
 #include "storageofconstraints.h"
 
-bool StorageOfConstraints::_findhere(std::list<IConstraint*>& list, IConstraint* constraint)
+bool StorageOfConstraints::_findhere(mylist<IConstraint*>& list, IConstraint* constraint)
 {
-	for (std::list<IConstraint*>::iterator i = list.begin(); i != list.end(); i++)
+	for (mylist<IConstraint*>::myiterator i = list.begin(); i.valid(); i++)
 	{
 		if (*i == constraint) return true;
 	}
 	return false;
 }
 
-bool StorageOfConstraints::_findhere(std::list<ObjectBase*>& list, ObjectBase* constraint)
+bool StorageOfConstraints::_findhere(mylist<ObjectBase*>& list, ObjectBase* constraint)
 {
-	for (std::list<ObjectBase*>::iterator i = list.begin(); i != list.end(); i++)
+	for (mylist<ObjectBase*>::myiterator i = list.begin(); i.valid(); i++)
 	{
 		if (*i == constraint) return true;
 	}
@@ -21,7 +21,7 @@ bool StorageOfConstraints::_findhere(std::list<ObjectBase*>& list, ObjectBase* c
 ID StorageOfConstraints::generateID()
 {
 	_last_id++;
-	while (_ids.hasKey(_last_id))
+	while (_ids.check(_last_id))
 	{
 		_last_id++;
 	}
@@ -30,56 +30,63 @@ ID StorageOfConstraints::generateID()
 
 void StorageOfConstraints::add(ObjectBase* object, IConstraint* constraint)
 {
-	if (_objects.hasKey(object))
+	if (_objects.check(object))
 	{
-		if (! _findhere(_objects.getValuebyKey(object), constraint))
-			_objects.getValuebyKey(object).push_back(constraint);
+		if (! _findhere(_objects.get(object), constraint))
+			_objects.get(object).push_back(constraint);
 	}
 	else
 	{
-		std::list<IConstraint*> a;
+		mylist<IConstraint*> a;
 		a.push_back(constraint);
-		_objects.add(object, a);
+		_objects.insert(object, a);
 	}
-	if (_constraints.hasKey(constraint))
+	if (_constraints.check(constraint))
 	{
-		if (! _findhere(_constraints.getValuebyKey(constraint), object))
-			_constraints.getValuebyKey(constraint).push_back(object);
+		if (! _findhere(_constraints.get(constraint), object))
+			_constraints.get(constraint).push_back(object);
 	}
 	else
 	{
-		std::list<ObjectBase*> b;
+		mylist<ObjectBase*> b;
 		b.push_back(object);
-		_constraints.add(constraint, b);
+		_constraints.insert(constraint, b);
 	}
-	_ids.add(generateID().getID(), constraint);
+	_ids.insert(generateID().getID(), constraint);
 }
 
 bool StorageOfConstraints::has(ObjectBase* a) const
 {
-	return _objects.hasKey(a);
+	return _objects.check(a);
 }
 
 bool StorageOfConstraints::has(IConstraint* b) const
 {
-	return _constraints.hasKey(b);
+	return _constraints.check(b);
 }
 
 bool StorageOfConstraints::has(ID id) const
 {
-	return _ids.hasKey(id.getID());
+	return _ids.check(id.getID());
 }
 
 bool StorageOfConstraints::remove(ObjectBase* object, IConstraint* constraint)
 {
-	if (!_objects.hasKey(object) || !_constraints.hasKey(constraint)) return false;
+	if (!_objects.check(object) || !_constraints.check(constraint)) return false;
 
-	_objects.getValuebyKey(object).remove(constraint);
-	if (_objects.getValuebyKey(object).size() == 0)
-		_objects.remove(object);
-	_constraints.getValuebyKey(constraint).remove(object);
-	if (_constraints.getValuebyKey(constraint).size() == 0)
-		_constraints.remove(constraint);
+	try
+	{
+		_objects.get(object).erase(_objects.get(object).find(constraint));
+		if (_objects.get(object).size() == 0)
+			_objects.erase(object);
+		_constraints.get(constraint).erase(_constraints.get(constraint).find(object));
+		if (_constraints.get(constraint).size() == 0)
+			_constraints.erase(constraint);
+	}
+	catch (...)
+	{
+		return false;
+	}
 
 	return true;
 }
@@ -88,7 +95,7 @@ IConstraint* StorageOfConstraints::get(ID id)
 {
 	try
 	{
-		return _ids.getValuebyKey(id.getID());
+		return _ids.get(id.getID());
 	}
 	catch (std::logic_error err)
 	{
@@ -98,25 +105,25 @@ IConstraint* StorageOfConstraints::get(ID id)
 
 bool StorageOfConstraints::remove(ID id)
 {
-	return _ids.remove(id.getID());
+	return _ids.erase(id.getID());
 }
 
-std::list<IConstraint*>& StorageOfConstraints::get(ObjectBase* object)
+mylist<IConstraint*>& StorageOfConstraints::get(ObjectBase* object)
 {
-	return _objects.getValuebyKey(object);
+	return _objects.get(object);
 }
 
-std::list<ObjectBase*>& StorageOfConstraints::get(IConstraint* constraint)
+mylist<ObjectBase*>& StorageOfConstraints::get(IConstraint* constraint)
 {
-	return _constraints.getValuebyKey(constraint);
+	return _constraints.get(constraint);
 }
 
 ID StorageOfConstraints::getid(IConstraint* constraint)
 {
-	for (AVLVeiwer<unsigned, IConstraint*> iter(_ids); iter.canMoveNext(); iter.moveNext())
+	for (myavltree<unsigned, IConstraint*>::myiterator iter(_ids); iter.valid(); iter++)
 	{
-		if (iter.getValue().key == 0) continue;
-		if (iter.getValue().value == constraint) return iter.getValue().key;
+		if (iter.key() == 0) continue;
+		if (iter.value() == constraint) return iter.key();
 	}
 	return ID(0);
 }
@@ -127,22 +134,26 @@ void StorageOfConstraints::clear()
 	_constraints.clear();
 	_ids.clear();
 	_last_id = 0;
-	_ids.add(0, 0);
+	_ids.insert(0, 0);
 }
 
-std::list<ObjectBase*>& StorageOfConstraints::viewer::objects()
+mylist<ObjectBase*>& StorageOfConstraints::viewer::objects()
 {
-	return _viewer.getValue().value;
+	return _viewer.value();
 }
 IConstraint* StorageOfConstraints::viewer::constraint()
 {
-	return _viewer.getValue().key;
+	return _viewer.key();
 }
-bool StorageOfConstraints::viewer::canMoveNext() const
+bool StorageOfConstraints::viewer::valid() const
 {
-	return _viewer.canMoveNext();
+	return _viewer.valid();
 }
-void StorageOfConstraints::viewer::moveNext()
+void StorageOfConstraints::viewer::operator++()
 {
-	_viewer.moveNext();
+	_viewer++;
+}
+void StorageOfConstraints::viewer::operator++(int)
+{
+	_viewer++;
 }

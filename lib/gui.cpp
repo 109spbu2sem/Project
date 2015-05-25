@@ -76,6 +76,8 @@ const char* GUI::ConstrTypeToString(CONSTR_TYPE type)
 			return "Parallel lines";
 		case CONSTR_ORTHOGONALITY:
 			return "Orthogonal lines";
+		case CONSTR_PONC:
+			return "Point on circle";
 		default:
 			return "Not a Constraint";
 	}
@@ -98,6 +100,7 @@ void GUI::on_ruleBox_currentIndexChanged(int index)
 		case 6:
 		case 9:
 		case 10:
+		case 11:
 		case 2:
 		{
 			ui->ruleValueEdit->setEnabled(false);
@@ -125,7 +128,7 @@ void GUI::on_pushButton_clicked()
 				mycore->Calculate();
 			}
 			else
-				WriteText("Need value","");
+				WriteText("Need value", "");
 			break;
 		}
 		case 1:
@@ -203,15 +206,21 @@ void GUI::on_pushButton_clicked()
 		}
 		case 9:
 		{
-						mycore->AddRule(CONSTR_PARALLELISM);
-						mycore->Calculate();
-						break;
+			mycore->AddRule(CONSTR_PARALLELISM);
+			mycore->Calculate();
+			break;
 		}
 		case 10:
 		{
-						mycore->AddRule(CONSTR_ORTHOGONALITY);
-						mycore->Calculate();
-						break;
+			mycore->AddRule(CONSTR_ORTHOGONALITY);
+			mycore->Calculate();
+			break;
+		}
+		case 11:
+		{
+			mycore->AddRule(CONSTR_PONC);
+			mycore->Calculate();
+			break;
 		}
 	}
 	ui->ruleValueEdit->clear();
@@ -229,12 +238,12 @@ void GUI::on_createCircleBTN_clicked()
 
 void GUI::on_selectBTNTool_clicked()
 {
-    ui->myCanvas->setTool(TOOL_Select);
+	ui->myCanvas->setTool(TOOL_Select);
 }
 
 void GUI::on_pointBTNTool_clicked()
 {
-    ui->myCanvas->setTool(TOOL_Point);
+	ui->myCanvas->setTool(TOOL_Point);
 }
 
 void GUI::on_ZoomBTNTool_clicked()
@@ -330,6 +339,7 @@ void GUI::on_actionLoad_triggered()
 	if (filename == "")
 		return;
 	mycore->IWantLoad(filename);
+	mycore->Calculate();
 }
 void GUI::on_objectsList_clicked(const QModelIndex &index)
 {
@@ -382,7 +392,7 @@ void GUI::on_openChangingDialog_clicked()
 		unsigned SWITCH = ui->propertiesList->item(0)->data(17).toUInt();
 		switch (SWITCH)
 		{
-			case 0:
+			case PRIMITIVE_POINT:
 			{
 				ow.setupPointProperties(ui->propertiesList->item(1)->data(17).toUInt(),
 												ui->propertiesList->item(2)->data(17).toDouble(),
@@ -392,7 +402,7 @@ void GUI::on_openChangingDialog_clicked()
 												Color(ui->propertiesList->item(4)->data(17).toUInt()));
 				break;
 			}
-			case 1:
+			case PRIMITIVE_SEGMENT:
 			{
 				ow.setupSegmentProperties(ui->propertiesList->item(1)->data(17).toUInt(),
 												  ui->propertiesList->item(2)->data(17).toDouble(),
@@ -406,7 +416,7 @@ void GUI::on_openChangingDialog_clicked()
 												  Color(ui->propertiesList->item(6)->data(17).toUInt()));
 				break;
 			}
-			case 2:
+			case PRIMITIVE_CIRCLE:
 			{
 				ow.setupCircleProperties(ui->propertiesList->item(1)->data(17).toUInt(),
 												 ui->propertiesList->item(2)->data(17).toDouble(),
@@ -434,5 +444,8 @@ void GUI::on_deleteObjBTN_clicked()
 void GUI::on_deleteRuleBTN_clicked()
 {
 	if (ui->propertiesList->count() != 0)
+	{
 		mycore->DeleteRule(selectedRuleId);
+		ui->propertiesList->clear();
+	}
 }
