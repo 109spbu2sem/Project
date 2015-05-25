@@ -31,7 +31,7 @@ void GUI::WriteError(const char* Text)
 void GUI::UpdateWorkStatus(unsigned a)
 {
 	workstatus += a;
-	switch (workstatus % 7000)
+	switch (workstatus % 12000)
 	{
 		case 1:
 		{
@@ -39,39 +39,33 @@ void GUI::UpdateWorkStatus(unsigned a)
 			this->repaint();
 			break;
 		}
-		case 1000:
+		case 2000:
 		{
 			ui->workStatusLabel->setText(":");
 			this->repaint();
 			break;
 		}
-		case 2000:
+		case 4000:
 		{
 			ui->workStatusLabel->setText("::");
 			this->repaint();
 			break;
 		}
-		case 3000:
-		{
-			ui->workStatusLabel->setText(":::");
-			this->repaint();
-			break;
-		}
-		case 4000:
-		{
-			ui->workStatusLabel->setText("::::");
-			this->repaint();
-			break;
-		}
-		case 5000:
-		{
-			ui->workStatusLabel->setText(":: ::");
-			this->repaint();
-			break;
-		}
 		case 6000:
 		{
-			ui->workStatusLabel->setText(": :");
+			ui->workStatusLabel->setText("::");
+			this->repaint();
+			break;
+		}
+		case 8000:
+		{
+			ui->workStatusLabel->setText(":  :");
+			this->repaint();
+			break;
+		}
+		case 10000:
+		{
+			ui->workStatusLabel->setText(":   :");
 			this->repaint();
 			break;
 		}

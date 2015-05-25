@@ -10,6 +10,7 @@ MyCanvas::MyCanvas(QWidget *parent) : QGraphicsView(parent)
 	setScene(mainscene);
 	//scale(2, 2);
 	_tool = TOOL_Select;
+	setSceneRect(-1000, -1000, 2000, 2000);
 	_displaygrid = false;
 	NewCanvas();
 }

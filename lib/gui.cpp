@@ -21,8 +21,8 @@ GUI::GUI(QWidget *parent) :
 	ui->setupUi(this);
 	mycore = 0;
 	selectedRuleId = 0;
-	QRegExp doub("[0-9]{1,8}\\.[0-9]{0,8}");
-	doubvalid = new QRegExpValidator(doub, this);
+	QRegExp doub("([1-9]{0,}.?[0-9]{0,}|0(.[0-9]{1,})?)"); // check for 'double' value
+	doubvalid = new QRegExpValidator(doub, this); 
 	ui->ruleValueEdit->setValidator(doubvalid);
 	ui->radiusEdit->setValidator(doubvalid);
 	mainscene = ui->myCanvas->getScene();
