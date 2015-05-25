@@ -39,9 +39,17 @@ public:
 		if (par == _p2y)
 			return 2 * (abs(*_r1 - *_r2) - length(*_p1x, *_p1y, *_p2x, *_p2y)) * (*_p1y - *_p2y) / (length(*_p1x, *_p1y, *_p2x, *_p2y));
 		if (par == _r1)
-			return 2 * (abs(*_r1 - *_r2) - length(*_p1x, *_p1y, *_p2x, *_p2y));
+		{
+			if (*_r1 - *_r2 > 0)
+				return 2 * (abs(*_r1 - *_r2) - length(*_p1x, *_p1y, *_p2x, *_p2y)); else
+				return (-2) * (abs(*_r1 - *_r2) - length(*_p1x, *_p1y, *_p2x, *_p2y));
+		}
 		if (par == _r2)
-			return (-2) * (abs(*_r1 - *_r2) - length(*_p1x, *_p1y, *_p2x, *_p2y));
+		{
+			if (*_r1 - *_r2 > 0)
+				return (-2) * (abs(*_r1 - *_r2) - length(*_p1x, *_p1y, *_p2x, *_p2y)); else
+				return 2 * (abs(*_r1 - *_r2) - length(*_p1x, *_p1y, *_p2x, *_p2y));
+		}
 		return 0;
 	}
 	virtual CONSTR_TYPE type() const
