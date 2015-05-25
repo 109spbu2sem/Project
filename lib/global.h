@@ -97,6 +97,9 @@ public:
 	virtual bool WriteRule(unsigned, unsigned, unsigned, unsigned, CONSTR_TYPE) = 0;
 	virtual bool WriteRule(unsigned, unsigned, unsigned, unsigned, CONSTR_TYPE, double) = 0;
 	virtual bool ClearRules() = 0;
+
+	virtual void UpdateWorkStatus(unsigned) = 0;
+	virtual void WorkStatusDone() = 0;
 };
 
 #endif

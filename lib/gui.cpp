@@ -31,6 +31,8 @@ GUI::GUI(QWidget *parent) :
 	toolsbuttons->addButton(ui->selectBTNTool);
 	toolsbuttons->addButton(ui->pointBTNTool);
 	toolsbuttons->addButton(ui->ZoomBTNTool);
+	workstatus = 0;
+
 
 	showMaximized();
 }

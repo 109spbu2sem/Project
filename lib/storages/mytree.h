@@ -79,6 +79,7 @@ public:
 			_root->data.key = a;
 			_root->data.value = b;
 			_root->left = _root->right = 0;
+			_size = 1;
 		}
 		else
 		{
@@ -108,8 +109,8 @@ public:
 				parent->left = newcell;
 			newcell->parent = parent;
 			_balance_cell(newcell);
+			++_size;
 		}
-		++_size;
 
 	}
 
@@ -157,7 +158,6 @@ public:
 	void clear()
 	{
 		_del(_root);
-		_size = 0;
 		_root = 0;
 	}
 
@@ -418,7 +418,6 @@ private:
 		{
 
 			cell* c = cur;
-			cell* newcell;
 			if (_heightdiff(cur) <= 0)
 			{
 				cur = cur->right;
@@ -466,6 +465,7 @@ private:
 			}
 			else
 			{
+				cell* newcell;
 				newcell = c->parent;
 				c->parent = cur->parent;
 				cur->parent = newcell;
@@ -525,15 +525,10 @@ private:
 	{
 		if (c)
 		{
-			if (c->left)
-			{
-				_del(c->left);
-			}
-			if (c->right)
-			{
-				_del(c->right);
-			}
+			_del(c->left);
+			_del(c->right);
 			delete c;
+			_size--;
 		}
 	}
 };

@@ -28,6 +28,64 @@ void GUI::WriteError(const char* Text)
 	return;
 }
 
+void GUI::UpdateWorkStatus(unsigned a)
+{
+	workstatus += a;
+	switch (workstatus % 7000)
+	{
+		case 1:
+		{
+			ui->workStatusLabel->setText("");
+			this->repaint();
+			break;
+		}
+		case 1000:
+		{
+			ui->workStatusLabel->setText(":");
+			this->repaint();
+			break;
+		}
+		case 2000:
+		{
+			ui->workStatusLabel->setText("::");
+			this->repaint();
+			break;
+		}
+		case 3000:
+		{
+			ui->workStatusLabel->setText(":::");
+			this->repaint();
+			break;
+		}
+		case 4000:
+		{
+			ui->workStatusLabel->setText("::::");
+			this->repaint();
+			break;
+		}
+		case 5000:
+		{
+			ui->workStatusLabel->setText(":: ::");
+			this->repaint();
+			break;
+		}
+		case 6000:
+		{
+			ui->workStatusLabel->setText(": :");
+			this->repaint();
+			break;
+		}
+	}
+	if (workstatus >= 1000000) workstatus = 0;
+}
+
+void GUI::WorkStatusDone()
+{
+	workstatus = 0;
+	ui->workStatusLabel->setText("");
+	this->repaint();
+}
+
 // Write Short to status bar, Long to message bar
 void GUI::WriteText(const char* Short, const char* Long)
 {

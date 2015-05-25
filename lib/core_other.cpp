@@ -247,6 +247,7 @@ void CORE::IWantSave()
 	StorageOfConstraints::viewer j(_storage_of_constraints);
 	while (i.valid())
 	{
+		mygui->UpdateWorkStatus(1); // draw :: on status
 		if (i.key().getID() == 0)
 		{
 			i++;
@@ -277,6 +278,7 @@ void CORE::IWantSave()
 		}
 	}
 	while (j.valid()) {
+		mygui->UpdateWorkStatus(1); // draw :: on status
 		if (j.constraint()->type() == CONSTR_COLLECTOR) {
 			j++;
 			continue;
@@ -314,6 +316,7 @@ void CORE::IWantSave()
 			continue;
 		}
 	}
+	mygui->WorkStatusDone();
 }
 
 void CORE::IWantSaveAs(QString way) {

@@ -143,7 +143,7 @@ void CORE::CreateCircle(double value, bool isconst)
 		mygui->WriteError("Select point before creating circle.");
 	}
 }
-
+// TODO change way of add rule
 void CORE::AddRule(unsigned type, double value)
 {
 	switch (type)

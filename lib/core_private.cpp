@@ -260,7 +260,7 @@ void CORE::Calculate()
 	}
 	//BuildFigure(&collector, &parameters);
 	writeToLog("---------------------Building new figure-----------------");
-	mygui->WriteText(EMPTYSTRING, "Redrawing...");
+	mygui->WriteText("Redrawing", EMPTYSTRING);
 	BuildFigureGoldMethod(&collector, &parameters);
 	writeToLog("---------------------Success build-----------------------");
 	Redraw(mygui);
@@ -272,6 +272,11 @@ void CORE::Calculate()
 
 void CORE::BuildFigureGoldMethod(IConstraint *constr, myvector<double*>* parameters)
 {
+	double *start_para = new double[parameters->size()];
+	for (unsigned i = 0; i < parameters->size(); i++)
+	{
+		*start_para = *(*parameters)[i];
+	}
 	// small value
 	const double f_epsi = 1e-6;
 	if (constr->error() < f_epsi) return;
@@ -360,13 +365,16 @@ void CORE::BuildFigureGoldMethod(IConstraint *constr, myvector<double*>* paramet
 		writeToLog(f_current, "f = ", 2);
 		writeToLog(abs(f_prev - f_current) /*/ abs(f_prev)*/, "delta f= ", 2);
 	//} while (abs(f_prev - f_current) > f_epsi);
+		mygui->UpdateWorkStatus(1);
 	} while (abs(f_prev - f_current) /*/ abs(f_prev)*/ > f_epsi && f_count < f_Epsi && f_current > f_epsi);
 	writeToLog(f_count, "iterations= ", 2);
 	writeToLog(nf_eval, "updates= ", 2);
+	mygui->WorkStatusDone();
 	/*if (constr->error() >= f_epsi)
 		mygui->WriteError("Can't build true figure.");*/
 	delete[] grad;
 	delete[] old_para;
+	delete[] start_para;
 }
 
 void CORE::BuildFigure(IConstraint* constraint, myvector<double*>* parameters)

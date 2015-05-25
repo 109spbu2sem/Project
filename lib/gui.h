@@ -50,6 +50,9 @@ public:
 	virtual void WriteError(const char* Text);
 	virtual void WriteText(const char* Short, const char* Long);
 
+	virtual void UpdateWorkStatus(unsigned);
+	virtual void WorkStatusDone();
+
 private slots:
 	void on_openAddingBTN_clicked();
 	
@@ -112,6 +115,8 @@ private:
 	const char* ConstrTypeToString(CONSTR_TYPE);
 	void setupIconsForVS();
 	unsigned selectedRuleId;
+
+	int workstatus;
 };
 
 #endif // GUI_H
