@@ -24,14 +24,18 @@ class Load;
 class CORE
 {
 private:
+	// other blocks
 	GraphicsInterface* mygui;
 	QString _fileWay;
+	// ------------------------
 
+	// storages
 	myavltree<double*, bool> _parameters;
 	StorageOfConstraints _storage_of_constraints;
 	myavltree<unsigned, ObjectBase*> _selected_objects;
 	StorageOfObjects _storage_of_objects;
 
+	// some private functions
 	bool isInArea(double x, double y, double x1, double y1, double x2, double y2);
 	void BuildFigure(IConstraint*, myvector<double*>*);
 	void BuildFigureGoldMethod(IConstraint*, myvector < double* >*);
@@ -43,6 +47,7 @@ private:
 
 	std::string GenerateTimeString(const char*, const char*);
 
+	// add constraint functions
 	bool addc_p2pdist(double);
 	bool addc_p2sdist(double);
 	bool addc_p2ldist(double);
@@ -56,6 +61,7 @@ private:
 	bool addc_orthogonality();
 	bool addc_ponc();
 	
+	// string consts
 	const char* DONESTRING;
 	const char* WORKSTRING;
 	const char* EMPTYSTRING;
@@ -70,6 +76,7 @@ public:
 		writeToLog("GUI connected to CORE", 2);
 	}
 
+	// writing log functions
 	void writeToLog(std::string, unsigned = 1);
 	void writeToLog(int, unsigned = 1);
 	void writeToLog(double, unsigned = 1);
@@ -79,8 +86,10 @@ public:
 	void writeToLog(unsigned, std::string, unsigned = 1);
 	void writeToLog(double, std::string, unsigned = 1);
 
+	// main redraw and calculate function
 	void Calculate();
 
+	// TODO flag instead bools
 	unsigned AddObject(double point_x, bool isconstx,
 							 double point_y, bool isconsty,
 							 Color color = COLORDEF,
@@ -94,13 +103,14 @@ public:
 							 unsigned id = 0, bool wait = false);
 	void CreateSegment();
 	void CreateCircle(double, bool);
-
+	// TODO change way of add rule
 	void AddRule(unsigned type, double value = 0);
 	bool AddRule(CONSTR_TYPE type, unsigned id1, unsigned id2);
 	bool AddRule(CONSTR_TYPE type, unsigned id1, unsigned id2, double value);
 	bool AddRule(CONSTR_TYPE type, unsigned id1, unsigned id2, unsigned id3);
 	bool AddRule(CONSTR_TYPE type, unsigned id1, unsigned id2, unsigned id3, double value);
 
+	// TODO flag instead bools
 	bool ChangePoint(unsigned id,
 						  double point_x, bool isconstx,
 						  double point_y, bool isconsty,
@@ -118,7 +128,7 @@ public:
 							Color color);
 
 	void Select(double x, double y);
-	void Select(double x1, double y1, double x2, double y2);
+	//void Select(double x1, double y1, double x2, double y2);
 	bool Select(unsigned id);
 	void ClearSelection();
 

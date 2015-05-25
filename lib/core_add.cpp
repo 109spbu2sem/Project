@@ -834,7 +834,8 @@ bool CORE::addc_3ponline()
 				Point* o3 = dynamic_cast<Point*>(k.value());
 				if (o3)
 				{
-					ThreePoints* rule = new ThreePoints(o1->x, o1->y,
+					ParallelLines* rule = new ParallelLines(o1->x, o1->y,
+																	o2->x, o2->y,
 																	o2->x, o2->y,
 																	o3->x, o3->y);
 					

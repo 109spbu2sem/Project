@@ -458,6 +458,17 @@ private:
 						c->parent->left = cur;
 						if (c->parent == _root) _root->left = cur;
 					}
+					if (cur->data.key>c->data.key)
+					{
+						cur->left = c->left;
+						if (c->left) c->left->parent = cur;
+					}
+					else
+					{
+						cur->right = c->right;
+						if (c->right) c->right->parent = cur;
+					}
+
 				}
 				delete c;
 				_size--;
