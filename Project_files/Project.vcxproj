@@ -137,7 +137,6 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="..\lib\Color.cpp" />
-    <ClCompile Include="..\lib\constraints\DistanceToTheLine.cpp" />
     <ClCompile Include="..\lib\core_add.cpp" />
     <ClCompile Include="..\lib\core_other.cpp" />
     <ClCompile Include="..\lib\core_private.cpp" />

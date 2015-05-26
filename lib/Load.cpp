@@ -2,7 +2,7 @@
 #include "global.h"
 
 Load::Load(){
-	_action->Calculate();
+
 };
 
 Load::Load(CORE*core, QString way){
@@ -189,7 +189,7 @@ void Load::testConstraint() {
 	CONSTR_TYPE type = static_cast<CONSTR_TYPE>(_xml.text().toUInt());
 	_xml.readNext(); _xml.readNext(); _xml.readNext();
 	if (type == CONSTR_EXCONTACT || type == CONSTR_INCONTACT ||
-		type == CONSTR_ORTHOGONALITY || type == CONSTR_PARALLELISM) {
+		type == CONSTR_ORTHOGONALITY || type == CONSTR_PARALLELISM || type == CONSTR_PONC) {
 		if (_xml.name() == "id1") _xml.readNext();
 		else { _flag = 0; return; }
 		if (_xml.text().toInt() == 0) { _flag = 0; return; }
@@ -419,7 +419,7 @@ void Load::constraint() {
 	CONSTR_TYPE type = static_cast<CONSTR_TYPE>(_xml.text().toUInt());
 	_xml.readNext(); _xml.readNext(); _xml.readNext();
 	if (type == CONSTR_EXCONTACT || type == CONSTR_INCONTACT ||
-		type == CONSTR_ORTHOGONALITY || type == CONSTR_PARALLELISM) {
+		type == CONSTR_ORTHOGONALITY || type == CONSTR_PARALLELISM || type == CONSTR_PONC) {
 		_xml.readNext();
 		id1 = _xml.text().toInt();
 		_xml.readNext(); _xml.readNext(); _xml.readNext(); _xml.readNext();

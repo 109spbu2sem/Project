@@ -284,7 +284,8 @@ void CORE::IWantSave()
 			continue;
 		}
 		if (j.constraint()->type() == CONSTR_EXCONTACT || j.constraint()->type() == CONSTR_INCONTACT ||
-			j.constraint()->type() == CONSTR_ORTHOGONALITY || j.constraint()->type() == CONSTR_PARALLELISM) {
+			j.constraint()->type() == CONSTR_ORTHOGONALITY || j.constraint()->type() == CONSTR_PARALLELISM ||
+			j.constraint()->type() == CONSTR_PONC) {
 			mysave.DrawRule(j.constraint()->type(), j.objects().front()->id.getID(), j.objects().back()->id.getID());
 			j++;
 			continue;

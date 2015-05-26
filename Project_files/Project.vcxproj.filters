@@ -55,9 +55,6 @@
     <ClCompile Include="..\lib\Color.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="..\lib\constraints\DistanceToTheLine.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="..\lib\core_add.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
