@@ -1,4 +1,4 @@
-###Доработанная версия доступна в ветке After-Session
+###Доработанная версия доступна в ветке *After-Session*
 
 #### [Список задач](https://github.com/109spbu2sem/Project/blob/master/List%20of%20tasks.md) для проекта
 
