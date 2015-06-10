@@ -1,5 +1,7 @@
 #### [Список задач](https://github.com/109spbu2sem/Project/blob/master/List%20of%20tasks.md) для проекта
 
+### Доработанная версия доступна в ветке After-Session
+
 ### Используйте ТОЛЬКО английский язык в комментариях к своему коду
 
 >Ссылка на документацию к [Qt 5.4](http://doc.qt.io/qt-5/index.html)  
