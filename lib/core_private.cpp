@@ -214,6 +214,7 @@ void CORE::Calculate()
 {
 	writeToLog("**********************Start calculating******************");
 	mygui->WriteText(EMPTYSTRING, "Start redrawing");
+	mygui->StartWorkStatus();
 	ConstraintCollector collector;
 	myvector< double* > parameters;
 	writeToLog("Generating graphs");
@@ -254,6 +255,7 @@ void CORE::Calculate()
 	writeToLog("---------------------Success build-----------------------");
 	Redraw(mygui);
 	TransmitRules(mygui);
+	mygui->StopWorkStatus();
 	mygui->WriteText(DONESTRING, EMPTYSTRING);
 	writeToLog("**********************Success calculate******************");
 	return;
@@ -354,11 +356,9 @@ void CORE::BuildFigureGoldMethod(IConstraint *constr, myvector<double*>* paramet
 		writeToLog(f_current, "f = ", 2);
 		writeToLog(abs(f_prev - f_current) /*/ abs(f_prev)*/, "delta f= ", 2);
 	//} while (abs(f_prev - f_current) > f_epsi);
-		mygui->UpdateWorkStatus(1);
 	} while (abs(f_prev - f_current) /*/ abs(f_prev)*/ > f_epsi && f_count < f_Epsi && f_current > f_epsi);
 	writeToLog(f_count, "iterations= ", 2);
 	writeToLog(nf_eval, "updates= ", 2);
-	mygui->WorkStatusDone();
 	/*if (constr->error() >= f_epsi)
 		mygui->WriteError("Can't build true figure.");*/
 	delete[] grad;

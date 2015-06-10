@@ -49,6 +49,10 @@ public:
 	unsigned red() const;
 	unsigned green() const;
 	unsigned blue() const;
+	void operator=(unsigned a)
+	{
+		_color = a;
+	}
 };
 
 class Interface
@@ -69,6 +73,8 @@ public:
 
 };
 
+// TODO Rework constraints, add to 'properties list' points ids for segment and circle
+
 class GraphicsInterface: public Interface
 {
 public:
@@ -81,9 +87,9 @@ public:
 	virtual bool DrawCircle(unsigned, double, double, double, Color, bool) = 0;
 	virtual bool Clear() = 0;
 
-	virtual bool Set_properties_of_point(unsigned, double, double, Color = 0) = 0;
-	virtual bool Set_properties_of_segment(unsigned, double, double, double, double, Color = 0) = 0;
-	virtual bool Set_properties_of_circle(unsigned, double, double, double, Color = 0) = 0;
+	virtual bool Set_properties_of_point(unsigned, double, double, bool, bool, Color = 0) = 0;
+	virtual bool Set_properties_of_segment(unsigned, double, double, double, double, bool, bool, bool, bool, Color = 0) = 0;
+	virtual bool Set_properties_of_circle(unsigned, double, double, double, bool, bool, bool, Color = 0) = 0;
 	virtual void Clear_properties() = 0;
 
 	virtual void WriteError(const char* Text) = 0;
@@ -95,8 +101,8 @@ public:
 	virtual bool WriteRule(unsigned, unsigned, unsigned, unsigned, CONSTR_TYPE, double) = 0;
 	virtual bool ClearRules() = 0;
 
-	virtual void UpdateWorkStatus(unsigned) = 0;
-	virtual void WorkStatusDone() = 0;
+	virtual void StartWorkStatus() = 0;
+	virtual void StopWorkStatus() = 0;
 };
 
 #endif

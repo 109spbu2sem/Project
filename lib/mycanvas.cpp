@@ -3,6 +3,9 @@
 #include "objectpropertieswindow.h"
 #include "ui_gui.h"
 #include <QPointF>
+#include "qcolor.h"
+#include "qpen.h"
+#include "qbrush.h"
 
 MyCanvas::MyCanvas(QWidget *parent) : QGraphicsView(parent)
 {
@@ -12,11 +15,24 @@ MyCanvas::MyCanvas(QWidget *parent) : QGraphicsView(parent)
 	_tool = TOOL_Select;
 	setSceneRect(-5000, -5000, 10000, 10000);
 	_displaygrid = false;
-	NewCanvas();
+	NewCanvas();	
+	setupSelectRect();
+}
+
+void MyCanvas::setupSelectRect()
+{
+	QColor c(0x35, 0x60, 0xD6, 70); // 0x3560d6
+	_selectionRectItem = new QGraphicsRectItem;
+	_selectionRectItem->setVisible(false);
+	_selectionRectItem->setPen(QPen(QBrush(c), 1, Qt::DashLine, Qt::RoundCap, Qt::RoundJoin));
+	c.setAlpha(20);
+	_selectionRectItem->setBrush(QBrush(c));
+	mainscene->addItem(_selectionRectItem);
 }
 
 MyCanvas::~MyCanvas()
 {
+	delete _selectionRectItem;
 	delete mainscene;
 }
 
@@ -53,11 +69,23 @@ void MyCanvas::NewCanvas()
 	}
 }
 
+void MyCanvas::mouseDoubleClickEvent(QMouseEvent *event)
+{
+	QPointF pt = mapToScene(event->pos());
+	if (mycore->Select(pt.x(), -pt.y()))
+		doubleclick();
+}
+
 void MyCanvas::mouseMoveEvent(QMouseEvent* event)
 {
 	QPointF pt = mapToScene(event->pos());
 	clickedx(pt.x());
 	clickedy(-pt.y());
+	if (_selectStatus)
+	{
+		_selectionRect.setBottomRight(pt);
+		_selectionRectItem->setRect(_selectionRect.normalized());
+	}
 }
 
 void MyCanvas::mousePressEvent(QMouseEvent *event)
@@ -65,36 +93,80 @@ void MyCanvas::mousePressEvent(QMouseEvent *event)
 	QPointF pt = mapToScene(event->pos());
 	switch (_tool)
 	{
-	case TOOL_Select:
-	{
-		if (event->button() == Qt::RightButton)
-			mycore->ClearSelection();
-		if (event->button() == Qt::LeftButton)
-			mycore->Select(pt.x(), -pt.y());
-		clickedx(pt.x());
-		clickedy(-pt.y());
-		break;
+		case TOOL_Select:
+		{
+			if (event->button() == Qt::RightButton)
+				mycore->ClearSelection();
+			if (event->button() == Qt::LeftButton)
+			{
+				_selectStatus = true;
+				_startSelectionPos = pt;
+				_selectionRect.setTopLeft(pt);
+				_selectionRect.setBottomRight(pt);
+				_selectionRectItem->setRect(_selectionRect);
+				_selectionRectItem->setVisible(true);
+			}
+			clickedx(pt.x());
+			clickedy(-pt.y());
+			break;
+		}
+		case TOOL_Point:
+		{
+			if (event->button() == Qt::LeftButton)
+				mycore->AddObject(pt.x(), false, -pt.y(), false);
+			if (event->button() == Qt::RightButton)
+				mycore->ClearSelection();
+			clickedx(pt.x());
+			clickedy(-pt.y());
+			break;
+		}
+		case TOOL_Zoom:
+		{
+			if (event->button() == Qt::RightButton)
+				scale(0.5, 0.5);
+			if (event->button() == Qt::LeftButton)
+				scale(2, 2);
+			clickedx(pt.x());
+			clickedy(-pt.y());
+			break;
+		}
 	}
-	case TOOL_Point:
+}
+
+void MyCanvas::mouseReleaseEvent(QMouseEvent *event)
+{
+	_selectStatus = false;
+	_selectionRectItem->setVisible(false);
+	QPointF pt = mapToScene(event->pos());
+	if (pt == _startSelectionPos)
 	{
-		if (event->button() == Qt::LeftButton)
-			mycore->AddObject(pt.x(), false, -pt.y(), false);
-		if (event->button() == Qt::RightButton)
-			mycore->ClearSelection();
-		clickedx(pt.x());
-		clickedy(-pt.y());
-		break;
+		switch (_tool)
+		{
+			case TOOL_Select:
+			{
+				mycore->Select(pt.x(), -pt.y());
+				break;
+			}
+			case TOOL_Point:
+			{
+				break;
+			}
+		}		
 	}
-	case TOOL_Zoom:
+	else
 	{
-		if (event->button() == Qt::RightButton)
-			scale(0.5, 0.5);
-		if (event->button() == Qt::LeftButton)
-			scale(2, 2);
-		clickedx(pt.x());
-		clickedy(-pt.y());
-		break;
-	}
+		switch (_tool)
+		{
+			case TOOL_Select:
+			{
+				mycore->Select(pt.x(), -pt.y(), _startSelectionPos.x(), -_startSelectionPos.y());
+				break;
+			}
+			case TOOL_Point:
+			{
+				break;
+			}
+		}
 	}
 }
 

@@ -28,56 +28,16 @@ void GUI::WriteError(const char* Text)
 	return;
 }
 
-void GUI::UpdateWorkStatus(unsigned a)
+void GUI::StartWorkStatus()
 {
-	workstatus += a;
-	switch (workstatus % 12000)
-	{
-		case 1:
-		{
-			ui->workStatusLabel->setText("");
-			this->repaint();
-			break;
-		}
-		case 2000:
-		{
-			ui->workStatusLabel->setText(":");
-			this->repaint();
-			break;
-		}
-		case 4000:
-		{
-			ui->workStatusLabel->setText("::");
-			this->repaint();
-			break;
-		}
-		case 6000:
-		{
-			ui->workStatusLabel->setText("::");
-			this->repaint();
-			break;
-		}
-		case 8000:
-		{
-			ui->workStatusLabel->setText(":  :");
-			this->repaint();
-			break;
-		}
-		case 10000:
-		{
-			ui->workStatusLabel->setText(":   :");
-			this->repaint();
-			break;
-		}
-	}
-	if (workstatus >= 1000000) workstatus = 0;
+	ui->workStatusLabel->setVisible(true);
+	_loadcircle->start();
 }
 
-void GUI::WorkStatusDone()
+void GUI::StopWorkStatus()
 {
-	workstatus = 0;
-	ui->workStatusLabel->setText("");
-	this->repaint();
+	ui->workStatusLabel->setVisible(false);
+	_loadcircle->stop();
 }
 
 // Write Short to status bar, Long to message bar
@@ -88,7 +48,8 @@ void GUI::WriteText(const char* Short, const char* Long)
 	this->repaint();
 }
 
-bool GUI::Set_properties_of_point(unsigned id, double x, double y, Color c)
+bool GUI::Set_properties_of_point(unsigned id, double x, double y,
+											 bool isx, bool isy, Color c)
 {
 	ui->propertiesList->clear();
 	QString s;
@@ -102,6 +63,8 @@ bool GUI::Set_properties_of_point(unsigned id, double x, double y, Color c)
 	s.setNum(id);
 	item->setText("id:\t" + s);
 	item->setData(17, id);
+	item->setData(18, isx);
+	item->setData(19, isy);
 	ui->propertiesList->addItem(item);
 
 	item = new QListWidgetItem;
@@ -124,7 +87,8 @@ bool GUI::Set_properties_of_point(unsigned id, double x, double y, Color c)
 	return true;
 }
 
-bool GUI::Set_properties_of_segment(unsigned id, double x1, double y1, double x2, double y2, Color c)
+bool GUI::Set_properties_of_segment(unsigned id, double x1, double y1, double x2, double y2,
+												bool isx1, bool isy1, bool isx2, bool isy2, Color c)
 {
 	ui->propertiesList->clear();
 	QString s;
@@ -132,6 +96,10 @@ bool GUI::Set_properties_of_segment(unsigned id, double x1, double y1, double x2
 
 	item->setText("Segment");
 	item->setData(17, PRIMITIVE_SEGMENT);
+	item->setData(18, isx1);
+	item->setData(19, isy1);
+	item->setData(20, isx2);
+	item->setData(21, isy2);
 	ui->propertiesList->addItem(item);
 
 	item = new QListWidgetItem;
@@ -176,7 +144,8 @@ bool GUI::Set_properties_of_segment(unsigned id, double x1, double y1, double x2
 	return true;
 }
 
-bool GUI::Set_properties_of_circle(unsigned id, double x, double y, double r, Color c)
+bool GUI::Set_properties_of_circle(unsigned id, double x, double y, double r,
+											  bool isx, bool isy, bool isr, Color c)
 {
 	ui->propertiesList->clear();
 	QString s;
@@ -184,6 +153,9 @@ bool GUI::Set_properties_of_circle(unsigned id, double x, double y, double r, Co
 
 	item->setText("Circle");
 	item->setData(17, PRIMITIVE_CIRCLE);
+	item->setData(18, isx);
+	item->setData(19, isy);
+	item->setData(20, isr);
 	ui->propertiesList->addItem(item);
 
 	item = new QListWidgetItem;
@@ -227,10 +199,10 @@ bool GUI::DrawPoint(unsigned id, double x, double y, Color c, bool selected)
 {
 	// if (x != x || y != y) return false; // check for NaN
 	if (!(std::isinf(x) || std::isinf(y)))
-		mainscene->addEllipse(x - 1.2, -y - 1.2, 2.4, 2.4,
-		selected ? QPen(QColor(QRgb(COLORSELECTED))) :
+		mainscene->addEllipse(x - _pointradius, -y - _pointradius, _pointradius * 2, _pointradius * 2,
+		selected ? *_selectPen :
 		QPen(QColor(c.red(), c.green(), c.blue())),
-		selected ? QBrush(QColor(QRgb(COLORSELECTED))) :
+		selected ? *_selectBrush :
 		QBrush(QColor(c.red(), c.green(), c.blue())));
 	QString s;
 	s.setNum(id);
@@ -240,7 +212,22 @@ bool GUI::DrawPoint(unsigned id, double x, double y, Color c, bool selected)
 	it->setData(17, id);
 	ui->objectsList->addItem(it);
 	if (selected)
+	{
 		it->setSelected(true);
+
+		mainscene->addEllipse(x  - _selectpointradius - _selectPradius - _constIndent,
+									-y  - _selectpointradius - _selectPradius - _constIndent,
+									_selectPradius * 2, _selectPradius * 2, *_selectPen, *_selectBrush);
+		mainscene->addEllipse(x  + _selectpointradius - _selectPradius + _constIndent,
+									-y  - _selectpointradius - _selectPradius - _constIndent,
+									_selectPradius * 2, _selectPradius * 2, *_selectPen, *_selectBrush);
+		mainscene->addEllipse(x  + _selectpointradius - _selectPradius + _constIndent,
+									-y  + _selectpointradius - _selectPradius + _constIndent,
+									_selectPradius * 2, _selectPradius * 2, *_selectPen, *_selectBrush);
+		mainscene->addEllipse(x  - _selectpointradius - _selectPradius - _constIndent,
+									-y  + _selectpointradius - _selectPradius + _constIndent,
+									_selectPradius * 2, _selectPradius * 2, *_selectPen, *_selectBrush);
+	}
 	return true;
 }
 
@@ -259,7 +246,9 @@ bool GUI::DrawSegment(unsigned id, double x1, double y1, double x2, double y2, C
 	it->setData(17, id);
 	ui->objectsList->addItem(it);
 	if (selected)
+	{
 		it->setSelected(true);
+	}
 	return true;
 }
 
@@ -278,7 +267,21 @@ bool GUI::DrawCircle(unsigned id, double x, double y, double r, Color c, bool se
 	it->setData(17, id);
 	ui->objectsList->addItem(it);
 	if (selected)
+	{
 		it->setSelected(true);
+		mainscene->addEllipse(x - r - _selectPradius - _constIndent,
+									-y - r - _selectPradius - _constIndent,
+									_selectPradius * 2, _selectPradius * 2, *_selectPen, *_selectBrush);
+		mainscene->addEllipse(x + r - _selectPradius + _constIndent,
+									-y - r - _selectPradius - _constIndent,
+									_selectPradius * 2, _selectPradius * 2, *_selectPen, *_selectBrush);
+		mainscene->addEllipse(x + r - _selectPradius + _constIndent,
+									-y + r - _selectPradius + _constIndent,
+									_selectPradius * 2, _selectPradius * 2, *_selectPen, *_selectBrush);
+		mainscene->addEllipse(x - r - _selectPradius - _constIndent,
+									-y + r - _selectPradius + _constIndent,
+									_selectPradius * 2, _selectPradius * 2, *_selectPen, *_selectBrush);
+	}
 	return true;
 }
 
@@ -287,6 +290,7 @@ bool GUI::Clear()
 	mainscene->clear();
 	ui->myCanvas->NewCanvas();
 	ui->objectsList->clear();
+	ui->myCanvas->setupSelectRect();
 	return true;
 }
 

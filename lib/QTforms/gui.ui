@@ -1949,6 +1949,7 @@ color: rgb(255, 255, 255);</string>
    <slots>
     <signal>clickedx(double)</signal>
     <signal>clickedy(double)</signal>
+    <signal>doubleclick()</signal>
    </slots>
   </customwidget>
  </customwidgets>
@@ -2017,6 +2018,22 @@ color: rgb(255, 255, 255);</string>
     <hint type="destinationlabel">
      <x>678</x>
      <y>107</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>myCanvas</sender>
+   <signal>doubleclick()</signal>
+   <receiver>openChangingDialog</receiver>
+   <slot>click()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>350</x>
+     <y>253</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>680</x>
+     <y>319</y>
     </hint>
    </hints>
   </connection>

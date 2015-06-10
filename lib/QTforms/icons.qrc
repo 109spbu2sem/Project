@@ -14,5 +14,6 @@
         <file>icons/segmentbtn.png</file>
         <file>icons/selectbtn.png</file>
         <file>icons/zoombtn.png</file>
+        <file>icons/loader.gif</file>
     </qresource>
 </RCC>

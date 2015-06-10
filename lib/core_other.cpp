@@ -2,7 +2,7 @@
 #include <string>
 
 
-void CORE::Select(double x, double y)
+bool CORE::Select(double x, double y)
 {
 	
 	//Try to search points in small radius
@@ -63,8 +63,7 @@ void CORE::Select(double x, double y)
 			}
 		}
 	}
-	Select(min_id);
-	return;
+	return Select(min_id);;
 }
 
 bool CORE::Select(unsigned id)
@@ -83,19 +82,26 @@ bool CORE::Select(unsigned id)
 					case PRIMITIVE_POINT:
 					{
 						Point* p = dynamic_cast<Point*>(object);
-						mygui->Set_properties_of_point(p->id.getID(), *p->x, *p->y, p->color.getColor());
+						mygui->Set_properties_of_point(p->id.getID(), *p->x, *p->y,
+																 _parameters.get(p->x), _parameters.get(p->y),
+																 p->color.getColor());
 						break;
 					}
 					case PRIMITIVE_SEGMENT:
 					{
 						Segment* s = dynamic_cast<Segment*>(object);
-						mygui->Set_properties_of_segment(s->id.getID(), *s->p1->x, *s->p1->y, *s->p2->x, *s->p2->y, s->color.getColor());
+						mygui->Set_properties_of_segment(s->id.getID(), *s->p1->x, *s->p1->y, *s->p2->x, *s->p2->y,
+																	_parameters.get(s->p1->x), _parameters.get(s->p1->y),
+																	_parameters.get(s->p2->x), _parameters.get(s->p2->y),
+																	s->color.getColor());
 						break;
 					}
 					case PRIMITIVE_CIRCLE:
 					{
 						Circle* c = dynamic_cast<Circle*>(object);
-						mygui->Set_properties_of_circle(c->id.getID(), *c->p->x, *c->p->y, *c->r, c->color.getColor());
+						mygui->Set_properties_of_circle(c->id.getID(), *c->p->x, *c->p->y, *c->r,
+																  _parameters.get(c->p->x), _parameters.get(c->p->y),
+																  _parameters.get(c->r), c->color.getColor());
 						break;
 					}
 				}
@@ -114,45 +120,54 @@ bool CORE::Select(unsigned id)
 	return false;
 }
 
-/*void CORE::Select(double x1, double y1, double x2, double y2)
+void CORE::Select(double x1, double y1, double x2, double y2)
 {
 	// select points
-	unsigned size = _storage_of_points.size();
-	for (ListViewer<Point> i(_storage_of_points); i.valid(); i++)
+	ClearSelection();
+	for (StorageOfObjects::viewer i(_storage_of_objects); i.valid(); i++)
 	{
-		if (isInArea(*i.x, *i.y, x1, y1, x2, y2))
+		if (i.key().getID())
 		{
-			i.changeSelect(true);
-			_selected_objects.add(&i.getValue());
+			switch (i.value()->objectType())
+			{
+				case PRIMITIVE_POINT:
+				{
+					Point* point = dynamic_cast<Point*>(i.value());
+					if (isInArea(*point->x, *point->y, x1, y1, x2, y2))
+					{
+						point->changeSelect(true);
+						_selected_objects.insert(point->id.getID(), point);
+					}
+					break;
+				}
+				case PRIMITIVE_SEGMENT:
+				{
+					Segment* segment = dynamic_cast<Segment*>(i.value());
+					if (isInArea(*segment->p1->x, *segment->p1->y, x1, y1, x2, y2) &&
+						 isInArea(*segment->p2->x, *segment->p2->y, x1, y1, x2, y2))
+					{
+						segment->changeSelect(true);
+						_selected_objects.insert(segment->id.getID(), segment);
+					}
+					break;
+				}
+				case PRIMITIVE_CIRCLE:
+				{
+					Circle* circle = dynamic_cast<Circle*>(i.value());
+					if ((isInArea(*circle->p->x, *circle->p->y, x1, y1, x2, y2)) &&
+						 (*circle->p->x + *circle->r) >= x1 && (*circle->p->x + *circle->r) <= x2 &&
+						 (*circle->p->y + *circle->r) >= y1 && (*circle->p->y + *circle->r) <= y2)
+					{
+						circle->changeSelect(true);
+						_selected_objects.insert(circle->id.getID(), circle);
+					}
+					break;
+				}
+			}
 		}
 	}
-
-	// select segments
-	size = _storage_of_segments.size();
-	for (ListViewer<Segment> i(_storage_of_segments); i.valid(); i++)
-	{
-		if (isInArea(*i.p1->x, *i.p1->y, x1, y1, x2, y2) &&
-			isInArea(*i.p2->x, *i.p2->y, x1, y1, x2, y2))
-		{
-			i.changeSelect(true);
-			_selected_objects.add(&i.getValue());
-		}
-	}
-	// select circles
-	size = _storage_of_circles.size();
-	for (ListViewer<Circle> i(_storage_of_circles); i.valid(); i++)
-	{
-		if ((isInArea(*i.p->x, *i.p->y, x1, y1, x2, y2)) &&
-			(*i.p->x + *i.r) >= x1 && (*i.p->x + *i.r) <= x2 &&
-			(*i.p->y + *i.r) >= y1 && (*i.p->y + *i.r) <= y2)
-		{
-			i.changeSelect(true);
-			_selected_objects.add(&i.getValue());
-		}
-	}
-	Redraw();
-	return;
-}*/
+	Redraw(mygui);
+}
 
 void CORE::ClearSelection()
 {
@@ -247,7 +262,7 @@ void CORE::IWantSave()
 	StorageOfConstraints::viewer j(_storage_of_constraints);
 	while (i.valid())
 	{
-		mygui->UpdateWorkStatus(1); // draw :: on status
+		mygui->StartWorkStatus();
 		if (i.key().getID() == 0)
 		{
 			i++;
@@ -278,7 +293,7 @@ void CORE::IWantSave()
 		}
 	}
 	while (j.valid()) {
-		mygui->UpdateWorkStatus(1); // draw :: on status
+		mygui->StartWorkStatus();
 		if (j.constraint()->type() == CONSTR_COLLECTOR) {
 			j++;
 			continue;
@@ -307,7 +322,7 @@ void CORE::IWantSave()
 			continue;
 		}
 	}
-	mygui->WorkStatusDone();
+	mygui->StopWorkStatus();
 }
 
 void CORE::IWantSaveAs(QString way) {

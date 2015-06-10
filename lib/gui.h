@@ -10,7 +10,9 @@
 #include "enums.h"
 #include "qregexp.h"
 #include "qvalidator.h"
-#include "qresource.h"
+#include "qmovie.h"
+#include "qpen.h"
+#include "qbrush.h"
 
 class CORE;
 
@@ -42,16 +44,16 @@ public:
 	virtual bool WriteRule(unsigned, unsigned, unsigned, unsigned, CONSTR_TYPE, double);
 	virtual bool ClearRules();
 
-	virtual bool Set_properties_of_point(unsigned, double, double, Color);
-	virtual bool Set_properties_of_segment(unsigned, double, double, double, double, Color);
-	virtual bool Set_properties_of_circle(unsigned, double, double, double, Color);
+	virtual bool Set_properties_of_point(unsigned, double, double, bool, bool, Color);
+	virtual bool Set_properties_of_segment(unsigned, double, double, double, double, bool, bool, bool, bool, Color);
+	virtual bool Set_properties_of_circle(unsigned, double, double, double, bool, bool, bool, Color);
 	virtual void Clear_properties();
 
 	virtual void WriteError(const char* Text);
 	virtual void WriteText(const char* Short, const char* Long);
 
-	virtual void UpdateWorkStatus(unsigned);
-	virtual void WorkStatusDone();
+	virtual void StartWorkStatus();
+	virtual void StopWorkStatus();
 
 private slots:
 	void on_openAddingBTN_clicked();
@@ -110,13 +112,18 @@ private:
 	QGraphicsScene* mainscene;
 	QButtonGroup* toolsbuttons;
 	QRegExpValidator *doubvalid;
-	QResource resourse;
+	QMovie* _loadcircle;
 	
 	const char* ConstrTypeToString(CONSTR_TYPE);
-	void setupIconsForVS();
 	unsigned selectedRuleId;
 
-	int workstatus;
+	const double _pointradius = 1.2;
+	const double _selectpointradius = 0.8;
+	const double _selectPradius = 0.4;
+	const double _constIndent = 2;
+
+	QPen* _selectPen;
+	QBrush* _selectBrush;
 };
 
 #endif // GUI_H

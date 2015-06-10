@@ -9,16 +9,17 @@
 #include "QtWidgets/qfiledialog.h"
 #include "QtWidgets/qlistview.h"
 #include "qlist.h"
-#include <QList>
-#include "QtWidgets/qscrollbar.h"
 #include "QtWidgets/qmainwindow.h"
-#include "qresource.h"
 
 GUI::GUI(QWidget *parent) :
 	QMainWindow(parent),
 	ui(new Ui::GUI)
 {
 	ui->setupUi(this);
+	_loadcircle = new QMovie(":/icons/icons/loader.gif");
+	_loadcircle->setSpeed(200);
+	ui->workStatusLabel->setMovie(_loadcircle);
+	StartWorkStatus();
 	mycore = 0;
 	selectedRuleId = 0;
 	QRegExp doub("([1-9]{0,}.?[0-9]{0,}|0(.[0-9]{1,})?)"); // check for 'double' value
@@ -31,8 +32,10 @@ GUI::GUI(QWidget *parent) :
 	toolsbuttons->addButton(ui->selectBTNTool);
 	toolsbuttons->addButton(ui->pointBTNTool);
 	toolsbuttons->addButton(ui->ZoomBTNTool);
-	workstatus = 0;
+	_selectPen = new QPen(QColor(QRgb(COLORSELECTED)));
+	_selectBrush = new QBrush(QColor(QRgb(COLORSELECTED)));
 
+	StopWorkStatus();
 
 	showMaximized();
 }
@@ -45,6 +48,9 @@ void GUI::ConnectCORE(CORE* core)
 
 GUI::~GUI()
 {
+	delete _selectPen;
+	delete _selectBrush;
+	delete _loadcircle;
 	delete toolsbuttons;
 	delete ui;
 	delete doubvalid;
@@ -256,8 +262,6 @@ void GUI::on_actionSave_As_triggered()
 void GUI::on_actionClear_all_triggered()
 {
 	mycore->DeleteAll();
-	ui->myCanvas->horizontalScrollBar()->setSliderPosition(50);
-	ui->myCanvas->verticalScrollBar()->setSliderPosition(50);
 }
 
 void GUI::on_saveBTN_clicked()
@@ -359,9 +363,9 @@ void GUI::on_openChangingDialog_clicked()
 			{
 				ow.setupPointProperties(ui->propertiesList->item(1)->data(17).toUInt(),
 												ui->propertiesList->item(2)->data(17).toDouble(),
-												false,
+												ui->propertiesList->item(1)->data(18).toBool(),
 												ui->propertiesList->item(3)->data(17).toDouble(),
-												false,
+												ui->propertiesList->item(1)->data(19).toBool(),
 												Color(ui->propertiesList->item(4)->data(17).toUInt()));
 				break;
 			}
@@ -369,13 +373,13 @@ void GUI::on_openChangingDialog_clicked()
 			{
 				ow.setupSegmentProperties(ui->propertiesList->item(1)->data(17).toUInt(),
 												  ui->propertiesList->item(2)->data(17).toDouble(),
-												  false,
+												  ui->propertiesList->item(1)->data(18).toBool(),
 												  ui->propertiesList->item(3)->data(17).toDouble(),
-												  false,
+												  ui->propertiesList->item(1)->data(19).toBool(),
 												  ui->propertiesList->item(4)->data(17).toDouble(),
-												  false,
+												  ui->propertiesList->item(1)->data(20).toBool(),
 												  ui->propertiesList->item(5)->data(17).toDouble(),
-												  false,
+												  ui->propertiesList->item(1)->data(21).toBool(),
 												  Color(ui->propertiesList->item(6)->data(17).toUInt()));
 				break;
 			}
@@ -383,11 +387,11 @@ void GUI::on_openChangingDialog_clicked()
 			{
 				ow.setupCircleProperties(ui->propertiesList->item(1)->data(17).toUInt(),
 												 ui->propertiesList->item(2)->data(17).toDouble(),
-												 false,
+												 ui->propertiesList->item(1)->data(18).toBool(),
 												 ui->propertiesList->item(3)->data(17).toDouble(),
-												 false,
+												 ui->propertiesList->item(1)->data(19).toBool(),
 												 ui->propertiesList->item(4)->data(17).toDouble(),
-												 false,
+												 ui->propertiesList->item(1)->data(20).toBool(),
 												 Color(ui->propertiesList->item(5)->data(17).toUInt()));
 				break;
 			}
