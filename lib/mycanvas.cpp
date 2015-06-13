@@ -17,22 +17,31 @@ MyCanvas::MyCanvas(QWidget *parent) : QGraphicsView(parent)
 	_displaygrid = false;
 	NewCanvas();	
 	setupSelectRect();
+	setupNewLineDraw();
 }
 
 void MyCanvas::setupSelectRect()
 {
-	QColor c(0x35, 0x60, 0xD6, 70); // 0x3560d6
+	QColor c(0x35, 0x60, 0xD6, 90); // 0x3560d6
 	_selectionRectItem = new QGraphicsRectItem;
 	_selectionRectItem->setVisible(false);
 	_selectionRectItem->setPen(QPen(QBrush(c), 1, Qt::DashLine, Qt::RoundCap, Qt::RoundJoin));
-	c.setAlpha(20);
+	c.setAlpha(40);
 	_selectionRectItem->setBrush(QBrush(c));
 	mainscene->addItem(_selectionRectItem);
+}
+
+void MyCanvas::setupNewLineDraw()
+{
+	_newSegmentItem = new QGraphicsLineItem;
+	_newSegmentItem->setVisible(false);
+	mainscene->addItem(_newSegmentItem);
 }
 
 MyCanvas::~MyCanvas()
 {
 	delete _selectionRectItem;
+	delete _newSegmentItem;
 	delete mainscene;
 }
 
@@ -83,8 +92,25 @@ void MyCanvas::mouseMoveEvent(QMouseEvent* event)
 	clickedy(-pt.y());
 	if (_selectStatus)
 	{
-		_selectionRect.setBottomRight(pt);
-		_selectionRectItem->setRect(_selectionRect.normalized());
+		switch (_tool)
+		{
+			case TOOL_Select:
+			{
+				_selectionRect.setBottomRight(pt);
+				_selectionRectItem->setRect(_selectionRect.normalized());
+				break;
+			}
+			case TOOL_Point:
+			{
+				_newSegment.setP2(pt);
+				_newSegmentItem->setLine(_newSegment);
+				break;
+			}
+			case TOOL_Zoom:
+				break;
+			default:
+				break;
+		}
 	}
 }
 
@@ -113,7 +139,14 @@ void MyCanvas::mousePressEvent(QMouseEvent *event)
 		case TOOL_Point:
 		{
 			if (event->button() == Qt::LeftButton)
-				mycore->AddObject(pt.x(), false, -pt.y(), false);
+			{
+				_selectStatus = true;
+				_startSelectionPos = pt;
+				_newSegment.setP1(_startSelectionPos);
+				_newSegment.setP2(pt);
+				_newSegmentItem->setLine(_newSegment);
+				_newSegmentItem->setVisible(true);
+			}
 			if (event->button() == Qt::RightButton)
 				mycore->ClearSelection();
 			clickedx(pt.x());
@@ -136,7 +169,6 @@ void MyCanvas::mousePressEvent(QMouseEvent *event)
 void MyCanvas::mouseReleaseEvent(QMouseEvent *event)
 {
 	_selectStatus = false;
-	_selectionRectItem->setVisible(false);
 	QPointF pt = mapToScene(event->pos());
 	if (pt == _startSelectionPos)
 	{
@@ -145,10 +177,13 @@ void MyCanvas::mouseReleaseEvent(QMouseEvent *event)
 			case TOOL_Select:
 			{
 				mycore->Select(pt.x(), -pt.y());
+				_selectionRectItem->setVisible(false);
 				break;
 			}
 			case TOOL_Point:
 			{
+				mycore->AddObject(pt.x(), false, -pt.y(), false);
+				_newSegmentItem->setVisible(false);
 				break;
 			}
 		}		
@@ -160,10 +195,14 @@ void MyCanvas::mouseReleaseEvent(QMouseEvent *event)
 			case TOOL_Select:
 			{
 				mycore->Select(pt.x(), -pt.y(), _startSelectionPos.x(), -_startSelectionPos.y());
+				_selectionRectItem->setVisible(false);
 				break;
 			}
 			case TOOL_Point:
 			{
+				mycore->AddObject(mycore->AddObject(pt.x(), false, -pt.y(), false),
+										mycore->AddObject(_startSelectionPos.x(), false, -_startSelectionPos.y(), false));
+				_newSegmentItem->setVisible(false);
 				break;
 			}
 		}

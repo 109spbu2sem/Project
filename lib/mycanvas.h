@@ -33,6 +33,7 @@ public:
 	void NewCanvas();
 	void setGrid(bool);
 	void setupSelectRect();
+	void setupNewLineDraw();
 
 public slots:
 	void mousePressEvent(QMouseEvent *event);
@@ -56,6 +57,10 @@ private:
 	bool _selectStatus;
 	QGraphicsRectItem* _selectionRectItem;
 	QRectF _selectionRect;
+
+	// create segment
+	QGraphicsLineItem* _newSegmentItem;
+	QLineF _newSegment;
 };
 
 #endif // MYCANVAS_H

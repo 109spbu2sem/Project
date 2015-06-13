@@ -356,6 +356,7 @@ void GUI::on_openChangingDialog_clicked()
 		objectPropertiesWindow ow(this);
 		ow.connectCORE(mycore);
 		ow.setFlag(1);
+		ow.setWindowTitle("Change object");
 		unsigned SWITCH = ui->propertiesList->item(0)->data(17).toUInt();
 		switch (SWITCH)
 		{
@@ -372,27 +373,27 @@ void GUI::on_openChangingDialog_clicked()
 			case PRIMITIVE_SEGMENT:
 			{
 				ow.setupSegmentProperties(ui->propertiesList->item(1)->data(17).toUInt(),
-												  ui->propertiesList->item(2)->data(17).toDouble(),
-												  ui->propertiesList->item(1)->data(18).toBool(),
 												  ui->propertiesList->item(3)->data(17).toDouble(),
-												  ui->propertiesList->item(1)->data(19).toBool(),
+												  ui->propertiesList->item(1)->data(18).toBool(),
 												  ui->propertiesList->item(4)->data(17).toDouble(),
+												  ui->propertiesList->item(1)->data(19).toBool(),
+												  ui->propertiesList->item(6)->data(17).toDouble(),
 												  ui->propertiesList->item(1)->data(20).toBool(),
-												  ui->propertiesList->item(5)->data(17).toDouble(),
+												  ui->propertiesList->item(7)->data(17).toDouble(),
 												  ui->propertiesList->item(1)->data(21).toBool(),
-												  Color(ui->propertiesList->item(6)->data(17).toUInt()));
+												  Color(ui->propertiesList->item(8)->data(17).toUInt()));
 				break;
 			}
 			case PRIMITIVE_CIRCLE:
 			{
 				ow.setupCircleProperties(ui->propertiesList->item(1)->data(17).toUInt(),
-												 ui->propertiesList->item(2)->data(17).toDouble(),
-												 ui->propertiesList->item(1)->data(18).toBool(),
 												 ui->propertiesList->item(3)->data(17).toDouble(),
-												 ui->propertiesList->item(1)->data(19).toBool(),
+												 ui->propertiesList->item(1)->data(18).toBool(),
 												 ui->propertiesList->item(4)->data(17).toDouble(),
+												 ui->propertiesList->item(1)->data(19).toBool(),
+												 ui->propertiesList->item(5)->data(17).toDouble(),
 												 ui->propertiesList->item(1)->data(20).toBool(),
-												 Color(ui->propertiesList->item(5)->data(17).toUInt()));
+												 Color(ui->propertiesList->item(6)->data(17).toUInt()));
 				break;
 			}
 		}

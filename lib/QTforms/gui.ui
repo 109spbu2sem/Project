@@ -1335,7 +1335,7 @@
              <widget class="QListWidget" name="propertiesList">
               <property name="maximumSize">
                <size>
-                <width>500</width>
+                <width>800</width>
                 <height>16777215</height>
                </size>
               </property>
@@ -1444,7 +1444,7 @@
              <widget class="QListWidget" name="objectsList">
               <property name="maximumSize">
                <size>
-                <width>500</width>
+                <width>800</width>
                 <height>16777215</height>
                </size>
               </property>
@@ -1487,6 +1487,9 @@
               </property>
               <property name="editTriggers">
                <set>QAbstractItemView::DoubleClicked|QAbstractItemView::SelectedClicked</set>
+              </property>
+              <property name="showDropIndicator" stdset="0">
+               <bool>false</bool>
               </property>
               <property name="selectionMode">
                <enum>QAbstractItemView::MultiSelection</enum>
@@ -1573,7 +1576,7 @@
              <widget class="QListWidget" name="rulesList">
               <property name="maximumSize">
                <size>
-                <width>500</width>
+                <width>800</width>
                 <height>16777215</height>
                </size>
               </property>

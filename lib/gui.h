@@ -45,8 +45,8 @@ public:
 	virtual bool ClearRules();
 
 	virtual bool Set_properties_of_point(unsigned, double, double, bool, bool, Color);
-	virtual bool Set_properties_of_segment(unsigned, double, double, double, double, bool, bool, bool, bool, Color);
-	virtual bool Set_properties_of_circle(unsigned, double, double, double, bool, bool, bool, Color);
+	virtual bool Set_properties_of_segment(unsigned, unsigned, unsigned, double, double, double, double, bool, bool, bool, bool, Color);
+	virtual bool Set_properties_of_circle(unsigned, unsigned, double, double, double, bool, bool, bool, Color);
 	virtual void Clear_properties();
 
 	virtual void WriteError(const char* Text);
@@ -106,7 +106,7 @@ private slots:
 	void on_closeBTN_clicked();
 	
 private:
-    bool flag;
+   bool flag;
 	Ui::GUI *ui;
 	CORE* mycore;
 	QGraphicsScene* mainscene;

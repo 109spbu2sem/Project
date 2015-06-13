@@ -183,7 +183,6 @@
     <ClInclude Include="..\lib\storages\mylist.h" />
     <ClInclude Include="..\lib\storages\mytree.h" />
     <ClInclude Include="..\lib\storages\myvector.h" />
-    <ClInclude Include="..\lib\storages\queue.h" />
     <ClInclude Include="..\lib\Load.h" />
     <ClInclude Include="GeneratedFiles\ui_gui.h" />
     <ClInclude Include="GeneratedFiles\ui_objectpropertieswindow.h" />
@@ -207,8 +206,6 @@ endlocal
       <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(QTDIR)\bin\moc.exe;%(FullPath)</AdditionalInputs>
       <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(QTDIR)\bin\moc.exe;%(FullPath)</AdditionalInputs>
     </CustomBuild>
-    <ClInclude Include="..\lib\storages\heshtable.h" />
-    <ClInclude Include="..\lib\storages\matrix.h" />
     <CustomBuild Include="..\lib\mycanvas.h">
       <Command Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">setlocal
 if errorlevel 1 goto VCEnd

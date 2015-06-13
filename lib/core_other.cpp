@@ -90,7 +90,8 @@ bool CORE::Select(unsigned id)
 					case PRIMITIVE_SEGMENT:
 					{
 						Segment* s = dynamic_cast<Segment*>(object);
-						mygui->Set_properties_of_segment(s->id.getID(), *s->p1->x, *s->p1->y, *s->p2->x, *s->p2->y,
+						mygui->Set_properties_of_segment(s->id.getID(), s->p1->id.getID(), s->p2->id.getID(),
+																	*s->p1->x, *s->p1->y, *s->p2->x, *s->p2->y,
 																	_parameters.get(s->p1->x), _parameters.get(s->p1->y),
 																	_parameters.get(s->p2->x), _parameters.get(s->p2->y),
 																	s->color.getColor());
@@ -99,7 +100,7 @@ bool CORE::Select(unsigned id)
 					case PRIMITIVE_CIRCLE:
 					{
 						Circle* c = dynamic_cast<Circle*>(object);
-						mygui->Set_properties_of_circle(c->id.getID(), *c->p->x, *c->p->y, *c->r,
+						mygui->Set_properties_of_circle(c->id.getID(), c->p->id.getID(), *c->p->x, *c->p->y, *c->r,
 																  _parameters.get(c->p->x), _parameters.get(c->p->y),
 																  _parameters.get(c->r), c->color.getColor());
 						break;

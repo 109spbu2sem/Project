@@ -87,7 +87,7 @@ bool GUI::Set_properties_of_point(unsigned id, double x, double y,
 	return true;
 }
 
-bool GUI::Set_properties_of_segment(unsigned id, double x1, double y1, double x2, double y2,
+bool GUI::Set_properties_of_segment(unsigned id, unsigned id1, unsigned id2, double x1, double y1, double x2, double y2,
 												bool isx1, bool isy1, bool isx2, bool isy2, Color c)
 {
 	ui->propertiesList->clear();
@@ -109,26 +109,38 @@ bool GUI::Set_properties_of_segment(unsigned id, double x1, double y1, double x2
 	ui->propertiesList->addItem(item);
 
 	item = new QListWidgetItem;
+	s.setNum(id1);
+	item->setText("point 1 id:\t" + s);
+	item->setData(17, id1);
+	ui->propertiesList->addItem(item);
+
+	item = new QListWidgetItem;
 	s.setNum(x1);
-	item->setText("x1:\t" + s);
+	item->setText("x:\t" + s);
 	item->setData(17, x1);
 	ui->propertiesList->addItem(item);
 
 	item = new QListWidgetItem;
 	s.setNum(y1);
-	item->setText("y1:\t" + s);
+	item->setText("y:\t" + s);
 	item->setData(17, y1);
 	ui->propertiesList->addItem(item);
 
 	item = new QListWidgetItem;
+	s.setNum(id2);
+	item->setText("point 2 id:\t" + s);
+	item->setData(17, id2);
+	ui->propertiesList->addItem(item);
+
+	item = new QListWidgetItem;
 	s.setNum(x2);
-	item->setText("x2:\t" + s);
+	item->setText("x:\t" + s);
 	item->setData(17, x2);
 	ui->propertiesList->addItem(item);
 
 	item = new QListWidgetItem;
 	s.setNum(y2);
-	item->setText("y2:\t" + s);
+	item->setText("y:\t" + s);
 	item->setData(17, y2);
 	ui->propertiesList->addItem(item);
 
@@ -144,7 +156,7 @@ bool GUI::Set_properties_of_segment(unsigned id, double x1, double y1, double x2
 	return true;
 }
 
-bool GUI::Set_properties_of_circle(unsigned id, double x, double y, double r,
+bool GUI::Set_properties_of_circle(unsigned id, unsigned id1, double x, double y, double r,
 											  bool isx, bool isy, bool isr, Color c)
 {
 	ui->propertiesList->clear();
@@ -162,6 +174,12 @@ bool GUI::Set_properties_of_circle(unsigned id, double x, double y, double r,
 	s.setNum(id);
 	item->setText("id:\t" + s);
 	item->setData(17, id);
+	ui->propertiesList->addItem(item);
+
+	item = new QListWidgetItem;
+	s.setNum(id1);
+	item->setText("point id:\t" + s);
+	item->setData(17, id1);
 	ui->propertiesList->addItem(item);
 
 	item = new QListWidgetItem;
@@ -205,8 +223,7 @@ bool GUI::DrawPoint(unsigned id, double x, double y, Color c, bool selected)
 		selected ? *_selectBrush :
 		QBrush(QColor(c.red(), c.green(), c.blue())));
 	QString s;
-	s.setNum(id);
-	s += "\tPoint";
+	s = QString().setNum(id) + "\tPoint( " + QString().setNum(x) + " , " + QString().setNum(y) + " )";
 	QListWidgetItem* it = new QListWidgetItem;
 	it->setText(s);
 	it->setData(17, id);
@@ -239,8 +256,16 @@ bool GUI::DrawSegment(unsigned id, double x1, double y1, double x2, double y2, C
 		selected ? QPen(QColor(QRgb(COLORSELECTED))) :
 		QPen(QColor(c.red(), c.green(), c.blue())));
 	QString s;
-	s.setNum(id);
-	s += "\tSegment";
+	s = QString().setNum(id) +
+		"\tSegment( " +
+		QString().setNum(x1) +
+		" , " +
+		QString().setNum(y1) +
+		" : " +
+		QString().setNum(x2) +
+		" , " +
+		QString().setNum(y2) +
+		" )";
 	QListWidgetItem* it = new QListWidgetItem;
 	it->setText(s);
 	it->setData(17, id);
@@ -260,8 +285,14 @@ bool GUI::DrawCircle(unsigned id, double x, double y, double r, Color c, bool se
 		selected ? QPen(QColor(QRgb(COLORSELECTED))) :
 		QPen(QColor(c.red(), c.green(), c.blue())));
 	QString s;
-	s.setNum(id);
-	s += "\tCircle";
+	s = QString().setNum(id) +
+		"\tCircle( " +
+		QString().setNum(x) +
+		" , " +
+		QString().setNum(y) +
+		" , "	+
+		QString().setNum(r) +
+		" )";
 	QListWidgetItem* it = new QListWidgetItem;
 	it->setText(s);
 	it->setData(17, id);
@@ -291,6 +322,7 @@ bool GUI::Clear()
 	ui->myCanvas->NewCanvas();
 	ui->objectsList->clear();
 	ui->myCanvas->setupSelectRect();
+	ui->myCanvas->setupNewLineDraw();
 	return true;
 }
 

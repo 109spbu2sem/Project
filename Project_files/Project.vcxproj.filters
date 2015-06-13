@@ -50,35 +50,26 @@
       <Extensions>qrc;*</Extensions>
       <ParseFiles>false</ParseFiles>
     </Filter>
+    <Filter Include="Header Files\Constraints">
+      <UniqueIdentifier>{26ace30c-d1a8-4d1c-bccc-6d70789d90dc}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Other">
+      <UniqueIdentifier>{7edf6219-5c2a-441e-ad8f-66fd526595d5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Blocks">
+      <UniqueIdentifier>{0e7ca488-c6e9-478e-bdab-a47dd9b8940f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Other">
+      <UniqueIdentifier>{c0f62551-b74b-4021-a99b-f0cc6b76563b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Main blocks">
+      <UniqueIdentifier>{af12200a-45fb-466f-b018-1f4318e9f158}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Other blocks">
+      <UniqueIdentifier>{6b76e088-54ee-47d9-b4b1-a95cde98bd0b}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="..\lib\Color.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="..\lib\core_add.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="..\lib\core_other.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="..\lib\core_private.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="..\lib\global.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="..\lib\gui.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="..\lib\main.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="..\lib\mycanvas.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="..\lib\objectpropertieswindow.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="Debug\moc_gui.cpp">
       <Filter>Generated Files\Debug</Filter>
     </ClCompile>
@@ -97,121 +88,115 @@
     <ClCompile Include="Release\moc_objectpropertieswindow.cpp">
       <Filter>Generated Files\Release</Filter>
     </ClCompile>
-    <ClCompile Include="..\lib\Save.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="..\lib\settings.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="..\lib\storageofobjects.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="..\lib\Load.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="..\lib\ObjectBase.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="..\lib\gui_interface.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="..\lib\storageofconstraints.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="GeneratedFiles\qrc_icons.cpp">
       <Filter>Generated Files</Filter>
     </ClCompile>
+    <ClCompile Include="..\lib\Color.cpp">
+      <Filter>Source Files\Other</Filter>
+    </ClCompile>
+    <ClCompile Include="..\lib\core_add.cpp">
+      <Filter>Source Files\Main blocks</Filter>
+    </ClCompile>
+    <ClCompile Include="..\lib\core_other.cpp">
+      <Filter>Source Files\Main blocks</Filter>
+    </ClCompile>
+    <ClCompile Include="..\lib\core_private.cpp">
+      <Filter>Source Files\Main blocks</Filter>
+    </ClCompile>
+    <ClCompile Include="..\lib\gui.cpp">
+      <Filter>Source Files\Main blocks</Filter>
+    </ClCompile>
+    <ClCompile Include="..\lib\gui_interface.cpp">
+      <Filter>Source Files\Main blocks</Filter>
+    </ClCompile>
+    <ClCompile Include="..\lib\main.cpp">
+      <Filter>Source Files\Other</Filter>
+    </ClCompile>
+    <ClCompile Include="..\lib\mycanvas.cpp">
+      <Filter>Source Files\Main blocks</Filter>
+    </ClCompile>
+    <ClCompile Include="..\lib\ObjectBase.cpp">
+      <Filter>Source Files\Other</Filter>
+    </ClCompile>
+    <ClCompile Include="..\lib\objectpropertieswindow.cpp">
+      <Filter>Source Files\Main blocks</Filter>
+    </ClCompile>
+    <ClCompile Include="..\lib\global.cpp">
+      <Filter>Source Files\Other blocks</Filter>
+    </ClCompile>
+    <ClCompile Include="..\lib\settings.cpp">
+      <Filter>Source Files\Other blocks</Filter>
+    </ClCompile>
+    <ClCompile Include="..\lib\storageofconstraints.cpp">
+      <Filter>Source Files\Other blocks</Filter>
+    </ClCompile>
+    <ClCompile Include="..\lib\storageofobjects.cpp">
+      <Filter>Source Files\Other blocks</Filter>
+    </ClCompile>
+    <ClCompile Include="..\lib\Load.cpp">
+      <Filter>Source Files\Other blocks</Filter>
+    </ClCompile>
+    <ClCompile Include="..\lib\Save.cpp">
+      <Filter>Source Files\Other blocks</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\lib\constraints\AngleSegment-Segment.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\lib\constraints\Collector.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\lib\constraints\DistancePoint-Point.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\lib\constraints\DistanceToTheLine.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\lib\Id.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\lib\core.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\lib\global.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <CustomBuild Include="..\lib\gui.h">
-      <Filter>Header Files</Filter>
-    </CustomBuild>
-    <ClInclude Include="..\lib\storages\heshtable.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\lib\storages\matrix.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <CustomBuild Include="..\lib\mycanvas.h">
-      <Filter>Header Files</Filter>
-    </CustomBuild>
-    <CustomBuild Include="..\lib\objectpropertieswindow.h">
-      <Filter>Header Files</Filter>
-    </CustomBuild>
-    <ClInclude Include="..\lib\structures.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="GeneratedFiles\ui_gui.h">
       <Filter>Generated Files</Filter>
     </ClInclude>
     <ClInclude Include="GeneratedFiles\ui_objectpropertieswindow.h">
       <Filter>Generated Files</Filter>
     </ClInclude>
-    <ClInclude Include="..\lib\Save.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\lib\settings.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\lib\storageofobjects.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\lib\storages\queue.h">
-      <Filter>Header Files</Filter>
+    <ClInclude Include="..\lib\constraints\AngleSegment-Segment.h">
+      <Filter>Header Files\Constraints</Filter>
     </ClInclude>
     <ClInclude Include="..\lib\constraints\CircleContact.h">
-      <Filter>Header Files</Filter>
+      <Filter>Header Files\Constraints</Filter>
     </ClInclude>
-    <ClInclude Include="..\lib\Load.h">
-      <Filter>Header Files</Filter>
+    <ClInclude Include="..\lib\constraints\Collector.h">
+      <Filter>Header Files\Constraints</Filter>
     </ClInclude>
-    <ClInclude Include="..\lib\enums.h">
-      <Filter>Header Files</Filter>
+    <ClInclude Include="..\lib\constraints\DistancePoint-Point.h">
+      <Filter>Header Files\Constraints</Filter>
     </ClInclude>
-    <ClInclude Include="..\lib\storageofconstraints.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\lib\ObjectBase.h">
-      <Filter>Header Files</Filter>
+    <ClInclude Include="..\lib\constraints\DistanceToTheLine.h">
+      <Filter>Header Files\Constraints</Filter>
     </ClInclude>
     <ClInclude Include="..\lib\constraints\OrthogonalLines.h">
-      <Filter>Header Files</Filter>
+      <Filter>Header Files\Constraints</Filter>
     </ClInclude>
     <ClInclude Include="..\lib\constraints\ParallelLines.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\lib\storages\mylist.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\lib\storages\mytree.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\lib\storages\myvector.h">
-      <Filter>Header Files</Filter>
+      <Filter>Header Files\Constraints</Filter>
     </ClInclude>
     <ClInclude Include="..\lib\constraints\ThreePointsOnTheLine.h">
-      <Filter>Header Files</Filter>
+      <Filter>Header Files\Constraints</Filter>
+    </ClInclude>
+    <ClInclude Include="..\lib\enums.h">
+      <Filter>Header Files\Other</Filter>
+    </ClInclude>
+    <ClInclude Include="..\lib\core.h">
+      <Filter>Header Files\Blocks</Filter>
+    </ClInclude>
+    <ClInclude Include="..\lib\global.h">
+      <Filter>Header Files\Blocks</Filter>
+    </ClInclude>
+    <ClInclude Include="..\lib\Load.h">
+      <Filter>Header Files\Blocks</Filter>
+    </ClInclude>
+    <ClInclude Include="..\lib\settings.h">
+      <Filter>Header Files\Blocks</Filter>
+    </ClInclude>
+    <ClInclude Include="..\lib\Save.h">
+      <Filter>Header Files\Blocks</Filter>
+    </ClInclude>
+    <ClInclude Include="..\lib\storageofconstraints.h">
+      <Filter>Header Files\Blocks</Filter>
+    </ClInclude>
+    <ClInclude Include="..\lib\storageofobjects.h">
+      <Filter>Header Files\Blocks</Filter>
+    </ClInclude>
+    <ClInclude Include="..\lib\structures.h">
+      <Filter>Header Files\Other</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -223,6 +208,15 @@
     </CustomBuild>
     <CustomBuild Include="..\lib\QTforms\icons.qrc">
       <Filter>Resource Files</Filter>
+    </CustomBuild>
+    <CustomBuild Include="..\lib\gui.h">
+      <Filter>Header Files\Blocks</Filter>
+    </CustomBuild>
+    <CustomBuild Include="..\lib\mycanvas.h">
+      <Filter>Header Files\Blocks</Filter>
+    </CustomBuild>
+    <CustomBuild Include="..\lib\objectpropertieswindow.h">
+      <Filter>Header Files\Blocks</Filter>
     </CustomBuild>
   </ItemGroup>
   <ItemGroup>
@@ -268,5 +262,22 @@
     <Image Include="..\lib\QTforms\icons\zoombtn.png">
       <Filter>Resource Files</Filter>
     </Image>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\lib\Id.h">
+      <Filter>Header Files\Other</Filter>
+    </ClInclude>
+    <ClInclude Include="..\lib\storages\mylist.h">
+      <Filter>Header Files\Blocks</Filter>
+    </ClInclude>
+    <ClInclude Include="..\lib\storages\mytree.h">
+      <Filter>Header Files\Blocks</Filter>
+    </ClInclude>
+    <ClInclude Include="..\lib\storages\myvector.h">
+      <Filter>Header Files\Blocks</Filter>
+    </ClInclude>
+    <ClInclude Include="..\lib\ObjectBase.h">
+      <Filter>Header Files\Other</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>
