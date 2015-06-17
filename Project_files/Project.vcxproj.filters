@@ -198,6 +198,15 @@
     <ClInclude Include="..\lib\structures.h">
       <Filter>Header Files\Other</Filter>
     </ClInclude>
+    <ClInclude Include="..\lib\storages\mylist.h">
+      <Filter>Header Files\Other</Filter>
+    </ClInclude>
+    <ClInclude Include="..\lib\storages\mytree.h">
+      <Filter>Header Files\Other</Filter>
+    </ClInclude>
+    <ClInclude Include="..\lib\storages\myvector.h">
+      <Filter>Header Files\Other</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <CustomBuild Include="..\lib\QTforms\gui.ui">
@@ -266,15 +275,6 @@
   <ItemGroup>
     <ClInclude Include="..\lib\Id.h">
       <Filter>Header Files\Other</Filter>
-    </ClInclude>
-    <ClInclude Include="..\lib\storages\mylist.h">
-      <Filter>Header Files\Blocks</Filter>
-    </ClInclude>
-    <ClInclude Include="..\lib\storages\mytree.h">
-      <Filter>Header Files\Blocks</Filter>
-    </ClInclude>
-    <ClInclude Include="..\lib\storages\myvector.h">
-      <Filter>Header Files\Blocks</Filter>
     </ClInclude>
     <ClInclude Include="..\lib\ObjectBase.h">
       <Filter>Header Files\Other</Filter>

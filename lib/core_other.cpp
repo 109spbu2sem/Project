@@ -63,13 +63,16 @@ bool CORE::Select(double x, double y)
 			}
 		}
 	}
-	return Select(min_id);;
+	if (min_id)
+	{
+		return Select(min_id);
+	}
+	ClearSelection();
+	return false;
 }
 
 bool CORE::Select(unsigned id)
 {
-	if (id)
-	{
 		ObjectBase* object = _storage_of_objects.get(id);
 		if (object)
 		{
@@ -115,9 +118,10 @@ bool CORE::Select(unsigned id)
 			Redraw(mygui);
 			return object->isSelected();
 		}
-	}
-	else
-		ClearSelection();
+		else
+		{
+			if (id) mygui->WriteError("FATAL ERROR: wrong object id");
+		}
 	return false;
 }
 
@@ -207,6 +211,7 @@ void CORE::DeleteSelectedObjects()
 	unsigned cantdelete = 0;
 	for (myavltree<unsigned, ObjectBase*>::myiterator i(_selected_objects); i.valid(); i++)
 	{
+		i.value()->changeSelect(false);
 		if (_storage_of_constraints.has(i.value()))
 			cantdelete++;
 		else 
@@ -219,7 +224,7 @@ void CORE::DeleteSelectedObjects()
 					if (_storage_of_objects.has_SorC_with_P(p))
 						cantdelete++;
 					else
-					{
+					{					
 						_parameters.erase(p->x);
 						_parameters.erase(p->y);
 						delete p->x;
@@ -231,7 +236,7 @@ void CORE::DeleteSelectedObjects()
 				}
 				case PRIMITIVE_SEGMENT:
 				{
-					//Segment* s = dynamic_cast<Segment*>(i.getValue());
+					//Segment* s = dynamic_cast<Segment*>(i.getValue());					
 					_storage_of_objects.remove(i.value()->id);
 					delete i.value();
 					break;

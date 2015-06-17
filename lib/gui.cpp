@@ -118,7 +118,7 @@ void GUI::on_ruleBox_currentIndexChanged(int index)
 	return;
 }
 
-void GUI::on_pushButton_clicked()
+void GUI::on_addRuleBTN_clicked()
 {
 	switch (ui->ruleBox->currentIndex() + 1)
 	{

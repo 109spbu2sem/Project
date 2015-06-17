@@ -60,7 +60,7 @@ private slots:
 	
 	void on_ruleBox_currentIndexChanged(int index);
 	
-	void on_pushButton_clicked();
+	void on_addRuleBTN_clicked();
 	
 	void on_createSegmentBTN_clicked();
 	

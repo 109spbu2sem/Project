@@ -357,6 +357,7 @@ void CORE::BuildFigureGoldMethod(IConstraint *constr, myvector<double*>* paramet
 		writeToLog(abs(f_prev - f_current) /*/ abs(f_prev)*/, "delta f= ", 2);
 	//} while (abs(f_prev - f_current) > f_epsi);
 	} while (abs(f_prev - f_current) /*/ abs(f_prev)*/ > f_epsi && f_count < f_Epsi && f_current > f_epsi);
+	writeToLog("---end of cycle---",2);
 	writeToLog(f_count, "iterations= ", 2);
 	writeToLog(nf_eval, "updates= ", 2);
 	/*if (constr->error() >= f_epsi)
